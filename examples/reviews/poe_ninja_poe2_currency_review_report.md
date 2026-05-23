@@ -7,15 +7,15 @@ This report is a local audit handoff. It does not approve automation, fetch data
 - Resource name: `poe.ninja POE2 Currency`
 - Resource id: `poe_ninja_poe2_currency`
 - Resource type: `price_site`
-- Current allowed_use: `manual-or-api-if-available`
+- Current allowed_use: `api`
 - Requested access method: `api`
 
 ## Preflight And Readiness
 
-- Preflight status: `needs-review`
-- Connector-check readiness: `not ready`
-- Approval suggestion: `allowed_use: api`
-- Approval helper reason: After human approval, manually update RESOURCES.md with the suggested allowed_use.
+- Preflight status: `approved-api`
+- Connector-check readiness: `ready`
+- Approval suggestion: `None`
+- Approval helper reason: No approval change needed; resource is already automation-eligible.
 
 ## Review Checklist
 
@@ -23,7 +23,7 @@ This report is a local audit handoff. It does not approve automation, fetch data
 | --- | --- | --- |
 | Resource match | poe.ninja POE2 Currency | ok |
 | Access method | api | ok |
-| Preflight | needs-review | blocked |
+| Preflight | approved-api | ok |
 | Source terms reviewed | yes | ok |
 | Source terms URL | https://poe.ninja/privacy | ok |
 | Robots/API policy reviewed | yes | ok |
@@ -39,7 +39,7 @@ This report is a local audit handoff. It does not approve automation, fetch data
 | Cache TTL | 86400s | ok |
 | Dry-run supported | yes | ok |
 | Derived-only public export | yes | ok |
-| Readiness | not ready | blocked |
+| Readiness | ready | ok |
 
 ## Evidence
 
@@ -67,12 +67,17 @@ This report is a local audit handoff. It does not approve automation, fetch data
 
 ## Blockers
 
-- Resource is not automation-eligible: needs-review - Allowed use is conditional or unclear; review source terms before automation.
+- None
 
 ## Fetch Plan Summary
 
-- No fetch plan is available until connector-check passes.
+- Cache path: `data\raw\cache\poe-ninja-poe2-currency-a1953252fcbf.cache`
+- Cache TTL: `86400s`
+- Rate limit: `6/min`
+- Minimum request interval: `10.00s`
+- Dry-run required: `yes`
+- Derived-only public export: `yes`
 
 ## Next Step
 
-After human approval, manually update `RESOURCES.md` with `allowed_use: api`, then rerun `wq connector-check`.
+Connector review is ready for `wq connector-plan` and source-specific implementation planning.

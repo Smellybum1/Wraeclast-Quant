@@ -109,15 +109,15 @@
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Local connector fixture signal export to manual-import-compatible JSON.
 - Local connector fixture daily pipeline for end-to-end derived artifact generation without live collection.
+- First human-approved API resource: `poe_ninja_poe2_currency`.
+- Ready poe.ninja POE2 currency connector review with safe fetch plan.
+- poe.ninja POE2 currency fixture, dry-run, and manual-import export proof without live collection.
 
 ## Recommended Next Milestones
 
-- Complete one human-edited source-specific connector review using `wq connector-candidates` and `wq connector-review-prep` output for an approved API, RSS, or downloadable source from `RESOURCES.md`.
-- Use `wq connector-review-status`, `wq connector-review-report`, `wq connector-approval-helper`, and `wq connector-approval-patch` while editing the first source-specific review, including reviewed URLs, review date, review notes, and allowed data shape, then require `wq connector-check` and `wq connector-plan` to pass.
-- Plan the first compliant dry-run connector implementation after `wq connector-check` and `wq connector-plan` pass for that source.
-- Use `wq connector-fixture-run` to validate the first connector's derived output shape with local synthetic fixtures before adding network access.
-- Use `wq connector-dry-run` to exercise the future connector interface before any live source-specific implementation.
-- Use `wq connector-fixture-export` with normalized-signal fixtures when connector output should feed `wq validate-import`, `wq import`, or `wq daily --input-path`.
+- Plan the first source-specific poe.ninja POE2 currency dry-run connector facade after the ready review and fixture proof.
+- Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
+- Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Use `wq connector-fixture-daily` to prove fixture-backed connector output can drive snapshots, reports, public intel, and the static dashboard before live ingestion exists.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Continue maintainability with `config/resources_loader.py` or another bounded command/storage service when human source review is blocked.

@@ -146,7 +146,7 @@ Use `wq connector-review-status --review-path <file>` while editing a draft to i
 
 Use `wq connector-review-evidence --review-path <file>` after manually reviewing source terms and API/robots policy. The command updates only the local JSON review file from values you provide; it does not browse URLs, verify source terms, edit `RESOURCES.md`, approve a source, or fetch data.
 
-For sources where useful public pages or community notes exist but official automation terms are still unclear, keep research notes separate from completed evidence. For example, `examples/reviews/poe_ninja_poe2_currency_research.md` lists poe.ninja candidate surfaces and evidence gaps, but the matching review remains blocked until the user manually verifies terms/API policy and records evidence.
+For sources where useful public pages or community notes exist but official automation terms are still unclear, keep research notes separate from completed evidence. For poe.ninja currency, `examples/reviews/poe_ninja_poe2_currency_research.md` records reviewed evidence, remaining gaps around the exact POE2 endpoint/field contract, and the narrow derived-only data shape used for local fixture proof.
 
 Use `wq connector-approval-helper --review-path <file>` after the review evidence is complete to see whether a manual `RESOURCES.md` change such as `allowed_use: api` is appropriate. The helper does not edit files or approve a source by itself.
 

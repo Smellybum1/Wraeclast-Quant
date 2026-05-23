@@ -238,7 +238,7 @@ Each resource may include:
 
 &#x20; priority: high
 
-&#x20; allowed\_use: manual-or-api-if-available
+&#x20; allowed\_use: api
 
 &#x20; collector: price\_site\_placeholder
 

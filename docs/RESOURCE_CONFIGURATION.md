@@ -93,7 +93,7 @@ Discord resources can also be represented when explicitly configured in `RESOURC
 
 Preflight eligibility is not approval to implement a connector. Future live connectors still require the connector policy and source-specific review gates.
 
-Current project preflight has no automation-eligible resources. Conditional values such as `manual-or-api-if-available`, `manual-review-or-api-if-available`, and `api-or-manual-review` remain blocked until a human records source evidence and manually changes `RESOURCES.md` to an explicit approved value such as `api`, `rss`, or `download`.
+Current project preflight has one automation-eligible resource: `poe_ninja_poe2_currency`, after human review evidence and manual `RESOURCES.md` approval. Conditional values such as `manual-or-api-if-available`, `manual-review-or-api-if-available`, and `api-or-manual-review` remain blocked until a human records source evidence and manually changes `RESOURCES.md` to an explicit approved value such as `api`, `rss`, or `download`.
 
 ## Safety Notes
 

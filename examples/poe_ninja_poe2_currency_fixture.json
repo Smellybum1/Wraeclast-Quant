@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-05-24T00:00:00+00:00",
+  "items": [
+    {
+      "category": "currency",
+      "confidence": "high",
+      "name": "Exalted Orb",
+      "notes": "Synthetic poe.ninja-style currency summary row for local connector shape proof.",
+      "price_text": "normalized against chaos, divine, and exalted references",
+      "signals": {
+        "build_dependency_score": 78,
+        "demand_momentum": 84,
+        "historical_spike_score": 66,
+        "liquidity_score": 91,
+        "manipulation_risk": 14,
+        "patch_relevance_score": 72,
+        "price_discount_score": 61,
+        "stale_data_penalty": 6
+      }
+    },
+    {
+      "category": "currency",
+      "confidence": "medium",
+      "name": "Divine Orb",
+      "notes": "Synthetic poe.ninja-style currency summary row for manual-import export validation.",
+      "price_text": "normalized exchange summary with recent trend marker",
+      "signals": {
+        "build_dependency_score": 74,
+        "demand_momentum": 76,
+        "historical_spike_score": 71,
+        "liquidity_score": 88,
+        "manipulation_risk": 18,
+        "patch_relevance_score": 69,
+        "price_discount_score": 58,
+        "stale_data_penalty": 7
+      }
+    },
+    {
+      "category": "currency",
+      "confidence": "medium",
+      "name": "Chaos Orb",
+      "notes": "Synthetic poe.ninja-style baseline currency row for normalized signal coverage.",
+      "price_text": "baseline normalized currency reference",
+      "signals": {
+        "build_dependency_score": 68,
+        "demand_momentum": 73,
+        "historical_spike_score": 59,
+        "liquidity_score": 86,
+        "manipulation_risk": 12,
+        "patch_relevance_score": 64,
+        "price_discount_score": 55,
+        "stale_data_penalty": 5
+      }
+    }
+  ],
+  "source_name": "poe.ninja POE2 Currency"
+}
