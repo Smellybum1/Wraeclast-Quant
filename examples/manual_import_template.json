@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Stormglass Catalyst",
+    "signals": {
+      "demand_momentum": 88,
+      "build_dependency_score": 82,
+      "price_discount_score": 76,
+      "liquidity_score": 70,
+      "historical_spike_score": 68,
+      "patch_relevance_score": 74,
+      "manipulation_risk": 18,
+      "stale_data_penalty": 8
+    }
+  },
+  {
+    "name": "Ashen Rune Core",
+    "signals": {
+      "demand_momentum": 72,
+      "build_dependency_score": 80,
+      "price_discount_score": 66,
+      "liquidity_score": 62,
+      "historical_spike_score": 55,
+      "patch_relevance_score": 70,
+      "manipulation_risk": 20,
+      "stale_data_penalty": 10
+    }
+  }
+]

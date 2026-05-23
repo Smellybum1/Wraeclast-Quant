@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-05-23T00:00:00+00:00",
+  "items": [
+    {
+      "category": "currency",
+      "confidence": "high",
+      "name": "Stormglass Catalyst",
+      "notes": "Synthetic fixture row with normalized signals for export validation.",
+      "price_text": "12 exalted",
+      "signals": {
+        "build_dependency_score": 82,
+        "demand_momentum": 88,
+        "historical_spike_score": 68,
+        "liquidity_score": 70,
+        "manipulation_risk": 18,
+        "patch_relevance_score": 74,
+        "price_discount_score": 76,
+        "stale_data_penalty": 8
+      }
+    },
+    {
+      "category": "unique",
+      "confidence": "medium",
+      "name": "Ashen Rune Core",
+      "notes": "Synthetic fixture row with normalized signals for manual import export.",
+      "price_text": "4 divine",
+      "signals": {
+        "build_dependency_score": 72,
+        "demand_momentum": 64,
+        "historical_spike_score": 58,
+        "liquidity_score": 62,
+        "manipulation_risk": 22,
+        "patch_relevance_score": 66,
+        "price_discount_score": 70,
+        "stale_data_penalty": 12
+      }
+    }
+  ],
+  "source_name": "Example Approved API"
+}

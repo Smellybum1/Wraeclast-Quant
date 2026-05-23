@@ -1,0 +1,3 @@
+name,demand_momentum,build_dependency_score,price_discount_score,liquidity_score,historical_spike_score,patch_relevance_score,manipulation_risk,stale_data_penalty
+Stormglass Catalyst,88,82,76,70,68,74,18,8
+Ashen Rune Core,72,80,66,62,55,70,20,10

@@ -1,0 +1,19 @@
+{
+  "access_method": "api",
+  "allowed_data_shape": "Derived POE2 currency economy summary rows only: currency/item name, category, league, normalized exchange value when publicly presented, 7-day movement/trend, volume/hour or popularity metric when publicly presented, source timestamp, and normalized 0-100 Wraeclast Quant signals. Excludes raw pages, raw HTML, account data, credentials, cookies, private data, and public export of raw source content.",
+  "authentication_required": false,
+  "cache_ttl_seconds": 86400,
+  "captcha_gated": false,
+  "dry_run_supported": true,
+  "login_required": false,
+  "private_data_risk": false,
+  "public_export_derived_only": true,
+  "rate_limit_per_minute": 6.0,
+  "resource_name": "poe.ninja POE2 Currency",
+  "review_notes": "Reviewed poe.ninja public pages for the POE2 currency source. The POE2 economy announcement says the section provides economic overviews based on Currency Exchange data and normalizes values against Chaos Orbs, Divine Orbs, and Exalted Orbs. The configured currency page and official data-dumps surface were reviewed, but the exact POE2 endpoint and field contract remain undocumented in the reviewed public pages. The privacy page is the only clearly linked policy page found in the footer and was updated September 28th, 2024. A data dumps link is present, but no dedicated public API terms, documented POE2 endpoint contract, explicit reuse license, or official rate-limit table was found during this review. Treat this as evidence-ready for a manual approval decision only; do not implement live collection unless RESOURCES.md is manually approved and connector-check/connector-plan pass.",
+  "reviewed_at": "2026-05-24",
+  "robots_or_api_policy_reviewed": true,
+  "robots_or_api_policy_url": "https://poe.ninja/poe1/data",
+  "source_terms_reviewed": true,
+  "source_terms_url": "https://poe.ninja/privacy"
+}

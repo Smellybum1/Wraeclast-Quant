@@ -1,0 +1,19 @@
+{
+  "resource_name": "Example Approved Download",
+  "access_method": "download",
+  "source_terms_reviewed": true,
+  "robots_or_api_policy_reviewed": true,
+  "source_terms_url": "https://example.test/terms",
+  "robots_or_api_policy_url": "https://example.test/download-policy",
+  "reviewed_at": "2026-05-23",
+  "review_notes": "Example review fixture for an approved downloadable data source.",
+  "allowed_data_shape": "Downloaded public rows normalized into derived local summaries only.",
+  "authentication_required": false,
+  "login_required": false,
+  "captcha_gated": false,
+  "private_data_risk": false,
+  "rate_limit_per_minute": 6,
+  "cache_ttl_seconds": 86400,
+  "dry_run_supported": true,
+  "public_export_derived_only": true
+}

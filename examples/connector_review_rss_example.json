@@ -1,0 +1,19 @@
+{
+  "resource_name": "Example Approved RSS",
+  "access_method": "rss",
+  "source_terms_reviewed": true,
+  "robots_or_api_policy_reviewed": true,
+  "source_terms_url": "https://example.test/terms",
+  "robots_or_api_policy_url": "https://example.test/feed-policy",
+  "reviewed_at": "2026-05-23",
+  "review_notes": "Example review fixture for an approved RSS source.",
+  "allowed_data_shape": "Feed entry titles, timestamps, links, and derived tags only.",
+  "authentication_required": false,
+  "login_required": false,
+  "captcha_gated": false,
+  "private_data_risk": false,
+  "rate_limit_per_minute": 12,
+  "cache_ttl_seconds": 1800,
+  "dry_run_supported": true,
+  "public_export_derived_only": true
+}

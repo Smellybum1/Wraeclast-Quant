@@ -1,0 +1,29 @@
+# Python caches and build output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Local environments and secrets
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Local databases, caches, and generated artifacts
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/raw/cache/
+data/backups/
+data/processed/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak

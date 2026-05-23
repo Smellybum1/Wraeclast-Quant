@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-05-23T00:00:00+00:00",
+  "items": [
+    {
+      "category": "currency",
+      "confidence": "high",
+      "name": "Stormglass Catalyst",
+      "notes": "Synthetic fixture row for connector harness validation.",
+      "price_text": "12 exalted"
+    },
+    {
+      "category": "unique",
+      "confidence": "medium",
+      "name": "Ashen Rune Core",
+      "notes": "Synthetic fixture row for normalized item output.",
+      "price_text": "4 divine"
+    }
+  ],
+  "source_name": "Example Approved API"
+}

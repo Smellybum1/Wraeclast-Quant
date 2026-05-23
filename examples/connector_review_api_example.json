@@ -1,0 +1,19 @@
+{
+  "resource_name": "Example Approved API",
+  "access_method": "api",
+  "source_terms_reviewed": true,
+  "robots_or_api_policy_reviewed": true,
+  "source_terms_url": "https://example.test/terms",
+  "robots_or_api_policy_url": "https://example.test/api-policy",
+  "reviewed_at": "2026-05-23",
+  "review_notes": "Example review fixture for an approved API source.",
+  "allowed_data_shape": "Derived public API summary rows only.",
+  "authentication_required": false,
+  "login_required": false,
+  "captcha_gated": false,
+  "private_data_risk": false,
+  "rate_limit_per_minute": 30,
+  "cache_ttl_seconds": 3600,
+  "dry_run_supported": true,
+  "public_export_derived_only": true
+}

@@ -1,0 +1,13 @@
+SAMPLE_ITEMS: list[dict[str, object]] = [
+    {"name": "Stormglass Catalyst", "signals": {"demand_momentum": 88, "build_dependency_score": 82, "price_discount_score": 76, "liquidity_score": 70, "historical_spike_score": 68, "patch_relevance_score": 74, "manipulation_risk": 18, "stale_data_penalty": 8}},
+    {"name": "Ashen Rune Core", "signals": {"demand_momentum": 72, "build_dependency_score": 80, "price_discount_score": 66, "liquidity_score": 62, "historical_spike_score": 55, "patch_relevance_score": 70, "manipulation_risk": 20, "stale_data_penalty": 10}},
+    {"name": "Waystone of Embers", "signals": {"demand_momentum": 64, "build_dependency_score": 58, "price_discount_score": 82, "liquidity_score": 78, "historical_spike_score": 49, "patch_relevance_score": 45, "manipulation_risk": 14, "stale_data_penalty": 12}},
+    {"name": "Serrated Spirit Fang", "signals": {"demand_momentum": 59, "build_dependency_score": 73, "price_discount_score": 52, "liquidity_score": 40, "historical_spike_score": 44, "patch_relevance_score": 61, "manipulation_risk": 33, "stale_data_penalty": 14}},
+    {"name": "Vaal-Touched Iron Ring", "signals": {"demand_momentum": 51, "build_dependency_score": 48, "price_discount_score": 63, "liquidity_score": 68, "historical_spike_score": 34, "patch_relevance_score": 36, "manipulation_risk": 25, "stale_data_penalty": 18}},
+    {"name": "Greater Essence of Ruin", "signals": {"demand_momentum": 69, "build_dependency_score": 44, "price_discount_score": 71, "liquidity_score": 84, "historical_spike_score": 53, "patch_relevance_score": 42, "manipulation_risk": 16, "stale_data_penalty": 6}},
+    {"name": "Gemcutter's Prism Shard", "signals": {"demand_momentum": 47, "build_dependency_score": 52, "price_discount_score": 38, "liquidity_score": 90, "historical_spike_score": 29, "patch_relevance_score": 31, "manipulation_risk": 12, "stale_data_penalty": 9}},
+    {"name": "Dunes Expedition Logbook", "signals": {"demand_momentum": 43, "build_dependency_score": 30, "price_discount_score": 58, "liquidity_score": 54, "historical_spike_score": 60, "patch_relevance_score": 26, "manipulation_risk": 28, "stale_data_penalty": 20}},
+    {"name": "Crackling Sceptre Base", "signals": {"demand_momentum": 35, "build_dependency_score": 46, "price_discount_score": 41, "liquidity_score": 31, "historical_spike_score": 24, "patch_relevance_score": 40, "manipulation_risk": 22, "stale_data_penalty": 16}},
+    {"name": "Obscure Trial Relic", "signals": {"demand_momentum": 22, "build_dependency_score": 18, "price_discount_score": 37, "liquidity_score": 20, "historical_spike_score": 15, "patch_relevance_score": 12, "manipulation_risk": 44, "stale_data_penalty": 30}},
+]
+

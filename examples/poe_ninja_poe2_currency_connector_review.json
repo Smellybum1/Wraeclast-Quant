@@ -1,0 +1,19 @@
+{
+  "access_method": "api",
+  "allowed_data_shape": "",
+  "authentication_required": false,
+  "cache_ttl_seconds": 86400,
+  "captcha_gated": false,
+  "dry_run_supported": true,
+  "login_required": false,
+  "private_data_risk": false,
+  "public_export_derived_only": true,
+  "rate_limit_per_minute": 6,
+  "resource_name": "poe.ninja POE2 Currency",
+  "review_notes": "",
+  "reviewed_at": "",
+  "robots_or_api_policy_url": "",
+  "robots_or_api_policy_reviewed": false,
+  "source_terms_url": "",
+  "source_terms_reviewed": false
+}
