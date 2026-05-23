@@ -75,3 +75,19 @@ class FixtureSourceConnector(SourceConnector):
             rows=result.rows,
             fetch_plan=result.fetch_plan,
         )
+
+
+def source_connector_from_review(
+    review: ConnectorReview,
+    resources: list[Resource],
+) -> SourceConnector:
+    connector = FixtureSourceConnector.from_review(review, resources)
+    if connector.resource.id == "poe_ninja_poe2_currency":
+        from wraeclast_quant.collectors.poe_ninja import PoeNinjaCurrencyConnector
+
+        return PoeNinjaCurrencyConnector(
+            resource=connector.resource,
+            review=connector.review,
+            fetch_plan=connector.fetch_plan,
+        )
+    return connector

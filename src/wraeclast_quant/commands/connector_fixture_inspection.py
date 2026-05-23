@@ -5,7 +5,7 @@ from pathlib import Path
 import typer
 from rich.table import Table
 
-from wraeclast_quant.collectors.source_connector import FixtureSourceConnector
+from wraeclast_quant.collectors.source_connector import source_connector_from_review
 from wraeclast_quant.commands._connector_support import console, load_fixture_resources
 from wraeclast_quant.config.connector_fixtures import run_connector_fixture
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError, load_connector_review
@@ -68,7 +68,7 @@ def register(app: typer.Typer) -> None:
     ) -> None:
         try:
             review = load_connector_review(review_path)
-            connector = FixtureSourceConnector.from_review(
+            connector = source_connector_from_review(
                 review,
                 load_fixture_resources(resources_path),
             )

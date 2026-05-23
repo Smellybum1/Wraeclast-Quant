@@ -3,7 +3,11 @@ from pathlib import Path
 
 import pytest
 
-from wraeclast_quant.collectors.source_connector import FixtureSourceConnector
+from wraeclast_quant.collectors.poe_ninja import PoeNinjaCurrencyConnector
+from wraeclast_quant.collectors.source_connector import (
+    FixtureSourceConnector,
+    source_connector_from_review,
+)
 from wraeclast_quant.config.connector_candidates import connector_candidates, suggested_access_method
 from wraeclast_quant.config.connector_fixtures import (
     export_connector_fixture_signals,
@@ -1326,6 +1330,62 @@ def test_fixture_source_connector_returns_normalized_rows() -> None:
     assert result.rows[0].name == "Stormglass Catalyst"
 
 
+def test_source_connector_factory_selects_poe_ninja_currency_connector() -> None:
+    review = load_connector_review("examples/reviews/poe_ninja_poe2_currency_connector_review.json")
+
+    connector = source_connector_from_review(review, [_poe_ninja_currency_resource()])
+
+    assert isinstance(connector, PoeNinjaCurrencyConnector)
+    assert connector.connector_id == "poe-ninja-poe2-currency"
+
+
+def test_source_connector_factory_keeps_generic_fixture_connector() -> None:
+    connector = source_connector_from_review(_review(), [_eligible_resource()])
+
+    assert isinstance(connector, FixtureSourceConnector)
+    assert not isinstance(connector, PoeNinjaCurrencyConnector)
+    assert connector.connector_id == "fixture-source-connector"
+
+
+def test_poe_ninja_currency_connector_returns_fixture_rows_without_cache_writes(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    review_path = Path("examples/reviews/poe_ninja_poe2_currency_connector_review.json").resolve()
+    fixture_path = Path("examples/poe_ninja_poe2_currency_fixture.json").resolve()
+    review = load_connector_review(review_path)
+    monkeypatch.chdir(tmp_path)
+
+    connector = PoeNinjaCurrencyConnector.from_review(
+        review,
+        [_poe_ninja_currency_resource()],
+    )
+    result = connector.collect_fixture(fixture_path)
+
+    assert result.connector_id == "poe-ninja-poe2-currency"
+    assert result.connector_class == "PoeNinjaCurrencyConnector"
+    assert result.resource_name == "poe.ninja POE2 Currency"
+    assert [row.name for row in result.rows] == ["Exalted Orb", "Divine Orb", "Chaos Orb"]
+    assert result.fetch_plan.cache_path == connector.fetch_plan.cache_path
+    assert not Path("data/raw/cache").exists()
+
+
+def test_poe_ninja_currency_connector_refuses_other_resources() -> None:
+    with pytest.raises(ConnectorPolicyError, match="poe_ninja_poe2_currency"):
+        PoeNinjaCurrencyConnector.from_review(_review(), [_eligible_resource()])
+
+
+def test_poe_ninja_currency_connector_live_collection_is_unsupported() -> None:
+    review = load_connector_review("examples/reviews/poe_ninja_poe2_currency_connector_review.json")
+    connector = PoeNinjaCurrencyConnector.from_review(
+        review,
+        [_poe_ninja_currency_resource()],
+    )
+
+    with pytest.raises(ConnectorPolicyError, match="Live connector collection is unsupported"):
+        connector.collect_live()
+
+
 def test_fixture_source_connector_live_collection_is_unsupported() -> None:
     connector = FixtureSourceConnector.from_review(_review(), [_eligible_resource()])
 
@@ -1369,6 +1429,16 @@ def _eligible_resource() -> Resource:
         name="Approved API",
         type="official",
         url="https://example.test/api",
+        allowed_use="api",
+    )
+
+
+def _poe_ninja_currency_resource() -> Resource:
+    return Resource(
+        id="poe_ninja_poe2_currency",
+        name="poe.ninja POE2 Currency",
+        type="price_site",
+        url="https://poe.ninja/poe2/economy/vaal/currency",
         allowed_use="api",
     )
 

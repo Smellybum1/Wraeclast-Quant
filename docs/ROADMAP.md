@@ -112,10 +112,10 @@
 - First human-approved API resource: `poe_ninja_poe2_currency`.
 - Ready poe.ninja POE2 currency connector review with safe fetch plan.
 - poe.ninja POE2 currency fixture, dry-run, and manual-import export proof without live collection.
+- Source-specific poe.ninja POE2 currency dry-run connector facade with live collection still unsupported.
 
 ## Recommended Next Milestones
 
-- Plan the first source-specific poe.ninja POE2 currency dry-run connector facade after the ready review and fixture proof.
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Use `wq connector-fixture-daily` to prove fixture-backed connector output can drive snapshots, reports, public intel, and the static dashboard before live ingestion exists.

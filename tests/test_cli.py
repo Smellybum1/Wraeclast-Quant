@@ -2312,6 +2312,25 @@ def test_connector_dry_run_prints_connector_class_rows_and_cache_path() -> None:
     assert "No network requests were made" in result.output
 
 
+def test_connector_dry_run_prints_poe_ninja_currency_connector() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "connector-dry-run",
+            "--review-path",
+            "examples/reviews/poe_ninja_poe2_currency_connector_review.json",
+            "--fixture-path",
+            "examples/poe_ninja_poe2_currency_fixture.json",
+        ],
+    )
+
+    assert result.exit_code == 0
+    assert "PoeNinjaCurrencyConnector" in result.output
+    assert "poe-ninja-poe2-currency" in result.output
+    assert "Exalted Orb" in result.output
+    assert "No network requests were made" in result.output
+
+
 def test_connector_dry_run_refuses_incomplete_review() -> None:
     result = runner.invoke(
         app,
