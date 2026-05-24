@@ -169,6 +169,32 @@ def write_publish_ready_bundle(tmp_path: Path) -> tuple[Path, Path, int]:
     return database_path, bundle_dir, run.id
 
 
+def write_invalid_public_intel(tmp_path: Path) -> Path:
+    intel_path = tmp_path / "public_intel.json"
+    intel_path.write_text("{}", encoding="utf-8")
+    return intel_path
+
+
+def write_invalid_market_brief(tmp_path: Path) -> Path:
+    brief_path = tmp_path / "market_brief.md"
+    brief_path.write_text("# Wrong Report", encoding="utf-8")
+    return brief_path
+
+
+def write_invalid_static_site(tmp_path: Path) -> Path:
+    site_dir = tmp_path / "site"
+    site_dir.mkdir()
+    (site_dir / "index.html").write_text("<html><title>Other</title></html>", encoding="utf-8")
+    return site_dir
+
+
+def write_invalid_site_bundle(tmp_path: Path) -> Path:
+    bundle_dir = tmp_path / "site_bundle"
+    bundle_dir.mkdir()
+    (bundle_dir / "wraeclast_quant_site_bundle.zip").write_bytes(b"not a zip")
+    return bundle_dir
+
+
 def public_intel_payload(run_id: int = 7) -> dict[str, object]:
     return {
         "schema_version": "1.0",
@@ -230,6 +256,10 @@ __all__ = [
     "status_args",
     "status_json_args",
     "status_workspace",
+    "write_invalid_market_brief",
+    "write_invalid_public_intel",
+    "write_invalid_site_bundle",
+    "write_invalid_static_site",
     "write_manual_resources",
     "write_publish_ready_bundle",
 ]

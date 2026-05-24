@@ -58,6 +58,10 @@ from cli_public_artifact_helpers import (
     status_args as _status_args,
     status_json_args as _status_json_args,
     status_workspace as _status_workspace,
+    write_invalid_market_brief as _write_invalid_market_brief,
+    write_invalid_public_intel as _write_invalid_public_intel,
+    write_invalid_site_bundle as _write_invalid_site_bundle,
+    write_invalid_static_site as _write_invalid_static_site,
     write_manual_resources as _write_manual_resources,
     write_publish_ready_bundle as _write_publish_ready_bundle,
 )
@@ -682,8 +686,7 @@ def test_status_command_reports_invalid_public_intel_without_failing(tmp_path: P
     database_path = tmp_path / "snapshots.db"
     repository = SnapshotRepository(database_path)
     repository.create_analysis_run(source_mode="sample-data", item_count=0)
-    intel_path = tmp_path / "public_intel.json"
-    intel_path.write_text("{}", encoding="utf-8")
+    intel_path = _write_invalid_public_intel(tmp_path)
 
     result = runner.invoke(
         app,
@@ -703,8 +706,7 @@ def test_status_command_reports_invalid_public_intel_without_failing(tmp_path: P
 
 def test_status_strict_exits_nonzero_for_health_failures(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    intel_path = tmp_path / "public_intel.json"
-    intel_path.write_text("{}", encoding="utf-8")
+    intel_path = _write_invalid_public_intel(tmp_path)
 
     result = runner.invoke(
         app,
@@ -725,8 +727,7 @@ def test_status_strict_exits_nonzero_for_health_failures(tmp_path: Path) -> None
 
 def test_status_command_reports_invalid_market_brief_without_failing(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    brief_path = tmp_path / "market_brief.md"
-    brief_path.write_text("# Wrong Report", encoding="utf-8")
+    brief_path = _write_invalid_market_brief(tmp_path)
 
     result = runner.invoke(
         app,
@@ -746,9 +747,7 @@ def test_status_command_reports_invalid_market_brief_without_failing(tmp_path: P
 
 def test_status_command_reports_invalid_static_site_without_failing(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    site_dir = tmp_path / "site"
-    site_dir.mkdir()
-    (site_dir / "index.html").write_text("<html><title>Other</title></html>", encoding="utf-8")
+    site_dir = _write_invalid_static_site(tmp_path)
 
     result = runner.invoke(
         app,
@@ -768,9 +767,7 @@ def test_status_command_reports_invalid_static_site_without_failing(tmp_path: Pa
 
 def test_status_command_reports_invalid_site_bundle_without_failing(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    bundle_dir = tmp_path / "site_bundle"
-    bundle_dir.mkdir()
-    (bundle_dir / "wraeclast_quant_site_bundle.zip").write_bytes(b"not a zip")
+    bundle_dir = _write_invalid_site_bundle(tmp_path)
 
     result = runner.invoke(
         app,
