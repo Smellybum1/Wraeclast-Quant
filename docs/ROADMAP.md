@@ -92,6 +92,7 @@
 - Run provenance repository persistence split into focused query and write helpers behind the stable provenance facade.
 - Snapshot repository persistence split into focused read-query and write-query helpers behind the stable snapshot mixin.
 - Snapshot repository read queries split into focused analysis-run and scored-opportunity helpers behind the stable query facade.
+- Snapshot repository write helpers split analysis-run creation and scored-opportunity insertion behind the stable write facade.
 - Static dashboard rendering decomposed into focused facade, health, and HTML rendering modules.
 - Publish readiness decomposed into focused facade, readiness, handoff, and model modules.
 - Publish handoff report split Markdown rendering and writer helpers behind the stable handoff facade.
