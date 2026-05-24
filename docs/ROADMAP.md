@@ -185,6 +185,7 @@
 - Connector approval helper and patch command workflows split into focused helpers behind stable advisory approval commands.
 - Connector approval policy split suggestion decisions and patch-preview writing behind the stable approval policy facade.
 - Connector approval patch helper split resource block parsing and allowed-use diff generation behind the stable patch facade.
+- Connector approval patch service split advisory patch calculation and preview-file writing behind the stable approval patch facade.
 - Connector planning command rendering split into a focused helper behind the stable `connector-plan` command.
 - Connector planning command review loading and fetch-plan workflow split into a focused helper behind the stable `connector-plan` command.
 - Fetch-plan service split into focused model, cache-path, and builder helpers behind the stable policy facade.
