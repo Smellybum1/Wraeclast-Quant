@@ -1,5 +1,4 @@
 import json
-import sqlite3
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -28,6 +27,10 @@ from cli_connector_helpers import write_connector_resources as _write_connector_
 from cli_connector_helpers import write_connector_review as _write_connector_review
 from cli_daily_helpers import previous_stormglass_database as _previous_stormglass_database
 from cli_daily_helpers import small_mover_daily_setup as _small_mover_daily_setup
+from cli_database_helpers import sqlite_table_names as _sqlite_table_names
+from cli_database_helpers import (
+    write_unrelated_sqlite_database as _write_unrelated_sqlite_database,
+)
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_manual_import_helpers import (
     write_invalid_manual_import_json as _write_invalid_manual_import_json,
@@ -781,9 +784,7 @@ def test_status_command_reports_unhealthy_database_without_initializing_schema(
     tmp_path: Path,
 ) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    database_path = tmp_path / "not_wq.db"
-    with sqlite3.connect(database_path) as connection:
-        connection.execute("CREATE TABLE unrelated (id INTEGER PRIMARY KEY)")
+    database_path = _write_unrelated_sqlite_database(tmp_path)
 
     result = runner.invoke(
         app,
@@ -799,14 +800,7 @@ def test_status_command_reports_unhealthy_database_without_initializing_schema(
     assert "needs attention" in result.output
     assert "missing tables" in result.output
     assert "Database health check did not pass." in result.output
-    with sqlite3.connect(database_path) as connection:
-        tables = {
-            row[0]
-            for row in connection.execute(
-                "SELECT name FROM sqlite_master WHERE type = 'table'"
-            ).fetchall()
-        }
-    assert tables == {"unrelated"}
+    assert _sqlite_table_names(database_path) == {"unrelated"}
 
 
 def test_schema_command_prints_sqlite_schema_contract() -> None:
