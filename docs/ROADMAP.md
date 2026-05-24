@@ -135,6 +135,7 @@
 - Status health report building split context gathering and row assembly behind the stable status health facade.
 - Status health report row assembly split into focused latest-run, artifact, and backup/safety helpers behind the stable report-builder facade.
 - Status health context and artifact-row status calculations split into focused helpers behind stable status facades.
+- Status health artifact row specifications split from status table mutation behind the stable artifact-row facade.
 - Static site rendering helper logic decomposed into focused section, HTML helper, and style modules behind the stable renderer entry point.
 - Static site section rendering split into focused run/history, review/compliance, and market-change helpers behind the stable section facade.
 - Static site market sections split into focused alert, opportunity, and snapshot-change helpers behind the stable market-section facade.
