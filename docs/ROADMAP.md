@@ -193,6 +193,7 @@
 - Fetch-plan service split into focused model, cache-path, and builder helpers behind the stable policy facade.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Resource Markdown parser split line normalization, bullet parsing, table parsing, and resource construction helpers behind the stable parser facade.
+- Compliance assessment model split from source eligibility assessment logic behind the stable compliance facade.
 - Resource command registration decomposed into focused collect, compliance, and preflight modules behind the stable resource command aggregator.
 - Resource command table rendering split into focused helpers behind the stable resource command modules.
 - Status command registration decomposed into focused schema, status-report, and database-check modules behind the stable status command aggregator.

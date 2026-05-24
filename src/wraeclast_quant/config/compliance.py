@@ -1,15 +1,7 @@
 from __future__ import annotations
 
-from pydantic import BaseModel
-
+from wraeclast_quant.config.compliance_models import ComplianceAssessment
 from wraeclast_quant.config.resources_loader import Resource
-
-
-class ComplianceAssessment(BaseModel):
-    resource: Resource
-    status: str
-    automation_eligible: bool
-    reason: str
 
 
 def assess_resource(resource: Resource) -> ComplianceAssessment:
@@ -74,3 +66,6 @@ def assess_resource(resource: Resource) -> ComplianceAssessment:
 
 def assess_resources(resources: list[Resource]) -> list[ComplianceAssessment]:
     return [assess_resource(resource) for resource in resources]
+
+
+__all__ = ["ComplianceAssessment", "assess_resource", "assess_resources"]
