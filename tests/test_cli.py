@@ -6,12 +6,15 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from wraeclast_quant.cli import app
-from wraeclast_quant.intelligence.scoring import OpportunityInputs, ScoredOpportunity
 from wraeclast_quant.reports.market_brief import write_market_brief
 from wraeclast_quant.reports.site_bundle import write_site_bundle
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
+from cli_connector_helpers import connector_review as _connector_review
+from cli_doc_helpers import documented_bullets as _documented_bullets
+from cli_domain_helpers import manual_item as _manual_item
+from cli_domain_helpers import opportunity as _opportunity
 from cli_public_artifact_helpers import (
     database_with_two_runs as _database_with_two_runs,
     public_intel_payload as _public_intel_payload,
@@ -4654,69 +4657,3 @@ def test_schedule_helper_does_not_create_database(tmp_path: Path, monkeypatch) -
     assert result.exit_code == 0
     assert not Path("data/wraeclast_quant.db").exists()
 
-
-def _opportunity(name: str, score: float, action: str) -> ScoredOpportunity:
-    return ScoredOpportunity(
-        item_name=name,
-        opportunity_score=score,
-        action=action,
-        inputs=OpportunityInputs(
-            demand_momentum=0,
-            build_dependency_score=0,
-            price_discount_score=0,
-            liquidity_score=0,
-            historical_spike_score=0,
-            patch_relevance_score=0,
-            manipulation_risk=0,
-            stale_data_penalty=0,
-        ),
-    )
-
-
-def _manual_item(name: str) -> dict[str, object]:
-    return {
-        "name": name,
-        "signals": {
-            "demand_momentum": 88,
-            "build_dependency_score": 82,
-            "price_discount_score": 76,
-            "liquidity_score": 70,
-            "historical_spike_score": 68,
-            "patch_relevance_score": 74,
-            "manipulation_risk": 18,
-            "stale_data_penalty": 8,
-        },
-    }
-
-
-def _documented_bullets(doc_text: str, heading: str) -> set[str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        line.strip()[3:-1]
-        for line in section.splitlines()
-        if line.strip().startswith("- `")
-    }
-
-
-def _connector_review(**overrides) -> dict[str, object]:
-    review = {
-        "resource_name": "Approved API",
-        "access_method": "api",
-        "source_terms_reviewed": True,
-        "robots_or_api_policy_reviewed": True,
-        "source_terms_url": "https://example.test/terms",
-        "robots_or_api_policy_url": "https://example.test/api-policy",
-        "reviewed_at": "2026-05-23",
-        "review_notes": "Example local connector review.",
-        "allowed_data_shape": "Derived price summary rows only.",
-        "authentication_required": False,
-        "login_required": False,
-        "captcha_gated": False,
-        "private_data_risk": False,
-        "rate_limit_per_minute": 30,
-        "cache_ttl_seconds": 3600,
-        "dry_run_supported": True,
-        "public_export_derived_only": True,
-    }
-    review.update(overrides)
-    return review
