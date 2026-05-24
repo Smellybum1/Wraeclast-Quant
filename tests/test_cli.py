@@ -121,6 +121,7 @@ from cli_report_helpers import report_sample_args as _report_sample_args
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
+from cli_snapshot_helpers import snapshots_args as _snapshots_args
 
 
 runner = CliRunner()
@@ -2185,7 +2186,7 @@ def test_snapshots_command_prints_latest_run(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
     runner.invoke(app, _analyze_sample_args(database_path))
 
-    result = runner.invoke(app, ["snapshots", "--database-path", str(database_path)])
+    result = runner.invoke(app, _snapshots_args(database_path))
 
     assert result.exit_code == 0
     assert "Recent Analysis Runs" in result.output

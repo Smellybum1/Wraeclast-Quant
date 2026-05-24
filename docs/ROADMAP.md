@@ -197,6 +197,7 @@
 - CLI import, validate-import, and inspect-import argument builders moved into manual import test helpers without changing assertions.
 - CLI run-provenance argument builder moved into provenance test helpers without changing assertions.
 - CLI backup verification, database health, backup listing, restore-helper, and migration-readiness JSON argument builders moved into backup test helpers without changing assertions.
+- CLI snapshots argument builder moved into snapshot test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

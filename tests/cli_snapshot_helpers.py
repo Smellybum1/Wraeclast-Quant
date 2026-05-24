@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from wraeclast_quant.intelligence.scoring import ScoredOpportunity
 from wraeclast_quant.storage.models import AnalysisRunRecord
 from wraeclast_quant.storage.repositories import SnapshotRepository
@@ -18,6 +20,10 @@ def save_scored_run(
     )
     repository.save_scored_opportunities(run.id, opportunities)
     return run
+
+
+def snapshots_args(database_path: Path) -> list[str]:
+    return ["snapshots", "--database-path", str(database_path)]
 
 
 def save_single_opportunity_run(
