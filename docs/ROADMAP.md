@@ -50,6 +50,7 @@
 - Read-only repository behavior for missing SQLite databases.
 - Read-only SQLite database health check.
 - SQLite database health service split into focused result model and read-only inspection helpers behind the stable health facade.
+- SQLite database health result assembly split from read-only inspection flow behind the stable health-check facade.
 - SQLite database and backup verification summary queries split into a shared helper behind stable health and backup facades.
 - SQLite database summary models split from shared read-only summary queries behind the stable query facade.
 - Shared local SQLite schema contract for database and backup verification.
