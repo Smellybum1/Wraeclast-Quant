@@ -296,6 +296,7 @@
 - Local connector fixture runner for synthetic output-shape validation before live connector work.
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
+- Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Local connector fixture signal export to manual-import-compatible JSON.
 - Local connector fixture daily pipeline for end-to-end derived artifact generation without live collection.

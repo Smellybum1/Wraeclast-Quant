@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from wraeclast_quant.intelligence.alerts import AlertCandidate
 from wraeclast_quant.intelligence.snapshot_deltas import OpportunityDelta, SnapshotComparison
+from wraeclast_quant.reports.public_intel_alert_payloads import alert_payload
 
 
 def snapshot_changes_payload(
@@ -35,16 +35,4 @@ def delta_payload(delta: OpportunityDelta) -> dict[str, Any]:
         "previous_action": delta.previous_action,
         "latest_action": delta.latest_action,
     }
-
-
-def alert_payload(alert: AlertCandidate) -> dict[str, Any]:
-    return {
-        "severity": alert.severity,
-        "item_name": alert.item_name,
-        "reason": alert.reason,
-        "previous_score": alert.previous_score,
-        "latest_score": alert.latest_score,
-        "score_delta": alert.score_delta,
-        "previous_action": alert.previous_action,
-        "latest_action": alert.latest_action,
-    }
+__all__ = ["alert_payload", "delta_payload", "snapshot_changes_payload"]
