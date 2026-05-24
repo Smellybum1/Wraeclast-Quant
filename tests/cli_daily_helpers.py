@@ -75,4 +75,25 @@ def daily_args(
     return args
 
 
-__all__ = ["daily_args", "previous_stormglass_database", "small_mover_daily_setup"]
+def schedule_helper_args(
+    *,
+    sample_data: bool = False,
+    input_path: Path | None = None,
+    time: str | None = None,
+) -> list[str]:
+    args = ["schedule-helper"]
+    if sample_data:
+        args.append("--sample-data")
+    if input_path is not None:
+        args.extend(["--input-path", str(input_path)])
+    if time is not None:
+        args.extend(["--time", time])
+    return args
+
+
+__all__ = [
+    "daily_args",
+    "previous_stormglass_database",
+    "schedule_helper_args",
+    "small_mover_daily_setup",
+]

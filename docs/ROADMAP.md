@@ -193,6 +193,7 @@
 - CLI site-bundle, publish-check, publish-handoff, and site-contract argument builders moved into public artifact test helpers without changing assertions.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
+- CLI schedule-helper argument builder moved into daily test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.
