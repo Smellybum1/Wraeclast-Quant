@@ -312,6 +312,7 @@
 - Source connector facade split into focused model, base, fixture, and factory helpers with live collection still unsupported.
 - poe.ninja POE2 currency fixture-daily proof through SQLite snapshots, derived public intel, static dashboard, site bundle, run provenance, and fresh local backup coverage.
 - poe.ninja POE2 currency live endpoint-contract review recorded; live collection remains blocked until an official endpoint and response-field contract are confirmed.
+- poe.ninja POE2 currency endpoint evidence rechecked against official public pages; live collection remains blocked because no official machine endpoint or response schema was confirmed.
 
 ## Recommended Next Milestones
 
