@@ -175,6 +175,7 @@
 - Maintenance outcome command registration decomposed into focused record/list, review queue/coverage, and report modules behind the stable outcome aggregator.
 - Maintenance outcome command table rendering split into focused helpers behind the stable outcome command modules.
 - Outcome review repository queries split into focused queue, joined-record, and summary helpers behind the stable repository facade.
+- Outcome review Markdown sections split from report writing behind the stable outcome review facade.
 - Maintenance backup command registration decomposed into focused backup creation, inspection, and restore-guidance modules behind the stable backup command aggregator.
 - Maintenance backup command table rendering split into focused helpers behind the stable backup command modules.
 - Migration readiness service decomposed into focused model, row helper, readiness evaluation, and payload modules behind the stable migration facade.

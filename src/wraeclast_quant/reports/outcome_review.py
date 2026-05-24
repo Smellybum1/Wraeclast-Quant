@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from wraeclast_quant.reports.outcome_markdown import (
-    outcome_summary_row,
-    reviewed_recommendation_row,
+from wraeclast_quant.reports.outcome_review_sections import (
+    empty_outcome_review_body,
+    outcome_review_header,
+    outcome_summary_by_action_section,
+    recent_reviewed_recommendations_section,
 )
 from wraeclast_quant.storage.models import OutcomeReviewRecord
 
@@ -15,36 +17,13 @@ def render_outcome_review(
     reviews: list[OutcomeReviewRecord],
     summary_by_action: dict[str, dict[str, int]],
 ) -> str:
-    lines = [
-        "# Wraeclast Quant Outcome Review",
-        "",
-        "Local review artifact only. Outcome notes may contain user context and are not part of public intel exports.",
-        "",
-    ]
+    lines = outcome_review_header()
     if not reviews:
-        lines.extend(["No reviewed recommendation outcomes found.", ""])
+        lines.extend(empty_outcome_review_body())
         return "\n".join(lines)
 
-    lines.extend(
-        [
-            "## Outcome Summary By Action",
-            "",
-            "| Action | Negative | Neutral | Positive |",
-            "| --- | ---: | ---: | ---: |",
-        ]
-    )
-    for action, counts in sorted(summary_by_action.items()):
-        lines.append(outcome_summary_row(action, counts))
-    lines.extend(["", "## Recent Reviewed Recommendations", ""])
-    lines.extend(
-        [
-            "| Run | Item | Score | Action | Outcome | Observed | Notes |",
-            "| ---: | --- | ---: | --- | --- | --- | --- |",
-        ]
-    )
-    for review in reviews:
-        lines.append(reviewed_recommendation_row(review))
-    lines.append("")
+    lines.extend(outcome_summary_by_action_section(summary_by_action))
+    lines.extend(recent_reviewed_recommendations_section(reviews))
     return "\n".join(lines)
 
 
