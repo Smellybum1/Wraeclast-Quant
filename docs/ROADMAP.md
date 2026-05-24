@@ -131,6 +131,7 @@
 - Site contract service decomposed into focused facade, constants, summaries, payload, and writer modules.
 - Site contract payload assembly split artifact-run and safety sections behind the stable payload facade.
 - Site contract summaries split into focused public-intel, static-site, and bundle summary helpers behind the stable summary facade.
+- Site contract section helpers split artifact-run IDs and safety payload behind the stable section facade.
 - Publish readiness follow-up cleanup split artifact checks, freshness row helpers, and payload conversion behind the stable facade.
 - Publish readiness row helpers split blocking, freshness, and manual readiness row assembly behind the stable row facade.
 - Status health helper logic decomposed into focused model, row, storage, and artifact modules behind the stable status orchestration entry point.
