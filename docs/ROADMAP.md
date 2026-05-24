@@ -91,6 +91,7 @@
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
+- Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Markdown documentation refreshed to reflect connector review, fixture pipeline, publishing handoff, migration readiness, provenance, calibration, and recent decomposition work.
 - Design documentation updated to match SQLite schema contract version `2`.
@@ -122,7 +123,7 @@
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
-- Continue maintainability with `config/resources_loader.py` or another bounded command/storage service when human source review is blocked.
+- Continue maintainability with another bounded command/storage service when human source review is blocked.
 
 ## Later Intelligence Improvements
 
