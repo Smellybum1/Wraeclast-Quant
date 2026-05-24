@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import json
 import shutil
-import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
+from wraeclast_quant.reports.site_bundle_archive import write_bundle_archive
 from wraeclast_quant.reports.site_bundle_inputs import validate_site_bundle_inputs
 from wraeclast_quant.reports.site_bundle_manifest import site_bundle_manifest
 from wraeclast_quant.reports.site_bundle_models import (
@@ -36,12 +36,7 @@ def write_site_bundle(
     generated_at = datetime.now(UTC).isoformat()
     manifest = site_bundle_manifest(generated_at, [bundle_index, bundle_intel], validation)
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
-
-    if archive_path.exists():
-        archive_path.unlink()
-    with zipfile.ZipFile(archive_path, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for path in [bundle_index, bundle_intel, manifest_path]:
-            archive.write(path, arcname=path.name)
+    write_bundle_archive(archive_path, [bundle_index, bundle_intel, manifest_path])
 
     return SiteBundleResult(
         bundle_dir=output_dir,
