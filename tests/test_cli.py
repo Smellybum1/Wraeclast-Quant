@@ -26,7 +26,9 @@ from cli_connector_helpers import write_connector_review as _write_connector_rev
 from cli_daily_helpers import previous_stormglass_database as _previous_stormglass_database
 from cli_daily_helpers import small_mover_daily_setup as _small_mover_daily_setup
 from cli_doc_helpers import documented_bullets as _documented_bullets
-from cli_domain_helpers import manual_item as _manual_item
+from cli_manual_import_helpers import (
+    write_invalid_manual_import_json as _write_invalid_manual_import_json,
+)
 from cli_manual_import_helpers import write_manual_import_csv as _write_manual_import_csv
 from cli_manual_import_helpers import write_manual_import_json as _write_manual_import_json
 from cli_market_flow_helpers import buy_crossing_database as _buy_crossing_database
@@ -204,10 +206,7 @@ def test_import_csv_records_manual_import_run(tmp_path: Path) -> None:
 
 def test_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    input_path = tmp_path / "items.json"
-    item = _manual_item("Stormglass Catalyst")
-    item["signals"]["demand_momentum"] = 101  # type: ignore[index]
-    input_path.write_text(json.dumps([item]), encoding="utf-8")
+    input_path = _write_invalid_manual_import_json(tmp_path)
 
     result = runner.invoke(
         app,
@@ -243,10 +242,7 @@ def test_validate_import_prints_valid_count_and_table(tmp_path: Path) -> None:
 
 
 def test_validate_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    item = _manual_item("Stormglass Catalyst")
-    item["signals"]["demand_momentum"] = 101  # type: ignore[index]
-    input_path.write_text(json.dumps([item]), encoding="utf-8")
+    input_path = _write_invalid_manual_import_json(tmp_path)
 
     result = runner.invoke(
         app,
@@ -305,10 +301,7 @@ def test_inspect_import_does_not_create_database(tmp_path: Path, monkeypatch) ->
 
 
 def test_inspect_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    item = _manual_item("Stormglass Catalyst")
-    item["signals"]["demand_momentum"] = 101  # type: ignore[index]
-    input_path.write_text(json.dumps([item]), encoding="utf-8")
+    input_path = _write_invalid_manual_import_json(tmp_path)
 
     result = runner.invoke(app, ["inspect-import", "--input-path", str(input_path)])
 
@@ -3735,10 +3728,7 @@ def test_schedule_helper_rejects_invalid_time() -> None:
 
 
 def test_schedule_helper_rejects_invalid_import_file(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    item = _manual_item("Manual Daily Catalyst")
-    item["signals"]["demand_momentum"] = 101  # type: ignore[index]
-    input_path.write_text(json.dumps([item]), encoding="utf-8")
+    input_path = _write_invalid_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,

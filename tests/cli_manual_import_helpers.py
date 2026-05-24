@@ -15,6 +15,17 @@ def write_manual_import_json(tmp_path: Path, *item_names: str) -> Path:
     return input_path
 
 
+def write_invalid_manual_import_json(
+    tmp_path: Path,
+    item_name: str = "Stormglass Catalyst",
+) -> Path:
+    input_path = tmp_path / "items.json"
+    item = manual_item(item_name)
+    item["signals"]["demand_momentum"] = 101  # type: ignore[index]
+    input_path.write_text(json.dumps([item]), encoding="utf-8")
+    return input_path
+
+
 def write_manual_import_csv(tmp_path: Path) -> Path:
     input_path = tmp_path / "items.csv"
     input_path.write_text(
