@@ -61,6 +61,7 @@
 - Public-intel contract validation split into focused model, file-loading, and payload-rule helpers behind the stable contract facade.
 - Public-intel contract shape validation split into focused key/schema and nested type-rule helpers behind the stable shape facade.
 - Public-intel contract payload rules split into focused shape and derived-only safety helpers behind the stable rule facade.
+- Public-intel contract nested shape checks split from container type checks behind the stable type-rule facade.
 - Local SQLite backup command for snapshot history.
 - Immediate post-create verification for local SQLite backups.
 - Read-only SQLite backup verification.
