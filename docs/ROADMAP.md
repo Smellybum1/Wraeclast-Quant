@@ -53,6 +53,7 @@
 - Versioned derived public-intel contract.
 - Documented public-intel JSON v1.0 contract for future local/static-site consumers.
 - Public-intel contract validation split into focused model, file-loading, and payload-rule helpers behind the stable contract facade.
+- Public-intel contract shape validation split into focused key/schema and nested type-rule helpers behind the stable shape facade.
 - Public-intel contract payload rules split into focused shape and derived-only safety helpers behind the stable rule facade.
 - Local SQLite backup command for snapshot history.
 - Immediate post-create verification for local SQLite backups.
