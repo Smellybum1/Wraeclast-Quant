@@ -64,6 +64,11 @@ from cli_public_artifact_helpers import (
     write_invalid_site_bundle as _write_invalid_site_bundle,
     write_invalid_static_site as _write_invalid_static_site,
     write_manual_resources as _write_manual_resources,
+    write_minimal_invalid_public_intel as _write_minimal_invalid_public_intel,
+    write_minimal_static_site as _write_minimal_static_site,
+    write_public_intel_file as _write_public_intel_file,
+    write_public_intel_missing_schema as _write_public_intel_missing_schema,
+    write_public_intel_with_raw_inputs as _write_public_intel_with_raw_inputs,
     write_publish_ready_bundle as _write_publish_ready_bundle,
     write_stale_public_intel as _write_stale_public_intel,
     write_stale_site_bundle as _write_stale_site_bundle,
@@ -2963,34 +2968,7 @@ def test_validate_intel_command_accepts_exported_public_intel(tmp_path: Path) ->
 
 
 def test_validate_intel_command_rejects_invalid_public_intel(tmp_path: Path) -> None:
-    intel_path = tmp_path / "public_intel.json"
-    intel_path.write_text(
-        json.dumps(
-            {
-                "schema_version": "1.0",
-                "generated_at": "2026-05-23T00:00:00+00:00",
-                "latest_run": {
-                    "id": 1,
-                    "created_at": "2026-05-23T00:00:00+00:00",
-                    "source_mode": "sample-data",
-                    "item_count": 1,
-                },
-                "recent_runs": [],
-                "top_opportunities": [{"item_name": "Bad", "inputs": {"demand_momentum": 1}}],
-                "score_trends": [],
-                "snapshot_changes": {"top_movers": [], "status_changes": []},
-                "alerts": [],
-                "outcome_summary": {},
-                "review_coverage": {},
-                "compliance_summary": {
-                    "total_resources": 0,
-                    "status_counts": {},
-                    "automation_eligible_count": 0,
-                },
-            }
-        ),
-        encoding="utf-8",
-    )
+    intel_path = _write_public_intel_with_raw_inputs(tmp_path)
 
     result = runner.invoke(app, ["validate-intel", "--intel-path", str(intel_path)])
 
@@ -3000,9 +2978,8 @@ def test_validate_intel_command_rejects_invalid_public_intel(tmp_path: Path) -> 
 
 
 def test_site_command_writes_index_html(tmp_path: Path) -> None:
-    intel_path = tmp_path / "public_intel.json"
+    intel_path = _write_public_intel_file(tmp_path)
     output_dir = tmp_path / "site"
-    intel_path.write_text(json.dumps(_public_intel_payload()), encoding="utf-8")
 
     result = runner.invoke(
         app,
@@ -3017,11 +2994,8 @@ def test_site_command_writes_index_html(tmp_path: Path) -> None:
 
 
 def test_site_command_rejects_invalid_public_intel(tmp_path: Path) -> None:
-    intel_path = tmp_path / "public_intel.json"
+    intel_path = _write_public_intel_missing_schema(tmp_path)
     output_dir = tmp_path / "site"
-    payload = _public_intel_payload()
-    del payload["schema_version"]
-    intel_path.write_text(json.dumps(payload), encoding="utf-8")
 
     result = runner.invoke(
         app,
@@ -3048,12 +3022,9 @@ def test_site_command_handles_missing_public_intel(tmp_path: Path) -> None:
 
 
 def test_site_bundle_command_writes_local_bundle(tmp_path: Path) -> None:
-    intel_path = tmp_path / "public_intel.json"
-    site_dir = tmp_path / "site"
+    intel_path = _write_public_intel_file(tmp_path)
+    site_dir = _write_minimal_static_site(tmp_path)
     output_dir = tmp_path / "bundle"
-    intel_path.write_text(json.dumps(_public_intel_payload()), encoding="utf-8")
-    site_dir.mkdir()
-    (site_dir / "index.html").write_text("<h1>Wraeclast Quant</h1>", encoding="utf-8")
 
     result = runner.invoke(
         app,
@@ -3078,12 +3049,9 @@ def test_site_bundle_command_writes_local_bundle(tmp_path: Path) -> None:
 
 
 def test_site_bundle_command_rejects_invalid_public_intel(tmp_path: Path) -> None:
-    intel_path = tmp_path / "public_intel.json"
-    site_dir = tmp_path / "site"
+    intel_path = _write_minimal_invalid_public_intel(tmp_path)
+    site_dir = _write_minimal_static_site(tmp_path)
     output_dir = tmp_path / "bundle"
-    intel_path.write_text(json.dumps({"latest_run": {"id": 7}}), encoding="utf-8")
-    site_dir.mkdir()
-    (site_dir / "index.html").write_text("<h1>Wraeclast Quant</h1>", encoding="utf-8")
 
     result = runner.invoke(
         app,

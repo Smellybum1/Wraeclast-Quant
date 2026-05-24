@@ -181,6 +181,7 @@
 - CLI invalid-backup fixture setup moved into backup test helpers without changing assertions.
 - CLI invalid SQLite database setup moved into focused database test helpers without changing assertions.
 - CLI stale status artifact fixture writers moved into public artifact test helpers without changing assertions.
+- CLI public-intel and minimal static-site fixture writers moved into public artifact test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

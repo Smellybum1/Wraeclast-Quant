@@ -169,6 +169,40 @@ def write_publish_ready_bundle(tmp_path: Path) -> tuple[Path, Path, int]:
     return database_path, bundle_dir, run.id
 
 
+def write_public_intel_file(
+    tmp_path: Path,
+    payload: dict[str, object] | None = None,
+) -> Path:
+    intel_path = tmp_path / "public_intel.json"
+    intel_path.write_text(json.dumps(payload or public_intel_payload()), encoding="utf-8")
+    return intel_path
+
+
+def write_public_intel_with_raw_inputs(tmp_path: Path) -> Path:
+    payload = public_intel_payload(run_id=1)
+    payload["top_opportunities"] = [
+        {"item_name": "Bad", "inputs": {"demand_momentum": 1}},
+    ]
+    return write_public_intel_file(tmp_path, payload)
+
+
+def write_public_intel_missing_schema(tmp_path: Path) -> Path:
+    payload = public_intel_payload()
+    del payload["schema_version"]
+    return write_public_intel_file(tmp_path, payload)
+
+
+def write_minimal_invalid_public_intel(tmp_path: Path) -> Path:
+    return write_public_intel_file(tmp_path, {"latest_run": {"id": 7}})
+
+
+def write_minimal_static_site(tmp_path: Path) -> Path:
+    site_dir = tmp_path / "site"
+    site_dir.mkdir()
+    (site_dir / "index.html").write_text("<h1>Wraeclast Quant</h1>", encoding="utf-8")
+    return site_dir
+
+
 def write_invalid_public_intel(tmp_path: Path) -> Path:
     intel_path = tmp_path / "public_intel.json"
     intel_path.write_text("{}", encoding="utf-8")
@@ -284,6 +318,11 @@ __all__ = [
     "write_invalid_site_bundle",
     "write_invalid_static_site",
     "write_manual_resources",
+    "write_minimal_invalid_public_intel",
+    "write_minimal_static_site",
+    "write_public_intel_file",
+    "write_public_intel_missing_schema",
+    "write_public_intel_with_raw_inputs",
     "write_publish_ready_bundle",
     "write_stale_public_intel",
     "write_stale_site_bundle",
