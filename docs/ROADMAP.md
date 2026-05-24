@@ -42,6 +42,7 @@
 - Status artifact health helpers split by market brief, public intel, static site, site bundle, and shared freshness behavior behind the stable artifact facade.
 - Read-only repository behavior for missing SQLite databases.
 - Read-only SQLite database health check.
+- SQLite database health service split into focused result model and read-only inspection helpers behind the stable health facade.
 - Shared local SQLite schema contract for database and backup verification.
 - Documented local SQLite schema contract with drift coverage.
 - Read-only CLI schema contract inspection.
@@ -177,7 +178,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include SQLite health service cleanup or connector candidate service cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include connector candidate service cleanup or source-review planning cleanup.
 
 ## Later Intelligence Improvements
 
