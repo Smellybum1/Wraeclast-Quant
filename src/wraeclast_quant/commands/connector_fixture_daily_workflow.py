@@ -3,8 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 
 from wraeclast_quant.commands.connector_fixture_daily_inputs import (
-    connector_fixture_daily_provenance,
     load_connector_fixture_daily_input,
+)
+from wraeclast_quant.commands.connector_fixture_daily_provenance import (
+    connector_fixture_daily_provenance,
 )
 from wraeclast_quant.intelligence.alerts import AlertRuleSettings
 from wraeclast_quant.workflows.daily_pipeline import DailyPipelineResult, run_daily_pipeline

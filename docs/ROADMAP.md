@@ -140,6 +140,7 @@
 - Daily schedule-helper command logic decomposed into focused command, validation, and command-builder modules behind the stable schedule-helper aggregator.
 - Connector fixture daily pipeline command cleanup split local fixture preparation and provenance assembly from command rendering.
 - Connector fixture daily workflow split fixture input preparation and provenance metadata assembly behind the stable pipeline entry point.
+- Connector fixture daily provenance assembly split from fixture input loading behind the stable input helper facade.
 - Connector fixture daily command result rendering split into a focused helper behind the stable fixture-daily command.
 - Connector fixture inspection command registration decomposed into focused fixture-run and dry-run modules behind the stable inspection aggregator.
 - Connector fixture run command rendering split into a focused helper behind the stable fixture-run command.
