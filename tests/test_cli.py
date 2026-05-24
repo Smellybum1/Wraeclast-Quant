@@ -51,7 +51,9 @@ from cli_market_flow_helpers import (
 from cli_market_flow_helpers import single_buy_database as _single_buy_database
 from cli_market_flow_helpers import small_mover_database as _small_mover_database
 from cli_market_flow_helpers import stable_watch_database as _stable_watch_database
+from cli_outcome_helpers import calibration_report_args as _calibration_report_args
 from cli_outcome_helpers import calibration_reviewed_database as _calibration_reviewed_database
+from cli_outcome_helpers import outcome_report_args as _outcome_report_args
 from cli_outcome_helpers import (
     partially_reviewed_two_item_database as _partially_reviewed_two_item_database,
 )
@@ -2617,13 +2619,7 @@ def test_outcome_report_command_writes_markdown_report(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "outcome-report",
-            "--database-path",
-            str(database_path),
-            "--output-path",
-            str(output_path),
-        ],
+        _outcome_report_args(database_path, output_path),
     )
 
     report = output_path.read_text(encoding="utf-8")
@@ -2639,13 +2635,7 @@ def test_outcome_report_command_writes_empty_report(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "outcome-report",
-            "--database-path",
-            str(tmp_path / "snapshots.db"),
-            "--output-path",
-            str(output_path),
-        ],
+        _outcome_report_args(tmp_path / "snapshots.db", output_path),
     )
 
     assert result.exit_code == 0
@@ -2684,13 +2674,7 @@ def test_calibration_report_command_writes_markdown(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "calibration-report",
-            "--database-path",
-            str(database_path),
-            "--output-path",
-            str(output_path),
-        ],
+        _calibration_report_args(database_path, output_path),
     )
 
     report = output_path.read_text(encoding="utf-8")

@@ -104,8 +104,30 @@ def record_outcome_args(
     return args
 
 
+def outcome_report_args(database_path: Path, output_path: Path) -> list[str]:
+    return [
+        "outcome-report",
+        "--database-path",
+        str(database_path),
+        "--output-path",
+        str(output_path),
+    ]
+
+
+def calibration_report_args(database_path: Path, output_path: Path) -> list[str]:
+    return [
+        "calibration-report",
+        "--database-path",
+        str(database_path),
+        "--output-path",
+        str(output_path),
+    ]
+
+
 __all__ = [
+    "calibration_report_args",
     "calibration_reviewed_database",
+    "outcome_report_args",
     "partially_reviewed_two_item_database",
     "record_outcome_args",
     "reviewed_single_opportunity_database",
