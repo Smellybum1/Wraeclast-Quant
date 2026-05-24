@@ -381,24 +381,14 @@ def test_status_json_outputs_machine_readable_rows(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--json",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            site_dir=tmp_path / "site",
+            bundle_dir=tmp_path / "site_bundle",
+            json_output=True,
+        ),
     )
 
     assert result.exit_code == 0
@@ -428,24 +418,14 @@ def test_status_json_contract_doc_matches_cli_output(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--json",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            site_dir=tmp_path / "site",
+            bundle_dir=tmp_path / "site_bundle",
+            json_output=True,
+        ),
     )
 
     payload = json.loads(result.output)
