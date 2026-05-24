@@ -74,6 +74,7 @@
 - Report command registration decomposed into focused report/export, static artifact, and publish handoff modules.
 - Static artifact command registration decomposed into focused site, public-intel validation, and site-bundle modules behind the stable report artifact aggregator.
 - Publishing command registration decomposed into focused publish-check, publish-handoff, and site-contract modules behind the stable report publishing aggregator.
+- Report export command registration decomposed into focused market-brief report and public-intel export modules behind the stable report export aggregator.
 - Daily pipeline orchestration decomposed into a shared workflow service used by manual/sample and connector-fixture daily commands.
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.
 - Snapshot command registration and local table rendering decomposed into focused listing, comparison, alert, and rendering modules.
@@ -85,17 +86,24 @@
 - Static site rendering helper logic decomposed into focused section, HTML helper, and style modules behind the stable renderer entry point.
 - Outcome repository helper logic decomposed into focused policy, record, review-query, and coverage modules behind the stable repository mixin.
 - Daily command registration decomposed into focused daily-run and schedule-helper modules behind the stable command aggregator.
+- Daily schedule-helper command logic decomposed into focused command, validation, and command-builder modules behind the stable schedule-helper aggregator.
+- Connector fixture daily pipeline command cleanup split local fixture preparation and provenance assembly from command rendering.
+- Connector fixture inspection command registration decomposed into focused fixture-run and dry-run modules behind the stable inspection aggregator.
+- Connector fixture export command rendering split into a focused helper behind the stable `connector-fixture-export` command.
 - Connector review command registration decomposed into focused draft/prep, evidence/status, and readiness-check modules behind the stable connector review aggregator.
 - Backup storage service decomposed into focused model, writer, verifier, listing, and restore-guidance modules behind the stable backup facade.
 - Maintenance outcome command registration decomposed into focused record/list, review queue/coverage, and report modules behind the stable outcome aggregator.
 - Maintenance backup command registration decomposed into focused backup creation, inspection, and restore-guidance modules behind the stable backup command aggregator.
 - Migration readiness service decomposed into focused model, row helper, readiness evaluation, and payload modules behind the stable migration facade.
+- Calibration command table rendering split into a focused helper behind the stable calibration command registration.
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
+- Connector approval command rendering split into focused helper/patch table rendering behind stable approval commands.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Resource command registration decomposed into focused collect, compliance, and preflight modules behind the stable resource command aggregator.
 - Status command registration decomposed into focused schema, status-report, and database-check modules behind the stable status command aggregator.
+- SQLite database-check command rendering split into a focused helper behind the stable `db-check` command.
 - Intake command registration decomposed into focused sample-analysis, manual-import, watchlist, and shared-rendering modules behind the stable intake command aggregator.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
@@ -130,7 +138,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include a focused status-health helper split or report export command cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include focused maintenance migration command cleanup or connector review report rendering cleanup.
 
 ## Later Intelligence Improvements
 

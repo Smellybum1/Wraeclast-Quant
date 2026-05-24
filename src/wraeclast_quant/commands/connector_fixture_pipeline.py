@@ -4,21 +4,15 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.collectors.source_connector import source_connector_from_review
-from wraeclast_quant.commands._connector_support import console, file_sha256, load_fixture_resources
+from wraeclast_quant.commands._connector_support import console
+from wraeclast_quant.commands.connector_fixture_daily_workflow import run_connector_fixture_daily_pipeline
 from wraeclast_quant.commands.snapshot_rendering import print_alert_candidates
-from wraeclast_quant.config.connector_fixtures import connector_fixture_signal_items, run_connector_fixture
-from wraeclast_quant.config.connector_policy import ConnectorPolicyError, load_connector_review
+from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.intelligence.alerts import AlertRuleSettings
-from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
 from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
-from wraeclast_quant.workflows.daily_pipeline import (
-    RunProvenanceInput,
-    create_alert_settings,
-    run_daily_pipeline,
-)
+from wraeclast_quant.workflows.daily_pipeline import create_alert_settings
 
 
 def register(app: typer.Typer) -> None:
@@ -38,47 +32,20 @@ def register(app: typer.Typer) -> None:
     ) -> None:
         try:
             alert_settings = _alert_settings(watch_threshold, buy_threshold, big_delta)
-            review = load_connector_review(review_path)
-            connector_resources = load_fixture_resources(resources_path)
-            connector = source_connector_from_review(review, connector_resources)
-            fixture_result = run_connector_fixture(review, connector_resources, fixture_path)
-            if not fixture_result.ready:
-                blockers = "\n".join(fixture_result.blockers)
-                raise ConnectorPolicyError(blockers or "Connector fixture daily failed.")
-            items = connector_fixture_signal_items(fixture_result.rows)
+            result = run_connector_fixture_daily_pipeline(
+                review_path=review_path,
+                fixture_path=fixture_path,
+                resources_path=resources_path,
+                database_path=database_path,
+                brief_path=brief_path,
+                intel_path=intel_path,
+                site_dir=site_dir,
+                limit=limit,
+                alert_settings=alert_settings,
+            )
         except ConnectorPolicyError as error:
             raise typer.BadParameter(str(error)) from error
 
-        opportunities = rank_opportunities(items)
-        assert fixture_result.fixture is not None
-        result = run_daily_pipeline(
-            opportunities=opportunities,
-            source_mode="connector-fixture",
-            database_path=database_path,
-            resources_path=resources_path,
-            brief_path=brief_path,
-            intel_path=intel_path,
-            site_dir=site_dir,
-            limit=limit,
-            alert_settings=alert_settings,
-            provenance=RunProvenanceInput(
-                source_kind="connector-fixture",
-                resource_name=connector.resource.name,
-                connector_id=connector.connector_id,
-                access_method=review.access_method,
-                metadata={
-                    "connector_class": connector.__class__.__name__,
-                    "fixture_source_name": fixture_result.fixture.source_name,
-                    "fixture_generated_at": fixture_result.fixture.generated_at,
-                    "fixture_item_count": len(fixture_result.rows),
-                    "review_file": review_path.name,
-                    "review_sha256": file_sha256(review_path),
-                    "fixture_file": fixture_path.name,
-                    "fixture_sha256": file_sha256(fixture_path),
-                    "future_cache_path": str(connector.fetch_plan.cache_path),
-                },
-            ),
-        )
         if result is None:
             console.print("No snapshots found.")
             return
