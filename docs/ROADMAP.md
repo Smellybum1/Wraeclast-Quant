@@ -83,6 +83,7 @@
 - Status health logic decomposed into focused command rendering and report-building service modules.
 - Storage repository decomposed into focused snapshot, artifact/provenance, outcome, and shared support modules.
 - Storage repository support split into focused read-connection, row-converter, and timestamp helpers behind the stable support facade.
+- Storage row converters split by run, opportunity, artifact, provenance, and outcome domains behind the stable converter facade.
 - Storage artifact/provenance repository helpers split report artifact and run provenance persistence behind the stable repository mixin.
 - Run provenance repository persistence split into focused query and write helpers behind the stable provenance facade.
 - Snapshot repository persistence split into focused read-query and write-query helpers behind the stable snapshot mixin.
