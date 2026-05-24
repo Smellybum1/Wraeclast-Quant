@@ -4,13 +4,11 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.commands._connector_support import console
+from wraeclast_quant.commands.connector_review_evidence_rendering import (
+    print_connector_review_evidence_update,
+)
 from wraeclast_quant.commands.connector_review_evidence_workflow import (
     update_review_evidence_file,
-)
-from wraeclast_quant.commands.connector_review_status_rendering import print_connector_review_status
-from wraeclast_quant.config.connector_policy import (
-    connector_review_status,
 )
 from wraeclast_quant.config.resources_loader import load_resources
 
@@ -53,10 +51,11 @@ def register(app: typer.Typer) -> None:
             private_data_risk=private_data_risk,
         )
 
-        console.print(f"Updated connector review evidence in {review_path}")
-        print_connector_review_status(
-            connector_review_status(update.review, load_resources(resources_path))
+        print_connector_review_evidence_update(
+            update,
+            review_path=review_path,
+            resources=load_resources(resources_path),
         )
-        console.print(
-            "Evidence update is local-only. It did not edit RESOURCES.md, fetch data, or approve a connector."
-        )
+
+
+__all__ = ["register"]

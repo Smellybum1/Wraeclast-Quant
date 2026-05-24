@@ -83,6 +83,8 @@
 - Verification: status rendering import smoke, status CLI focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Completed packet: rechecked official poe.ninja POE2 currency/economy evidence and updated the local research handoff; live collection remains blocked because no official machine endpoint or response schema was confirmed.
 - Verification: `preflight`, `connector-review-status`, `connector-check`, `connector-plan`, `status --strict`, `publish-check`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
+- Completed packet: split connector review evidence command result rendering from update orchestration behind the stable command facade.
+- Verification: connector review evidence import smoke, focused CLI tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Protected resource hash: `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6`.
 - Safety state: no live HTTP, scraping, Discord collection, publishing automation, schema migration, source approval, dependency change, or `RESOURCES.md` edit.
 - Next likely unblocked work: continue bounded maintainability with small test-helper cleanup or status artifact row cleanup while live source work remains blocked.

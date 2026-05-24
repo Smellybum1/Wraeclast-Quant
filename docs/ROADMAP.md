@@ -286,6 +286,7 @@
 - Local connector review draft workflow for source-specific compliance review.
 - Local connector review prep workflow with human checklist generation.
 - Local connector review evidence update workflow for manually collected source review fields.
+- Connector review evidence command result rendering split from update orchestration behind the stable command facade.
 - Local connector candidate report for prioritizing source-specific reviews.
 - Connector candidate command rendering split into a focused helper behind the stable candidate report command.
 - Connector candidate service split into focused model, command-text, and ranking helpers behind the stable candidate facade.
