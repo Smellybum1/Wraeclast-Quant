@@ -21,8 +21,12 @@ from cli_connector_helpers import connector_review as _connector_review
 from cli_connector_helpers import discord_resources_text as _discord_resources_text
 from cli_connector_helpers import manual_source_resources_text as _manual_source_resources_text
 from cli_connector_helpers import poe_ninja_currency_resources_text as _poe_ninja_currency_resources_text
+from cli_connector_helpers import write_basic_connector_fixture as _write_basic_connector_fixture
 from cli_connector_helpers import write_connector_resources as _write_connector_resources
 from cli_connector_helpers import write_connector_review as _write_connector_review
+from cli_connector_helpers import (
+    write_invalid_connector_fixture as _write_invalid_connector_fixture,
+)
 from cli_daily_helpers import previous_stormglass_database as _previous_stormglass_database
 from cli_daily_helpers import small_mover_daily_setup as _small_mover_daily_setup
 from cli_database_helpers import sqlite_table_names as _sqlite_table_names
@@ -1704,11 +1708,7 @@ def test_connector_fixture_run_refuses_incomplete_review() -> None:
 
 
 def test_connector_fixture_run_invalid_fixture_exits_nonzero(tmp_path: Path) -> None:
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps({"source_name": "Example Approved API", "generated_at": "now"}),
-        encoding="utf-8",
-    )
+    fixture_path = _write_invalid_connector_fixture(tmp_path)
 
     result = runner.invoke(
         app,
@@ -1782,17 +1782,7 @@ def test_connector_dry_run_refuses_incomplete_review() -> None:
 
 def test_connector_dry_run_is_read_only(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps(
-            {
-                "source_name": "Approved API",
-                "generated_at": "2026-05-23T00:00:00+00:00",
-                "items": [{"name": "Stormglass Catalyst"}],
-            }
-        ),
-        encoding="utf-8",
-    )
+    fixture_path = _write_basic_connector_fixture(tmp_path)
     resources_path = _write_connector_resources(
         tmp_path,
         "\n## Fixture Sources\n- name: Approved API\n  type: official\n  url: https://example.test/api\n  allowed_use: api\n",

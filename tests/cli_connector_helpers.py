@@ -111,6 +111,30 @@ def write_connector_review(tmp_path: Path, **overrides) -> Path:
     return review_path
 
 
+def write_connector_fixture(tmp_path: Path, payload: dict[str, object]) -> Path:
+    fixture_path = tmp_path / "fixture.json"
+    fixture_path.write_text(json.dumps(payload), encoding="utf-8")
+    return fixture_path
+
+
+def write_invalid_connector_fixture(tmp_path: Path) -> Path:
+    return write_connector_fixture(
+        tmp_path,
+        {"source_name": "Example Approved API", "generated_at": "now"},
+    )
+
+
+def write_basic_connector_fixture(tmp_path: Path) -> Path:
+    return write_connector_fixture(
+        tmp_path,
+        {
+            "source_name": "Approved API",
+            "generated_at": "2026-05-23T00:00:00+00:00",
+            "items": [{"name": "Stormglass Catalyst"}],
+        },
+    )
+
+
 def connector_fixture_daily_args(
     *,
     review_path: str | Path = "examples/connector_review_api_example.json",
@@ -179,6 +203,9 @@ __all__ = [
     "discord_resources_text",
     "manual_source_resources_text",
     "poe_ninja_currency_resources_text",
+    "write_basic_connector_fixture",
+    "write_connector_fixture",
     "write_connector_resources",
     "write_connector_review",
+    "write_invalid_connector_fixture",
 ]
