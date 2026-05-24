@@ -4,9 +4,8 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.commands._connector_support import console
+from wraeclast_quant.commands.connector_fixture_daily_rendering import print_connector_fixture_daily_result
 from wraeclast_quant.commands.connector_fixture_daily_workflow import run_connector_fixture_daily_pipeline
-from wraeclast_quant.commands.snapshot_rendering import print_alert_candidates
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.intelligence.alerts import AlertRuleSettings
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
@@ -46,20 +45,7 @@ def register(app: typer.Typer) -> None:
         except ConnectorPolicyError as error:
             raise typer.BadParameter(str(error)) from error
 
-        if result is None:
-            console.print("No snapshots found.")
-            return
-
-        console.print(f"Connector fixture daily run #{result.run.id} complete.")
-        console.print(f"Database: {database_path}")
-        console.print(f"Market brief: {result.brief_path}")
-        console.print(f"Public intel: {result.intel_path}")
-        console.print(f"Dashboard: {result.site_path}")
-
-        if result.comparison is None:
-            console.print("No previous snapshot found for comparison.")
-            return
-        print_alert_candidates(result.alert_candidates, limit=limit)
+        print_connector_fixture_daily_result(result, database_path=database_path, limit=limit)
 
 
 def _alert_settings(
