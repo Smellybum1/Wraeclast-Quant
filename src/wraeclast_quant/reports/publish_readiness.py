@@ -14,6 +14,7 @@ from wraeclast_quant.reports.publish_readiness_artifacts import (
 )
 from wraeclast_quant.reports.publish_readiness_payload import publish_check_payload
 from wraeclast_quant.reports.publish_readiness_paths import publish_readiness_paths
+from wraeclast_quant.reports.publish_readiness_result import publish_readiness_result
 from wraeclast_quant.reports.publish_readiness_rows import add_manual_publish_readiness
 from wraeclast_quant.reports.site_bundle import check_site_bundle_health
 
@@ -47,12 +48,11 @@ def check_publish_readiness(
 
     add_safety_check(checks, blockers, bundle_health)
     add_manual_publish_readiness(checks, blockers)
-    return PublishCheckResult(
-        ready=not blockers,
-        latest_database_run_id=latest_database_run_id,
-        bundle_latest_run_id=bundle_latest_run_id,
-        archive_path=paths.archive_path,
-        files=files,
+    return publish_readiness_result(
+        paths=paths,
         checks=checks,
         blockers=blockers,
+        latest_database_run_id=latest_database_run_id,
+        bundle_latest_run_id=bundle_latest_run_id,
+        files=files,
     )
