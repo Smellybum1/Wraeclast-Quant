@@ -53,8 +53,16 @@ def missing_provenance_database(tmp_path: Path) -> Path:
     return database_path
 
 
+def run_provenance_args(database_path: Path, *, run_id: int | None = None) -> list[str]:
+    args = ["run-provenance", "--database-path", str(database_path)]
+    if run_id is not None:
+        args.extend(["--run-id", str(run_id)])
+    return args
+
+
 __all__ = [
     "latest_connector_fixture_provenance_database",
     "missing_provenance_database",
+    "run_provenance_args",
     "two_run_provenance_database",
 ]

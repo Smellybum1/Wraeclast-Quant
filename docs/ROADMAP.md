@@ -195,6 +195,7 @@
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
 - CLI schedule-helper argument builder moved into daily test helpers without changing assertions.
 - CLI import, validate-import, and inspect-import argument builders moved into manual import test helpers without changing assertions.
+- CLI run-provenance argument builder moved into provenance test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

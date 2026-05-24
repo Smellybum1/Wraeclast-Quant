@@ -109,6 +109,7 @@ from cli_provenance_helpers import (
     latest_connector_fixture_provenance_database as _latest_connector_fixture_provenance_database,
 )
 from cli_provenance_helpers import missing_provenance_database as _missing_provenance_database
+from cli_provenance_helpers import run_provenance_args as _run_provenance_args
 from cli_provenance_helpers import two_run_provenance_database as _two_run_provenance_database
 from cli_report_helpers import analyze_sample_args as _analyze_sample_args
 from cli_report_helpers import report_sample_args as _report_sample_args
@@ -1998,7 +1999,7 @@ def test_connector_fixture_daily_uses_tuned_alert_settings(tmp_path: Path) -> No
 def test_run_provenance_prints_latest_provenance(tmp_path: Path) -> None:
     database_path, _run = _latest_connector_fixture_provenance_database(tmp_path)
 
-    result = runner.invoke(app, ["run-provenance", "--database-path", str(database_path)])
+    result = runner.invoke(app, _run_provenance_args(database_path))
 
     assert result.exit_code == 0
     assert "Run Provenance - Run #1" in result.output
@@ -2013,7 +2014,7 @@ def test_run_provenance_prints_requested_run(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["run-provenance", "--database-path", str(database_path), "--run-id", str(first.id)],
+        _run_provenance_args(database_path, run_id=first.id),
     )
 
     assert result.exit_code == 0
@@ -2025,7 +2026,7 @@ def test_run_provenance_prints_requested_run(tmp_path: Path) -> None:
 def test_run_provenance_missing_provenance_prints_clear_message(tmp_path: Path) -> None:
     database_path = _missing_provenance_database(tmp_path)
 
-    result = runner.invoke(app, ["run-provenance", "--database-path", str(database_path)])
+    result = runner.invoke(app, _run_provenance_args(database_path))
 
     assert result.exit_code == 0
     assert "No run provenance found." in result.output
@@ -2034,7 +2035,7 @@ def test_run_provenance_missing_provenance_prints_clear_message(tmp_path: Path) 
 def test_run_provenance_missing_database_does_not_create_database(tmp_path: Path) -> None:
     database_path = tmp_path / "missing" / "snapshots.db"
 
-    result = runner.invoke(app, ["run-provenance", "--database-path", str(database_path)])
+    result = runner.invoke(app, _run_provenance_args(database_path))
 
     assert result.exit_code == 0
     assert "No run provenance found." in result.output
