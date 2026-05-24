@@ -1,6 +1,5 @@
 import json
 import sqlite3
-import time
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -10,6 +9,7 @@ from wraeclast_quant.reports.site_bundle import write_site_bundle
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
+from cli_backup_helpers import invalid_backup_dir as _invalid_backup_dir
 from cli_backup_helpers import sample_data_backup as _sample_data_backup
 from cli_backup_helpers import sample_data_database as _sample_data_database
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
@@ -634,11 +634,7 @@ def test_status_strict_json_exits_nonzero_for_stale_artifacts(tmp_path: Path) ->
 
 def test_status_reports_invalid_latest_backup_without_failing(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    backup_dir = tmp_path / "backups"
-    backup_dir.mkdir()
-    invalid_backup = backup_dir / "invalid.db"
-    with sqlite3.connect(invalid_backup) as connection:
-        connection.execute("CREATE TABLE unrelated (id INTEGER PRIMARY KEY)")
+    backup_dir = _invalid_backup_dir(tmp_path)
 
     result = runner.invoke(
         app,
@@ -659,12 +655,7 @@ def test_status_reports_invalid_latest_backup_without_failing(tmp_path: Path) ->
 
 def test_status_strict_exits_nonzero_for_invalid_latest_backup(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
-    backup_dir = tmp_path / "backups"
-    backup_dir.mkdir()
-    invalid_backup = backup_dir / "invalid.db"
-    with sqlite3.connect(invalid_backup) as connection:
-        connection.execute("CREATE TABLE unrelated (id INTEGER PRIMARY KEY)")
-    time.sleep(0.01)
+    backup_dir = _invalid_backup_dir(tmp_path, ensure_new_mtime=True)
 
     result = runner.invoke(
         app,

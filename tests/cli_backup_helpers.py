@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sqlite3
+import time
 from pathlib import Path
 
 from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
@@ -33,4 +35,15 @@ def sample_data_backup(tmp_path: Path) -> tuple[Path, Path, Path]:
     return database_path, backup_dir, result.backup_path
 
 
-__all__ = ["sample_data_backup", "sample_data_database"]
+def invalid_backup_dir(tmp_path: Path, *, ensure_new_mtime: bool = False) -> Path:
+    backup_dir = tmp_path / "backups"
+    backup_dir.mkdir()
+    invalid_backup = backup_dir / "invalid.db"
+    with sqlite3.connect(invalid_backup) as connection:
+        connection.execute("CREATE TABLE unrelated (id INTEGER PRIMARY KEY)")
+    if ensure_new_mtime:
+        time.sleep(0.01)
+    return backup_dir
+
+
+__all__ = ["invalid_backup_dir", "sample_data_backup", "sample_data_database"]
