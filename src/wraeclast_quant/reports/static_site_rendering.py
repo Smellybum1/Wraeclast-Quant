@@ -3,18 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from wraeclast_quant.reports.static_site_html import metadata_tags
-from wraeclast_quant.reports.static_site_sections import (
-    alerts_section,
-    compliance_section,
-    movers_section,
-    opportunities_section,
-    outcome_summary_section,
-    recent_runs_section,
-    review_coverage_section,
-    score_trends_section,
-    status_changes_section,
-    summary_section,
-)
+from wraeclast_quant.reports.static_site_page_sections import dashboard_sections
 from wraeclast_quant.reports.static_site_styles import static_site_css
 
 
@@ -41,16 +30,7 @@ def render_static_site(payload: dict[str, Any]) -> str:
             "      <h1>Wraeclast Quant</h1>",
             "      <p>Local market intelligence preview. Research output only.</p>",
             "    </header>",
-            summary_section(payload, latest_run),
-            recent_runs_section(payload.get("recent_runs") or []),
-            score_trends_section(payload.get("score_trends") or []),
-            review_coverage_section(payload.get("review_coverage") or {}),
-            outcome_summary_section(payload.get("outcome_summary") or {}),
-            compliance_section(compliance, status_counts),
-            alerts_section(payload.get("alerts") or []),
-            opportunities_section(payload.get("top_opportunities") or []),
-            movers_section(changes.get("top_movers") or []),
-            status_changes_section(changes.get("status_changes") or []),
+            *dashboard_sections(payload, latest_run, compliance, status_counts, changes),
             "  </main>",
             "</body>",
             "</html>",
