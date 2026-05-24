@@ -162,6 +162,7 @@
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
 - Connector review check command rendering split into a focused helper behind the stable `connector-check` command.
 - Connector review report command rendering split into a focused helper behind the stable report command.
+- Connector review report command generation/write workflow split into a focused helper behind the stable report command.
 - Connector review report generation split fetch-plan lookup and Markdown section helpers behind the stable report service facade.
 - Connector review report sections split into focused audit/evidence and safety/planning helpers behind the stable Markdown facade.
 - Connector approval command rendering split into focused helper/patch table rendering behind stable approval commands.
