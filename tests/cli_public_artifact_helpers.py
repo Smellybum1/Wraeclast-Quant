@@ -252,6 +252,32 @@ def write_stale_site_bundle(tmp_path: Path, run_id: int = 1) -> Path:
     return bundle_dir
 
 
+def export_args(
+    database_path: Path,
+    output_path: Path,
+    *,
+    big_delta: int | None = None,
+) -> list[str]:
+    args = [
+        "export",
+        "--database-path",
+        str(database_path),
+        "--output-path",
+        str(output_path),
+    ]
+    if big_delta is not None:
+        args.extend(["--big-delta", str(big_delta)])
+    return args
+
+
+def validate_intel_args(intel_path: Path) -> list[str]:
+    return ["validate-intel", "--intel-path", str(intel_path)]
+
+
+def site_args(intel_path: Path, output_dir: Path) -> list[str]:
+    return ["site", "--intel-path", str(intel_path), "--output-dir", str(output_dir)]
+
+
 def public_intel_payload(run_id: int = 7) -> dict[str, object]:
     return {
         "schema_version": "1.0",
@@ -309,10 +335,13 @@ def public_intel_payload(run_id: int = 7) -> dict[str, object]:
 __all__ = [
     "StatusWorkspace",
     "database_with_two_runs",
+    "export_args",
     "public_intel_payload",
+    "site_args",
     "status_args",
     "status_json_args",
     "status_workspace",
+    "validate_intel_args",
     "write_invalid_market_brief",
     "write_invalid_public_intel",
     "write_invalid_site_bundle",

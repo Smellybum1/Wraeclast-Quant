@@ -74,10 +74,13 @@ from cli_outcome_helpers import (
 )
 from cli_public_artifact_helpers import (
     database_with_two_runs as _database_with_two_runs,
+    export_args as _export_args,
     public_intel_payload as _public_intel_payload,
+    site_args as _site_args,
     status_args as _status_args,
     status_json_args as _status_json_args,
     status_workspace as _status_workspace,
+    validate_intel_args as _validate_intel_args,
     write_invalid_market_brief as _write_invalid_market_brief,
     write_invalid_public_intel as _write_invalid_public_intel,
     write_invalid_site_bundle as _write_invalid_site_bundle,
@@ -2774,13 +2777,7 @@ def test_export_command_writes_public_intel(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "export",
-            "--database-path",
-            str(database_path),
-            "--output-path",
-            str(output_path),
-        ],
+        _export_args(database_path, output_path),
     )
 
     assert result.exit_code == 0
@@ -2795,15 +2792,7 @@ def test_export_command_uses_tuned_alert_settings(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "export",
-            "--database-path",
-            str(database_path),
-            "--output-path",
-            str(output_path),
-            "--big-delta",
-            "20",
-        ],
+        _export_args(database_path, output_path, big_delta=20),
     )
 
     payload = json.loads(output_path.read_text(encoding="utf-8"))
@@ -2817,13 +2806,7 @@ def test_export_command_handles_no_snapshots(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "export",
-            "--database-path",
-            str(database_path),
-            "--output-path",
-            str(output_path),
-        ],
+        _export_args(database_path, output_path),
     )
 
     assert result.exit_code == 0
@@ -2836,16 +2819,10 @@ def test_validate_intel_command_accepts_exported_public_intel(tmp_path: Path) ->
     output_path = tmp_path / "public_intel.json"
     runner.invoke(
         app,
-        [
-            "export",
-            "--database-path",
-            str(database_path),
-            "--output-path",
-            str(output_path),
-        ],
+        _export_args(database_path, output_path),
     )
 
-    result = runner.invoke(app, ["validate-intel", "--intel-path", str(output_path)])
+    result = runner.invoke(app, _validate_intel_args(output_path))
 
     assert result.exit_code == 0
     assert "Public Intel Contract Validation" in result.output
@@ -2857,7 +2834,7 @@ def test_validate_intel_command_accepts_exported_public_intel(tmp_path: Path) ->
 def test_validate_intel_command_rejects_invalid_public_intel(tmp_path: Path) -> None:
     intel_path = _write_public_intel_with_raw_inputs(tmp_path)
 
-    result = runner.invoke(app, ["validate-intel", "--intel-path", str(intel_path)])
+    result = runner.invoke(app, _validate_intel_args(intel_path))
 
     assert result.exit_code != 0
     assert "Public Intel Contract Validation" in result.output
@@ -2870,7 +2847,7 @@ def test_site_command_writes_index_html(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["site", "--intel-path", str(intel_path), "--output-dir", str(output_dir)],
+        _site_args(intel_path, output_dir),
     )
 
     index_path = output_dir / "index.html"
@@ -2886,7 +2863,7 @@ def test_site_command_rejects_invalid_public_intel(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["site", "--intel-path", str(intel_path), "--output-dir", str(output_dir)],
+        _site_args(intel_path, output_dir),
     )
 
     assert result.exit_code != 0
@@ -2900,7 +2877,7 @@ def test_site_command_handles_missing_public_intel(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["site", "--intel-path", str(tmp_path / "missing.json"), "--output-dir", str(output_dir)],
+        _site_args(tmp_path / "missing.json", output_dir),
     )
 
     assert result.exit_code == 0
