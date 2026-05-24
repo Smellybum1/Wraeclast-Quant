@@ -211,6 +211,7 @@
 - Connector approval patch service split advisory patch calculation and preview-file writing behind the stable approval patch facade.
 - Connector planning command rendering split into a focused helper behind the stable `connector-plan` command.
 - Connector planning command review loading and fetch-plan workflow split into a focused helper behind the stable `connector-plan` command.
+- CLI connector-plan command tests moved into a focused connector plan test module without changing assertions.
 - Fetch-plan service split into focused model, cache-path, and builder helpers behind the stable policy facade.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Resource Markdown parser split line normalization, bullet parsing, table parsing, and resource construction helpers behind the stable parser facade.
@@ -224,8 +225,13 @@
 - Manual import parsing, validation, and diagnostics rendering split behind stable importer and command facades.
 - Manual import command loading, scoring, summary, and persistence flow split into a focused helper behind stable import commands.
 - CLI public artifact/status fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI status workspace, stale/invalid artifact, and status argument helpers split into a focused status fixture helper while preserving the public artifact helper facade.
+- CLI status stale/invalid artifact fixture writers split into a focused status artifact helper while preserving status/public artifact helper facades.
+- CLI status fixture helper responsibilities split into focused workspace/resource and database fixture helpers while preserving status/public artifact helper facades.
+- CLI public-intel payload fixture helper split into a shared focused helper without changing assertions.
 - CLI domain, connector-review, and documentation fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI snapshot/run fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI public artifact command helper responsibilities split into focused artifact/export and publishing-readiness command helpers while preserving the command helper facade.
 - CLI manual-import fixture file helpers extracted from the broad CLI test module without changing assertions.
 - CLI status command argument helpers extracted from the broad CLI test module without changing assertions.
 - CLI connector resource and review fixture helpers extracted from the broad CLI test module without changing assertions.
@@ -237,10 +243,12 @@
 - CLI run-provenance fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI connector fixture-daily setup helper extracted from the broad CLI test module without changing assertions.
 - CLI status healthy-workspace fixture helper extracted from the broad CLI test module without changing assertions.
+- CLI documentation helper responsibilities split into focused public-command and Markdown parser helpers while preserving the documentation helper facade.
 - CLI migration-readiness JSON setup reused backup fixture helpers without changing assertions.
 - CLI review-queue requested-run setup moved into outcome fixture helpers without changing assertions.
 - CLI invalid manual-import fixture writer moved into manual import test helpers without changing assertions.
 - CLI connector fixture-daily argument construction moved into connector test helpers without changing assertions.
+- CLI connector fixture-run, dry-run, fixture-export, and fixture-daily command tests moved into a focused connector fixture test module without changing assertions.
 - CLI invalid status artifact fixture writers moved into public artifact test helpers without changing assertions.
 - CLI invalid-backup fixture setup moved into backup test helpers without changing assertions.
 - CLI invalid SQLite database setup moved into focused database test helpers without changing assertions.
@@ -248,25 +256,48 @@
 - CLI public-intel and minimal static-site fixture writers moved into public artifact test helpers without changing assertions.
 - CLI connector fixture JSON writers moved into connector test helpers without changing assertions.
 - CLI connector fixture-run, dry-run, and export argument builders moved into connector test helpers without changing assertions.
+- CLI connector fixture payload writers, fixture command argument builders, and fixture-daily setup split into a focused connector fixture helper while preserving the general connector helper facade.
+- CLI connector fixture helper responsibilities split into focused command-argument and fixture-data/setup helpers while preserving connector fixture and general connector facades.
+- CLI connector review JSON helpers and resource text helpers split into focused helper modules while preserving the general connector helper facade.
+- CLI connector resource helper responsibilities split into focused resource-text and file-writer helpers while preserving the connector resource helper facade.
+- CLI connector review helper responsibilities split into focused review-payload and file-writer helpers while preserving the connector review helper facade.
 - CLI backup and migration-readiness argument builders moved into backup test helpers without changing assertions.
+- CLI backup helper responsibilities split into focused command-argument and backup/database fixture helpers while preserving the backup helper facade.
 - CLI record-outcome argument builder moved into outcome test helpers without changing assertions.
 - CLI outcome and calibration report argument builders moved into outcome test helpers without changing assertions.
 - CLI outcome list, review queue, coverage, and calibration argument builders moved into outcome test helpers without changing assertions.
+- CLI outcome, review queue, coverage, outcome report, and calibration command tests moved into a focused outcome test module without changing assertions.
+- CLI outcome command argument builders and reviewed database setup helpers split into focused helper modules while preserving the outcome helper facade.
 - CLI compare and alerts argument builders moved into market-flow test helpers without changing assertions.
+- CLI compare and alerts command tests moved into a focused market-flow test module without changing assertions.
+- CLI market-flow helper responsibilities split into focused command-argument and market database fixture helpers while preserving the market-flow helper facade.
 - CLI export, validate-intel, and site argument builders moved into public artifact test helpers without changing assertions.
 - CLI site-bundle, publish-check, publish-handoff, and site-contract argument builders moved into public artifact test helpers without changing assertions.
+- CLI export, validate-intel, site, site-bundle, publish-check, publish-handoff, and site-contract command tests moved into a focused public artifact test module without changing assertions.
+- CLI public artifact command argument builders and file fixture writers split into focused helper modules while preserving the public artifact helper facade.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
+- CLI daily and schedule-helper command tests moved into a focused daily test module without changing assertions.
+- CLI daily helper responsibilities split into focused command-argument and fixture/setup helpers while preserving the daily helper facade.
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
+- CLI analyze, report sample-data, and watchlist command tests moved into a focused report test module without changing assertions.
 - CLI schedule-helper argument builder moved into daily test helpers without changing assertions.
 - CLI import, validate-import, and inspect-import argument builders moved into manual import test helpers without changing assertions.
+- CLI import, validate-import, and inspect-import command tests moved into a focused manual-import test module without changing assertions.
+- CLI manual-import helper responsibilities split into focused command-argument and file fixture helpers while preserving the manual-import helper facade.
 - CLI run-provenance argument builder moved into provenance test helpers without changing assertions.
+- CLI run-provenance command tests moved into a focused provenance test module without changing assertions.
+- CLI provenance helper responsibilities split into focused command-argument and provenance database fixture helpers while preserving the provenance helper facade.
 - CLI backup verification, database health, backup listing, restore-helper, and migration-readiness JSON argument builders moved into backup test helpers without changing assertions.
+- CLI backup, database health, backup listing, restore-helper, and migration-readiness command tests moved into a focused backup test module without changing assertions.
 - CLI snapshots argument builder moved into snapshot test helpers without changing assertions.
 - CLI public command help matrix moved into documentation test helpers without changing assertions.
 - CLI top-level help, command-help, and watchlist argument builders moved into focused test helpers without changing assertions.
 - CLI status JSON row-key documentation parser moved into documentation test helpers without changing assertions.
 - CLI status JSON tests reused the shared status argument builder without changing assertions.
+- CLI status command tests moved into a focused status test module without changing assertions.
+- CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI resource, preflight, compliance, and schema command tests moved into a focused resource test module without changing assertions.
 - Connector policy review and resource fixture builders extracted from the broad connector-policy test module without changing assertions.
 - Connector fixture payload writers extracted from the broad connector-policy test module without changing assertions.
 - Connector fixture approved-resource helpers extracted from the broad connector-policy test module without changing assertions.
@@ -287,6 +318,7 @@
 - Local connector review prep workflow with human checklist generation.
 - Local connector review evidence update workflow for manually collected source review fields.
 - Connector review evidence command result rendering split from update orchestration behind the stable command facade.
+- CLI connector candidate, draft, review-prep, review-evidence, review-status, and check command tests moved into a focused connector review test module without changing assertions.
 - Local connector candidate report for prioritizing source-specific reviews.
 - Connector candidate command rendering split into a focused helper behind the stable candidate report command.
 - Connector candidate service split into focused model, command-text, and ranking helpers behind the stable candidate facade.
@@ -299,9 +331,12 @@
 - Local connector fixture runner for synthetic output-shape validation before live connector work.
 - Connector approval command table construction split from safety-message rendering behind the stable approval renderer.
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
+- CLI connector approval-helper, review-report, and approval-patch command tests moved into a focused connector approval test module without changing assertions.
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
 - Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
+- Public intel file validation summary/count extraction split from result assembly behind the stable validator facade.
+- Public intel file validation summary/count regression coverage hardened for malformed latest-run and collection fields.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
 - Site contract artifact summary loading split from payload assembly behind the stable contract facade.

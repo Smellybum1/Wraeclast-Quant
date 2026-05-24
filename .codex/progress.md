@@ -96,6 +96,75 @@
 - Verification: connector review evidence import smoke, focused CLI tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Completed packet: split connector approval command table construction from safety-message rendering behind the stable approval renderer.
 - Verification: connector approval table import smoke, focused approval tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
+- Completed packet: moved status command tests from the broad CLI test module into `tests/test_cli_status.py` without changing assertions or runtime behavior.
+- Verification: focused status tests, remaining broad CLI tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, `preflight`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed; pytest used repo-local temp directories because the default Windows temp path was not accessible.
+- Completed packet: moved resource, preflight, compliance, and schema CLI tests from the broad CLI test module into `tests/test_cli_resources.py` without changing assertions or runtime behavior.
+- Verification: focused resource CLI tests, remaining broad CLI tests, status CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved import, validate-import, and inspect-import CLI tests from the broad CLI test module into `tests/test_cli_manual_import.py` without changing assertions or runtime behavior.
+- Verification: focused manual-import CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved analyze, report sample-data, and watchlist CLI tests from the broad CLI test module into `tests/test_cli_reports.py` without changing assertions or runtime behavior.
+- Verification: focused report CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved connector fixture-run, dry-run, fixture-export, and fixture-daily CLI tests from the broad CLI test module into `tests/test_cli_connector_fixture.py` without changing assertions or runtime behavior.
+- Verification: focused connector fixture CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved connector approval-helper, review-report, and approval-patch CLI tests from the broad CLI test module into `tests/test_cli_connector_approval.py` without changing assertions or runtime behavior.
+- Verification: focused connector approval CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved connector-plan CLI tests from the broad CLI test module into `tests/test_cli_connector_plan.py` without changing assertions or runtime behavior.
+- Verification: focused connector-plan CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved connector candidate, draft, review-prep, review-evidence, review-status, and check CLI tests from the broad CLI test module into `tests/test_cli_connector_review.py` without changing assertions or runtime behavior.
+- Verification: focused connector review CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved run-provenance CLI tests from the broad CLI test module into `tests/test_cli_provenance.py` without changing assertions or runtime behavior.
+- Verification: focused provenance CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved backup, database health, backup listing, restore-helper, and migration-readiness CLI tests from the broad CLI test module into `tests/test_cli_backup.py` without changing assertions or runtime behavior.
+- Verification: focused backup CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved outcome, review queue, coverage, outcome report, and calibration CLI tests from the broad CLI test module into `tests/test_cli_outcomes.py` without changing assertions or runtime behavior.
+- Verification: focused outcome CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved compare and alerts CLI tests from the broad CLI test module into `tests/test_cli_market_flow.py` without changing assertions or runtime behavior.
+- Verification: focused market-flow CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved export, validate-intel, site, site-bundle, publish-check, publish-handoff, and site-contract CLI tests from the broad CLI test module into `tests/test_cli_public_artifacts.py` without changing assertions or runtime behavior.
+- Verification: focused public artifact CLI tests, remaining broad CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: moved daily and schedule-helper CLI tests from the broad CLI test module into `tests/test_cli_daily.py` without changing assertions or runtime behavior.
+- Verification: focused daily CLI tests, remaining broad CLI smoke tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split status workspace, stale/invalid artifact, and status argument helpers from `tests/cli_public_artifact_helpers.py` into `tests/cli_status_helpers.py`, with shared public-intel payload setup in `tests/cli_public_intel_payload_helpers.py` and compatibility re-exports preserved.
+- Verification: focused status CLI tests, public artifact CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split connector fixture payload writers, fixture command argument builders, and fixture-daily setup from `tests/cli_connector_helpers.py` into `tests/cli_connector_fixture_helpers.py` while preserving compatibility re-exports.
+- Verification: focused connector fixture CLI tests, connector approval/plan/review facade checks, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed stabilization packet: split `tests/cli_connector_fixture_helpers.py` into focused command-argument and fixture-data/setup helpers while preserving the connector fixture facade and the general connector helper facade.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_connector_fixture.py --basetemp=.tmp-pytest-focused` passed with 20 tests. Pytest still warned that the existing `.pytest_cache` path was access-denied.
+- Completed packet: split status stale/invalid artifact fixture writers from `tests/cli_status_helpers.py` into `tests/cli_status_artifact_helpers.py` while preserving status and public artifact compatibility re-exports.
+- Verification: focused status CLI tests, public artifact CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split connector review JSON helpers and resource text helpers from `tests/cli_connector_helpers.py` into `tests/cli_connector_review_helpers.py` and `tests/cli_connector_resource_helpers.py` while preserving the general connector helper facade.
+- Verification: focused connector review/approval/plan CLI tests, connector fixture CLI facade checks, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split public intel file validation summary/count extraction from result assembly into `public_intel_contract_file_summary.py` behind the stable validator facade.
+- Verification: focused public intel contract/public intel tests, public artifact/site-bundle CLI-adjacent tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split public artifact command argument builders and file fixture writers from `tests/cli_public_artifact_helpers.py` into `tests/cli_public_artifact_command_helpers.py` and `tests/cli_public_artifact_file_helpers.py` while preserving compatibility re-exports.
+- Verification: focused public artifact CLI tests, status CLI facade checks, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split status command argument builders from `tests/cli_status_helpers.py` into `tests/cli_status_command_helpers.py` while preserving compatibility re-exports.
+- Verification: focused status CLI tests, public artifact CLI tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split outcome command argument builders and reviewed database setup helpers from `tests/cli_outcome_helpers.py` into `tests/cli_outcome_command_helpers.py` and `tests/cli_outcome_database_helpers.py` while preserving compatibility re-exports.
+- Verification: focused outcome CLI tests, broad CLI smoke tests, and full `pytest` all passed using repo-local pytest temp directories.
+- Completed packet: split `tests/cli_market_flow_helpers.py` into focused command-argument and market database fixture helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_market_flow.py tests/test_cli_public_artifacts.py --basetemp=.tmp-pytest-market-flow -p no:cacheprovider` passed with 25 tests.
+- Completed packet: split `tests/cli_backup_helpers.py` into focused command-argument and backup/database fixture helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_backup.py tests/test_cli_status.py --basetemp=.tmp-pytest-backup -p no:cacheprovider` passed with 32 tests.
+- Completed packet: hardened public-intel file validation summary/count regression coverage for non-int latest run IDs, non-object latest runs, and non-list opportunity/alert collections without changing contract behavior.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_public_intel_contract.py tests/test_public_intel.py tests/test_cli_public_artifacts.py tests/test_site_bundle.py --basetemp=.tmp-pytest-public-intel -p no:cacheprovider` passed with 66 tests.
+- Completed packet: split `tests/cli_daily_helpers.py` into focused command-argument and fixture/setup helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_daily.py tests/test_cli_reports.py --basetemp=.tmp-pytest-daily -p no:cacheprovider` passed with 27 tests.
+- Completed packet: split `tests/cli_connector_resource_helpers.py` into focused resource-text and file-writer helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_connector_review.py tests/test_cli_connector_approval.py tests/test_cli_connector_plan.py --basetemp=.tmp-pytest-connector-resource -p no:cacheprovider` passed with 33 tests.
+- Completed packet: split `tests/cli_connector_review_helpers.py` into focused review-payload and file-writer helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_connector_review.py tests/test_cli_connector_approval.py tests/test_cli_connector_plan.py --basetemp=.tmp-pytest-connector-review -p no:cacheprovider` passed with 33 tests.
+- Completed packet: split `tests/cli_provenance_helpers.py` into focused command-argument and provenance database fixture helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_provenance.py --basetemp=.tmp-pytest-provenance -p no:cacheprovider` passed with 5 tests.
+- Completed packet: split `tests/cli_manual_import_helpers.py` into focused command-argument and file fixture helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_manual_import.py tests/test_cli_daily.py --basetemp=.tmp-pytest-manual-import -p no:cacheprovider` passed with 30 tests.
+- Completed packet: split `tests/cli_doc_helpers.py` into focused public-command and Markdown parser helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli.py tests/test_cli_daily.py tests/test_cli_status.py --basetemp=.tmp-pytest-doc-helpers -p no:cacheprovider` passed with 43 tests.
+- Completed packet: split `tests/cli_status_helpers.py` into focused workspace/resource and database fixture helpers while preserving status and public artifact compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_status.py tests/test_cli_public_artifacts.py --basetemp=.tmp-pytest-status-helpers -p no:cacheprovider` passed with 37 tests.
+- Completed packet: split `tests/cli_public_artifact_command_helpers.py` into focused artifact/export and publishing-readiness command helpers while preserving compatibility re-exports.
+- Verification: `diff --check` passed; bundled Python focused tests `tests/test_cli_helper_facades.py tests/test_cli_public_artifacts.py tests/test_cli_status.py --basetemp=.tmp-pytest-public-artifact-commands -p no:cacheprovider` passed with 37 tests.
+- Final health after refreshed derived artifacts: full `pytest` passed with 441 tests; `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, `preflight`, `git diff --check`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed after the latest helper packets.
 - Protected resource hash: `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6`.
 - Safety state: no live HTTP, scraping, Discord collection, publishing automation, schema migration, source approval, dependency change, or `RESOURCES.md` edit.
-- Next likely unblocked work: continue bounded maintainability with small test-helper cleanup or status artifact row cleanup while live source work remains blocked.
+- Next likely unblocked work: continue bounded maintainability with connector review/resource helper cleanup or public artifact contract cleanup while live source work remains blocked.
