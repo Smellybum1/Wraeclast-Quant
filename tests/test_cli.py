@@ -11,9 +11,12 @@ from cli_backup_helpers import sample_data_backup as _sample_data_backup
 from cli_backup_helpers import sample_data_database as _sample_data_database
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
 from cli_connector_helpers import conditional_api_resources_text as _conditional_api_resources_text
+from cli_connector_helpers import connector_dry_run_args as _connector_dry_run_args
+from cli_connector_helpers import connector_fixture_export_args as _connector_fixture_export_args
 from cli_connector_helpers import (
     connector_fixture_daily_args as _connector_fixture_daily_args,
 )
+from cli_connector_helpers import connector_fixture_run_args as _connector_fixture_run_args
 from cli_connector_helpers import (
     connector_fixture_daily_tuned_setup as _connector_fixture_daily_tuned_setup,
 )
@@ -1673,13 +1676,7 @@ def test_connector_approval_patch_does_not_modify_resources(tmp_path: Path) -> N
 def test_connector_fixture_run_prints_rows_and_count() -> None:
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-run",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_api_example.json",
-        ],
+        _connector_fixture_run_args(),
     )
 
     assert result.exit_code == 0
@@ -1693,13 +1690,9 @@ def test_connector_fixture_run_prints_rows_and_count() -> None:
 def test_connector_fixture_run_refuses_incomplete_review() -> None:
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-run",
-            "--review-path",
-            "examples/poe_ninja_poe2_currency_connector_review.json",
-            "--fixture-path",
-            "examples/connector_fixture_api_example.json",
-        ],
+        _connector_fixture_run_args(
+            review_path="examples/poe_ninja_poe2_currency_connector_review.json",
+        ),
     )
 
     assert result.exit_code != 0
@@ -1712,13 +1705,7 @@ def test_connector_fixture_run_invalid_fixture_exits_nonzero(tmp_path: Path) -> 
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-run",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            str(fixture_path),
-        ],
+        _connector_fixture_run_args(fixture_path=fixture_path),
     )
 
     assert result.exit_code != 0
@@ -1728,13 +1715,7 @@ def test_connector_fixture_run_invalid_fixture_exits_nonzero(tmp_path: Path) -> 
 def test_connector_dry_run_prints_connector_class_rows_and_cache_path() -> None:
     result = runner.invoke(
         app,
-        [
-            "connector-dry-run",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_api_example.json",
-        ],
+        _connector_dry_run_args(),
     )
 
     assert result.exit_code == 0
@@ -1748,13 +1729,10 @@ def test_connector_dry_run_prints_connector_class_rows_and_cache_path() -> None:
 def test_connector_dry_run_prints_poe_ninja_currency_connector() -> None:
     result = runner.invoke(
         app,
-        [
-            "connector-dry-run",
-            "--review-path",
-            "examples/reviews/poe_ninja_poe2_currency_connector_review.json",
-            "--fixture-path",
-            "examples/poe_ninja_poe2_currency_fixture.json",
-        ],
+        _connector_dry_run_args(
+            review_path="examples/reviews/poe_ninja_poe2_currency_connector_review.json",
+            fixture_path="examples/poe_ninja_poe2_currency_fixture.json",
+        ),
     )
 
     assert result.exit_code == 0
@@ -1767,13 +1745,9 @@ def test_connector_dry_run_prints_poe_ninja_currency_connector() -> None:
 def test_connector_dry_run_refuses_incomplete_review() -> None:
     result = runner.invoke(
         app,
-        [
-            "connector-dry-run",
-            "--review-path",
-            "examples/poe_ninja_poe2_currency_connector_review.json",
-            "--fixture-path",
-            "examples/connector_fixture_api_example.json",
-        ],
+        _connector_dry_run_args(
+            review_path="examples/poe_ninja_poe2_currency_connector_review.json",
+        ),
     )
 
     assert result.exit_code != 0
@@ -1791,15 +1765,11 @@ def test_connector_dry_run_is_read_only(tmp_path: Path, monkeypatch) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "connector-dry-run",
-            "--review-path",
-            str(review_path),
-            "--fixture-path",
-            str(fixture_path),
-            "--resources-path",
-            str(resources_path),
-        ],
+        _connector_dry_run_args(
+            review_path=review_path,
+            fixture_path=fixture_path,
+            resources_path=resources_path,
+        ),
     )
 
     assert result.exit_code == 0
@@ -1812,15 +1782,7 @@ def test_connector_fixture_export_writes_manual_import_json(tmp_path: Path) -> N
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-export",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--output-path",
-            str(output_path),
-        ],
+        _connector_fixture_export_args(output_path=output_path),
     )
     payload = json.loads(output_path.read_text(encoding="utf-8"))
 
@@ -1837,15 +1799,10 @@ def test_connector_fixture_export_rejects_fixture_without_signals(tmp_path: Path
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-export",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_api_example.json",
-            "--output-path",
-            str(output_path),
-        ],
+        _connector_fixture_export_args(
+            output_path=output_path,
+            fixture_path="examples/connector_fixture_api_example.json",
+        ),
     )
 
     assert result.exit_code != 0
@@ -1858,15 +1815,10 @@ def test_connector_fixture_export_refuses_incomplete_review(tmp_path: Path) -> N
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-export",
-            "--review-path",
-            "examples/poe_ninja_poe2_currency_connector_review.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--output-path",
-            str(output_path),
-        ],
+        _connector_fixture_export_args(
+            output_path=output_path,
+            review_path="examples/poe_ninja_poe2_currency_connector_review.json",
+        ),
     )
 
     assert result.exit_code != 0

@@ -135,6 +135,55 @@ def write_basic_connector_fixture(tmp_path: Path) -> Path:
     )
 
 
+def connector_fixture_run_args(
+    *,
+    review_path: str | Path = "examples/connector_review_api_example.json",
+    fixture_path: str | Path = "examples/connector_fixture_api_example.json",
+) -> list[str]:
+    return [
+        "connector-fixture-run",
+        "--review-path",
+        str(review_path),
+        "--fixture-path",
+        str(fixture_path),
+    ]
+
+
+def connector_dry_run_args(
+    *,
+    review_path: str | Path = "examples/connector_review_api_example.json",
+    fixture_path: str | Path = "examples/connector_fixture_api_example.json",
+    resources_path: str | Path | None = None,
+) -> list[str]:
+    args = [
+        "connector-dry-run",
+        "--review-path",
+        str(review_path),
+        "--fixture-path",
+        str(fixture_path),
+    ]
+    if resources_path is not None:
+        args.extend(["--resources-path", str(resources_path)])
+    return args
+
+
+def connector_fixture_export_args(
+    *,
+    output_path: Path,
+    review_path: str | Path = "examples/connector_review_api_example.json",
+    fixture_path: str | Path = "examples/connector_fixture_signals_example.json",
+) -> list[str]:
+    return [
+        "connector-fixture-export",
+        "--review-path",
+        str(review_path),
+        "--fixture-path",
+        str(fixture_path),
+        "--output-path",
+        str(output_path),
+    ]
+
+
 def connector_fixture_daily_args(
     *,
     review_path: str | Path = "examples/connector_review_api_example.json",
@@ -197,7 +246,10 @@ def connector_fixture_daily_tuned_setup(tmp_path: Path) -> tuple[Path, Path]:
 __all__ = [
     "approved_api_resources_text",
     "conditional_api_resources_text",
+    "connector_dry_run_args",
+    "connector_fixture_export_args",
     "connector_fixture_daily_args",
+    "connector_fixture_run_args",
     "connector_fixture_daily_tuned_setup",
     "connector_review",
     "discord_resources_text",
