@@ -6,7 +6,6 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from wraeclast_quant.cli import app
-from wraeclast_quant.reports.market_brief import write_market_brief
 from wraeclast_quant.reports.site_bundle import write_site_bundle
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.repositories import SnapshotRepository
@@ -28,7 +27,6 @@ from cli_daily_helpers import previous_stormglass_database as _previous_stormgla
 from cli_daily_helpers import small_mover_daily_setup as _small_mover_daily_setup
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_domain_helpers import manual_item as _manual_item
-from cli_domain_helpers import opportunity as _opportunity
 from cli_manual_import_helpers import write_manual_import_csv as _write_manual_import_csv
 from cli_manual_import_helpers import write_manual_import_json as _write_manual_import_json
 from cli_market_flow_helpers import buy_crossing_database as _buy_crossing_database
@@ -53,6 +51,7 @@ from cli_public_artifact_helpers import (
     public_intel_payload as _public_intel_payload,
     status_args as _status_args,
     status_json_args as _status_json_args,
+    status_workspace as _status_workspace,
     write_manual_resources as _write_manual_resources,
     write_publish_ready_bundle as _write_publish_ready_bundle,
 )
@@ -64,7 +63,6 @@ from cli_provenance_helpers import two_run_provenance_database as _two_run_prove
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
-from cli_snapshot_helpers import save_scored_run as _save_scored_run
 from cli_snapshot_helpers import save_single_opportunity_run as _save_single_opportunity_run
 
 
@@ -328,62 +326,19 @@ def test_compliance_command_uses_real_resources() -> None:
 
 
 def test_status_command_prints_local_health(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_scored_run(
-        repository,
-        [
-            _opportunity("Reviewed Catalyst", 76.0, "BUY"),
-            _opportunity("Open Catalyst", 60.0, "WATCH"),
-        ],
-    )
-    repository.save_recommendation_outcome(run.id, "Reviewed Catalyst", "positive")
-    brief_path = tmp_path / "market_brief.md"
-    intel_path = tmp_path / "public_intel.json"
-    site_dir = tmp_path / "site"
-    bundle_dir = tmp_path / "site_bundle"
-    backup_dir = tmp_path / "backups"
-    write_market_brief(
-        [_opportunity("Reviewed Catalyst", 76.0, "BUY")],
-        path=brief_path,
-    )
-    intel_payload = _public_intel_payload(run_id=run.id)
-    intel_path.write_text(json.dumps(intel_payload), encoding="utf-8")
-    write_static_site(intel_payload, site_dir)
-    write_site_bundle(intel_path=intel_path, site_dir=site_dir, output_dir=bundle_dir)
-    runner.invoke(
-        app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
-    )
+    workspace = _status_workspace(tmp_path)
 
     result = runner.invoke(
         app,
         _status_args(
             tmp_path,
-            database_path=database_path,
-            resources_path=resources_path,
-            brief_path=brief_path,
-            intel_path=intel_path,
-            site_dir=site_dir,
-            bundle_dir=bundle_dir,
-            backup_dir=backup_dir,
+            database_path=workspace.database_path,
+            resources_path=workspace.resources_path,
+            brief_path=workspace.brief_path,
+            intel_path=workspace.intel_path,
+            site_dir=workspace.site_dir,
+            bundle_dir=workspace.bundle_dir,
+            backup_dir=workspace.backup_dir,
         ),
     )
 
