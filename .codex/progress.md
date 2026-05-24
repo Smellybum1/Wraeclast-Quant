@@ -11,6 +11,8 @@
 - Verification: `pytest tests/test_connector_policy.py`, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Completed packet: split storage row converters by run, opportunity, artifact, provenance, and outcome domains behind the stable `repository_row_converters` facade.
 - Verification: storage/outcome focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
+- Completed packet: split alert rule helpers by candidate construction, threshold checks, action ranking, and sorting behind the stable `generate_alerts` facade.
+- Verification: alert-focused tests, related delta/export/daily tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Protected resource hash: `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6`.
 - Safety state: no live HTTP, scraping, Discord collection, publishing automation, schema migration, source approval, dependency change, or `RESOURCES.md` edit.
 - Next likely unblocked work: continue bounded maintainability with small test-helper cleanup or status artifact row cleanup while live source work remains blocked.
