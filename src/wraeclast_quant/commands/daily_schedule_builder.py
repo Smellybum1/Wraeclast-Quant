@@ -2,6 +2,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from wraeclast_quant.commands.daily_schedule_quoting import (
+    powershell_daily_argument,
+    quote_cli_arg,
+    quote_powershell_string,
+)
+
 
 def build_daily_command(
     sample_data: bool,
@@ -57,17 +63,11 @@ def build_powershell_schedule_command(daily_command: str, cwd: Path, run_time: s
     return f"{action}; {trigger}; {register}"
 
 
-def powershell_daily_argument(daily_command: str, cwd: Path) -> str:
-    cwd_value = str(cwd).replace("'", "''")
-    return f"-NoProfile -Command \"Set-Location -LiteralPath '{cwd_value}'; {daily_command}\""
-
-
-def quote_cli_arg(value: str) -> str:
-    if not value or any(character.isspace() for character in value) or '"' in value:
-        return f'"{value.replace(chr(34), chr(92) + chr(34))}"'
-    return value
-
-
-def quote_powershell_string(value: str) -> str:
-    escaped = value.replace("'", "''")
-    return f"'{escaped}'"
+__all__ = [
+    "build_daily_command",
+    "build_powershell_schedule_command",
+    "build_schtasks_command",
+    "powershell_daily_argument",
+    "quote_cli_arg",
+    "quote_powershell_string",
+]
