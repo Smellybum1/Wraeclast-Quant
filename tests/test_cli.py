@@ -123,6 +123,11 @@ from cli_report_helpers import report_sample_args as _report_sample_args
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
+from cli_resource_helpers import collect_dry_run_args as _collect_dry_run_args
+from cli_resource_helpers import compliance_args as _compliance_args
+from cli_resource_helpers import preflight_args as _preflight_args
+from cli_resource_helpers import schema_args as _schema_args
+from cli_resource_helpers import write_preflight_resources as _write_preflight_resources
 from cli_snapshot_helpers import snapshots_args as _snapshots_args
 
 
@@ -144,7 +149,7 @@ def test_public_command_help_smoke_matrix() -> None:
 
 
 def test_collect_dry_run() -> None:
-    result = runner.invoke(app, ["collect", "--dry-run"])
+    result = runner.invoke(app, _collect_dry_run_args())
 
     assert result.exit_code == 0
     assert "POE2 Scout" in result.output
@@ -282,7 +287,7 @@ def test_inspect_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:
 
 
 def test_compliance_command_uses_real_resources() -> None:
-    result = runner.invoke(app, ["compliance"])
+    result = runner.invoke(app, _compliance_args())
 
     assert result.exit_code == 0
     assert "Resource Compliance" in result.output
@@ -730,7 +735,7 @@ def test_status_command_reports_unhealthy_database_without_initializing_schema(
 
 
 def test_schema_command_prints_sqlite_schema_contract() -> None:
-    result = runner.invoke(app, ["schema"])
+    result = runner.invoke(app, _schema_args())
 
     assert result.exit_code == 0
     assert "SQLite Schema Contract v2" in result.output
@@ -742,30 +747,11 @@ def test_schema_command_prints_sqlite_schema_contract() -> None:
 
 
 def test_preflight_command_prints_table_and_summary(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-- name: Missing URL API
-  type: official
-  allowed_use: api
-- name: Official Discord
-  type: discord
-  url: https://discord.com/channels/example
-  allowed_use: api
-- name: Manual Source
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_preflight_resources(tmp_path)
 
     result = runner.invoke(
         app,
-        ["preflight", "--resources-path", str(resources_path)],
+        _preflight_args(resources_path),
     )
 
     assert result.exit_code == 0
