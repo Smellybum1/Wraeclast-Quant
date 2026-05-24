@@ -6,7 +6,9 @@ from typer.testing import CliRunner
 from wraeclast_quant.cli import app
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
+from cli_backup_helpers import backup_db_args as _backup_db_args
 from cli_backup_helpers import invalid_backup_dir as _invalid_backup_dir
+from cli_backup_helpers import migration_readiness_args as _migration_readiness_args
 from cli_backup_helpers import sample_data_backup as _sample_data_backup
 from cli_backup_helpers import sample_data_database as _sample_data_database
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
@@ -2196,13 +2198,7 @@ def test_backup_db_command_writes_local_backup(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
+        _backup_db_args(database_path, backup_dir),
     )
 
     backups = list(backup_dir.glob("snapshots_*.db"))
@@ -2224,13 +2220,7 @@ def test_backup_db_command_handles_missing_database_without_creating_output_dir(
 
     result = runner.invoke(
         app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
+        _backup_db_args(database_path, backup_dir),
     )
 
     assert result.exit_code == 0
@@ -2368,13 +2358,7 @@ def test_migration_readiness_command_prints_table(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "migration-readiness",
-            "--database-path",
-            str(database_path),
-            "--backup-dir",
-            str(backup_dir),
-        ],
+        _migration_readiness_args(database_path, backup_dir),
     )
 
     assert result.exit_code == 0

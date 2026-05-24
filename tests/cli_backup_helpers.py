@@ -46,4 +46,30 @@ def invalid_backup_dir(tmp_path: Path, *, ensure_new_mtime: bool = False) -> Pat
     return backup_dir
 
 
-__all__ = ["invalid_backup_dir", "sample_data_backup", "sample_data_database"]
+def backup_db_args(database_path: Path, backup_dir: Path) -> list[str]:
+    return [
+        "backup-db",
+        "--database-path",
+        str(database_path),
+        "--output-dir",
+        str(backup_dir),
+    ]
+
+
+def migration_readiness_args(database_path: Path, backup_dir: Path) -> list[str]:
+    return [
+        "migration-readiness",
+        "--database-path",
+        str(database_path),
+        "--backup-dir",
+        str(backup_dir),
+    ]
+
+
+__all__ = [
+    "backup_db_args",
+    "invalid_backup_dir",
+    "migration_readiness_args",
+    "sample_data_backup",
+    "sample_data_database",
+]
