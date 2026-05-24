@@ -40,3 +40,25 @@ def write_manual_import_csv(tmp_path: Path) -> Path:
         encoding="utf-8",
     )
     return input_path
+
+
+def import_args(input_path: Path, database_path: Path) -> list[str]:
+    return ["import", "--input-path", str(input_path), "--database-path", str(database_path)]
+
+
+def validate_import_args(input_path: Path) -> list[str]:
+    return ["validate-import", "--input-path", str(input_path)]
+
+
+def inspect_import_args(input_path: Path) -> list[str]:
+    return ["inspect-import", "--input-path", str(input_path)]
+
+
+__all__ = [
+    "import_args",
+    "inspect_import_args",
+    "validate_import_args",
+    "write_invalid_manual_import_json",
+    "write_manual_import_csv",
+    "write_manual_import_json",
+]
