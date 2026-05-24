@@ -4,8 +4,6 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from wraeclast_quant.cli import app
-from wraeclast_quant.reports.site_bundle import write_site_bundle
-from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
 from cli_backup_helpers import invalid_backup_dir as _invalid_backup_dir
@@ -67,6 +65,9 @@ from cli_public_artifact_helpers import (
     write_invalid_static_site as _write_invalid_static_site,
     write_manual_resources as _write_manual_resources,
     write_publish_ready_bundle as _write_publish_ready_bundle,
+    write_stale_public_intel as _write_stale_public_intel,
+    write_stale_site_bundle as _write_stale_site_bundle,
+    write_stale_static_site as _write_stale_static_site,
 )
 from cli_provenance_helpers import (
     latest_connector_fixture_provenance_database as _latest_connector_fixture_provenance_database,
@@ -539,8 +540,7 @@ def test_status_json_strict_exits_nonzero_with_parseable_failures(tmp_path: Path
 def test_status_marks_stale_public_intel_needs_attention(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
     database_path = _database_with_two_runs(tmp_path)
-    intel_path = tmp_path / "public_intel.json"
-    intel_path.write_text(json.dumps(_public_intel_payload(run_id=1)), encoding="utf-8")
+    intel_path = _write_stale_public_intel(tmp_path, run_id=1)
 
     result = runner.invoke(
         app,
@@ -562,8 +562,7 @@ def test_status_marks_stale_public_intel_needs_attention(tmp_path: Path) -> None
 def test_status_marks_stale_static_site_needs_attention(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
     database_path = _database_with_two_runs(tmp_path)
-    site_dir = tmp_path / "site"
-    write_static_site(_public_intel_payload(run_id=1), site_dir)
+    site_dir = _write_stale_static_site(tmp_path, run_id=1)
 
     result = runner.invoke(
         app,
@@ -585,13 +584,7 @@ def test_status_marks_stale_static_site_needs_attention(tmp_path: Path) -> None:
 def test_status_marks_stale_site_bundle_needs_attention(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
     database_path = _database_with_two_runs(tmp_path)
-    intel_path = tmp_path / "bundle_source_intel.json"
-    site_dir = tmp_path / "bundle_source_site"
-    bundle_dir = tmp_path / "site_bundle"
-    stale_payload = _public_intel_payload(run_id=1)
-    intel_path.write_text(json.dumps(stale_payload), encoding="utf-8")
-    write_static_site(stale_payload, site_dir)
-    write_site_bundle(intel_path=intel_path, site_dir=site_dir, output_dir=bundle_dir)
+    bundle_dir = _write_stale_site_bundle(tmp_path, run_id=1)
 
     result = runner.invoke(
         app,
@@ -613,8 +606,7 @@ def test_status_marks_stale_site_bundle_needs_attention(tmp_path: Path) -> None:
 def test_status_strict_json_exits_nonzero_for_stale_artifacts(tmp_path: Path) -> None:
     resources_path = _write_manual_resources(tmp_path)
     database_path = _database_with_two_runs(tmp_path)
-    intel_path = tmp_path / "public_intel.json"
-    intel_path.write_text(json.dumps(_public_intel_payload(run_id=1)), encoding="utf-8")
+    intel_path = _write_stale_public_intel(tmp_path, run_id=1)
 
     result = runner.invoke(
         app,

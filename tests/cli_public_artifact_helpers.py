@@ -195,6 +195,29 @@ def write_invalid_site_bundle(tmp_path: Path) -> Path:
     return bundle_dir
 
 
+def write_stale_public_intel(tmp_path: Path, run_id: int = 1) -> Path:
+    intel_path = tmp_path / "public_intel.json"
+    intel_path.write_text(json.dumps(public_intel_payload(run_id=run_id)), encoding="utf-8")
+    return intel_path
+
+
+def write_stale_static_site(tmp_path: Path, run_id: int = 1) -> Path:
+    site_dir = tmp_path / "site"
+    write_static_site(public_intel_payload(run_id=run_id), site_dir)
+    return site_dir
+
+
+def write_stale_site_bundle(tmp_path: Path, run_id: int = 1) -> Path:
+    intel_path = tmp_path / "bundle_source_intel.json"
+    site_dir = tmp_path / "bundle_source_site"
+    bundle_dir = tmp_path / "site_bundle"
+    stale_payload = public_intel_payload(run_id=run_id)
+    intel_path.write_text(json.dumps(stale_payload), encoding="utf-8")
+    write_static_site(stale_payload, site_dir)
+    write_site_bundle(intel_path=intel_path, site_dir=site_dir, output_dir=bundle_dir)
+    return bundle_dir
+
+
 def public_intel_payload(run_id: int = 7) -> dict[str, object]:
     return {
         "schema_version": "1.0",
@@ -262,4 +285,7 @@ __all__ = [
     "write_invalid_static_site",
     "write_manual_resources",
     "write_publish_ready_bundle",
+    "write_stale_public_intel",
+    "write_stale_site_bundle",
+    "write_stale_static_site",
 ]
