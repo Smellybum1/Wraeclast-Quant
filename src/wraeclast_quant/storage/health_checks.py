@@ -3,6 +3,11 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
+from wraeclast_quant.storage.database_summary_queries import (
+    missing_required_tables,
+    read_database_content_summary,
+    read_table_names,
+)
 from wraeclast_quant.storage.health_models import DatabaseHealthResult
 from wraeclast_quant.storage.schema import REQUIRED_SQLITE_TABLES, SQLITE_SCHEMA_VERSION
 
@@ -13,13 +18,7 @@ def read_database_health(
 ) -> DatabaseHealthResult:
     integrity_message = str(connection.execute("PRAGMA integrity_check").fetchone()[0])
     integrity_ok = integrity_message.lower() == "ok"
-    tables = {
-        str(row["name"])
-        for row in connection.execute(
-            "SELECT name FROM sqlite_master WHERE type = 'table'"
-        ).fetchall()
-    }
-    missing_tables = sorted(REQUIRED_SQLITE_TABLES - tables)
+    missing_tables = missing_required_tables(read_table_names(connection))
     if missing_tables:
         return DatabaseHealthResult(
             database_path=database_path,
@@ -39,14 +38,7 @@ def read_database_health(
             latest_run_item_count=None,
         )
 
-    latest_run = connection.execute(
-        """
-        SELECT id, created_at, source_mode, item_count
-        FROM analysis_runs
-        ORDER BY id DESC
-        LIMIT 1
-        """
-    ).fetchone()
+    summary = read_database_content_summary(connection)
 
     return DatabaseHealthResult(
         database_path=database_path,
@@ -56,25 +48,18 @@ def read_database_health(
         integrity_ok=integrity_ok,
         integrity_message=integrity_message,
         missing_tables=[],
-        analysis_run_count=_count_rows(connection, "analysis_runs"),
-        scored_opportunity_count=_count_rows(connection, "scored_opportunities"),
-        report_artifact_count=_count_rows(connection, "report_artifacts"),
-        recommendation_outcome_count=_count_rows(
-            connection,
-            "recommendation_outcomes",
-        ),
-        latest_run_id=int(latest_run["id"]) if latest_run is not None else None,
-        latest_run_created_at=str(latest_run["created_at"])
-        if latest_run is not None
+        analysis_run_count=summary.analysis_run_count,
+        scored_opportunity_count=summary.scored_opportunity_count,
+        report_artifact_count=summary.report_artifact_count,
+        recommendation_outcome_count=summary.recommendation_outcome_count,
+        latest_run_id=summary.latest_run.id if summary.latest_run is not None else None,
+        latest_run_created_at=summary.latest_run.created_at
+        if summary.latest_run is not None
         else None,
-        latest_run_source_mode=str(latest_run["source_mode"])
-        if latest_run is not None
+        latest_run_source_mode=summary.latest_run.source_mode
+        if summary.latest_run is not None
         else None,
-        latest_run_item_count=int(latest_run["item_count"])
-        if latest_run is not None
+        latest_run_item_count=summary.latest_run.item_count
+        if summary.latest_run is not None
         else None,
     )
-
-
-def _count_rows(connection: sqlite3.Connection, table: str) -> int:
-    return int(connection.execute(f"SELECT COUNT(*) AS count FROM {table}").fetchone()["count"])
