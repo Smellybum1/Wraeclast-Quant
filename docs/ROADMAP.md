@@ -22,6 +22,7 @@
 - Delta-aware Markdown market brief.
 - Market brief service split into focused model, health, and Markdown rendering helpers behind the stable report facade.
 - Market brief Markdown rendering split into focused formatting and section helpers behind the stable rendering facade.
+- Market brief section rendering split into focused opportunity-table and snapshot-change helpers behind the stable section facade.
 - Derived-only `public_intel.json` export with recent runs, score trends, outcome summary, and review coverage.
 - Local static dashboard preview and local site bundle.
 - `wq daily` orchestration for sample data or manual import files.
