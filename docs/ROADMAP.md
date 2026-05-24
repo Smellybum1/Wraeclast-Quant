@@ -114,6 +114,7 @@
 - Static site HTML helpers split into focused metadata, table, and formatting modules behind the stable HTML facade.
 - Static site health inspection split into focused model and metadata helpers behind the stable health facade.
 - Outcome repository helper logic decomposed into focused policy, record, review-query, and coverage modules behind the stable repository mixin.
+- Outcome record repository queries split into focused write, listing, and summary helpers behind the stable record facade.
 - Daily command registration decomposed into focused daily-run and schedule-helper modules behind the stable command aggregator.
 - Daily run result rendering split into a focused helper behind the stable `daily` command.
 - Daily schedule-helper command logic decomposed into focused command, validation, and command-builder modules behind the stable schedule-helper aggregator.
