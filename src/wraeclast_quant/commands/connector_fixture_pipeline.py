@@ -4,7 +4,7 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.collectors.source_connector import FixtureSourceConnector
+from wraeclast_quant.collectors.source_connector import source_connector_from_review
 from wraeclast_quant.commands._connector_support import console, file_sha256, load_fixture_resources
 from wraeclast_quant.commands.snapshot_rendering import print_alert_candidates
 from wraeclast_quant.config.connector_fixtures import connector_fixture_signal_items, run_connector_fixture
@@ -40,7 +40,7 @@ def register(app: typer.Typer) -> None:
             alert_settings = _alert_settings(watch_threshold, buy_threshold, big_delta)
             review = load_connector_review(review_path)
             connector_resources = load_fixture_resources(resources_path)
-            connector = FixtureSourceConnector.from_review(review, connector_resources)
+            connector = source_connector_from_review(review, connector_resources)
             fixture_result = run_connector_fixture(review, connector_resources, fixture_path)
             if not fixture_result.ready:
                 blockers = "\n".join(fixture_result.blockers)

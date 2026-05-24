@@ -2550,6 +2550,38 @@ def test_connector_fixture_daily_stores_sanitized_run_provenance(tmp_path: Path)
     assert str(tmp_path) not in serialized
 
 
+def test_connector_fixture_daily_uses_poe_ninja_connector_provenance(tmp_path: Path) -> None:
+    database_path = tmp_path / "snapshots.db"
+    brief_path = tmp_path / "market_brief.md"
+    intel_path = tmp_path / "public_intel.json"
+    site_dir = tmp_path / "site"
+
+    result = runner.invoke(
+        app,
+        [
+            "connector-fixture-daily",
+            "--review-path",
+            "examples/reviews/poe_ninja_poe2_currency_connector_review.json",
+            "--fixture-path",
+            "examples/poe_ninja_poe2_currency_fixture.json",
+            "--database-path",
+            str(database_path),
+            "--brief-path",
+            str(brief_path),
+            "--intel-path",
+            str(intel_path),
+            "--site-dir",
+            str(site_dir),
+        ],
+    )
+
+    provenance = SnapshotRepository(database_path).latest_run_provenance()
+    assert result.exit_code == 0
+    assert provenance is not None
+    assert provenance.connector_id == "poe-ninja-poe2-currency"
+    assert provenance.metadata["connector_class"] == "PoeNinjaCurrencyConnector"
+
+
 def test_connector_fixture_daily_public_intel_latest_run_matches_created_run(
     tmp_path: Path,
 ) -> None:
