@@ -17,6 +17,7 @@
 - Tunable local alert candidate previews.
 - Documented local alert rule contract with drift coverage.
 - Delta-aware Markdown market brief.
+- Market brief service split into focused model, health, and Markdown rendering helpers behind the stable report facade.
 - Derived-only `public_intel.json` export with recent runs, score trends, outcome summary, and review coverage.
 - Local static dashboard preview and local site bundle.
 - `wq daily` orchestration for sample data or manual import files.
@@ -173,7 +174,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include market brief service cleanup or connector review status builder cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include connector review status builder cleanup or another focused reporting cleanup.
 
 ## Later Intelligence Improvements
 
