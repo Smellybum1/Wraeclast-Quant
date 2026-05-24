@@ -2535,19 +2535,8 @@ def test_migration_readiness_command_prints_table(tmp_path: Path) -> None:
 
 
 def test_migration_readiness_json_outputs_stable_fields(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    backup_dir = tmp_path / "backups"
-    run = SnapshotRepository(database_path).create_analysis_run(source_mode="sample-data", item_count=1)
-    runner.invoke(
-        app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
-    )
+    database_path, backup_dir, _backup_path = _sample_data_backup(tmp_path)
+    run = SnapshotRepository(database_path).latest_run()
 
     result = runner.invoke(
         app,
@@ -2565,6 +2554,7 @@ def test_migration_readiness_json_outputs_stable_fields(tmp_path: Path) -> None:
     payload = json.loads(result.output)
     assert payload["ready"] is True
     assert payload["schema_version"] == "2"
+    assert run is not None
     assert payload["latest_database_run_id"] == run.id
     assert payload["latest_backup_run_id"] == run.id
     assert payload["blockers"] == []
