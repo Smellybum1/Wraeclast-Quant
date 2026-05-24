@@ -144,6 +144,7 @@
 - Calibration command table rendering split into a focused helper behind the stable calibration command registration.
 - Calibration report service split into focused model, metric, and Markdown rendering helpers behind the stable calibration facade.
 - Outcome and calibration Markdown table helpers shared behind stable report rendering facades.
+- Calibration metric aggregation split into focused outcome-count and score-bucket helpers behind the stable metrics facade.
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
