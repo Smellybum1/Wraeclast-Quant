@@ -87,6 +87,7 @@
 - Static dashboard rendering decomposed into focused facade, health, and HTML rendering modules.
 - Publish readiness decomposed into focused facade, readiness, handoff, and model modules.
 - Publish handoff report split Markdown rendering and writer helpers behind the stable handoff facade.
+- Publish handoff Markdown rendering split into focused summary, checks, blockers, checklist, safety, and formatting helpers behind the stable renderer facade.
 - Publish readiness artifact checks split into focused bundle, contract, and safety helper modules behind the stable artifact facade.
 - Publish readiness service split database-run and artifact-freshness helpers behind the stable readiness facade.
 - Publish readiness contract checks split public-intel and static-site validation helpers behind the stable contract facade.
