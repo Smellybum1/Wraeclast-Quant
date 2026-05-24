@@ -11,6 +11,8 @@ from wraeclast_quant.reports.site_bundle import write_site_bundle
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
+from cli_backup_helpers import sample_data_backup as _sample_data_backup
+from cli_backup_helpers import sample_data_database as _sample_data_database
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
 from cli_connector_helpers import conditional_api_resources_text as _conditional_api_resources_text
 from cli_connector_helpers import connector_review as _connector_review
@@ -19,11 +21,30 @@ from cli_connector_helpers import manual_source_resources_text as _manual_source
 from cli_connector_helpers import poe_ninja_currency_resources_text as _poe_ninja_currency_resources_text
 from cli_connector_helpers import write_connector_resources as _write_connector_resources
 from cli_connector_helpers import write_connector_review as _write_connector_review
+from cli_daily_helpers import previous_stormglass_database as _previous_stormglass_database
+from cli_daily_helpers import small_mover_daily_setup as _small_mover_daily_setup
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_domain_helpers import manual_item as _manual_item
 from cli_domain_helpers import opportunity as _opportunity
 from cli_manual_import_helpers import write_manual_import_csv as _write_manual_import_csv
 from cli_manual_import_helpers import write_manual_import_json as _write_manual_import_json
+from cli_market_flow_helpers import buy_crossing_database as _buy_crossing_database
+from cli_market_flow_helpers import (
+    comparison_database_with_changes as _comparison_database_with_changes,
+)
+from cli_market_flow_helpers import single_buy_database as _single_buy_database
+from cli_market_flow_helpers import small_mover_database as _small_mover_database
+from cli_market_flow_helpers import stable_watch_database as _stable_watch_database
+from cli_outcome_helpers import calibration_reviewed_database as _calibration_reviewed_database
+from cli_outcome_helpers import (
+    partially_reviewed_two_item_database as _partially_reviewed_two_item_database,
+)
+from cli_outcome_helpers import (
+    reviewed_single_opportunity_database as _reviewed_single_opportunity_database,
+)
+from cli_outcome_helpers import (
+    two_run_database_with_second_reviewed as _two_run_database_with_second_reviewed,
+)
 from cli_public_artifact_helpers import (
     database_with_two_runs as _database_with_two_runs,
     public_intel_payload as _public_intel_payload,
@@ -2385,14 +2406,7 @@ def test_report_sample_data_records_artifact(tmp_path: Path, monkeypatch) -> Non
 
 def test_report_sample_data_includes_snapshot_changes(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(
-        repository,
-        "Stormglass Catalyst",
-        50.0,
-        "HOLD / SELL SELECTIVELY",
-    )
+    database_path = _previous_stormglass_database(tmp_path)
 
     result = runner.invoke(
         app,
@@ -2416,9 +2430,8 @@ def test_snapshots_command_prints_latest_run(tmp_path: Path) -> None:
 
 
 def test_backup_db_command_writes_local_backup(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
+    database_path = _sample_data_database(tmp_path)
     backup_dir = tmp_path / "backups"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
 
     result = runner.invoke(
         app,
@@ -2466,20 +2479,7 @@ def test_backup_db_command_handles_missing_database_without_creating_output_dir(
 
 
 def test_verify_backup_command_prints_counts(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    backup_dir = tmp_path / "backups"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
-    runner.invoke(
-        app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
-    )
-    backup_path = next(backup_dir.glob("snapshots_*.db"))
+    _database_path, _backup_dir, backup_path = _sample_data_backup(tmp_path)
 
     result = runner.invoke(app, ["verify-backup", "--backup-path", str(backup_path)])
 
@@ -2505,8 +2505,7 @@ def test_verify_backup_command_rejects_missing_file_without_creating_it(tmp_path
 
 
 def test_db_check_command_prints_database_health(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
+    database_path = _sample_data_database(tmp_path)
 
     result = runner.invoke(app, ["db-check", "--database-path", str(database_path)])
 
@@ -2534,19 +2533,7 @@ def test_db_check_command_handles_missing_database_without_creating_it(tmp_path:
 
 
 def test_backups_command_lists_local_backups(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    backup_dir = tmp_path / "backups"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
-    runner.invoke(
-        app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
-    )
+    _database_path, backup_dir, _backup_path = _sample_data_backup(tmp_path)
 
     result = runner.invoke(app, ["backups", "--backup-dir", str(backup_dir)])
 
@@ -2569,21 +2556,8 @@ def test_backups_command_handles_missing_directory_without_creating_it(tmp_path:
 
 
 def test_restore_helper_prints_manual_restore_command_without_writing_target(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    backup_dir = tmp_path / "backups"
+    _database_path, _backup_dir, backup_path = _sample_data_backup(tmp_path)
     target_path = tmp_path / "restore" / "snapshots.db"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
-    runner.invoke(
-        app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
-    )
-    backup_path = next(backup_dir.glob("snapshots_*.db"))
 
     result = runner.invoke(
         app,
@@ -2629,19 +2603,7 @@ def test_restore_helper_rejects_missing_backup_without_creating_target(tmp_path:
 
 
 def test_migration_readiness_command_prints_table(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    backup_dir = tmp_path / "backups"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
-    runner.invoke(
-        app,
-        [
-            "backup-db",
-            "--database-path",
-            str(database_path),
-            "--output-dir",
-            str(backup_dir),
-        ],
-    )
+    database_path, backup_dir, _backup_path = _sample_data_backup(tmp_path)
 
     result = runner.invoke(
         app,
@@ -2806,10 +2768,7 @@ def test_record_outcome_command_rejects_missing_item(tmp_path: Path) -> None:
 
 
 def test_outcomes_command_prints_recent_outcomes_and_summary(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
-    repository.save_recommendation_outcome(run.id, "Stormglass Catalyst", "positive")
+    database_path, _run = _reviewed_single_opportunity_database(tmp_path)
 
     result = runner.invoke(app, ["outcomes", "--database-path", str(database_path)])
 
@@ -2831,16 +2790,7 @@ def test_outcomes_command_handles_empty_database(tmp_path: Path) -> None:
 
 
 def test_review_queue_command_prints_unreviewed_latest_run(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_scored_run(
-        repository,
-        [
-            _opportunity("Reviewed Catalyst", 76.0, "BUY"),
-            _opportunity("Open Catalyst", 60.0, "WATCH"),
-        ],
-    )
-    repository.save_recommendation_outcome(run.id, "Reviewed Catalyst", "positive")
+    database_path, _run = _partially_reviewed_two_item_database(tmp_path)
 
     result = runner.invoke(app, ["review-queue", "--database-path", str(database_path)])
 
@@ -2879,10 +2829,10 @@ def test_review_queue_command_handles_no_snapshots(tmp_path: Path) -> None:
 
 
 def test_review_queue_command_handles_fully_reviewed_run(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_single_opportunity_run(repository, "Reviewed Catalyst", 76.0, "BUY")
-    repository.save_recommendation_outcome(run.id, "Reviewed Catalyst", "positive")
+    database_path, _run = _reviewed_single_opportunity_database(
+        tmp_path,
+        item_name="Reviewed Catalyst",
+    )
 
     result = runner.invoke(app, ["review-queue", "--database-path", str(database_path)])
 
@@ -2901,16 +2851,7 @@ def test_review_queue_command_rejects_missing_run(tmp_path: Path) -> None:
 
 
 def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_scored_run(
-        repository,
-        [
-            _opportunity("Reviewed Catalyst", 76.0, "BUY"),
-            _opportunity("Open Catalyst", 60.0, "WATCH"),
-        ],
-    )
-    repository.save_recommendation_outcome(run.id, "Reviewed Catalyst", "positive")
+    database_path, _run = _partially_reviewed_two_item_database(tmp_path)
 
     result = runner.invoke(app, ["review-coverage", "--database-path", str(database_path)])
 
@@ -2921,11 +2862,7 @@ def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> N
 
 
 def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    first = _save_single_opportunity_run(repository, "First Run Item", 50.0, "WATCH")
-    second = _save_single_opportunity_run(repository, "Second Run Item", 70.0, "BUY")
-    repository.save_recommendation_outcome(second.id, "Second Run Item", "positive")
+    database_path, first, _second = _two_run_database_with_second_reviewed(tmp_path)
 
     result = runner.invoke(
         app,
@@ -2947,13 +2884,8 @@ def test_review_coverage_command_handles_no_snapshots(tmp_path: Path) -> None:
 
 
 def test_outcome_review_command_prints_joined_review_and_summary(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
-    repository.save_recommendation_outcome(
-        run.id,
-        "Stormglass Catalyst",
-        "positive",
+    database_path, _run = _reviewed_single_opportunity_database(
+        tmp_path,
         notes="Manual review.",
     )
 
@@ -2979,14 +2911,9 @@ def test_outcome_review_command_handles_empty_database(tmp_path: Path) -> None:
 
 
 def test_outcome_report_command_writes_markdown_report(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
     output_path = tmp_path / "outcome_review.md"
-    repository = SnapshotRepository(database_path)
-    run = _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
-    repository.save_recommendation_outcome(
-        run.id,
-        "Stormglass Catalyst",
-        "positive",
+    database_path, _run = _reviewed_single_opportunity_database(
+        tmp_path,
         notes="Manual review.",
     )
 
@@ -3029,19 +2956,7 @@ def test_outcome_report_command_writes_empty_report(tmp_path: Path) -> None:
 
 
 def test_calibration_command_prints_local_summaries(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = _save_scored_run(
-        repository,
-        [
-            _opportunity("Stormglass Catalyst", 76.0, "BUY"),
-            _opportunity("Watch Relic", 60.0, "WATCH"),
-            _opportunity("Hold Core", 40.0, "HOLD / SELL SELECTIVELY"),
-        ],
-    )
-    repository.save_recommendation_outcome(run.id, "Stormglass Catalyst", "positive")
-    repository.save_recommendation_outcome(run.id, "Watch Relic", "negative")
-    repository.save_recommendation_outcome(run.id, "Hold Core", "neutral")
+    database_path = _calibration_reviewed_database(tmp_path)
 
     result = runner.invoke(app, ["calibration", "--database-path", str(database_path)])
 
@@ -3066,11 +2981,8 @@ def test_calibration_command_missing_database_is_non_mutating(tmp_path: Path) ->
 
 
 def test_calibration_report_command_writes_markdown(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
     output_path = tmp_path / "calibration_report.md"
-    repository = SnapshotRepository(database_path)
-    run = _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
-    repository.save_recommendation_outcome(run.id, "Stormglass Catalyst", "positive")
+    database_path, _run = _reviewed_single_opportunity_database(tmp_path)
 
     result = runner.invoke(
         app,
@@ -3092,22 +3004,7 @@ def test_calibration_report_command_writes_markdown(tmp_path: Path) -> None:
 
 
 def test_compare_command_prints_delta(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    _save_scored_run(
-        repository,
-        [
-            _opportunity("Stormglass Catalyst", 50.0, "HOLD / SELL SELECTIVELY"),
-            _opportunity("Removed Relic", 42.0, "HOLD / SELL SELECTIVELY"),
-        ],
-    )
-    _save_scored_run(
-        repository,
-        [
-            _opportunity("Stormglass Catalyst", 76.0, "BUY"),
-            _opportunity("New Catalyst", 60.0, "WATCH"),
-        ],
-    )
+    database_path = _comparison_database_with_changes(tmp_path)
 
     result = runner.invoke(app, ["compare", "--database-path", str(database_path)])
 
@@ -3131,15 +3028,7 @@ def test_compare_command_handles_missing_previous_run(tmp_path: Path) -> None:
 
 
 def test_alerts_command_prints_candidates(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(
-        repository,
-        "Stormglass Catalyst",
-        50.0,
-        "HOLD / SELL SELECTIVELY",
-    )
-    _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
+    database_path = _buy_crossing_database(tmp_path)
 
     result = runner.invoke(app, ["alerts", "--database-path", str(database_path)])
 
@@ -3150,10 +3039,7 @@ def test_alerts_command_prints_candidates(tmp_path: Path) -> None:
 
 
 def test_alerts_command_handles_stable_comparison(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(repository, "Stable Item", 70.0, "WATCH")
-    _save_single_opportunity_run(repository, "Stable Item", 70.0, "WATCH")
+    database_path = _stable_watch_database(tmp_path)
 
     result = runner.invoke(app, ["alerts", "--database-path", str(database_path)])
 
@@ -3162,15 +3048,7 @@ def test_alerts_command_handles_stable_comparison(tmp_path: Path) -> None:
 
 
 def test_alerts_command_uses_tuned_thresholds(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(
-        repository,
-        "Stormglass Catalyst",
-        50.0,
-        "HOLD / SELL SELECTIVELY",
-    )
-    _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
+    database_path = _buy_crossing_database(tmp_path)
 
     result = runner.invoke(
         app,
@@ -3211,16 +3089,8 @@ def test_alerts_command_rejects_invalid_threshold_order(tmp_path: Path) -> None:
 
 
 def test_export_command_writes_public_intel(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
+    database_path = _buy_crossing_database(tmp_path)
     output_path = tmp_path / "public_intel.json"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(
-        repository,
-        "Stormglass Catalyst",
-        50.0,
-        "HOLD / SELL SELECTIVELY",
-    )
-    _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
 
     result = runner.invoke(
         app,
@@ -3240,11 +3110,8 @@ def test_export_command_writes_public_intel(tmp_path: Path) -> None:
 
 
 def test_export_command_uses_tuned_alert_settings(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
+    database_path = _small_mover_database(tmp_path)
     output_path = tmp_path / "public_intel.json"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(repository, "Small Mover", 20.0, "AVOID")
-    _save_single_opportunity_run(repository, "Small Mover", 30.0, "AVOID")
 
     result = runner.invoke(
         app,
@@ -3285,10 +3152,8 @@ def test_export_command_handles_no_snapshots(tmp_path: Path) -> None:
 
 
 def test_validate_intel_command_accepts_exported_public_intel(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
+    database_path = _single_buy_database(tmp_path)
     output_path = tmp_path / "public_intel.json"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(repository, "Stormglass Catalyst", 76.0, "BUY")
     runner.invoke(
         app,
         [
@@ -3689,15 +3554,8 @@ def test_daily_creates_exactly_one_analysis_run(tmp_path: Path) -> None:
 
 
 def test_daily_brief_includes_snapshot_changes_with_previous_run(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
+    database_path = _previous_stormglass_database(tmp_path)
     brief_path = tmp_path / "market_brief.md"
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(
-        repository,
-        "Stormglass Catalyst",
-        50.0,
-        "HOLD / SELL SELECTIVELY",
-    )
 
     result = runner.invoke(
         app,
@@ -3909,30 +3767,7 @@ def test_daily_rejects_sample_data_and_input_path(tmp_path: Path) -> None:
 
 
 def test_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    input_path = tmp_path / "items.json"
-    input_path.write_text(
-        json.dumps(
-            [
-                {
-                    "name": "Small Mover",
-                    "signals": {
-                        "demand_momentum": 100,
-                        "build_dependency_score": 0,
-                        "price_discount_score": 0,
-                        "liquidity_score": 66.6667,
-                        "historical_spike_score": 0,
-                        "patch_relevance_score": 0,
-                        "manipulation_risk": 0,
-                        "stale_data_penalty": 0,
-                    },
-                }
-            ]
-        ),
-        encoding="utf-8",
-    )
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(repository, "Small Mover", 20.0, "AVOID")
+    database_path, input_path = _small_mover_daily_setup(tmp_path)
 
     result = runner.invoke(
         app,

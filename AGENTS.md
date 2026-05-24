@@ -21,6 +21,7 @@
 
 - Prefer small, focused work packets over broad "do everything" batches.
 - Read the smallest set of files needed to act safely; expand context when architecture, persistence, data flow, or source compliance is affected.
+- Read `docs/CONTEXT.md` when work depends on project language, domain concepts, connector/source-compliance meaning, public artifact contracts, persistence, or autonomous execution terms.
 - Run the narrowest useful check first, then broader checks when changes are cross-cutting.
 - Use deterministic behavior for MVP logic, especially scoring and reports.
 - Keep modules small, typed, and easy to test.
@@ -50,6 +51,8 @@ Default behavior:
 - Make the smallest useful change that satisfies the acceptance criteria.
 - Run focused verification first, then broader tests/checks when shared behavior, CLI behavior, generated artifacts, persistence, or core paths change.
 - Update the roadmap, progress log, or relevant planning document only when the completed packet changes project state, next steps, or handoff context.
+- Update `docs/CONTEXT.md` only when a packet creates or clarifies durable project language that future agents should reuse.
+- Add an ADR under `docs/adr/` only for decisions that are hard to reverse, surprising without context, or the result of a real trade-off.
 - After a packet passes verification, continue to the next highest-impact unblocked packet only when the user asked for autonomous progress and context remains safe; otherwise hand off with the next recommended packet.
 - If running in normal chat mode instead of Goal Mode, treat a prompt such as "advance the project according to AGENTS.md" as permission to run this loop packet-by-packet without requiring the user to paste the full instructions again.
 

@@ -5,12 +5,12 @@ Use this file when starting a self-directed Wraeclast Quant run from Codex Goal 
 ## Short Goal To Paste
 
 ```text
-Work autonomously in D:\Codex\Wraeclast Quant by following docs/GOAL_MODE.md. Start by reading AGENTS.md, README.md, docs/ROADMAP.md, then run status --json and preflight. Choose the highest-impact unblocked local-first task, implement one focused packet, verify it, and stop only for decisions that affect architecture, data model, public API, security, source approval, persistence, pricing, or user experience.
+Work autonomously in D:\Codex\Wraeclast Quant by following docs/GOAL_MODE.md. Start by reading AGENTS.md, README.md, docs/CONTEXT.md, docs/ROADMAP.md, then run status --json and preflight. Choose the highest-impact unblocked local-first task, implement one focused packet, verify it, and stop only for decisions that affect architecture, data model, public API, security, source approval, persistence, pricing, or user experience.
 ```
 
 ## Operating Loop
 
-1. Start each packet by reading `AGENTS.md`, `README.md`, `docs/ROADMAP.md`, and this file.
+1. Start each packet by reading `AGENTS.md`, `README.md`, `docs/CONTEXT.md`, `docs/ROADMAP.md`, and this file.
 2. Run `git status --short --branch`, `wq status --json`, and `wq preflight`.
 3. If `wq` is not on PATH, use the bundled Typer entrypoint:
 
@@ -23,8 +23,9 @@ Work autonomously in D:\Codex\Wraeclast Quant by following docs/GOAL_MODE.md. St
 6. Implement one focused packet only.
 7. Run the narrowest relevant tests first, then broader checks when shared behavior changes.
 8. If tests or proof runs stale generated artifacts, rerun `export`, `site`, and `site-bundle`, then verify `status --strict` and `publish-check`.
-9. Commit and push only after green verification, if the current thread/user has allowed git writes.
-10. Handoff with changed files, checks run, risks, and the next recommended packet.
+9. Update `docs/CONTEXT.md` only when durable project language changed, and add an ADR only for hard-to-reverse or surprising decisions.
+10. Commit and push only after green verification, if the current thread/user has allowed git writes.
+11. Handoff with changed files, checks run, risks, and the next recommended packet.
 
 ## Guardrails
 

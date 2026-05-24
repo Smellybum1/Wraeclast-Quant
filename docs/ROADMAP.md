@@ -165,8 +165,13 @@
 - CLI manual-import fixture file helpers extracted from the broad CLI test module without changing assertions.
 - CLI status command argument helpers extracted from the broad CLI test module without changing assertions.
 - CLI connector resource and review fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI outcome and calibration fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI compare, alert, and export fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI daily/report fixture helpers extracted from the broad CLI test module without changing assertions.
+- CLI backup, restore-helper, and migration-readiness fixture helpers extracted from the broad CLI test module without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
+- Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.
 - Markdown documentation refreshed to reflect connector review, fixture pipeline, publishing handoff, migration readiness, provenance, calibration, and recent decomposition work.
 - Design documentation updated to match SQLite schema contract version `2`.
 - Read-only SQLite migration-readiness check and documented future schema-change workflow.
