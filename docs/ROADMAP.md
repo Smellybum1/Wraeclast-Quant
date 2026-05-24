@@ -95,6 +95,7 @@
 - Public intel builder split snapshot/alert context loading from contract payload assembly behind the stable builder facade.
 - Site bundle service decomposed into focused facade, model, manifest, writer, and health modules.
 - Site contract service decomposed into focused facade, constants, summaries, payload, and writer modules.
+- Site contract summaries split into focused public-intel, static-site, and bundle summary helpers behind the stable summary facade.
 - Publish readiness follow-up cleanup split artifact checks, freshness row helpers, and payload conversion behind the stable facade.
 - Status health helper logic decomposed into focused model, row, storage, and artifact modules behind the stable status orchestration entry point.
 - Status health report building split context gathering and row assembly behind the stable status health facade.
@@ -191,7 +192,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include public handoff safety helpers or storage support cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include storage support cleanup or migration backup-check cleanup.
 
 ## Later Intelligence Improvements
 
