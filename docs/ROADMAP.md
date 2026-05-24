@@ -297,6 +297,7 @@
 - Read-only connector approval helper for manual `RESOURCES.md` allowed-use changes after completed review.
 - Read-only connector approval patch preview for manual `RESOURCES.md` allowed-use changes.
 - Local connector fixture runner for synthetic output-shape validation before live connector work.
+- Connector approval command table construction split from safety-message rendering behind the stable approval renderer.
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
