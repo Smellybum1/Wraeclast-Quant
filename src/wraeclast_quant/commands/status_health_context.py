@@ -3,11 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 
 from wraeclast_quant.commands.status_health_context_artifacts import load_artifact_status_context
+from wraeclast_quant.commands.status_health_context_database import load_database_status_context
 from wraeclast_quant.commands.status_health_context_model import StatusHealthContext
 from wraeclast_quant.commands.status_health_context_resources import load_resource_status_context
 from wraeclast_quant.commands.status_health_context_snapshots import load_snapshot_status_context
-from wraeclast_quant.storage.backups import list_database_backups
-from wraeclast_quant.storage.health import check_database_health
 
 
 def load_status_health_context(
@@ -21,9 +20,8 @@ def load_status_health_context(
     backup_dir: Path,
 ) -> StatusHealthContext:
     resource_context = load_resource_status_context(resources_path)
-    backups = list_database_backups(backup_dir=backup_dir, limit=1)
-    database_health = check_database_health(database_path)
-    snapshot_context = load_snapshot_status_context(database_path, database_health)
+    database_context = load_database_status_context(database_path=database_path, backup_dir=backup_dir)
+    snapshot_context = load_snapshot_status_context(database_path, database_context.database_health)
     artifact_context = load_artifact_status_context(
         brief_path=brief_path,
         intel_path=intel_path,
@@ -35,9 +33,9 @@ def load_status_health_context(
         resources=resource_context.resources,
         assessments=resource_context.assessments,
         eligible_count=resource_context.eligible_count,
-        backups=backups,
-        database_health=database_health,
-        database_exists=database_path.exists(),
+        backups=database_context.backups,
+        database_health=database_context.database_health,
+        database_exists=database_context.database_exists,
         latest=snapshot_context.latest,
         latest_run_id=snapshot_context.latest_run_id,
         coverage=snapshot_context.coverage,
