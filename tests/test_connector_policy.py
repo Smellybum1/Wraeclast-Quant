@@ -31,6 +31,11 @@ from wraeclast_quant.config.fetch_policy import build_fetch_plan
 from wraeclast_quant.config.resources_loader import Resource
 from wraeclast_quant.importers.manual import load_manual_items
 
+from connector_policy_helpers import connector_review as _review
+from connector_policy_helpers import connector_review_payload as _review_payload
+from connector_policy_helpers import eligible_resource as _eligible_resource
+from connector_policy_helpers import poe_ninja_currency_resource as _poe_ninja_currency_resource
+
 
 def test_valid_api_review_for_eligible_resource_passes() -> None:
     result = check_connector_review(
@@ -1423,51 +1428,3 @@ def test_fixture_source_connector_exposes_fetch_plan_without_cache_writes(
     assert result.fetch_plan.cache_path == connector.fetch_plan.cache_path
     assert not Path("data/raw/cache").exists()
 
-
-def _eligible_resource() -> Resource:
-    return Resource(
-        name="Approved API",
-        type="official",
-        url="https://example.test/api",
-        allowed_use="api",
-    )
-
-
-def _poe_ninja_currency_resource() -> Resource:
-    return Resource(
-        id="poe_ninja_poe2_currency",
-        name="poe.ninja POE2 Currency",
-        type="price_site",
-        url="https://poe.ninja/poe2/economy/vaal/currency",
-        allowed_use="api",
-    )
-
-
-def _review(**overrides):
-    data = _review_payload()
-    data.update(overrides)
-    from wraeclast_quant.config.connector_policy import ConnectorReview
-
-    return ConnectorReview.model_validate(data)
-
-
-def _review_payload() -> dict[str, object]:
-    return {
-        "resource_name": "Approved API",
-        "access_method": "api",
-        "source_terms_reviewed": True,
-        "robots_or_api_policy_reviewed": True,
-        "source_terms_url": "https://example.test/terms",
-        "robots_or_api_policy_url": "https://example.test/api-policy",
-        "reviewed_at": "2026-05-23",
-        "review_notes": "Example local connector review.",
-        "allowed_data_shape": "Derived price summary rows only.",
-        "authentication_required": False,
-        "login_required": False,
-        "captcha_gated": False,
-        "private_data_risk": False,
-        "rate_limit_per_minute": 30,
-        "cache_ttl_seconds": 3600,
-        "dry_run_supported": True,
-        "public_export_derived_only": True,
-    }
