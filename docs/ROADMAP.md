@@ -136,6 +136,7 @@
 - Connector review prep command rendering split into a focused helper behind the stable draft/prep command module.
 - Connector review prep service split workspace writing and checklist rendering behind the stable prep facade.
 - Connector review evidence/status command registration split into focused evidence-update and status-display modules behind the stable status aggregator.
+- Connector review evidence command local JSON update workflow split into a focused helper behind the stable evidence command.
 - Connector review status table rendering split into a focused helper behind stable evidence/status commands.
 - Connector review status builder split row assembly behind the stable review status facade.
 - Connector review status rows split into focused core, evidence, safety, limits, execution, and readiness helpers behind the stable row facade.
