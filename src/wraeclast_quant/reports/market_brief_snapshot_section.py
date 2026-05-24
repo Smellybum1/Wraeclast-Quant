@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from wraeclast_quant.intelligence.snapshot_deltas import SnapshotComparison
-from wraeclast_quant.reports.market_brief_formatting import format_delta, format_score
+from wraeclast_quant.reports.market_brief_snapshot_tables import (
+    action_changes_section,
+    top_score_movers_section,
+)
 
 
 def render_snapshot_changes_section(comparison: SnapshotComparison, limit: int = 5) -> list[str]:
@@ -18,37 +21,10 @@ def render_snapshot_changes_section(comparison: SnapshotComparison, limit: int =
         return lines
 
     if top_movers:
-        lines.extend(
-            [
-                "### Top Score Movers",
-                "",
-                "| Item | Previous | Latest | Delta | Action |",
-                "| --- | ---: | ---: | ---: | --- |",
-            ]
-        )
-        for delta in top_movers:
-            lines.append(
-                f"| {delta.item_name} | {format_score(delta.previous_score)} | "
-                f"{format_score(delta.latest_score)} | {format_delta(delta.score_delta)} | "
-                f"{delta.latest_action or ''} |"
-            )
-        lines.append("")
+        lines.extend(top_score_movers_section(top_movers))
 
     if status_changes:
-        lines.extend(
-            [
-                "### Action Changes / New / Removed",
-                "",
-                "| Item | Status | Previous Action | Latest Action | Delta |",
-                "| --- | --- | --- | --- | ---: |",
-            ]
-        )
-        for delta in status_changes:
-            lines.append(
-                f"| {delta.item_name} | {delta.status} | {delta.previous_action or ''} | "
-                f"{delta.latest_action or ''} | {format_delta(delta.score_delta)} |"
-            )
-        lines.append("")
+        lines.extend(action_changes_section(status_changes))
 
     return lines
 

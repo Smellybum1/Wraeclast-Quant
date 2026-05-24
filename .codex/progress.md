@@ -67,6 +67,8 @@
 - Verification: publish readiness result import smoke, publish/static artifact focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Completed packet: split outcome review Markdown sections from report writing behind the stable outcome review facade.
 - Verification: outcome review section import smoke, outcome/calibration focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
+- Completed packet: split market brief snapshot-change table rendering from section orchestration behind the stable snapshot section facade.
+- Verification: market brief snapshot table import smoke, market/report focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Protected resource hash: `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6`.
 - Safety state: no live HTTP, scraping, Discord collection, publishing automation, schema migration, source approval, dependency change, or `RESOURCES.md` edit.
 - Next likely unblocked work: continue bounded maintainability with small test-helper cleanup or status artifact row cleanup while live source work remains blocked.
