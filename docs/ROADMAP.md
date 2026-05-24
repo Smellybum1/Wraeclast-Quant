@@ -231,6 +231,7 @@
 - CLI backup verification, database health, backup listing, restore-helper, and migration-readiness JSON argument builders moved into backup test helpers without changing assertions.
 - CLI snapshots argument builder moved into snapshot test helpers without changing assertions.
 - CLI public command help matrix moved into documentation test helpers without changing assertions.
+- CLI top-level help, command-help, and watchlist argument builders moved into focused test helpers without changing assertions.
 - CLI status JSON row-key documentation parser moved into documentation test helpers without changing assertions.
 - CLI status JSON tests reused the shared status argument builder without changing assertions.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.

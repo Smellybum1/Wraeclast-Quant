@@ -46,8 +46,10 @@ from cli_database_helpers import (
     write_unrelated_sqlite_database as _write_unrelated_sqlite_database,
 )
 from cli_doc_helpers import PUBLIC_COMMANDS as _PUBLIC_COMMANDS
+from cli_doc_helpers import command_help_args as _command_help_args
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_doc_helpers import documented_status_row_keys as _documented_status_row_keys
+from cli_doc_helpers import top_level_help_args as _top_level_help_args
 from cli_manual_import_helpers import (
     import_args as _import_args,
     inspect_import_args as _inspect_import_args,
@@ -120,6 +122,7 @@ from cli_provenance_helpers import run_provenance_args as _run_provenance_args
 from cli_provenance_helpers import two_run_provenance_database as _two_run_provenance_database
 from cli_report_helpers import analyze_sample_args as _analyze_sample_args
 from cli_report_helpers import report_sample_args as _report_sample_args
+from cli_report_helpers import watchlist_args as _watchlist_args
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
@@ -134,7 +137,7 @@ from cli_snapshot_helpers import snapshots_args as _snapshots_args
 runner = CliRunner()
 
 def test_top_level_help_lists_public_commands() -> None:
-    result = runner.invoke(app, ["--help"])
+    result = runner.invoke(app, _top_level_help_args())
 
     assert result.exit_code == 0
     for command in _PUBLIC_COMMANDS:
@@ -143,7 +146,7 @@ def test_top_level_help_lists_public_commands() -> None:
 
 def test_public_command_help_smoke_matrix() -> None:
     for command in _PUBLIC_COMMANDS:
-        result = runner.invoke(app, [command, "--help"])
+        result = runner.invoke(app, _command_help_args(command))
 
         assert result.exit_code == 0, command
 
@@ -2039,7 +2042,7 @@ def test_report_sample_data(tmp_path: Path, monkeypatch) -> None:
 
 
 def test_watchlist() -> None:
-    result = runner.invoke(app, ["watchlist"])
+    result = runner.invoke(app, _watchlist_args())
 
     assert result.exit_code == 0
     assert "Watchlist" in result.output

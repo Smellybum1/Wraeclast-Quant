@@ -56,6 +56,14 @@ PUBLIC_COMMANDS = [
 ]
 
 
+def top_level_help_args() -> list[str]:
+    return ["--help"]
+
+
+def command_help_args(command: str) -> list[str]:
+    return [command, "--help"]
+
+
 def documented_bullets(doc_text: str, heading: str) -> set[str]:
     section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
     return {
@@ -76,4 +84,10 @@ def documented_status_row_keys(doc_text: str) -> list[str]:
     ]
 
 
-__all__ = ["PUBLIC_COMMANDS", "documented_bullets", "documented_status_row_keys"]
+__all__ = [
+    "PUBLIC_COMMANDS",
+    "command_help_args",
+    "documented_bullets",
+    "documented_status_row_keys",
+    "top_level_help_args",
+]

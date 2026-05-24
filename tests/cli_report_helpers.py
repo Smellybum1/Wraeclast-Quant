@@ -14,4 +14,8 @@ def report_sample_args(database_path: Path | None = None) -> list[str]:
     return args
 
 
-__all__ = ["analyze_sample_args", "report_sample_args"]
+def watchlist_args() -> list[str]:
+    return ["watchlist"]
+
+
+__all__ = ["analyze_sample_args", "report_sample_args", "watchlist_args"]
