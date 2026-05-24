@@ -47,6 +47,7 @@ from cli_database_helpers import (
 )
 from cli_doc_helpers import PUBLIC_COMMANDS as _PUBLIC_COMMANDS
 from cli_doc_helpers import documented_bullets as _documented_bullets
+from cli_doc_helpers import documented_status_row_keys as _documented_status_row_keys
 from cli_manual_import_helpers import (
     import_args as _import_args,
     inspect_import_args as _inspect_import_args,
@@ -452,14 +453,7 @@ def test_status_json_contract_doc_matches_cli_output(tmp_path: Path) -> None:
     documented_version = doc_text.split(
         "The current status JSON schema version is `", 1
     )[1].split("`", 1)[0]
-    documented_keys_section = doc_text.split("Current row keys:\n\n", 1)[1].split(
-        "\n\n", 1
-    )[0]
-    documented_keys = [
-        line.strip()[3:-1]
-        for line in documented_keys_section.splitlines()
-        if line.strip().startswith("- `")
-    ]
+    documented_keys = _documented_status_row_keys(doc_text)
 
     assert result.exit_code == 0
     assert documented_version == payload["schema_version"]
