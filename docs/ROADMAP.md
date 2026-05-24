@@ -186,6 +186,7 @@
 - Connector review report command generation/write workflow split into a focused helper behind the stable report command.
 - Connector review report generation split fetch-plan lookup and Markdown section helpers behind the stable report service facade.
 - Connector review report sections split into focused audit/evidence and safety/planning helpers behind the stable Markdown facade.
+- Connector review report planning sections split into focused safety/limit and fetch/blocker helpers behind the stable plan-section facade.
 - Connector approval command rendering split into focused helper/patch table rendering behind stable approval commands.
 - Connector approval helper and patch command workflows split into focused helpers behind stable advisory approval commands.
 - Connector approval policy split suggestion decisions and patch-preview writing behind the stable approval policy facade.
