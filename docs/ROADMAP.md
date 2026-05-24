@@ -75,6 +75,7 @@
 - Maintenance command module decomposed into focused backup, migration/provenance, outcome, and calibration registrations.
 - Status health logic decomposed into focused command rendering and report-building service modules.
 - Storage repository decomposed into focused snapshot, artifact/provenance, outcome, and shared support modules.
+- Storage repository support split into focused read-connection, row-converter, and timestamp helpers behind the stable support facade.
 - Storage artifact/provenance repository helpers split report artifact and run provenance persistence behind the stable repository mixin.
 - Snapshot repository persistence split into focused read-query and write-query helpers behind the stable snapshot mixin.
 - Static dashboard rendering decomposed into focused facade, health, and HTML rendering modules.
@@ -192,7 +193,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include storage support cleanup or migration backup-check cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include migration backup-check cleanup or publish readiness contract checks.
 
 ## Later Intelligence Improvements
 
