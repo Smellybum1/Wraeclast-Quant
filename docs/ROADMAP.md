@@ -114,6 +114,7 @@
 - Site contract payload assembly split artifact-run and safety sections behind the stable payload facade.
 - Site contract summaries split into focused public-intel, static-site, and bundle summary helpers behind the stable summary facade.
 - Publish readiness follow-up cleanup split artifact checks, freshness row helpers, and payload conversion behind the stable facade.
+- Publish readiness row helpers split blocking, freshness, and manual readiness row assembly behind the stable row facade.
 - Status health helper logic decomposed into focused model, row, storage, and artifact modules behind the stable status orchestration entry point.
 - Status health report building split context gathering and row assembly behind the stable status health facade.
 - Status health report row assembly split into focused latest-run, artifact, and backup/safety helpers behind the stable report-builder facade.
