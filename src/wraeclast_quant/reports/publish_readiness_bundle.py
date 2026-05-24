@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-import zipfile
 from pathlib import Path
 
 from wraeclast_quant.reports.publish_models import PublishCheckRow
+from wraeclast_quant.reports.publish_readiness_archive import archive_members
 from wraeclast_quant.reports.publish_readiness_rows import add_blocking_check
 from wraeclast_quant.reports.site_bundle import SiteBundleHealthResult
 
@@ -53,11 +53,4 @@ def add_bundle_checks(
     )
 
 
-def archive_members(archive_path: Path) -> list[str]:
-    if not archive_path.exists():
-        return []
-    try:
-        with zipfile.ZipFile(archive_path) as archive:
-            return sorted(archive.namelist())
-    except zipfile.BadZipFile:
-        return []
+__all__ = ["add_bundle_checks", "archive_members"]
