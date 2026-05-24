@@ -170,6 +170,7 @@
 - CLI daily/report fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI backup, restore-helper, and migration-readiness fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI read-only missing-database command matrix extracted from the broad CLI test module without changing assertions.
+- CLI run-provenance fixture helpers extracted from the broad CLI test module without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

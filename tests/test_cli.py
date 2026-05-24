@@ -53,6 +53,11 @@ from cli_public_artifact_helpers import (
     write_manual_resources as _write_manual_resources,
     write_publish_ready_bundle as _write_publish_ready_bundle,
 )
+from cli_provenance_helpers import (
+    latest_connector_fixture_provenance_database as _latest_connector_fixture_provenance_database,
+)
+from cli_provenance_helpers import missing_provenance_database as _missing_provenance_database
+from cli_provenance_helpers import two_run_provenance_database as _two_run_provenance_database
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
@@ -2212,17 +2217,7 @@ def test_connector_fixture_daily_uses_tuned_alert_settings(tmp_path: Path) -> No
 
 
 def test_run_provenance_prints_latest_provenance(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    run = repository.create_analysis_run(source_mode="connector-fixture", item_count=1)
-    repository.save_run_provenance(
-        run.id,
-        source_kind="connector-fixture",
-        resource_name="Example Approved API",
-        connector_id="fixture-source-connector",
-        access_method="api",
-        metadata={"fixture_item_count": 1, "future_cache_path": "data/raw/cache/example.cache"},
-    )
+    database_path, _run = _latest_connector_fixture_provenance_database(tmp_path)
 
     result = runner.invoke(app, ["run-provenance", "--database-path", str(database_path)])
 
@@ -2235,26 +2230,7 @@ def test_run_provenance_prints_latest_provenance(tmp_path: Path) -> None:
 
 
 def test_run_provenance_prints_requested_run(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    first = repository.create_analysis_run(source_mode="sample-data", item_count=1)
-    second = repository.create_analysis_run(source_mode="connector-fixture", item_count=1)
-    repository.save_run_provenance(
-        first.id,
-        source_kind="manual",
-        resource_name="Manual",
-        connector_id="none",
-        access_method="manual",
-        metadata={"label": "first"},
-    )
-    repository.save_run_provenance(
-        second.id,
-        source_kind="connector-fixture",
-        resource_name="Example Approved API",
-        connector_id="fixture-source-connector",
-        access_method="api",
-        metadata={"label": "second"},
-    )
+    database_path, first, _second = _two_run_provenance_database(tmp_path)
 
     result = runner.invoke(
         app,
@@ -2268,8 +2244,7 @@ def test_run_provenance_prints_requested_run(tmp_path: Path) -> None:
 
 
 def test_run_provenance_missing_provenance_prints_clear_message(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    SnapshotRepository(database_path).create_analysis_run(source_mode="sample-data", item_count=0)
+    database_path = _missing_provenance_database(tmp_path)
 
     result = runner.invoke(app, ["run-provenance", "--database-path", str(database_path)])
 
