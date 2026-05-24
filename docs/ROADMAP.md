@@ -121,6 +121,7 @@
 - Outcome record repository queries split into focused write, listing, and summary helpers behind the stable record facade.
 - Outcome coverage repository helpers split review-coverage and item-lookup queries behind the stable coverage facade.
 - Daily command registration decomposed into focused daily-run and schedule-helper modules behind the stable command aggregator.
+- Daily command input selection and alert-threshold validation split into a focused helper behind the stable `daily` command.
 - Daily run result rendering split into a focused helper behind the stable `daily` command.
 - Daily schedule-helper command logic decomposed into focused command, validation, and command-builder modules behind the stable schedule-helper aggregator.
 - Connector fixture daily pipeline command cleanup split local fixture preparation and provenance assembly from command rendering.
