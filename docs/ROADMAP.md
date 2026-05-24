@@ -176,6 +176,7 @@
 - CLI migration-readiness JSON setup reused backup fixture helpers without changing assertions.
 - CLI review-queue requested-run setup moved into outcome fixture helpers without changing assertions.
 - CLI invalid manual-import fixture writer moved into manual import test helpers without changing assertions.
+- CLI connector fixture-daily argument construction moved into connector test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

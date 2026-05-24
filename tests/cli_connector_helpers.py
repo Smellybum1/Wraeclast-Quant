@@ -111,6 +111,36 @@ def write_connector_review(tmp_path: Path, **overrides) -> Path:
     return review_path
 
 
+def connector_fixture_daily_args(
+    *,
+    review_path: str | Path = "examples/connector_review_api_example.json",
+    fixture_path: str | Path = "examples/connector_fixture_signals_example.json",
+    database_path: Path | None = None,
+    brief_path: Path | None = None,
+    intel_path: Path | None = None,
+    site_dir: Path | None = None,
+    big_delta: str | int | None = None,
+) -> list[str]:
+    args = [
+        "connector-fixture-daily",
+        "--review-path",
+        str(review_path),
+        "--fixture-path",
+        str(fixture_path),
+    ]
+    if database_path is not None:
+        args.extend(["--database-path", str(database_path)])
+    if brief_path is not None:
+        args.extend(["--brief-path", str(brief_path)])
+    if intel_path is not None:
+        args.extend(["--intel-path", str(intel_path)])
+    if site_dir is not None:
+        args.extend(["--site-dir", str(site_dir)])
+    if big_delta is not None:
+        args.extend(["--big-delta", str(big_delta)])
+    return args
+
+
 def connector_fixture_daily_tuned_setup(tmp_path: Path) -> tuple[Path, Path]:
     database_path = tmp_path / "snapshots.db"
     fixture_path = tmp_path / "fixture.json"
@@ -143,6 +173,7 @@ def connector_fixture_daily_tuned_setup(tmp_path: Path) -> tuple[Path, Path]:
 __all__ = [
     "approved_api_resources_text",
     "conditional_api_resources_text",
+    "connector_fixture_daily_args",
     "connector_fixture_daily_tuned_setup",
     "connector_review",
     "discord_resources_text",

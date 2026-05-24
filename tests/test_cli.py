@@ -15,6 +15,9 @@ from cli_backup_helpers import sample_data_database as _sample_data_database
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
 from cli_connector_helpers import conditional_api_resources_text as _conditional_api_resources_text
 from cli_connector_helpers import (
+    connector_fixture_daily_args as _connector_fixture_daily_args,
+)
+from cli_connector_helpers import (
     connector_fixture_daily_tuned_setup as _connector_fixture_daily_tuned_setup,
 )
 from cli_connector_helpers import connector_review as _connector_review
@@ -1910,21 +1913,12 @@ def test_connector_fixture_daily_writes_artifacts(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--database-path",
-            str(database_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _connector_fixture_daily_args(
+            database_path=database_path,
+            brief_path=brief_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -1941,15 +1935,7 @@ def test_connector_fixture_daily_creates_one_connector_fixture_run(tmp_path: Pat
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--database-path",
-            str(database_path),
-        ],
+        _connector_fixture_daily_args(database_path=database_path),
     )
 
     runs = SnapshotRepository(database_path).list_recent_runs(limit=10)
@@ -1963,15 +1949,7 @@ def test_connector_fixture_daily_stores_sanitized_run_provenance(tmp_path: Path)
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--database-path",
-            str(database_path),
-        ],
+        _connector_fixture_daily_args(database_path=database_path),
     )
 
     provenance = SnapshotRepository(database_path).latest_run_provenance()
@@ -2001,21 +1979,14 @@ def test_connector_fixture_daily_uses_poe_ninja_connector_provenance(tmp_path: P
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/reviews/poe_ninja_poe2_currency_connector_review.json",
-            "--fixture-path",
-            "examples/poe_ninja_poe2_currency_fixture.json",
-            "--database-path",
-            str(database_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _connector_fixture_daily_args(
+            review_path="examples/reviews/poe_ninja_poe2_currency_connector_review.json",
+            fixture_path="examples/poe_ninja_poe2_currency_fixture.json",
+            database_path=database_path,
+            brief_path=brief_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+        ),
     )
 
     provenance = SnapshotRepository(database_path).latest_run_provenance()
@@ -2033,17 +2004,7 @@ def test_connector_fixture_daily_public_intel_latest_run_matches_created_run(
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--database-path",
-            str(database_path),
-            "--intel-path",
-            str(intel_path),
-        ],
+        _connector_fixture_daily_args(database_path=database_path, intel_path=intel_path),
     )
 
     latest = SnapshotRepository(database_path).latest_run()
@@ -2060,17 +2021,7 @@ def test_connector_fixture_daily_static_site_includes_fixture_items(tmp_path: Pa
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--database-path",
-            str(database_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _connector_fixture_daily_args(database_path=database_path, site_dir=site_dir),
     )
 
     assert result.exit_code == 0
@@ -2084,15 +2035,10 @@ def test_connector_fixture_daily_rejects_fixture_without_signals(tmp_path: Path)
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            "examples/connector_fixture_api_example.json",
-            "--database-path",
-            str(database_path),
-        ],
+        _connector_fixture_daily_args(
+            fixture_path="examples/connector_fixture_api_example.json",
+            database_path=database_path,
+        ),
     )
 
     assert result.exit_code != 0
@@ -2105,15 +2051,10 @@ def test_connector_fixture_daily_refuses_incomplete_review(tmp_path: Path) -> No
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/poe_ninja_poe2_currency_connector_review.json",
-            "--fixture-path",
-            "examples/connector_fixture_signals_example.json",
-            "--database-path",
-            str(database_path),
-        ],
+        _connector_fixture_daily_args(
+            review_path="examples/poe_ninja_poe2_currency_connector_review.json",
+            database_path=database_path,
+        ),
     )
 
     assert result.exit_code != 0
@@ -2126,17 +2067,11 @@ def test_connector_fixture_daily_uses_tuned_alert_settings(tmp_path: Path) -> No
 
     result = runner.invoke(
         app,
-        [
-            "connector-fixture-daily",
-            "--review-path",
-            "examples/connector_review_api_example.json",
-            "--fixture-path",
-            str(fixture_path),
-            "--database-path",
-            str(database_path),
-            "--big-delta",
-            "20",
-        ],
+        _connector_fixture_daily_args(
+            fixture_path=fixture_path,
+            database_path=database_path,
+            big_delta=20,
+        ),
     )
 
     assert result.exit_code == 0
