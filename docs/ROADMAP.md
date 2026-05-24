@@ -299,6 +299,7 @@
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
+- Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
 - Local connector fixture signal export to manual-import-compatible JSON.
 - Local connector fixture daily pipeline for end-to-end derived artifact generation without live collection.
 - First human-approved API resource: `poe_ninja_poe2_currency`.
@@ -316,7 +317,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include CLI helper cleanup or status artifact row cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include CLI helper cleanup or public artifact contract cleanup.
 
 ## Later Intelligence Improvements
 

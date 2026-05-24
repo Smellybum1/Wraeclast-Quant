@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 from wraeclast_quant.reports.public_intel_contract import PublicIntelValidationResult
-from wraeclast_quant.reports.site_bundle_models import REQUIRED_MANIFEST_KEYS
+from wraeclast_quant.reports.site_bundle_manifest_validation import manifest_errors
 
 
 def site_bundle_manifest(
@@ -35,18 +34,4 @@ def site_bundle_manifest(
         ),
     }
 
-
-def manifest_errors(manifest: dict[str, Any]) -> list[str]:
-    errors: list[str] = []
-    missing = sorted(REQUIRED_MANIFEST_KEYS - set(manifest))
-    if missing:
-        errors.append("manifest is missing: " + ", ".join(missing))
-    if manifest.get("product") != "Wraeclast Quant":
-        errors.append("manifest product must be Wraeclast Quant")
-    if manifest.get("derived_only") is not True:
-        errors.append("manifest derived_only must be true")
-    if manifest.get("network_behavior") != "none":
-        errors.append("manifest network_behavior must be none")
-    if not isinstance(manifest.get("files"), list):
-        errors.append("manifest files must be a list")
-    return errors
+__all__ = ["manifest_errors", "site_bundle_manifest"]
