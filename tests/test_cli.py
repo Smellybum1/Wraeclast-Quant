@@ -32,6 +32,7 @@ from cli_connector_helpers import write_connector_review as _write_connector_rev
 from cli_connector_helpers import (
     write_invalid_connector_fixture as _write_invalid_connector_fixture,
 )
+from cli_daily_helpers import daily_args as _daily_args
 from cli_daily_helpers import previous_stormglass_database as _previous_stormglass_database
 from cli_daily_helpers import small_mover_daily_setup as _small_mover_daily_setup
 from cli_database_helpers import sqlite_table_names as _sqlite_table_names
@@ -3067,18 +3068,13 @@ def test_daily_sample_data_writes_artifacts(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--sample-data",
-            "--database-path",
-            str(database_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _daily_args(
+            sample_data=True,
+            database_path=database_path,
+            brief_path=brief_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -3095,7 +3091,7 @@ def test_daily_creates_exactly_one_analysis_run(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["daily", "--sample-data", "--database-path", str(database_path)],
+        _daily_args(sample_data=True, database_path=database_path),
     )
 
     runs = SnapshotRepository(database_path).list_recent_runs(limit=10)
@@ -3109,14 +3105,7 @@ def test_daily_brief_includes_snapshot_changes_with_previous_run(tmp_path: Path)
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--sample-data",
-            "--database-path",
-            str(database_path),
-            "--brief-path",
-            str(brief_path),
-        ],
+        _daily_args(sample_data=True, database_path=database_path, brief_path=brief_path),
     )
 
     assert result.exit_code == 0
@@ -3129,14 +3118,7 @@ def test_daily_public_intel_latest_run_matches_daily_run(tmp_path: Path) -> None
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--sample-data",
-            "--database-path",
-            str(database_path),
-            "--intel-path",
-            str(intel_path),
-        ],
+        _daily_args(sample_data=True, database_path=database_path, intel_path=intel_path),
     )
 
     latest = SnapshotRepository(database_path).latest_run()
@@ -3152,14 +3134,7 @@ def test_daily_site_includes_title(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--sample-data",
-            "--database-path",
-            str(database_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _daily_args(sample_data=True, database_path=database_path, site_dir=site_dir),
     )
 
     assert result.exit_code == 0
@@ -3175,19 +3150,13 @@ def test_daily_input_path_writes_artifacts(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--input-path",
-            str(input_path),
-            "--database-path",
-            str(database_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _daily_args(
+            input_path=input_path,
+            database_path=database_path,
+            brief_path=brief_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -3204,13 +3173,7 @@ def test_daily_input_path_creates_one_manual_import_run(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--input-path",
-            str(input_path),
-            "--database-path",
-            str(database_path),
-        ],
+        _daily_args(input_path=input_path, database_path=database_path),
     )
 
     runs = SnapshotRepository(database_path).list_recent_runs(limit=10)
@@ -3226,15 +3189,7 @@ def test_daily_input_path_public_intel_latest_run_matches_created_run(tmp_path: 
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--input-path",
-            str(input_path),
-            "--database-path",
-            str(database_path),
-            "--intel-path",
-            str(intel_path),
-        ],
+        _daily_args(input_path=input_path, database_path=database_path, intel_path=intel_path),
     )
 
     latest = SnapshotRepository(database_path).latest_run()
@@ -3251,15 +3206,7 @@ def test_daily_input_path_static_site_includes_imported_item(tmp_path: Path) -> 
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--input-path",
-            str(input_path),
-            "--database-path",
-            str(database_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _daily_args(input_path=input_path, database_path=database_path, site_dir=site_dir),
     )
 
     assert result.exit_code == 0
@@ -3276,18 +3223,13 @@ def test_daily_pipeline_contract_doc_matches_printed_output_labels(tmp_path: Pat
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--sample-data",
-            "--database-path",
-            str(database_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-        ],
+        _daily_args(
+            sample_data=True,
+            database_path=database_path,
+            brief_path=brief_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -3302,14 +3244,11 @@ def test_daily_rejects_sample_data_and_input_path(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--sample-data",
-            "--input-path",
-            str(input_path),
-            "--database-path",
-            str(tmp_path / "snapshots.db"),
-        ],
+        _daily_args(
+            sample_data=True,
+            input_path=input_path,
+            database_path=tmp_path / "snapshots.db",
+        ),
     )
 
     assert result.exit_code != 0
@@ -3321,15 +3260,7 @@ def test_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "daily",
-            "--input-path",
-            str(input_path),
-            "--database-path",
-            str(database_path),
-            "--big-delta",
-            "20",
-        ],
+        _daily_args(input_path=input_path, database_path=database_path, big_delta=20),
     )
 
     assert result.exit_code == 0
@@ -3339,7 +3270,7 @@ def test_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
 def test_daily_requires_sample_data_or_input_path(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        ["daily", "--database-path", str(tmp_path / "snapshots.db")],
+        _daily_args(database_path=tmp_path / "snapshots.db"),
     )
 
     assert result.exit_code != 0
