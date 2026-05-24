@@ -105,6 +105,7 @@
 - Publish readiness archive inspection split from bundle row assembly behind the stable bundle facade.
 - Publish readiness service split database-run and artifact-freshness helpers behind the stable readiness facade.
 - Publish readiness contract checks split public-intel and static-site validation helpers behind the stable contract facade.
+- Publish readiness bundle path construction split from readiness evaluation behind the stable readiness facade.
 - Report command registration decomposed into focused report/export, static artifact, and publish handoff modules.
 - Static artifact command registration decomposed into focused site, public-intel validation, and site-bundle modules behind the stable report artifact aggregator.
 - Publishing command registration decomposed into focused publish-check, publish-handoff, and site-contract modules behind the stable report publishing aggregator.

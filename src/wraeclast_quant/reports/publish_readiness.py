@@ -13,31 +13,27 @@ from wraeclast_quant.reports.publish_readiness_artifacts import (
     archive_members,
 )
 from wraeclast_quant.reports.publish_readiness_payload import publish_check_payload
+from wraeclast_quant.reports.publish_readiness_paths import publish_readiness_paths
 from wraeclast_quant.reports.publish_readiness_rows import add_manual_publish_readiness
-from wraeclast_quant.reports.site_bundle import (
-    ARCHIVE_NAME,
-    check_site_bundle_health,
-)
+from wraeclast_quant.reports.site_bundle import check_site_bundle_health
 
 
 def check_publish_readiness(
     database_path: Path,
     bundle_dir: Path,
 ) -> PublishCheckResult:
-    archive_path = bundle_dir / ARCHIVE_NAME
-    intel_path = bundle_dir / "public_intel.json"
-    index_path = bundle_dir / "index.html"
+    paths = publish_readiness_paths(bundle_dir)
 
     checks: list[PublishCheckRow] = []
     blockers: list[str] = []
     latest_database_run_id = add_latest_database_run_check(checks, blockers, database_path)
 
-    bundle_health = check_site_bundle_health(bundle_dir)
-    files = archive_members(archive_path)
-    add_bundle_checks(checks, blockers, bundle_health, archive_path, files)
+    bundle_health = check_site_bundle_health(paths.bundle_dir)
+    files = archive_members(paths.archive_path)
+    add_bundle_checks(checks, blockers, bundle_health, paths.archive_path, files)
 
-    intel_latest_run_id = add_public_intel_checks(checks, blockers, intel_path)
-    static_latest_run_id = add_static_site_checks(checks, blockers, index_path)
+    intel_latest_run_id = add_public_intel_checks(checks, blockers, paths.intel_path)
+    static_latest_run_id = add_static_site_checks(checks, blockers, paths.index_path)
     bundle_latest_run_id = bundle_health.latest_run_id if bundle_health is not None else None
 
     add_artifact_freshness_checks(
@@ -55,7 +51,7 @@ def check_publish_readiness(
         ready=not blockers,
         latest_database_run_id=latest_database_run_id,
         bundle_latest_run_id=bundle_latest_run_id,
-        archive_path=archive_path,
+        archive_path=paths.archive_path,
         files=files,
         checks=checks,
         blockers=blockers,
