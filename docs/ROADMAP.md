@@ -45,6 +45,7 @@
 - Read-only CLI schema contract inspection.
 - Versioned derived public-intel contract.
 - Documented public-intel JSON v1.0 contract for future local/static-site consumers.
+- Public-intel contract validation split into focused model, file-loading, and payload-rule helpers behind the stable contract facade.
 - Local SQLite backup command for snapshot history.
 - Immediate post-create verification for local SQLite backups.
 - Read-only SQLite backup verification.
@@ -164,7 +165,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include public-intel contract validator cleanup or additional CLI test fixture cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include status artifact health cleanup or additional CLI test fixture cleanup.
 
 ## Later Intelligence Improvements
 
