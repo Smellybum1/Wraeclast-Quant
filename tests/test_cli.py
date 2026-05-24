@@ -11,7 +11,14 @@ from wraeclast_quant.reports.site_bundle import write_site_bundle
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
+from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
+from cli_connector_helpers import conditional_api_resources_text as _conditional_api_resources_text
 from cli_connector_helpers import connector_review as _connector_review
+from cli_connector_helpers import discord_resources_text as _discord_resources_text
+from cli_connector_helpers import manual_source_resources_text as _manual_source_resources_text
+from cli_connector_helpers import poe_ninja_currency_resources_text as _poe_ninja_currency_resources_text
+from cli_connector_helpers import write_connector_resources as _write_connector_resources
+from cli_connector_helpers import write_connector_review as _write_connector_review
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_domain_helpers import manual_item as _manual_item
 from cli_domain_helpers import opportunity as _opportunity
@@ -883,19 +890,11 @@ def test_preflight_command_prints_table_and_summary(tmp_path: Path) -> None:
 
 
 def test_connector_check_ready_review_prints_ready_status(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(json.dumps(_connector_review()), encoding="utf-8")
+    review_path = _write_connector_review(tmp_path)
 
     result = runner.invoke(
         app,
@@ -916,22 +915,12 @@ def test_connector_check_ready_review_prints_ready_status(tmp_path: Path) -> Non
 
 
 def test_connector_candidates_prints_candidate_rows_and_draft_commands(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- id: poe_ninja_poe2_currency
-  name: poe.ninja POE2 Currency
-  type: price_site
-  url: https://poe.ninja/poe2/economy/vaal/currency
-  priority: high
-  allowed_use: manual-or-api-if-available
-- name: Manual Source
-  type: manual_workflow
-  priority: critical
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _poe_ninja_currency_resources_text(
+            allowed_use="manual-or-api-if-available",
+            include_manual_source=True,
+        ),
     )
 
     result = runner.invoke(
@@ -951,17 +940,7 @@ def test_connector_candidates_prints_candidate_rows_and_draft_commands(tmp_path:
 
 
 def test_connector_candidates_marks_discord_as_compliance_gated(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Discord Signals
-- name: Official Discord
-  type: discord
-  url: https://discord.gg/example
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_connector_resources(tmp_path, _discord_resources_text())
 
     result = runner.invoke(
         app,
@@ -976,17 +955,9 @@ def test_connector_candidates_marks_discord_as_compliance_gated(tmp_path: Path) 
 
 def test_connector_candidates_is_read_only(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- id: poe_ninja_poe2_currency
-  name: poe.ninja POE2 Currency
-  type: price_site
-  url: https://poe.ninja/poe2/economy/vaal/currency
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _poe_ninja_currency_resources_text(allowed_use="manual-or-api-if-available"),
     )
 
     result = runner.invoke(
@@ -1000,17 +971,9 @@ def test_connector_candidates_is_read_only(tmp_path: Path, monkeypatch) -> None:
 
 
 def test_connector_draft_writes_local_review_json(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- id: poe_ninja_poe2_currency
-  name: poe.ninja POE2 Currency
-  type: price_site
-  url: https://poe.ninja/poe2/economy/vaal/currency
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _poe_ninja_currency_resources_text(),
     )
     output_path = tmp_path / "review.json"
 
@@ -1049,16 +1012,8 @@ def test_connector_draft_writes_local_review_json(tmp_path: Path) -> None:
 
 
 def test_connector_review_prep_writes_draft_and_checklist(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_text = """
-## Price Data
-- name: poe.ninja POE2 Currency
-  id: poe_ninja_poe2_currency
-  type: price_site
-  url: https://poe.ninja/poe2/economy/vaal/currency
-  allowed_use: manual-or-api-if-available
-"""
-    resources_path.write_text(resources_text, encoding="utf-8")
+    resources_text = _poe_ninja_currency_resources_text(allowed_use="manual-or-api-if-available")
+    resources_path = _write_connector_resources(tmp_path, resources_text)
     output_dir = tmp_path / "reviews"
 
     result = runner.invoke(
@@ -1097,17 +1052,9 @@ def test_connector_review_prep_writes_draft_and_checklist(tmp_path: Path) -> Non
 def test_connector_review_prep_untouched_draft_fails_connector_check(
     tmp_path: Path,
 ) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- name: poe.ninja POE2 Currency
-  id: poe_ninja_poe2_currency
-  type: price_site
-  url: https://poe.ninja/poe2/economy/vaal/currency
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _poe_ninja_currency_resources_text(allowed_use="manual-or-api-if-available"),
     )
     output_dir = tmp_path / "reviews"
 
@@ -1142,14 +1089,9 @@ def test_connector_review_prep_untouched_draft_fails_connector_check(
 
 
 def test_connector_review_prep_rejects_missing_resource(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- name: Manual Source
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        "\n## Price Data\n- name: Manual Source\n  allowed_use: manual-review\n",
     )
 
     result = runner.invoke(
@@ -1172,17 +1114,7 @@ def test_connector_review_prep_rejects_missing_resource(tmp_path: Path) -> None:
 
 
 def test_connector_review_prep_rejects_discord_resource(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Social
-- name: Official Discord
-  type: discord
-  url: https://discord.gg/example
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_connector_resources(tmp_path, _discord_resources_text())
 
     result = runner.invoke(
         app,
@@ -1204,20 +1136,8 @@ def test_connector_review_prep_rejects_discord_resource(tmp_path: Path) -> None:
 
 
 def test_connector_review_evidence_updates_json_and_prints_status(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- id: approved_api
-  name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(json.dumps(_connector_review(source_terms_reviewed=False)), encoding="utf-8")
+    resources_path = _write_connector_resources(tmp_path, _approved_api_resources_text())
+    review_path = _write_connector_review(tmp_path, source_terms_reviewed=False)
 
     result = runner.invoke(
         app,
@@ -1262,20 +1182,12 @@ def test_connector_review_evidence_updates_json_and_prints_status(tmp_path: Path
 def test_connector_review_evidence_preserves_unrelated_fields_and_resources(
     tmp_path: Path,
 ) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_text = """
-## Official Sources
-- id: approved_api
-  name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-"""
-    resources_path.write_text(resources_text, encoding="utf-8")
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(_connector_review(review_notes="Existing note.", rate_limit_per_minute=12)),
-        encoding="utf-8",
+    resources_text = _approved_api_resources_text()
+    resources_path = _write_connector_resources(tmp_path, resources_text)
+    review_path = _write_connector_review(
+        tmp_path,
+        review_notes="Existing note.",
+        rate_limit_per_minute=12,
     )
 
     result = runner.invoke(
@@ -1300,8 +1212,7 @@ def test_connector_review_evidence_preserves_unrelated_fields_and_resources(
 
 
 def test_connector_review_evidence_invalid_values_exit_nonzero(tmp_path: Path) -> None:
-    review_path = tmp_path / "review.json"
-    review_path.write_text(json.dumps(_connector_review()), encoding="utf-8")
+    review_path = _write_connector_review(tmp_path)
 
     result = runner.invoke(
         app,
@@ -1319,18 +1230,7 @@ def test_connector_review_evidence_invalid_values_exit_nonzero(tmp_path: Path) -
 
 
 def test_connector_check_on_untouched_draft_exits_nonzero(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- id: approved_api
-  name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_connector_resources(tmp_path, _approved_api_resources_text())
     review_path = tmp_path / "draft.json"
     draft_result = runner.invoke(
         app,
@@ -1364,18 +1264,7 @@ def test_connector_check_on_untouched_draft_exits_nonzero(tmp_path: Path) -> Non
 
 
 def test_connector_review_status_incomplete_review_exits_zero_with_blockers(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- id: approved_api
-  name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_connector_resources(tmp_path, _approved_api_resources_text())
     review_path = tmp_path / "draft.json"
     draft_result = runner.invoke(
         app,
@@ -1415,16 +1304,9 @@ def test_connector_review_status_incomplete_review_exits_zero_with_blockers(tmp_
 
 
 def test_connector_review_status_invalid_json_exits_nonzero(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
     review_path = tmp_path / "review.json"
     review_path.write_text("{not json", encoding="utf-8")
@@ -1445,16 +1327,9 @@ def test_connector_review_status_invalid_json_exits_nonzero(tmp_path: Path) -> N
 
 
 def test_connector_draft_rejects_missing_resource(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
     output_path = tmp_path / "draft.json"
 
@@ -1479,17 +1354,7 @@ def test_connector_draft_rejects_missing_resource(tmp_path: Path) -> None:
 
 
 def test_connector_draft_rejects_discord_resource(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Discord Signals
-- name: Official Discord
-  type: discord
-  url: https://discord.gg/example
-  allowed_use: api
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_connector_resources(tmp_path, _discord_resources_text())
     output_path = tmp_path / "draft.json"
 
     result = runner.invoke(
@@ -1513,21 +1378,11 @@ def test_connector_draft_rejects_discord_resource(tmp_path: Path) -> None:
 
 
 def test_connector_check_invalid_review_exits_nonzero_with_blockers(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  type: official
-  url: https://example.test
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Manual Source", source_terms_reviewed=False)),
-        encoding="utf-8",
+    resources_path = _write_connector_resources(tmp_path, _manual_source_resources_text())
+    review_path = _write_connector_review(
+        tmp_path,
+        resource_name="Manual Source",
+        source_terms_reviewed=False,
     )
 
     result = runner.invoke(
@@ -1549,28 +1404,16 @@ def test_connector_check_invalid_review_exits_nonzero_with_blockers(tmp_path: Pa
 
 
 def test_connector_check_missing_claimed_evidence_exits_nonzero(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(
-            _connector_review(
-                source_terms_url="",
-                robots_or_api_policy_url="",
-                reviewed_at="",
-                allowed_data_shape="",
-            )
-        ),
-        encoding="utf-8",
+    review_path = _write_connector_review(
+        tmp_path,
+        source_terms_url="",
+        robots_or_api_policy_url="",
+        reviewed_at="",
+        allowed_data_shape="",
     )
 
     result = runner.invoke(
@@ -1593,28 +1436,16 @@ def test_connector_check_missing_claimed_evidence_exits_nonzero(tmp_path: Path) 
 
 
 def test_connector_review_status_marks_missing_claimed_evidence_blocked(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(
-            _connector_review(
-                source_terms_url="",
-                robots_or_api_policy_url="",
-                reviewed_at="",
-                allowed_data_shape="",
-            )
-        ),
-        encoding="utf-8",
+    review_path = _write_connector_review(
+        tmp_path,
+        source_terms_url="",
+        robots_or_api_policy_url="",
+        reviewed_at="",
+        allowed_data_shape="",
     )
 
     result = runner.invoke(
@@ -1636,23 +1467,8 @@ def test_connector_review_status_marks_missing_claimed_evidence_blocked(tmp_path
 
 
 def test_connector_approval_helper_prints_manual_allowed_use_suggestion(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- id: conditional_api
-  name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
-    )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API")),
-        encoding="utf-8",
-    )
+    resources_path = _write_connector_resources(tmp_path, _conditional_api_resources_text())
+    review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
 
     result = runner.invoke(
         app,
@@ -1676,21 +1492,14 @@ def test_connector_approval_helper_prints_manual_allowed_use_suggestion(tmp_path
 def test_connector_approval_helper_incomplete_review_prints_blockers_without_suggestion(
     tmp_path: Path,
 ) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _conditional_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API", source_terms_url="")),
-        encoding="utf-8",
+    review_path = _write_connector_review(
+        tmp_path,
+        resource_name="Conditional API",
+        source_terms_url="",
     )
 
     result = runner.invoke(
@@ -1712,21 +1521,9 @@ def test_connector_approval_helper_incomplete_review_prints_blockers_without_sug
 
 
 def test_connector_approval_helper_is_read_only(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    original = """
-## Price Data
-- id: conditional_api
-  name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-"""
-    resources_path.write_text(original, encoding="utf-8")
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API")),
-        encoding="utf-8",
-    )
+    original = _conditional_api_resources_text()
+    resources_path = _write_connector_resources(tmp_path, original)
+    review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
 
     result = runner.invoke(
         app,
@@ -1744,24 +1541,9 @@ def test_connector_approval_helper_is_read_only(tmp_path: Path) -> None:
 
 
 def test_connector_review_report_writes_markdown(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- id: conditional_api
-  name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
-    )
-    review_path = tmp_path / "review.json"
+    resources_path = _write_connector_resources(tmp_path, _conditional_api_resources_text())
+    review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
     output_path = tmp_path / "review_report.md"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API")),
-        encoding="utf-8",
-    )
 
     result = runner.invoke(
         app,
@@ -1789,16 +1571,9 @@ def test_connector_review_report_writes_markdown(tmp_path: Path) -> None:
 
 
 def test_connector_review_report_invalid_review_exits_nonzero(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
     review_path = tmp_path / "review.json"
     output_path = tmp_path / "review_report.md"
@@ -1823,22 +1598,10 @@ def test_connector_review_report_invalid_review_exits_nonzero(tmp_path: Path) ->
 
 
 def test_connector_review_report_is_read_only_for_resources(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    original = """
-## Price Data
-- id: conditional_api
-  name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-"""
-    resources_path.write_text(original, encoding="utf-8")
-    review_path = tmp_path / "review.json"
+    original = _conditional_api_resources_text()
+    resources_path = _write_connector_resources(tmp_path, original)
+    review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
     output_path = tmp_path / "review_report.md"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API")),
-        encoding="utf-8",
-    )
 
     result = runner.invoke(
         app,
@@ -1859,24 +1622,9 @@ def test_connector_review_report_is_read_only_for_resources(tmp_path: Path) -> N
 
 
 def test_connector_approval_patch_writes_patch_preview(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- id: conditional_api
-  name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
-    )
-    review_path = tmp_path / "review.json"
+    resources_path = _write_connector_resources(tmp_path, _conditional_api_resources_text())
+    review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
     output_path = tmp_path / "approval.patch"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API")),
-        encoding="utf-8",
-    )
 
     result = runner.invoke(
         app,
@@ -1902,23 +1650,16 @@ def test_connector_approval_patch_writes_patch_preview(tmp_path: Path) -> None:
 
 
 def test_connector_approval_patch_incomplete_review_writes_no_patch(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Price Data
-- name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _conditional_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
+    review_path = _write_connector_review(
+        tmp_path,
+        resource_name="Conditional API",
+        source_terms_url="",
+    )
     output_path = tmp_path / "approval.patch"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API", source_terms_url="")),
-        encoding="utf-8",
-    )
 
     result = runner.invoke(
         app,
@@ -1940,22 +1681,10 @@ def test_connector_approval_patch_incomplete_review_writes_no_patch(tmp_path: Pa
 
 
 def test_connector_approval_patch_does_not_modify_resources(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    original = """
-## Price Data
-- id: conditional_api
-  name: Conditional API
-  type: price_site
-  url: https://example.test/api
-  allowed_use: manual-or-api-if-available
-"""
-    resources_path.write_text(original, encoding="utf-8")
-    review_path = tmp_path / "review.json"
+    original = _conditional_api_resources_text()
+    resources_path = _write_connector_resources(tmp_path, original)
+    review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
     output_path = tmp_path / "approval.patch"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Conditional API")),
-        encoding="utf-8",
-    )
 
     result = runner.invoke(
         app,
@@ -2102,19 +1831,11 @@ def test_connector_dry_run_is_read_only(tmp_path: Path, monkeypatch) -> None:
         ),
         encoding="utf-8",
     )
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Fixture Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        "\n## Fixture Sources\n- name: Approved API\n  type: official\n  url: https://example.test/api\n  allowed_use: api\n",
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(json.dumps(_connector_review()), encoding="utf-8")
+    review_path = _write_connector_review(tmp_path)
 
     result = runner.invoke(
         app,
@@ -2544,19 +2265,11 @@ def test_run_provenance_missing_database_does_not_create_database(tmp_path: Path
 
 
 def test_connector_plan_ready_review_prints_fetch_plan(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(json.dumps(_connector_review()), encoding="utf-8")
+    review_path = _write_connector_review(tmp_path)
 
     result = runner.invoke(
         app,
@@ -2578,21 +2291,11 @@ def test_connector_plan_ready_review_prints_fetch_plan(tmp_path: Path) -> None:
 
 
 def test_connector_plan_invalid_review_exits_nonzero_with_blockers(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  type: official
-  url: https://example.test
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(
-        json.dumps(_connector_review(resource_name="Manual Source", source_terms_reviewed=False)),
-        encoding="utf-8",
+    resources_path = _write_connector_resources(tmp_path, _manual_source_resources_text())
+    review_path = _write_connector_review(
+        tmp_path,
+        resource_name="Manual Source",
+        source_terms_reviewed=False,
     )
 
     result = runner.invoke(
@@ -2614,19 +2317,11 @@ def test_connector_plan_invalid_review_exits_nonzero_with_blockers(tmp_path: Pat
 
 def test_connector_plan_does_not_create_cache_files(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Approved API
-  type: official
-  url: https://example.test/api
-  allowed_use: api
-""",
-        encoding="utf-8",
+    resources_path = _write_connector_resources(
+        tmp_path,
+        _approved_api_resources_text(include_id=False),
     )
-    review_path = tmp_path / "review.json"
-    review_path.write_text(json.dumps(_connector_review()), encoding="utf-8")
+    review_path = _write_connector_review(tmp_path)
 
     result = runner.invoke(
         app,
