@@ -142,6 +142,7 @@
 - Read-only connector approval patch preview for manual `RESOURCES.md` allowed-use changes.
 - Local connector fixture runner for synthetic output-shape validation before live connector work.
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
+- Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Local connector fixture signal export to manual-import-compatible JSON.
 - Local connector fixture daily pipeline for end-to-end derived artifact generation without live collection.
@@ -159,7 +160,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include targeted test helper cleanup or public-intel payload cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include status health report-builder cleanup or targeted test helper cleanup.
 
 ## Later Intelligence Improvements
 
