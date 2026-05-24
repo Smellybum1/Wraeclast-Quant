@@ -1,26 +1,12 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import sqlite3
 
+from wraeclast_quant.storage.database_summary_models import (
+    DatabaseContentSummary,
+    LatestRunSummary,
+)
 from wraeclast_quant.storage.schema import REQUIRED_SQLITE_TABLES
-
-
-@dataclass(frozen=True)
-class LatestRunSummary:
-    id: int
-    created_at: str
-    source_mode: str
-    item_count: int
-
-
-@dataclass(frozen=True)
-class DatabaseContentSummary:
-    analysis_run_count: int
-    scored_opportunity_count: int
-    report_artifact_count: int
-    recommendation_outcome_count: int
-    latest_run: LatestRunSummary | None
 
 
 def read_table_names(connection: sqlite3.Connection) -> set[str]:

@@ -51,6 +51,7 @@
 - Read-only SQLite database health check.
 - SQLite database health service split into focused result model and read-only inspection helpers behind the stable health facade.
 - SQLite database and backup verification summary queries split into a shared helper behind stable health and backup facades.
+- SQLite database summary models split from shared read-only summary queries behind the stable query facade.
 - Shared local SQLite schema contract for database and backup verification.
 - Documented local SQLite schema contract with drift coverage.
 - Read-only CLI schema contract inspection.
