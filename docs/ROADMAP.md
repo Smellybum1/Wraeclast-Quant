@@ -246,6 +246,7 @@
 - Local connector candidate report for prioritizing source-specific reviews.
 - Connector candidate command rendering split into a focused helper behind the stable candidate report command.
 - Connector candidate service split into focused model, command-text, and ranking helpers behind the stable candidate facade.
+- Connector candidate ranking split candidate construction and priority ordering behind the stable ranking facade.
 - Local connector review status checklist for inspecting incomplete review drafts.
 - Optional connector review evidence fields for local source-term auditability.
 - Connector review evidence gate requiring reviewed URLs, review date, and allowed data shape before readiness.
