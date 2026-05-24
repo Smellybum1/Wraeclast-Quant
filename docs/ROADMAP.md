@@ -100,6 +100,7 @@
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
+- Connector review report command rendering split into a focused helper behind the stable report command.
 - Connector approval command rendering split into focused helper/patch table rendering behind stable approval commands.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Resource command registration decomposed into focused collect, compliance, and preflight modules behind the stable resource command aggregator.
@@ -139,7 +140,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include connector review report rendering cleanup or focused connector planning command cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include focused connector planning command cleanup or connector review prep rendering cleanup.
 
 ## Later Intelligence Improvements
 
