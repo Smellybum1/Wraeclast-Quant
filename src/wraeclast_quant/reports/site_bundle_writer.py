@@ -7,15 +7,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
-from wraeclast_quant.reports.public_intel_contract import (
-    PublicIntelContractError,
-    validate_public_intel_file,
-)
+from wraeclast_quant.reports.site_bundle_inputs import validate_site_bundle_inputs
 from wraeclast_quant.reports.site_bundle_manifest import site_bundle_manifest
 from wraeclast_quant.reports.site_bundle_models import (
     ARCHIVE_NAME,
     DEFAULT_SITE_BUNDLE_DIR,
-    SiteBundleError,
     SiteBundleResult,
 )
 from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
@@ -27,18 +23,7 @@ def write_site_bundle(
     output_dir: Path = DEFAULT_SITE_BUNDLE_DIR,
 ) -> SiteBundleResult:
     index_path = site_dir / "index.html"
-    if not intel_path.exists():
-        raise SiteBundleError("No public intel export found. Run wq export first.")
-    if not index_path.exists():
-        raise SiteBundleError("No static site found. Run wq site first.")
-    try:
-        validation = validate_public_intel_file(intel_path)
-    except PublicIntelContractError as error:
-        raise SiteBundleError(str(error)) from error
-    if not validation.valid:
-        raise SiteBundleError(
-            "Public intel contract validation failed: " + "; ".join(validation.errors)
-        )
+    validation = validate_site_bundle_inputs(intel_path, index_path)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     bundle_index = output_dir / "index.html"
