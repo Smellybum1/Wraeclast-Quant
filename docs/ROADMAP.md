@@ -301,6 +301,7 @@
 - Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
+- Site contract artifact summary loading split from payload assembly behind the stable contract facade.
 - Local connector fixture signal export to manual-import-compatible JSON.
 - Local connector fixture daily pipeline for end-to-end derived artifact generation without live collection.
 - First human-approved API resource: `poe_ninja_poe2_currency`.

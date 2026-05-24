@@ -10,13 +10,11 @@ from wraeclast_quant.reports.publish_check import (
     publish_check_payload,
 )
 from wraeclast_quant.reports.site_bundle import REQUIRED_ARCHIVE_MEMBERS
+from wraeclast_quant.reports.site_contract_artifact_summaries import (
+    site_contract_artifact_summaries,
+)
 from wraeclast_quant.reports.site_contract_constants import SITE_CONTRACT_SCHEMA_VERSION
 from wraeclast_quant.reports.site_contract_sections import artifact_run_ids, safety_payload
-from wraeclast_quant.reports.site_contract_summaries import (
-    bundle_summary,
-    public_intel_summary,
-    static_site_summary,
-)
 
 
 def build_site_contract(
@@ -31,9 +29,7 @@ def site_contract_payload(
     readiness: PublishCheckResult,
     bundle_dir: Path,
 ) -> dict[str, Any]:
-    public_intel = public_intel_summary(bundle_dir / "public_intel.json")
-    static_site = static_site_summary(bundle_dir / "index.html")
-    bundle = bundle_summary(bundle_dir)
+    public_intel, static_site, bundle = site_contract_artifact_summaries(bundle_dir)
 
     return {
         "schema_version": SITE_CONTRACT_SCHEMA_VERSION,
@@ -48,3 +44,6 @@ def site_contract_payload(
         "publish_readiness": publish_check_payload(readiness),
         "safety": safety_payload(),
     }
+
+
+__all__ = ["build_site_contract", "site_contract_payload"]
