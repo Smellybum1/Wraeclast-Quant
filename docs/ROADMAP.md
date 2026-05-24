@@ -133,6 +133,7 @@
 - Connector review status builder split row assembly behind the stable review status facade.
 - Connector review status rows split into focused core, evidence, safety, limits, execution, and readiness helpers behind the stable row facade.
 - Backup storage service decomposed into focused model, writer, verifier, listing, and restore-guidance modules behind the stable backup facade.
+- Backup restore guidance split from backup listing behind the stable listing facade.
 - Maintenance outcome command registration decomposed into focused record/list, review queue/coverage, and report modules behind the stable outcome aggregator.
 - Maintenance outcome command table rendering split into focused helpers behind the stable outcome command modules.
 - Outcome review repository queries split into focused queue, joined-record, and summary helpers behind the stable repository facade.
