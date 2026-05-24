@@ -114,6 +114,7 @@
 - Daily pipeline orchestration decomposed into a shared workflow service used by manual/sample and connector-fixture daily commands.
 - Daily pipeline workflow service split snapshot persistence, provenance, and artifact writing behind the stable workflow facade.
 - Daily pipeline alert settings construction split behind the stable workflow facade.
+- Daily pipeline resource context loading split from artifact writing behind the stable artifact workflow facade.
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.
 - Snapshot command registration and local table rendering decomposed into focused listing, comparison, alert, and rendering modules.
 - Snapshot command rendering split into focused alert, comparison, formatting, and console helpers behind the stable rendering facade.

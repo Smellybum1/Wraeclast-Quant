@@ -3,8 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from wraeclast_quant.config.compliance import assess_resources
-from wraeclast_quant.config.resources_loader import load_resources
 from wraeclast_quant.intelligence.alerts import AlertCandidate, AlertRuleSettings, generate_alerts
 from wraeclast_quant.intelligence.scoring import ScoredOpportunity
 from wraeclast_quant.intelligence.snapshot_deltas import SnapshotComparison
@@ -13,6 +11,7 @@ from wraeclast_quant.reports.public_intel import build_public_intel, write_publi
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.models import AnalysisRunRecord
 from wraeclast_quant.storage.repositories import SnapshotRepository
+from wraeclast_quant.workflows.daily_pipeline_resources import load_daily_resource_context
 
 
 @dataclass(frozen=True)
@@ -36,8 +35,7 @@ def write_daily_artifacts(
     alert_settings: AlertRuleSettings,
     comparison: SnapshotComparison | None,
 ) -> DailyArtifactOutput | None:
-    resources = load_resources(resources_path)
-    assessments = assess_resources(resources)
+    resource_context = load_daily_resource_context(resources_path)
 
     written_brief_path = write_market_brief(
         opportunities,
@@ -48,8 +46,8 @@ def write_daily_artifacts(
 
     payload = build_public_intel(
         repository=repository,
-        resources=resources,
-        assessments=assessments,
+        resources=resource_context.resources,
+        assessments=resource_context.assessments,
         limit=limit,
         alert_settings=alert_settings,
     )
