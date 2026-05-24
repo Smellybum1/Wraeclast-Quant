@@ -7,10 +7,15 @@ from wraeclast_quant.cli import app
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
 from cli_backup_helpers import backup_db_args as _backup_db_args
+from cli_backup_helpers import backups_args as _backups_args
+from cli_backup_helpers import db_check_args as _db_check_args
 from cli_backup_helpers import invalid_backup_dir as _invalid_backup_dir
 from cli_backup_helpers import migration_readiness_args as _migration_readiness_args
+from cli_backup_helpers import migration_readiness_json_args as _migration_readiness_json_args
+from cli_backup_helpers import restore_helper_args as _restore_helper_args
 from cli_backup_helpers import sample_data_backup as _sample_data_backup
 from cli_backup_helpers import sample_data_database as _sample_data_database
+from cli_backup_helpers import verify_backup_args as _verify_backup_args
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
 from cli_connector_helpers import conditional_api_resources_text as _conditional_api_resources_text
 from cli_connector_helpers import connector_dry_run_args as _connector_dry_run_args
@@ -2227,7 +2232,7 @@ def test_backup_db_command_handles_missing_database_without_creating_output_dir(
 def test_verify_backup_command_prints_counts(tmp_path: Path) -> None:
     _database_path, _backup_dir, backup_path = _sample_data_backup(tmp_path)
 
-    result = runner.invoke(app, ["verify-backup", "--backup-path", str(backup_path)])
+    result = runner.invoke(app, _verify_backup_args(backup_path))
 
     assert result.exit_code == 0
     assert "SQLite Backup Verification" in result.output
@@ -2242,7 +2247,7 @@ def test_verify_backup_command_prints_counts(tmp_path: Path) -> None:
 def test_verify_backup_command_rejects_missing_file_without_creating_it(tmp_path: Path) -> None:
     backup_path = tmp_path / "missing" / "backup.db"
 
-    result = runner.invoke(app, ["verify-backup", "--backup-path", str(backup_path)])
+    result = runner.invoke(app, _verify_backup_args(backup_path))
 
     assert result.exit_code != 0
     assert "Backup file not found" in result.output
@@ -2253,7 +2258,7 @@ def test_verify_backup_command_rejects_missing_file_without_creating_it(tmp_path
 def test_db_check_command_prints_database_health(tmp_path: Path) -> None:
     database_path = _sample_data_database(tmp_path)
 
-    result = runner.invoke(app, ["db-check", "--database-path", str(database_path)])
+    result = runner.invoke(app, _db_check_args(database_path))
 
     assert result.exit_code == 0
     assert "SQLite Database Check" in result.output
@@ -2270,7 +2275,7 @@ def test_db_check_command_prints_database_health(tmp_path: Path) -> None:
 def test_db_check_command_handles_missing_database_without_creating_it(tmp_path: Path) -> None:
     database_path = tmp_path / "missing" / "snapshots.db"
 
-    result = runner.invoke(app, ["db-check", "--database-path", str(database_path)])
+    result = runner.invoke(app, _db_check_args(database_path))
 
     assert result.exit_code == 0
     assert "No database found." in result.output
@@ -2281,7 +2286,7 @@ def test_db_check_command_handles_missing_database_without_creating_it(tmp_path:
 def test_backups_command_lists_local_backups(tmp_path: Path) -> None:
     _database_path, backup_dir, _backup_path = _sample_data_backup(tmp_path)
 
-    result = runner.invoke(app, ["backups", "--backup-dir", str(backup_dir)])
+    result = runner.invoke(app, _backups_args(backup_dir))
 
     assert result.exit_code == 0
     assert "Local SQLite Backups" in result.output
@@ -2294,7 +2299,7 @@ def test_backups_command_lists_local_backups(tmp_path: Path) -> None:
 def test_backups_command_handles_missing_directory_without_creating_it(tmp_path: Path) -> None:
     backup_dir = tmp_path / "missing_backups"
 
-    result = runner.invoke(app, ["backups", "--backup-dir", str(backup_dir)])
+    result = runner.invoke(app, _backups_args(backup_dir))
 
     assert result.exit_code == 0
     assert "No database backups found." in result.output
@@ -2307,13 +2312,7 @@ def test_restore_helper_prints_manual_restore_command_without_writing_target(tmp
 
     result = runner.invoke(
         app,
-        [
-            "restore-helper",
-            "--backup-path",
-            str(backup_path),
-            "--database-path",
-            str(target_path),
-        ],
+        _restore_helper_args(backup_path, target_path),
     )
 
     assert result.exit_code == 0
@@ -2331,13 +2330,7 @@ def test_restore_helper_rejects_missing_backup_without_creating_target(tmp_path:
 
     result = runner.invoke(
         app,
-        [
-            "restore-helper",
-            "--backup-path",
-            str(backup_path),
-            "--database-path",
-            str(target_path),
-        ],
+        _restore_helper_args(backup_path, target_path),
     )
 
     assert result.exit_code != 0
@@ -2368,14 +2361,7 @@ def test_migration_readiness_json_outputs_stable_fields(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "migration-readiness",
-            "--json",
-            "--database-path",
-            str(database_path),
-            "--backup-dir",
-            str(backup_dir),
-        ],
+        _migration_readiness_json_args(database_path, backup_dir),
     )
 
     assert result.exit_code == 0
