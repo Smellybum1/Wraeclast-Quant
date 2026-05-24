@@ -109,6 +109,7 @@
 - Static site rendering helper logic decomposed into focused section, HTML helper, and style modules behind the stable renderer entry point.
 - Static site section rendering split into focused run/history, review/compliance, and market-change helpers behind the stable section facade.
 - Static site market sections split into focused alert, opportunity, and snapshot-change helpers behind the stable market-section facade.
+- Static site HTML helpers split into focused metadata, table, and formatting modules behind the stable HTML facade.
 - Outcome repository helper logic decomposed into focused policy, record, review-query, and coverage modules behind the stable repository mixin.
 - Daily command registration decomposed into focused daily-run and schedule-helper modules behind the stable command aggregator.
 - Daily run result rendering split into a focused helper behind the stable `daily` command.
