@@ -126,6 +126,7 @@
 - Connector review check command rendering split into a focused helper behind the stable `connector-check` command.
 - Connector review report command rendering split into a focused helper behind the stable report command.
 - Connector review report generation split fetch-plan lookup and Markdown section helpers behind the stable report service facade.
+- Connector review report sections split into focused audit/evidence and safety/planning helpers behind the stable Markdown facade.
 - Connector approval command rendering split into focused helper/patch table rendering behind stable approval commands.
 - Connector approval policy split suggestion decisions and patch-preview writing behind the stable approval policy facade.
 - Connector planning command rendering split into a focused helper behind the stable `connector-plan` command.
@@ -175,7 +176,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include another focused reporting cleanup or source-review docs/test fixture cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include daily pipeline workflow cleanup or SQLite health service cleanup.
 
 ## Later Intelligence Improvements
 
