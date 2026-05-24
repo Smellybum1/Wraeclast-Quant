@@ -44,7 +44,9 @@ from cli_manual_import_helpers import (
 )
 from cli_manual_import_helpers import write_manual_import_csv as _write_manual_import_csv
 from cli_manual_import_helpers import write_manual_import_json as _write_manual_import_json
+from cli_market_flow_helpers import alerts_args as _alerts_args
 from cli_market_flow_helpers import buy_crossing_database as _buy_crossing_database
+from cli_market_flow_helpers import compare_args as _compare_args
 from cli_market_flow_helpers import (
     comparison_database_with_changes as _comparison_database_with_changes,
 )
@@ -2693,7 +2695,7 @@ def test_calibration_report_command_writes_markdown(tmp_path: Path) -> None:
 def test_compare_command_prints_delta(tmp_path: Path) -> None:
     database_path = _comparison_database_with_changes(tmp_path)
 
-    result = runner.invoke(app, ["compare", "--database-path", str(database_path)])
+    result = runner.invoke(app, _compare_args(database_path))
 
     assert result.exit_code == 0
     assert "Top Movers" in result.output
@@ -2708,7 +2710,7 @@ def test_compare_command_handles_missing_previous_run(tmp_path: Path) -> None:
     repository = SnapshotRepository(database_path)
     repository.create_analysis_run(source_mode="sample-data", item_count=0)
 
-    result = runner.invoke(app, ["compare", "--database-path", str(database_path)])
+    result = runner.invoke(app, _compare_args(database_path))
 
     assert result.exit_code == 0
     assert "No previous snapshot found for comparison." in result.output
@@ -2717,7 +2719,7 @@ def test_compare_command_handles_missing_previous_run(tmp_path: Path) -> None:
 def test_alerts_command_prints_candidates(tmp_path: Path) -> None:
     database_path = _buy_crossing_database(tmp_path)
 
-    result = runner.invoke(app, ["alerts", "--database-path", str(database_path)])
+    result = runner.invoke(app, _alerts_args(database_path))
 
     assert result.exit_code == 0
     assert "Local Alert Preview" in result.output
@@ -2728,7 +2730,7 @@ def test_alerts_command_prints_candidates(tmp_path: Path) -> None:
 def test_alerts_command_handles_stable_comparison(tmp_path: Path) -> None:
     database_path = _stable_watch_database(tmp_path)
 
-    result = runner.invoke(app, ["alerts", "--database-path", str(database_path)])
+    result = runner.invoke(app, _alerts_args(database_path))
 
     assert result.exit_code == 0
     assert "No alert candidates found." in result.output
@@ -2739,17 +2741,12 @@ def test_alerts_command_uses_tuned_thresholds(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "alerts",
-            "--database-path",
-            str(database_path),
-            "--watch-threshold",
-            "55",
-            "--buy-threshold",
-            "90",
-            "--big-delta",
-            "100",
-        ],
+        _alerts_args(
+            database_path,
+            watch_threshold=55,
+            buy_threshold=90,
+            big_delta=100,
+        ),
     )
 
     assert result.exit_code == 0
@@ -2760,15 +2757,11 @@ def test_alerts_command_uses_tuned_thresholds(tmp_path: Path) -> None:
 def test_alerts_command_rejects_invalid_threshold_order(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        [
-            "alerts",
-            "--database-path",
-            str(tmp_path / "snapshots.db"),
-            "--watch-threshold",
-            "80",
-            "--buy-threshold",
-            "70",
-        ],
+        _alerts_args(
+            tmp_path / "snapshots.db",
+            watch_threshold=80,
+            buy_threshold=70,
+        ),
     )
 
     assert result.exit_code != 0
