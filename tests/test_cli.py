@@ -15,6 +15,8 @@ from cli_connector_helpers import connector_review as _connector_review
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_domain_helpers import manual_item as _manual_item
 from cli_domain_helpers import opportunity as _opportunity
+from cli_manual_import_helpers import write_manual_import_csv as _write_manual_import_csv
+from cli_manual_import_helpers import write_manual_import_json as _write_manual_import_json
 from cli_public_artifact_helpers import (
     database_with_two_runs as _database_with_two_runs,
     public_intel_payload as _public_intel_payload,
@@ -118,8 +120,7 @@ def test_analyze_sample_data(tmp_path: Path) -> None:
 
 def test_import_json_records_manual_import_run(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Stormglass Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Stormglass Catalyst")
 
     result = runner.invoke(
         app,
@@ -143,18 +144,7 @@ def test_import_json_records_manual_import_run(tmp_path: Path) -> None:
 
 def test_import_csv_records_manual_import_run(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    input_path = tmp_path / "items.csv"
-    input_path.write_text(
-        "\n".join(
-            [
-                "name,demand_momentum,build_dependency_score,price_discount_score,"
-                "liquidity_score,historical_spike_score,patch_relevance_score,"
-                "manipulation_risk,stale_data_penalty",
-                "Ashen Rune Core,72,80,66,62,55,70,20,10",
-            ]
-        ),
-        encoding="utf-8",
-    )
+    input_path = _write_manual_import_csv(tmp_path)
 
     result = runner.invoke(
         app,
@@ -197,8 +187,7 @@ def test_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:
 
 
 def test_validate_import_prints_valid_count_and_table(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Stormglass Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Stormglass Catalyst")
 
     result = runner.invoke(
         app,
@@ -236,8 +225,7 @@ def test_validate_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:
 
 def test_validate_import_does_not_create_database(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Stormglass Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Stormglass Catalyst")
 
     result = runner.invoke(
         app,
@@ -253,16 +241,7 @@ def test_validate_import_does_not_create_database(tmp_path: Path, monkeypatch) -
 
 
 def test_inspect_import_prints_read_only_diagnostics(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    input_path.write_text(
-        json.dumps(
-            [
-                _manual_item("Stormglass Catalyst"),
-                _manual_item("Ashen Rune Core"),
-            ]
-        ),
-        encoding="utf-8",
-    )
+    input_path = _write_manual_import_json(tmp_path, "Stormglass Catalyst", "Ashen Rune Core")
 
     result = runner.invoke(app, ["inspect-import", "--input-path", str(input_path)])
 
@@ -279,8 +258,7 @@ def test_inspect_import_prints_read_only_diagnostics(tmp_path: Path) -> None:
 
 def test_inspect_import_does_not_create_database(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Stormglass Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Stormglass Catalyst")
 
     result = runner.invoke(app, ["inspect-import", "--input-path", str(input_path)])
 
@@ -4338,8 +4316,7 @@ def test_daily_input_path_writes_artifacts(tmp_path: Path) -> None:
     brief_path = tmp_path / "market_brief.md"
     intel_path = tmp_path / "public_intel.json"
     site_dir = tmp_path / "site"
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
@@ -4368,8 +4345,7 @@ def test_daily_input_path_writes_artifacts(tmp_path: Path) -> None:
 
 def test_daily_input_path_creates_one_manual_import_run(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
@@ -4391,8 +4367,7 @@ def test_daily_input_path_creates_one_manual_import_run(tmp_path: Path) -> None:
 def test_daily_input_path_public_intel_latest_run_matches_created_run(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
     intel_path = tmp_path / "public_intel.json"
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
@@ -4417,8 +4392,7 @@ def test_daily_input_path_public_intel_latest_run_matches_created_run(tmp_path: 
 def test_daily_input_path_static_site_includes_imported_item(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
     site_dir = tmp_path / "site"
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
@@ -4469,8 +4443,7 @@ def test_daily_pipeline_contract_doc_matches_printed_output_labels(tmp_path: Pat
 
 
 def test_daily_rejects_sample_data_and_input_path(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
@@ -4554,8 +4527,7 @@ def test_schedule_helper_sample_data_prints_scheduler_guidance() -> None:
 
 
 def test_schedule_helper_input_path_validates_and_prints_daily_command(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
@@ -4569,8 +4541,7 @@ def test_schedule_helper_input_path_validates_and_prints_daily_command(tmp_path:
 
 
 def test_schedule_helper_rejects_sample_data_and_input_path(tmp_path: Path) -> None:
-    input_path = tmp_path / "items.json"
-    input_path.write_text(json.dumps([_manual_item("Manual Daily Catalyst")]), encoding="utf-8")
+    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
 
     result = runner.invoke(
         app,
