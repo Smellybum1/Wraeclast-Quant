@@ -53,6 +53,9 @@ from cli_public_artifact_helpers import (
     write_manual_resources as _write_manual_resources,
     write_publish_ready_bundle as _write_publish_ready_bundle,
 )
+from cli_readonly_helpers import (
+    read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
+)
 from cli_snapshot_helpers import save_scored_run as _save_scored_run
 from cli_snapshot_helpers import save_single_opportunity_run as _save_single_opportunity_run
 
@@ -2683,22 +2686,9 @@ def test_migration_readiness_strict_exits_nonzero_when_not_ready(tmp_path: Path)
 
 
 def test_read_only_snapshot_commands_do_not_create_missing_database(tmp_path: Path) -> None:
-    command_cases = [
-        (["snapshots"], "No snapshots found."),
-        (["compare"], "No snapshots found."),
-        (["alerts"], "No snapshots found."),
-        (["export", "--output-path", str(tmp_path / "public_intel.json")], "No snapshots found."),
-        (["outcomes"], "No recommendation outcomes recorded."),
-        (["review-queue"], "No snapshots found."),
-        (["review-coverage"], "No snapshots found."),
-        (["outcome-review"], "No reviewed recommendation outcomes found."),
-        (
-            ["outcome-report", "--output-path", str(tmp_path / "outcome_review.md")],
-            "Wrote empty outcome review report",
-        ),
-    ]
-
-    for index, (command, expected_output) in enumerate(command_cases):
+    for index, (command, expected_output) in enumerate(
+        _read_only_missing_database_command_cases(tmp_path)
+    ):
         database_path = tmp_path / f"missing-{index}" / "snapshots.db"
         result = runner.invoke(
             app,
