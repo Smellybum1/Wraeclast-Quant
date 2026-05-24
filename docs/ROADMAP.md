@@ -134,6 +134,7 @@
 - Migration readiness service decomposed into focused model, row helper, readiness evaluation, and payload modules behind the stable migration facade.
 - Migration readiness evaluator split database, backup, and freshness checks behind the stable migration facade.
 - Migration backup checks split latest-backup and backup-freshness helpers behind the stable backup-check facade.
+- Migration database checks split database-health and latest-run helpers behind the stable database-check facade.
 - Maintenance migration/provenance command rendering split into a focused helper behind stable read-only commands.
 - Calibration command table rendering split into a focused helper behind the stable calibration command registration.
 - Calibration report service split into focused model, metric, and Markdown rendering helpers behind the stable calibration facade.
