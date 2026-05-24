@@ -4,18 +4,18 @@ import json
 from pathlib import Path
 
 import typer
-from rich.console import Console
-from rich.table import Table
 
 from wraeclast_quant.commands.status_health import build_status_report
+from wraeclast_quant.commands.status_report_rendering import (
+    print_status_report,
+    print_strict_status_failure,
+)
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
 from wraeclast_quant.reports.site_bundle import DEFAULT_SITE_BUNDLE_DIR
 from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
 from wraeclast_quant.storage.backups import DEFAULT_BACKUP_DIR, DatabaseBackupError
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.health import DatabaseHealthError
-
-console = Console(width=260)
 
 
 def register(app: typer.Typer) -> None:
@@ -49,15 +49,12 @@ def register(app: typer.Typer) -> None:
         if json_output:
             typer.echo(json.dumps(report.json_payload(strict=strict), indent=2, sort_keys=True))
         else:
-            table = Table(title="Wraeclast Quant Status")
-            table.add_column("Check")
-            table.add_column("Status", no_wrap=True)
-            table.add_column("Details")
-            for row in report.rows:
-                table.add_row(row["check"], row["status"], row["details"])
-            console.print(table)
+            print_status_report(report)
 
         if strict and report.strict_failures:
             if not json_output:
-                console.print("Strict status failed: " + ", ".join(report.strict_failures))
+                print_strict_status_failure(report)
             raise typer.Exit(1)
+
+
+__all__ = ["register"]
