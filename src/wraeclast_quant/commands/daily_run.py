@@ -3,9 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 import typer
-from rich.console import Console
 
-from wraeclast_quant.commands.snapshot_rendering import print_alert_candidates
+from wraeclast_quant.commands.daily_run_rendering import print_daily_result
 from wraeclast_quant.importers.manual import ManualImportError, load_manual_items
 from wraeclast_quant.intelligence.alerts import AlertRuleSettings
 from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
@@ -14,8 +13,6 @@ from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
 from wraeclast_quant.sample_data.items import SAMPLE_ITEMS
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.workflows.daily_pipeline import create_alert_settings, run_daily_pipeline
-
-console = Console(width=260)
 
 
 def register(app: typer.Typer) -> None:
@@ -46,20 +43,7 @@ def register(app: typer.Typer) -> None:
             limit=limit,
             alert_settings=alert_settings,
         )
-        if result is None:
-            console.print("No snapshots found.")
-            return
-
-        console.print(f"Daily run #{result.run.id} complete.")
-        console.print(f"Database: {database_path}")
-        console.print(f"Market brief: {result.brief_path}")
-        console.print(f"Public intel: {result.intel_path}")
-        console.print(f"Dashboard: {result.site_path}")
-
-        if result.comparison is None:
-            console.print("No previous snapshot found for comparison.")
-            return
-        print_alert_candidates(result.alert_candidates, limit=limit)
+        print_daily_result(result, database_path=database_path, limit=limit)
 
 
 def _daily_opportunities(sample_data: bool, input_path: Path | None):

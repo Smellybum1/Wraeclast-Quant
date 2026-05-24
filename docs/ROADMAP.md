@@ -86,6 +86,7 @@
 - Static site rendering helper logic decomposed into focused section, HTML helper, and style modules behind the stable renderer entry point.
 - Outcome repository helper logic decomposed into focused policy, record, review-query, and coverage modules behind the stable repository mixin.
 - Daily command registration decomposed into focused daily-run and schedule-helper modules behind the stable command aggregator.
+- Daily run result rendering split into a focused helper behind the stable `daily` command.
 - Daily schedule-helper command logic decomposed into focused command, validation, and command-builder modules behind the stable schedule-helper aggregator.
 - Connector fixture daily pipeline command cleanup split local fixture preparation and provenance assembly from command rendering.
 - Connector fixture daily command result rendering split into a focused helper behind the stable fixture-daily command.
@@ -149,7 +150,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include daily run rendering cleanup or outcome command rendering cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include outcome command rendering cleanup or backup command rendering cleanup.
 
 ## Later Intelligence Improvements
 
