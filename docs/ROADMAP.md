@@ -116,6 +116,7 @@
 - Migration readiness evaluator split database, backup, and freshness checks behind the stable migration facade.
 - Maintenance migration/provenance command rendering split into a focused helper behind stable read-only commands.
 - Calibration command table rendering split into a focused helper behind the stable calibration command registration.
+- Calibration report service split into focused model, metric, and Markdown rendering helpers behind the stable calibration facade.
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
@@ -169,7 +170,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include calibration service cleanup or manual import command/service cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include manual import command/service cleanup or another persistence/reporting cleanup.
 
 ## Later Intelligence Improvements
 
