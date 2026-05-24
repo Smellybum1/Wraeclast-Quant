@@ -5,6 +5,7 @@
 - Tolerant `RESOURCES.md` loader with safe defaults.
 - Documented resource configuration parser contract with drift coverage.
 - Resource compliance, preflight, connector-check, and connector-plan gates.
+- Preflight service split models, single-resource assessment, and summary counting behind the stable preflight facade.
 - Dry-run placeholder collectors only.
 - Deterministic opportunity scoring and action mapping.
 - Documented deterministic scoring contract with drift coverage.
@@ -184,7 +185,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include preflight service cleanup or resource parser helper cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include resource parser helper cleanup or source connector facade cleanup.
 
 ## Later Intelligence Improvements
 
