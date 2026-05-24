@@ -139,6 +139,7 @@
 - Connector planning command rendering split into a focused helper behind the stable `connector-plan` command.
 - Fetch-plan service split into focused model, cache-path, and builder helpers behind the stable policy facade.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
+- Resource Markdown parser split line normalization, bullet parsing, table parsing, and resource construction helpers behind the stable parser facade.
 - Resource command registration decomposed into focused collect, compliance, and preflight modules behind the stable resource command aggregator.
 - Resource command table rendering split into focused helpers behind the stable resource command modules.
 - Status command registration decomposed into focused schema, status-report, and database-check modules behind the stable status command aggregator.
@@ -185,7 +186,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include resource parser helper cleanup or source connector facade cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include source connector facade cleanup or import/test helper cleanup.
 
 ## Later Intelligence Improvements
 
