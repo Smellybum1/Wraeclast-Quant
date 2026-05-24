@@ -20,6 +20,7 @@ from cli_manual_import_helpers import write_manual_import_json as _write_manual_
 from cli_public_artifact_helpers import (
     database_with_two_runs as _database_with_two_runs,
     public_intel_payload as _public_intel_payload,
+    status_args as _status_args,
     status_json_args as _status_json_args,
     write_manual_resources as _write_manual_resources,
     write_publish_ready_bundle as _write_publish_ready_bundle,
@@ -335,23 +336,16 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(database_path),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-            "--bundle-dir",
-            str(bundle_dir),
-            "--backup-dir",
-            str(backup_dir),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=database_path,
+            resources_path=resources_path,
+            brief_path=brief_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+            bundle_dir=bundle_dir,
+            backup_dir=backup_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -383,38 +377,18 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
 
 
 def test_status_command_does_not_create_missing_database(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     database_path = tmp_path / "missing.db"
     backup_dir = tmp_path / "missing_backups"
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(database_path),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(backup_dir),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=database_path,
+            resources_path=resources_path,
+            backup_dir=backup_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -427,37 +401,16 @@ def test_status_command_does_not_create_missing_database(tmp_path: Path) -> None
 
 
 def test_status_strict_allows_missing_optional_artifacts(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--strict",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            strict=True,
+        ),
     )
 
     assert result.exit_code == 0
@@ -465,16 +418,7 @@ def test_status_strict_allows_missing_optional_artifacts(tmp_path: Path) -> None
 
 
 def test_status_json_outputs_machine_readable_rows(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
 
     result = runner.invoke(
         app,
@@ -521,16 +465,7 @@ def test_status_json_outputs_machine_readable_rows(tmp_path: Path) -> None:
 
 
 def test_status_json_contract_doc_matches_cli_output(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
 
     result = runner.invoke(
         app,
@@ -575,40 +510,20 @@ def test_status_json_contract_doc_matches_cli_output(tmp_path: Path) -> None:
 
 
 def test_status_json_strict_exits_nonzero_with_parseable_failures(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     intel_path = tmp_path / "public_intel.json"
     intel_path.write_text("{}", encoding="utf-8")
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--strict",
-            "--json",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            intel_path=intel_path,
+            strict=True,
+            json_output=True,
+        ),
     )
 
     assert result.exit_code == 1
@@ -706,16 +621,14 @@ def test_status_strict_json_exits_nonzero_for_stale_artifacts(tmp_path: Path) ->
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--strict",
-            *_status_json_args(
-                tmp_path,
-                database_path=database_path,
-                resources_path=resources_path,
-                intel_path=intel_path,
-            )[1:],
-        ],
+        _status_args(
+            tmp_path,
+            database_path=database_path,
+            resources_path=resources_path,
+            intel_path=intel_path,
+            strict=True,
+            json_output=True,
+        ),
     )
 
     assert result.exit_code == 1
@@ -726,16 +639,7 @@ def test_status_strict_json_exits_nonzero_for_stale_artifacts(tmp_path: Path) ->
 
 
 def test_status_reports_invalid_latest_backup_without_failing(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     backup_dir = tmp_path / "backups"
     backup_dir.mkdir()
     invalid_backup = backup_dir / "invalid.db"
@@ -744,23 +648,12 @@ def test_status_reports_invalid_latest_backup_without_failing(tmp_path: Path) ->
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(backup_dir),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            backup_dir=backup_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -771,16 +664,7 @@ def test_status_reports_invalid_latest_backup_without_failing(tmp_path: Path) ->
 
 
 def test_status_strict_exits_nonzero_for_invalid_latest_backup(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     backup_dir = tmp_path / "backups"
     backup_dir.mkdir()
     invalid_backup = backup_dir / "invalid.db"
@@ -790,24 +674,13 @@ def test_status_strict_exits_nonzero_for_invalid_latest_backup(tmp_path: Path) -
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--strict",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(backup_dir),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            backup_dir=backup_dir,
+            strict=True,
+        ),
     )
 
     assert result.exit_code == 1
@@ -815,16 +688,7 @@ def test_status_strict_exits_nonzero_for_invalid_latest_backup(tmp_path: Path) -
 
 
 def test_status_command_reports_invalid_public_intel_without_failing(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     database_path = tmp_path / "snapshots.db"
     repository = SnapshotRepository(database_path)
     repository.create_analysis_run(source_mode="sample-data", item_count=0)
@@ -833,23 +697,12 @@ def test_status_command_reports_invalid_public_intel_without_failing(tmp_path: P
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(database_path),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=database_path,
+            resources_path=resources_path,
+            intel_path=intel_path,
+        ),
     )
 
     assert result.exit_code == 0
@@ -859,39 +712,19 @@ def test_status_command_reports_invalid_public_intel_without_failing(tmp_path: P
 
 
 def test_status_strict_exits_nonzero_for_health_failures(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     intel_path = tmp_path / "public_intel.json"
     intel_path.write_text("{}", encoding="utf-8")
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--strict",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            intel_path=intel_path,
+            strict=True,
+        ),
     )
 
     assert result.exit_code == 1
@@ -901,38 +734,18 @@ def test_status_strict_exits_nonzero_for_health_failures(tmp_path: Path) -> None
 
 
 def test_status_command_reports_invalid_market_brief_without_failing(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     brief_path = tmp_path / "market_brief.md"
     brief_path.write_text("# Wrong Report", encoding="utf-8")
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(brief_path),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            brief_path=brief_path,
+        ),
     )
 
     assert result.exit_code == 0
@@ -942,39 +755,19 @@ def test_status_command_reports_invalid_market_brief_without_failing(tmp_path: P
 
 
 def test_status_command_reports_invalid_static_site_without_failing(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     site_dir = tmp_path / "site"
     site_dir.mkdir()
     (site_dir / "index.html").write_text("<html><title>Other</title></html>", encoding="utf-8")
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(site_dir),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            site_dir=site_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -984,39 +777,19 @@ def test_status_command_reports_invalid_static_site_without_failing(tmp_path: Pa
 
 
 def test_status_command_reports_invalid_site_bundle_without_failing(tmp_path: Path) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     bundle_dir = tmp_path / "site_bundle"
     bundle_dir.mkdir()
     (bundle_dir / "wraeclast_quant_site_bundle.zip").write_bytes(b"not a zip")
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(tmp_path / "missing.db"),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(bundle_dir),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=tmp_path / "missing.db",
+            resources_path=resources_path,
+            bundle_dir=bundle_dir,
+        ),
     )
 
     assert result.exit_code == 0
@@ -1029,39 +802,18 @@ def test_status_command_reports_invalid_site_bundle_without_failing(tmp_path: Pa
 def test_status_command_reports_unhealthy_database_without_initializing_schema(
     tmp_path: Path,
 ) -> None:
-    resources_path = tmp_path / "RESOURCES.md"
-    resources_path.write_text(
-        """
-## Official Sources
-- name: Manual Source
-  url: https://example.test/manual
-  allowed_use: manual-review
-""",
-        encoding="utf-8",
-    )
+    resources_path = _write_manual_resources(tmp_path)
     database_path = tmp_path / "not_wq.db"
     with sqlite3.connect(database_path) as connection:
         connection.execute("CREATE TABLE unrelated (id INTEGER PRIMARY KEY)")
 
     result = runner.invoke(
         app,
-        [
-            "status",
-            "--database-path",
-            str(database_path),
-            "--resources-path",
-            str(resources_path),
-            "--brief-path",
-            str(tmp_path / "missing.md"),
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "site"),
-            "--bundle-dir",
-            str(tmp_path / "site_bundle"),
-            "--backup-dir",
-            str(tmp_path / "missing_backups"),
-        ],
+        _status_args(
+            tmp_path,
+            database_path=database_path,
+            resources_path=resources_path,
+        ),
     )
 
     assert result.exit_code == 0

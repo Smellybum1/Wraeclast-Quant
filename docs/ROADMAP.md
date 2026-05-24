@@ -157,6 +157,7 @@
 - CLI domain, connector-review, and documentation fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI snapshot/run fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI manual-import fixture file helpers extracted from the broad CLI test module without changing assertions.
+- CLI status command argument helpers extracted from the broad CLI test module without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Markdown documentation refreshed to reflect connector review, fixture pipeline, publishing handoff, migration readiness, provenance, calibration, and recent decomposition work.

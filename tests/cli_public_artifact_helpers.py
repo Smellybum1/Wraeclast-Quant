@@ -39,15 +39,43 @@ def status_json_args(
     site_dir: Path | None = None,
     bundle_dir: Path | None = None,
 ) -> list[str]:
+    return status_args(
+        tmp_path,
+        database_path=database_path,
+        resources_path=resources_path,
+        intel_path=intel_path,
+        site_dir=site_dir,
+        bundle_dir=bundle_dir,
+        json_output=True,
+    )
+
+
+def status_args(
+    tmp_path: Path,
+    *,
+    database_path: Path,
+    resources_path: Path,
+    brief_path: Path | None = None,
+    intel_path: Path | None = None,
+    site_dir: Path | None = None,
+    bundle_dir: Path | None = None,
+    backup_dir: Path | None = None,
+    strict: bool = False,
+    json_output: bool = False,
+) -> list[str]:
+    args = ["status"]
+    if strict:
+        args.append("--strict")
+    if json_output:
+        args.append("--json")
     return [
-        "status",
-        "--json",
+        *args,
         "--database-path",
         str(database_path),
         "--resources-path",
         str(resources_path),
         "--brief-path",
-        str(tmp_path / "missing.md"),
+        str(brief_path or tmp_path / "missing.md"),
         "--intel-path",
         str(intel_path or tmp_path / "missing.json"),
         "--site-dir",
@@ -55,7 +83,7 @@ def status_json_args(
         "--bundle-dir",
         str(bundle_dir or tmp_path / "missing_bundle"),
         "--backup-dir",
-        str(tmp_path / "missing_backups"),
+        str(backup_dir or tmp_path / "missing_backups"),
     ]
 
 
