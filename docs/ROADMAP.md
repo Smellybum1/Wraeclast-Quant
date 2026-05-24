@@ -198,6 +198,7 @@
 - CLI run-provenance argument builder moved into provenance test helpers without changing assertions.
 - CLI backup verification, database health, backup listing, restore-helper, and migration-readiness JSON argument builders moved into backup test helpers without changing assertions.
 - CLI snapshots argument builder moved into snapshot test helpers without changing assertions.
+- CLI public command help matrix moved into documentation test helpers without changing assertions.
 - Status health context loading split into focused resource and snapshot context helpers behind the stable status facade.
 - Status health artifact loading split into a focused artifact context helper behind the stable status facade.
 - Status health database and backup loading split into a focused database context helper behind the stable status facade.

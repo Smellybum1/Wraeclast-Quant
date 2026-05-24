@@ -1,5 +1,60 @@
 from __future__ import annotations
 
+PUBLIC_COMMANDS = [
+    "schema",
+    "status",
+    "db-check",
+    "snapshots",
+    "compare",
+    "alerts",
+    "report",
+    "export",
+    "site",
+    "validate-intel",
+    "site-bundle",
+    "publish-check",
+    "publish-handoff",
+    "site-contract",
+    "daily",
+    "schedule-helper",
+    "backup-db",
+    "verify-backup",
+    "backups",
+    "restore-helper",
+    "migration-readiness",
+    "run-provenance",
+    "record-outcome",
+    "outcomes",
+    "review-queue",
+    "review-coverage",
+    "outcome-review",
+    "outcome-report",
+    "calibration",
+    "calibration-report",
+    "collect",
+    "compliance",
+    "preflight",
+    "connector-candidates",
+    "connector-draft",
+    "connector-review-prep",
+    "connector-review-evidence",
+    "connector-check",
+    "connector-review-status",
+    "connector-approval-helper",
+    "connector-review-report",
+    "connector-approval-patch",
+    "connector-fixture-run",
+    "connector-dry-run",
+    "connector-fixture-export",
+    "connector-fixture-daily",
+    "connector-plan",
+    "analyze",
+    "import",
+    "validate-import",
+    "inspect-import",
+    "watchlist",
+]
+
 
 def documented_bullets(doc_text: str, heading: str) -> set[str]:
     section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
@@ -8,3 +63,6 @@ def documented_bullets(doc_text: str, heading: str) -> set[str]:
         for line in section.splitlines()
         if line.strip().startswith("- `")
     }
+
+
+__all__ = ["PUBLIC_COMMANDS", "documented_bullets"]

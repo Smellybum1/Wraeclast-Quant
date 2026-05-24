@@ -45,6 +45,7 @@ from cli_database_helpers import sqlite_table_names as _sqlite_table_names
 from cli_database_helpers import (
     write_unrelated_sqlite_database as _write_unrelated_sqlite_database,
 )
+from cli_doc_helpers import PUBLIC_COMMANDS as _PUBLIC_COMMANDS
 from cli_doc_helpers import documented_bullets as _documented_bullets
 from cli_manual_import_helpers import (
     import_args as _import_args,
@@ -126,72 +127,16 @@ from cli_snapshot_helpers import snapshots_args as _snapshots_args
 
 runner = CliRunner()
 
-PUBLIC_COMMANDS = [
-    "schema",
-    "status",
-    "db-check",
-    "snapshots",
-    "compare",
-    "alerts",
-    "report",
-    "export",
-    "site",
-    "validate-intel",
-    "site-bundle",
-    "publish-check",
-    "publish-handoff",
-    "site-contract",
-    "daily",
-    "schedule-helper",
-    "backup-db",
-    "verify-backup",
-    "backups",
-    "restore-helper",
-    "migration-readiness",
-    "run-provenance",
-    "record-outcome",
-    "outcomes",
-    "review-queue",
-    "review-coverage",
-    "outcome-review",
-    "outcome-report",
-    "calibration",
-    "calibration-report",
-    "collect",
-    "compliance",
-    "preflight",
-    "connector-candidates",
-    "connector-draft",
-    "connector-review-prep",
-    "connector-review-evidence",
-    "connector-check",
-    "connector-review-status",
-    "connector-approval-helper",
-    "connector-review-report",
-    "connector-approval-patch",
-    "connector-fixture-run",
-    "connector-dry-run",
-    "connector-fixture-export",
-    "connector-fixture-daily",
-    "connector-plan",
-    "analyze",
-    "import",
-    "validate-import",
-    "inspect-import",
-    "watchlist",
-]
-
-
 def test_top_level_help_lists_public_commands() -> None:
     result = runner.invoke(app, ["--help"])
 
     assert result.exit_code == 0
-    for command in PUBLIC_COMMANDS:
+    for command in _PUBLIC_COMMANDS:
         assert command in result.output
 
 
 def test_public_command_help_smoke_matrix() -> None:
-    for command in PUBLIC_COMMANDS:
+    for command in _PUBLIC_COMMANDS:
         result = runner.invoke(app, [command, "--help"])
 
         assert result.exit_code == 0, command
