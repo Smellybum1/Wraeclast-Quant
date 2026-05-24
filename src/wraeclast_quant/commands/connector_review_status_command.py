@@ -4,7 +4,8 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.commands._connector_support import console, print_connector_review_status
+from wraeclast_quant.commands._connector_support import console
+from wraeclast_quant.commands.connector_review_status_rendering import print_connector_review_status
 from wraeclast_quant.config.connector_policy import (
     ConnectorPolicyError,
     connector_review_status,
