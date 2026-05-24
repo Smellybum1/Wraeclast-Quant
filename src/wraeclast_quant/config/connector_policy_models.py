@@ -4,15 +4,13 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from wraeclast_quant.config.connector_policy_constants import (
+    ALLOWED_ACCESS_METHODS,
+    AUTOMATION_ACCESS_METHODS,
+)
+from wraeclast_quant.config.connector_policy_errors import ConnectorPolicyError
 from wraeclast_quant.config.preflight import PreflightAssessment
 from wraeclast_quant.config.resources_loader import Resource
-
-ALLOWED_ACCESS_METHODS = {"api", "rss", "download", "manual-export"}
-AUTOMATION_ACCESS_METHODS = {"api", "rss", "download"}
-
-
-class ConnectorPolicyError(ValueError):
-    pass
 
 
 class ConnectorReview(BaseModel):
@@ -90,3 +88,18 @@ class ConnectorApprovalPatchResult(BaseModel):
     patch_text: str
     reason: str
     blockers: list[str]
+
+
+__all__ = [
+    "ALLOWED_ACCESS_METHODS",
+    "AUTOMATION_ACCESS_METHODS",
+    "ConnectorApprovalHelperResult",
+    "ConnectorApprovalPatchResult",
+    "ConnectorCheckResult",
+    "ConnectorPolicyError",
+    "ConnectorReview",
+    "ConnectorReviewPrepResult",
+    "ConnectorReviewReportResult",
+    "ConnectorReviewStatus",
+    "ConnectorReviewStatusRow",
+]

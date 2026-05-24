@@ -78,6 +78,7 @@
 - CLI decomposed into focused command modules with public command registration preserved.
 - Connector command module decomposed into focused review, approval, fixture, candidate, and planning registrations.
 - Connector policy service decomposed into focused review, readiness, approval, report, patch, and shared-helper modules.
+- Connector policy constants and error class split behind the stable policy model facade.
 - Maintenance command module decomposed into focused backup, migration/provenance, outcome, and calibration registrations.
 - Status health logic decomposed into focused command rendering and report-building service modules.
 - Storage repository decomposed into focused snapshot, artifact/provenance, outcome, and shared support modules.
