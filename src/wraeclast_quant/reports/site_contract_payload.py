@@ -10,10 +10,8 @@ from wraeclast_quant.reports.publish_check import (
     publish_check_payload,
 )
 from wraeclast_quant.reports.site_bundle import REQUIRED_ARCHIVE_MEMBERS
-from wraeclast_quant.reports.site_contract_constants import (
-    SAFETY_STATEMENT,
-    SITE_CONTRACT_SCHEMA_VERSION,
-)
+from wraeclast_quant.reports.site_contract_constants import SITE_CONTRACT_SCHEMA_VERSION
+from wraeclast_quant.reports.site_contract_sections import artifact_run_ids, safety_payload
 from wraeclast_quant.reports.site_contract_summaries import (
     bundle_summary,
     public_intel_summary,
@@ -42,20 +40,11 @@ def site_contract_payload(
         "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "product": "Wraeclast Quant",
         "latest_database_run_id": readiness.latest_database_run_id,
-        "artifact_run_ids": {
-            "bundle": readiness.bundle_latest_run_id,
-            "public_intel": public_intel["latest_run_id"],
-            "static_site": static_site["latest_run_id"],
-        },
+        "artifact_run_ids": artifact_run_ids(readiness, public_intel, static_site),
         "public_intel": public_intel,
         "static_site": static_site,
         "bundle": bundle,
         "required_bundle_files": sorted(REQUIRED_ARCHIVE_MEMBERS),
         "publish_readiness": publish_check_payload(readiness),
-        "safety": {
-            "derived_only": True,
-            "network_behavior": "none",
-            "publishing_behavior": "manual-outside-app-only",
-            "statement": SAFETY_STATEMENT,
-        },
+        "safety": safety_payload(),
     }
