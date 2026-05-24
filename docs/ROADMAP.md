@@ -236,6 +236,7 @@
 - CLI status JSON tests reused the shared status argument builder without changing assertions.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
 - Connector policy review and resource fixture builders extracted from the broad connector-policy test module without changing assertions.
+- Connector fixture payload writers extracted from the broad connector-policy test module without changing assertions.
 - Status health context loading split into focused resource and snapshot context helpers behind the stable status facade.
 - Status health artifact loading split into a focused artifact context helper behind the stable status facade.
 - Status health database and backup loading split into a focused database context helper behind the stable status facade.

@@ -34,7 +34,12 @@ from wraeclast_quant.importers.manual import load_manual_items
 from connector_policy_helpers import connector_review as _review
 from connector_policy_helpers import connector_review_payload as _review_payload
 from connector_policy_helpers import eligible_resource as _eligible_resource
+from connector_policy_helpers import invalid_signals_fixture_payload as _invalid_signals_fixture_payload
+from connector_policy_helpers import minimal_fixture_payload as _minimal_fixture_payload
+from connector_policy_helpers import missing_items_fixture_payload as _missing_items_fixture_payload
 from connector_policy_helpers import poe_ninja_currency_resource as _poe_ninja_currency_resource
+from connector_policy_helpers import unnamed_item_fixture_payload as _unnamed_item_fixture_payload
+from connector_policy_helpers import write_connector_fixture as _write_connector_fixture
 
 
 def test_valid_api_review_for_eligible_resource_passes() -> None:
@@ -1135,59 +1140,21 @@ def test_connector_fixture_loads_optional_normalized_signals() -> None:
 
 
 def test_connector_fixture_missing_items_fails_clearly(tmp_path: Path) -> None:
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps({"source_name": "Example Approved API", "generated_at": "now"}),
-        encoding="utf-8",
-    )
+    fixture_path = _write_connector_fixture(tmp_path, _missing_items_fixture_payload())
 
     with pytest.raises(ConnectorPolicyError, match="Invalid connector fixture"):
         load_connector_fixture(fixture_path)
 
 
 def test_connector_fixture_item_without_name_fails_clearly(tmp_path: Path) -> None:
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps(
-            {
-                "source_name": "Example Approved API",
-                "generated_at": "now",
-                "items": [{"category": "currency"}],
-            }
-        ),
-        encoding="utf-8",
-    )
+    fixture_path = _write_connector_fixture(tmp_path, _unnamed_item_fixture_payload())
 
     with pytest.raises(ConnectorPolicyError, match="Invalid connector fixture"):
         load_connector_fixture(fixture_path)
 
 
 def test_connector_fixture_invalid_signals_fail_clearly(tmp_path: Path) -> None:
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps(
-            {
-                "source_name": "Example Approved API",
-                "generated_at": "2026-05-23T00:00:00+00:00",
-                "items": [
-                    {
-                        "name": "Stormglass Catalyst",
-                        "signals": {
-                            "demand_momentum": 101,
-                            "build_dependency_score": 82,
-                            "price_discount_score": 76,
-                            "liquidity_score": 70,
-                            "historical_spike_score": 68,
-                            "patch_relevance_score": 74,
-                            "manipulation_risk": 18,
-                            "stale_data_penalty": 8,
-                        },
-                    }
-                ],
-            }
-        ),
-        encoding="utf-8",
-    )
+    fixture_path = _write_connector_fixture(tmp_path, _invalid_signals_fixture_payload())
 
     with pytest.raises(ConnectorPolicyError, match="Invalid connector fixture"):
         load_connector_fixture(fixture_path)
@@ -1291,17 +1258,7 @@ def test_connector_fixture_signal_export_refuses_failed_review(tmp_path: Path) -
 
 def test_connector_fixture_runner_does_not_write_files(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps(
-            {
-                "source_name": "Approved API",
-                "generated_at": "2026-05-23T00:00:00+00:00",
-                "items": [{"name": "Stormglass Catalyst"}],
-            }
-        ),
-        encoding="utf-8",
-    )
+    fixture_path = _write_connector_fixture(tmp_path, _minimal_fixture_payload())
     result = run_connector_fixture(
         _review(),
         [_eligible_resource()],
@@ -1427,4 +1384,3 @@ def test_fixture_source_connector_exposes_fetch_plan_without_cache_writes(
 
     assert result.fetch_plan.cache_path == connector.fetch_plan.cache_path
     assert not Path("data/raw/cache").exists()
-
