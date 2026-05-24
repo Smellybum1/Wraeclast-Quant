@@ -1,40 +1,17 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from pathlib import Path
 
-from wraeclast_quant.config.compliance import ComplianceAssessment, assess_resources
-from wraeclast_quant.config.resources_loader import Resource, load_resources
-from wraeclast_quant.reports.market_brief import MarketBriefHealthResult, check_market_brief_health
-from wraeclast_quant.reports.public_intel_contract import (
-    PublicIntelContractError,
-    PublicIntelValidationResult,
-    validate_public_intel_file,
-)
-from wraeclast_quant.reports.site_bundle import SiteBundleHealthResult, check_site_bundle_health
-from wraeclast_quant.reports.static_site import StaticSiteHealthResult, check_static_site_health
-from wraeclast_quant.storage.backups import DatabaseBackupListing, list_database_backups
-from wraeclast_quant.storage.health import DatabaseHealthResult, check_database_health
-from wraeclast_quant.storage.models import AnalysisRunRecord, ReviewCoverageRecord
+from wraeclast_quant.commands.status_health_context_model import StatusHealthContext
+from wraeclast_quant.commands.status_health_context_validation import load_public_intel_validation
+from wraeclast_quant.config.compliance import assess_resources
+from wraeclast_quant.config.resources_loader import load_resources
+from wraeclast_quant.reports.market_brief import check_market_brief_health
+from wraeclast_quant.reports.site_bundle import check_site_bundle_health
+from wraeclast_quant.reports.static_site import check_static_site_health
+from wraeclast_quant.storage.backups import list_database_backups
+from wraeclast_quant.storage.health import check_database_health
 from wraeclast_quant.storage.repositories import SnapshotRepository
-
-
-@dataclass(frozen=True)
-class StatusHealthContext:
-    resources: list[Resource]
-    assessments: list[ComplianceAssessment]
-    eligible_count: int
-    backups: list[DatabaseBackupListing]
-    database_health: DatabaseHealthResult | None
-    database_exists: bool
-    latest: AnalysisRunRecord | None
-    latest_run_id: int | None
-    coverage: ReviewCoverageRecord | None
-    market_brief_health: MarketBriefHealthResult | None
-    intel_validation: PublicIntelValidationResult | None
-    intel_error: str
-    static_site_health: StaticSiteHealthResult | None
-    site_bundle_health: SiteBundleHealthResult | None
 
 
 def load_status_health_context(
@@ -52,14 +29,7 @@ def load_status_health_context(
     eligible_count = sum(1 for assessment in assessments if assessment.automation_eligible)
     backups = list_database_backups(backup_dir=backup_dir, limit=1)
     database_health = check_database_health(database_path)
-
-    intel_validation = None
-    intel_error = ""
-    if intel_path.exists():
-        try:
-            intel_validation = validate_public_intel_file(intel_path)
-        except PublicIntelContractError as error:
-            intel_error = str(error)
+    intel_validation, intel_error = load_public_intel_validation(intel_path)
 
     latest = None
     coverage = None
@@ -85,3 +55,6 @@ def load_status_health_context(
         static_site_health=check_static_site_health(site_dir / "index.html"),
         site_bundle_health=check_site_bundle_health(bundle_dir),
     )
+
+
+__all__ = ["StatusHealthContext", "load_status_health_context"]
