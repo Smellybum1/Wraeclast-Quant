@@ -173,6 +173,7 @@
 - SQLite database-check command rendering split into a focused helper behind the stable `db-check` command.
 - Intake command registration decomposed into focused sample-analysis, manual-import, watchlist, and shared-rendering modules behind the stable intake command aggregator.
 - Manual import parsing, validation, and diagnostics rendering split behind stable importer and command facades.
+- Manual import command loading, scoring, summary, and persistence flow split into a focused helper behind stable import commands.
 - CLI public artifact/status fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI domain, connector-review, and documentation fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI snapshot/run fixture helpers extracted from the broad CLI test module without changing assertions.
