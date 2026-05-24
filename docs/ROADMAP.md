@@ -126,6 +126,7 @@
 - Status command registration decomposed into focused schema, status-report, and database-check modules behind the stable status command aggregator.
 - SQLite database-check command rendering split into a focused helper behind the stable `db-check` command.
 - Intake command registration decomposed into focused sample-analysis, manual-import, watchlist, and shared-rendering modules behind the stable intake command aggregator.
+- CLI public artifact/status fixture helpers extracted from the broad CLI test module without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Markdown documentation refreshed to reflect connector review, fixture pipeline, publishing handoff, migration readiness, provenance, calibration, and recent decomposition work.
@@ -162,7 +163,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include targeted test helper cleanup or public-intel builder cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include public-intel builder cleanup or additional CLI test fixture cleanup.
 
 ## Later Intelligence Improvements
 
