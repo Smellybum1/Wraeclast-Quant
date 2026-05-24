@@ -82,6 +82,7 @@
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.
 - Snapshot command registration and local table rendering decomposed into focused listing, comparison, alert, and rendering modules.
 - Public intel service decomposed into focused facade, builder, payload, constant, and writer modules.
+- Public intel builder split snapshot/alert context loading from contract payload assembly behind the stable builder facade.
 - Site bundle service decomposed into focused facade, model, manifest, writer, and health modules.
 - Site contract service decomposed into focused facade, constants, summaries, payload, and writer modules.
 - Publish readiness follow-up cleanup split artifact checks, freshness row helpers, and payload conversion behind the stable facade.
@@ -163,7 +164,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include public-intel builder cleanup or additional CLI test fixture cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include public-intel contract validator cleanup or additional CLI test fixture cleanup.
 
 ## Later Intelligence Improvements
 
