@@ -6,6 +6,7 @@
 - Documented resource configuration parser contract with drift coverage.
 - Resource compliance, preflight, connector-check, and connector-plan gates.
 - Preflight service split models, single-resource assessment, and summary counting behind the stable preflight facade.
+- Preflight assessment split special-case eligibility and fallback next-step wording behind the stable assessment facade.
 - Dry-run placeholder collectors only.
 - Deterministic opportunity scoring and action mapping.
 - Documented deterministic scoring contract with drift coverage.
