@@ -174,6 +174,7 @@
 - Status command registration decomposed into focused schema, status-report, and database-check modules behind the stable status command aggregator.
 - SQLite database-check command rendering split into a focused helper behind the stable `db-check` command.
 - Intake command registration decomposed into focused sample-analysis, manual-import, watchlist, and shared-rendering modules behind the stable intake command aggregator.
+- Sample analysis command input and persistence flow split into a focused helper behind the stable `analyze` command.
 - Manual import parsing, validation, and diagnostics rendering split behind stable importer and command facades.
 - Manual import command loading, scoring, summary, and persistence flow split into a focused helper behind stable import commands.
 - CLI public artifact/status fixture helpers extracted from the broad CLI test module without changing assertions.
