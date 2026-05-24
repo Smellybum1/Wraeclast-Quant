@@ -176,6 +176,7 @@
 - Ready poe.ninja POE2 currency connector review with safe fetch plan.
 - poe.ninja POE2 currency fixture, dry-run, and manual-import export proof without live collection.
 - Source-specific poe.ninja POE2 currency dry-run connector facade with live collection still unsupported.
+- Source connector facade split into focused model, base, fixture, and factory helpers with live collection still unsupported.
 - poe.ninja POE2 currency fixture-daily proof through SQLite snapshots, derived public intel, static dashboard, site bundle, run provenance, and fresh local backup coverage.
 - poe.ninja POE2 currency live endpoint-contract review recorded; live collection remains blocked until an official endpoint and response-field contract are confirmed.
 
@@ -186,7 +187,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include source connector facade cleanup or import/test helper cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include import/test helper cleanup or public handoff safety helpers.
 
 ## Later Intelligence Improvements
 

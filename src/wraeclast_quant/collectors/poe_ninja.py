@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from wraeclast_quant.collectors.source_connector import FixtureSourceConnector
+from wraeclast_quant.collectors.source_connector_fixture import FixtureSourceConnector
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError, ConnectorReview
 from wraeclast_quant.config.resources_loader import Resource
 
