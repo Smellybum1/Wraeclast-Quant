@@ -2,6 +2,15 @@
 
 ## 2026-05-24
 
+### New Thread Handoff
+
+- Current health: `status --json` ok; latest SQLite run is `#10 connector-fixture`; SQLite schema is v2; status JSON schema is 1.5; public intel, static site, site bundle, backups, and migration readiness are fresh/green.
+- Git state at handoff: clean worktree, `main...origin/main [ahead 4]`. The unpushed local commits are `b86b887` status command rendering split, `6b24946` poe.ninja endpoint evidence refresh, `99a38ea` connector review evidence rendering split, and `e3987c3` connector approval table split.
+- Source state: `preflight` reports 22 resources and 1 automation-eligible resource, `poe_ninja_poe2_currency`. `RESOURCES.md` must keep SHA256 `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6` unless the user explicitly approves a source edit.
+- Live connector state: poe.ninja POE2 Currency has fixture, dry-run, export, and fixture-daily proof, but live collection remains unsupported because no official machine endpoint, query parameters, response-field schema, reuse terms, cache/rate policy, or failure behavior have been confirmed.
+- Recommended new-thread first move: read `AGENTS.md`, `docs/CONTEXT.md`, `docs/ROADMAP.md`, and this file; run `git status --short --branch`, `status --json`, and `preflight`; then ask whether to push the 4 local commits or continue local-only.
+- Best unblocked work if not pushing: continue bounded behavior-preserving maintainability only where a clear responsibility boundary remains, or help pursue human/source-owner confirmation for the poe.ninja endpoint contract. Do not implement live HTTP, scraping, Discord collection, publishing automation, schema migrations, new dependencies, or `RESOURCES.md` edits.
+
 - Health before work: `status --json` ok; `preflight` reports 22 resources, 1 automation-eligible resource (`poe_ninja_poe2_currency`); live poe.ninja collection remains unsupported pending official endpoint/field-contract evidence.
 - Completed packet: extracted connector fixture payload writers into `tests/connector_policy_helpers.py` without changing connector-policy assertions or runtime behavior.
 - Verification: `pytest tests/test_connector_policy.py`, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
