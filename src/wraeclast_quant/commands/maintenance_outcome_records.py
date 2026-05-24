@@ -3,13 +3,14 @@ from __future__ import annotations
 from pathlib import Path
 
 import typer
-from rich.console import Console
-from rich.table import Table
 
+from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
+    print_no_outcomes,
+    print_outcome_record,
+    print_recent_outcomes,
+)
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
-from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES, SnapshotRepository
-
-console = Console(width=260)
+from wraeclast_quant.storage.repositories import SnapshotRepository
 
 
 def register(app: typer.Typer) -> None:
@@ -32,9 +33,7 @@ def register(app: typer.Typer) -> None:
         except ValueError as error:
             raise typer.BadParameter(str(error)) from error
 
-        console.print(
-            f"Recorded {record.outcome} outcome for '{record.item_name}' from run #{record.run_id}."
-        )
+        print_outcome_record(record)
 
     @app.command()
     def outcomes(
@@ -44,29 +43,8 @@ def register(app: typer.Typer) -> None:
         repository = SnapshotRepository(database_path)
         records = repository.list_recent_outcomes(limit=limit)
         if not records:
-            console.print("No recommendation outcomes recorded.")
+            print_no_outcomes()
             return
 
-        table = Table(title="Recommendation Outcomes")
-        table.add_column("Run", justify="right")
-        table.add_column("Item")
-        table.add_column("Outcome")
-        table.add_column("Observed")
-        table.add_column("Notes")
-        for record in records:
-            table.add_row(
-                str(record.run_id),
-                record.item_name,
-                record.outcome,
-                record.observed_at,
-                record.notes,
-            )
-        console.print(table)
-
         summary = repository.outcome_summary()
-        summary_table = Table(title="Outcome Summary")
-        summary_table.add_column("Outcome")
-        summary_table.add_column("Count", justify="right")
-        for label in sorted(ALLOWED_OUTCOMES):
-            summary_table.add_row(label, str(summary.get(label, 0)))
-        console.print(summary_table)
+        print_recent_outcomes(records, summary)

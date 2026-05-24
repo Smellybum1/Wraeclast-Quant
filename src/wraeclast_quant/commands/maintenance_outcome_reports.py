@@ -3,17 +3,18 @@ from __future__ import annotations
 from pathlib import Path
 
 import typer
-from rich.console import Console
-from rich.table import Table
 
+from wraeclast_quant.commands.maintenance_outcome_reports_rendering import (
+    print_no_outcome_reviews,
+    print_outcome_report_written,
+    print_outcome_review,
+)
 from wraeclast_quant.reports.outcome_review import (
     DEFAULT_OUTCOME_REVIEW_PATH,
     write_outcome_review,
 )
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
-from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES, SnapshotRepository
-
-console = Console(width=260)
+from wraeclast_quant.storage.repositories import SnapshotRepository
 
 
 def register(app: typer.Typer) -> None:
@@ -25,40 +26,11 @@ def register(app: typer.Typer) -> None:
         repository = SnapshotRepository(database_path)
         records = repository.list_outcome_reviews(limit=limit)
         if not records:
-            console.print("No reviewed recommendation outcomes found.")
+            print_no_outcome_reviews()
             return
 
-        table = Table(title="Recommendation Outcome Review")
-        table.add_column("Run", justify="right")
-        table.add_column("Item")
-        table.add_column("Score", justify="right")
-        table.add_column("Action")
-        table.add_column("Outcome")
-        table.add_column("Observed")
-        table.add_column("Notes")
-        for record in records:
-            table.add_row(
-                str(record.run_id),
-                record.item_name,
-                f"{record.opportunity_score:.2f}",
-                record.action,
-                record.outcome,
-                record.observed_at,
-                record.notes,
-            )
-        console.print(table)
-
         summary = repository.outcome_review_summary_by_action()
-        summary_table = Table(title="Outcome Review By Action")
-        summary_table.add_column("Action")
-        for label in sorted(ALLOWED_OUTCOMES):
-            summary_table.add_column(label, justify="right")
-        for action, counts in sorted(summary.items()):
-            summary_table.add_row(
-                action,
-                *(str(counts.get(label, 0)) for label in sorted(ALLOWED_OUTCOMES)),
-            )
-        console.print(summary_table)
+        print_outcome_review(records, summary)
 
     @app.command("outcome-report")
     def outcome_report(
@@ -73,7 +45,4 @@ def register(app: typer.Typer) -> None:
             summary_by_action=repository.outcome_review_summary_by_action(),
             path=output_path,
         )
-        if not reviews:
-            console.print(f"Wrote empty outcome review report to {written_path}")
-            return
-        console.print(f"Wrote outcome review report to {written_path}")
+        print_outcome_report_written(written_path, has_reviews=bool(reviews))
