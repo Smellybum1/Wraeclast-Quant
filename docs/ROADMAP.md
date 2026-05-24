@@ -134,6 +134,7 @@
 - Connector fixture export command rendering split into a focused helper behind the stable `connector-fixture-export` command.
 - Connector review command registration decomposed into focused draft/prep, evidence/status, and readiness-check modules behind the stable connector review aggregator.
 - Connector review prep command rendering split into a focused helper behind the stable draft/prep command module.
+- Connector review draft and prep command workspace workflows split into focused helpers behind stable draft/prep commands.
 - Connector review prep service split workspace writing and checklist rendering behind the stable prep facade.
 - Connector review evidence/status command registration split into focused evidence-update and status-display modules behind the stable status aggregator.
 - Connector review evidence command local JSON update workflow split into a focused helper behind the stable evidence command.

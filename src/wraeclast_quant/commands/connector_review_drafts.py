@@ -5,14 +5,11 @@ from pathlib import Path
 import typer
 
 from wraeclast_quant.commands._connector_support import console
-from wraeclast_quant.commands.connector_review_prep_rendering import print_connector_review_prep
-from wraeclast_quant.config.connector_policy import (
-    ConnectorPolicyError,
-    build_connector_review_draft,
-    prepare_connector_review_workspace,
-    write_connector_review_draft,
+from wraeclast_quant.commands.connector_review_draft_workflow import (
+    prepare_connector_review_for_resource,
+    write_connector_review_draft_for_resource,
 )
-from wraeclast_quant.config.resources_loader import load_resources
+from wraeclast_quant.commands.connector_review_prep_rendering import print_connector_review_prep
 
 
 def register(app: typer.Typer) -> None:
@@ -23,17 +20,14 @@ def register(app: typer.Typer) -> None:
         output_path: Path = typer.Option(..., "--output-path", help="Local connector review JSON draft path."),
         resources_path: Path = typer.Option(Path("RESOURCES.md"), "--resources-path"),
     ) -> None:
-        try:
-            review = build_connector_review_draft(
-                resource_name=resource,
-                access_method=access_method,
-                resources=load_resources(resources_path),
-            )
-            written_path = write_connector_review_draft(review, output_path)
-        except ConnectorPolicyError as error:
-            raise typer.BadParameter(str(error)) from error
+        draft = write_connector_review_draft_for_resource(
+            resource=resource,
+            access_method=access_method,
+            output_path=output_path,
+            resources_path=resources_path,
+        )
 
-        console.print(f"Wrote connector review draft to {written_path}")
+        console.print(f"Wrote connector review draft to {draft.written_path}")
         console.print(
             "Draft is not approval. Review source terms and API/robots policy, then run "
             "wq connector-check before planning implementation."
@@ -46,14 +40,11 @@ def register(app: typer.Typer) -> None:
         resources_path: Path = typer.Option(Path("RESOURCES.md"), "--resources-path"),
         output_dir: Path = typer.Option(Path("examples/reviews"), "--output-dir"),
     ) -> None:
-        try:
-            prep = prepare_connector_review_workspace(
-                resource_name=resource,
-                access_method=access_method,
-                resources=load_resources(resources_path),
-                output_dir=output_dir,
-            )
-        except ConnectorPolicyError as error:
-            raise typer.BadParameter(str(error)) from error
+        prep = prepare_connector_review_for_resource(
+            resource=resource,
+            access_method=access_method,
+            resources_path=resources_path,
+            output_dir=output_dir,
+        )
 
         print_connector_review_prep(prep)
