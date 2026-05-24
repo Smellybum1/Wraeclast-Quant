@@ -75,6 +75,8 @@
 - Verification: static-site page section import smoke, static/public artifact focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Completed packet: split site-bundle manifest validation from manifest assembly behind the stable manifest facade.
 - Verification: site-bundle manifest import smoke, public artifact focused tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
+- Completed packet: split public-intel file validation result assembly from JSON file loading behind the stable validator facade.
+- Verification: public-intel contract import smoke, focused public artifact tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Protected resource hash: `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6`.
 - Safety state: no live HTTP, scraping, Discord collection, publishing automation, schema migration, source approval, dependency change, or `RESOURCES.md` edit.
 - Next likely unblocked work: continue bounded maintainability with small test-helper cleanup or status artifact row cleanup while live source work remains blocked.

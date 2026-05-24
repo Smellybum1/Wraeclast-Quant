@@ -298,6 +298,7 @@
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
+- Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
 - Local connector fixture signal export to manual-import-compatible JSON.
