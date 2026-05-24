@@ -34,6 +34,7 @@ from wraeclast_quant.importers.manual import load_manual_items
 from connector_policy_helpers import connector_review as _review
 from connector_policy_helpers import connector_review_payload as _review_payload
 from connector_policy_helpers import eligible_resource as _eligible_resource
+from connector_policy_helpers import example_approved_api_resources as _example_approved_api_resources
 from connector_policy_helpers import invalid_signals_fixture_payload as _invalid_signals_fixture_payload
 from connector_policy_helpers import minimal_fixture_payload as _minimal_fixture_payload
 from connector_policy_helpers import missing_items_fixture_payload as _missing_items_fixture_payload
@@ -1176,14 +1177,7 @@ def test_connector_fixture_runner_accepts_approved_example_review() -> None:
     review = load_connector_review("examples/connector_review_api_example.json")
     result = run_connector_fixture(
         review,
-        [
-            Resource(
-                name="Example Approved API",
-                type="official",
-                url="https://example.test/api",
-                allowed_use="api",
-            )
-        ],
+        _example_approved_api_resources(),
         "examples/connector_fixture_api_example.json",
     )
 
@@ -1200,14 +1194,7 @@ def test_connector_fixture_signal_export_writes_manual_import_json(tmp_path: Pat
 
     export = export_connector_fixture_signals(
         review,
-        [
-            Resource(
-                name="Example Approved API",
-                type="official",
-                url="https://example.test/api",
-                allowed_use="api",
-            )
-        ],
+        _example_approved_api_resources(),
         "examples/connector_fixture_signals_example.json",
         output_path,
     )
@@ -1227,14 +1214,7 @@ def test_connector_fixture_signal_export_requires_signals(tmp_path: Path) -> Non
     with pytest.raises(ConnectorPolicyError, match="requires normalized signals"):
         export_connector_fixture_signals(
             review,
-            [
-                Resource(
-                    name="Example Approved API",
-                    type="official",
-                    url="https://example.test/api",
-                    allowed_use="api",
-                )
-            ],
+            _example_approved_api_resources(),
             "examples/connector_fixture_api_example.json",
             output_path,
         )
@@ -1273,14 +1253,7 @@ def test_fixture_source_connector_returns_normalized_rows() -> None:
     review = load_connector_review("examples/connector_review_api_example.json")
     connector = FixtureSourceConnector.from_review(
         review,
-        [
-            Resource(
-                name="Example Approved API",
-                type="official",
-                url="https://example.test/api",
-                allowed_use="api",
-            )
-        ],
+        _example_approved_api_resources(),
     )
 
     result = connector.collect_fixture("examples/connector_fixture_api_example.json")
@@ -1368,17 +1341,7 @@ def test_fixture_source_connector_exposes_fetch_plan_without_cache_writes(
     monkeypatch,
 ) -> None:
     monkeypatch.chdir(tmp_path)
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps(
-            {
-                "source_name": "Approved API",
-                "generated_at": "2026-05-23T00:00:00+00:00",
-                "items": [{"name": "Stormglass Catalyst"}],
-            }
-        ),
-        encoding="utf-8",
-    )
+    fixture_path = _write_connector_fixture(tmp_path, _minimal_fixture_payload())
     connector = FixtureSourceConnector.from_review(_review(), [_eligible_resource()])
     result = connector.collect_fixture(fixture_path)
 

@@ -26,6 +26,17 @@ def poe_ninja_currency_resource() -> Resource:
     )
 
 
+def example_approved_api_resources() -> list[Resource]:
+    return [
+        Resource(
+            name="Example Approved API",
+            type="official",
+            url="https://example.test/api",
+            allowed_use="api",
+        )
+    ]
+
+
 def connector_review(**overrides: object) -> ConnectorReview:
     data = connector_review_payload()
     data.update(overrides)
@@ -106,6 +117,7 @@ __all__ = [
     "connector_review",
     "connector_review_payload",
     "eligible_resource",
+    "example_approved_api_resources",
     "invalid_signals_fixture_payload",
     "minimal_fixture_payload",
     "missing_items_fixture_payload",
