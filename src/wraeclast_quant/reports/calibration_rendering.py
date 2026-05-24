@@ -7,6 +7,10 @@ from wraeclast_quant.reports.calibration_models import (
     CalibrationResult,
     SCORE_BUCKETS,
 )
+from wraeclast_quant.reports.outcome_markdown import (
+    outcome_summary_row,
+    reviewed_recommendation_row,
+)
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
 
@@ -30,7 +34,7 @@ def render_calibration_report(result: CalibrationResult) -> str:
         ]
     )
     for action, counts in sorted(result.by_action.items()):
-        lines.append(_summary_row(action, counts))
+        lines.append(outcome_summary_row(action, counts))
 
     lines.extend(
         [
@@ -42,7 +46,7 @@ def render_calibration_report(result: CalibrationResult) -> str:
         ]
     )
     for bucket in SCORE_BUCKETS:
-        lines.append(_summary_row(bucket, result.by_score_bucket[bucket]))
+        lines.append(outcome_summary_row(bucket, result.by_score_bucket[bucket]))
 
     lines.extend(
         [
@@ -66,12 +70,7 @@ def render_calibration_report(result: CalibrationResult) -> str:
         ]
     )
     for review in result.recent_reviews:
-        lines.append(
-            f"| {review.run_id} | {_escape_cell(review.item_name)} | "
-            f"{review.opportunity_score:.2f} | {_escape_cell(review.action)} | "
-            f"{review.outcome} | {_escape_cell(review.observed_at)} | "
-            f"{_escape_cell(review.notes)} |"
-        )
+        lines.append(reviewed_recommendation_row(review))
     lines.append("")
     return "\n".join(lines)
 
@@ -83,14 +82,3 @@ def write_calibration_report(
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(render_calibration_report(result), encoding="utf-8")
     return path
-
-
-def _summary_row(label: str, counts: dict[str, int]) -> str:
-    return (
-        f"| {_escape_cell(label)} | {counts.get('negative', 0)} | "
-        f"{counts.get('neutral', 0)} | {counts.get('positive', 0)} |"
-    )
-
-
-def _escape_cell(value: object) -> str:
-    return str(value).replace("|", "\\|").replace("\n", " ")

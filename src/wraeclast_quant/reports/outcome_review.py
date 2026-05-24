@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from wraeclast_quant.reports.outcome_markdown import (
+    outcome_summary_row,
+    reviewed_recommendation_row,
+)
 from wraeclast_quant.storage.models import OutcomeReviewRecord
-from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
 DEFAULT_OUTCOME_REVIEW_PATH = Path("data/processed/outcome_review.md")
 
@@ -31,10 +34,7 @@ def render_outcome_review(
         ]
     )
     for action, counts in sorted(summary_by_action.items()):
-        lines.append(
-            f"| {_escape_cell(action)} | {counts.get('negative', 0)} | "
-            f"{counts.get('neutral', 0)} | {counts.get('positive', 0)} |"
-        )
+        lines.append(outcome_summary_row(action, counts))
     lines.extend(["", "## Recent Reviewed Recommendations", ""])
     lines.extend(
         [
@@ -43,12 +43,7 @@ def render_outcome_review(
         ]
     )
     for review in reviews:
-        lines.append(
-            f"| {review.run_id} | {_escape_cell(review.item_name)} | "
-            f"{review.opportunity_score:.2f} | {_escape_cell(review.action)} | "
-            f"{review.outcome} | {_escape_cell(review.observed_at)} | "
-            f"{_escape_cell(review.notes)} |"
-        )
+        lines.append(reviewed_recommendation_row(review))
     lines.append("")
     return "\n".join(lines)
 
@@ -64,7 +59,3 @@ def write_outcome_review(
         encoding="utf-8",
     )
     return path
-
-
-def _escape_cell(value: object) -> str:
-    return str(value).replace("|", "\\|").replace("\n", " ")
