@@ -114,12 +114,13 @@
 - poe.ninja POE2 currency fixture, dry-run, and manual-import export proof without live collection.
 - Source-specific poe.ninja POE2 currency dry-run connector facade with live collection still unsupported.
 - poe.ninja POE2 currency fixture-daily proof through SQLite snapshots, derived public intel, static dashboard, site bundle, run provenance, and fresh local backup coverage.
+- poe.ninja POE2 currency live endpoint-contract review recorded; live collection remains blocked until an official endpoint and response-field contract are confirmed.
 
 ## Recommended Next Milestones
 
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
-- Prepare the next poe.ninja live-fetch packet as design-only first: exact endpoint and field contract, cache hit/miss behavior, error handling, and tests before any network collection is enabled.
+- Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Continue maintainability with `config/resources_loader.py` or another bounded command/storage service when human source review is blocked.
 

@@ -78,6 +78,13 @@ This report is a local audit handoff. It does not approve automation, fetch data
 - Dry-run required: `yes`
 - Derived-only public export: `yes`
 
+## Live Endpoint Contract
+
+- Endpoint contract status: `not ready for live implementation`
+- Officially evidenced: POE2 economy overviews exist and are based on Currency Exchange data normalized against Chaos Orbs, Divine Orbs, and Exalted Orbs.
+- Still unconfirmed: exact POE2 currency endpoint URL, query parameters, response-field schema, official reuse terms for automated access, and official cache/rate-limit guidance.
+- Live connector behavior remains unsupported until source-owner documentation or confirmation resolves the endpoint and field-contract gap.
+
 ## Next Step
 
-Connector review is ready for `wq connector-plan` and source-specific implementation planning.
+Connector review is ready for `wq connector-plan`, fixture-backed proof, and source-specific design planning. Live fetching remains blocked until the endpoint contract is confirmed.
