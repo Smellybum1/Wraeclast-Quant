@@ -171,6 +171,7 @@
 - Connector approval policy split suggestion decisions and patch-preview writing behind the stable approval policy facade.
 - Connector approval patch helper split resource block parsing and allowed-use diff generation behind the stable patch facade.
 - Connector planning command rendering split into a focused helper behind the stable `connector-plan` command.
+- Connector planning command review loading and fetch-plan workflow split into a focused helper behind the stable `connector-plan` command.
 - Fetch-plan service split into focused model, cache-path, and builder helpers behind the stable policy facade.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Resource Markdown parser split line normalization, bullet parsing, table parsing, and resource construction helpers behind the stable parser facade.
