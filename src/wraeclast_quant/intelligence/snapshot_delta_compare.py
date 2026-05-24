@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+from wraeclast_quant.intelligence.snapshot_delta_builders import (
+    changed_item_delta,
+    compared_item_names,
+    new_item_delta,
+    records_by_item_name,
+    removed_item_delta,
+)
 from wraeclast_quant.intelligence.snapshot_delta_models import OpportunityDelta, SnapshotComparison
 from wraeclast_quant.storage.models import StoredOpportunityRecord
 
@@ -10,56 +17,26 @@ def compare_opportunities(
     previous_run_id: int | None = None,
     latest_run_id: int | None = None,
 ) -> SnapshotComparison:
-    previous_by_name = {record.item_name: record for record in previous}
-    latest_by_name = {record.item_name: record for record in latest}
-    item_names = sorted(set(previous_by_name) | set(latest_by_name))
+    previous_by_name = records_by_item_name(previous)
+    latest_by_name = records_by_item_name(latest)
     deltas: list[OpportunityDelta] = []
 
-    for item_name in item_names:
+    for item_name in compared_item_names(previous_by_name, latest_by_name):
         previous_record = previous_by_name.get(item_name)
         latest_record = latest_by_name.get(item_name)
 
         if previous_record is None and latest_record is not None:
-            deltas.append(
-                OpportunityDelta(
-                    item_name=item_name,
-                    status="new",
-                    latest_score=latest_record.opportunity_score,
-                    latest_action=latest_record.action,
-                )
-            )
+            deltas.append(new_item_delta(item_name, latest_record))
             continue
 
         if latest_record is None and previous_record is not None:
-            deltas.append(
-                OpportunityDelta(
-                    item_name=item_name,
-                    status="removed",
-                    previous_score=previous_record.opportunity_score,
-                    previous_action=previous_record.action,
-                )
-            )
+            deltas.append(removed_item_delta(item_name, previous_record))
             continue
 
         if previous_record is None or latest_record is None:
             continue
 
-        score_delta = round(
-            latest_record.opportunity_score - previous_record.opportunity_score,
-            2,
-        )
-        deltas.append(
-            OpportunityDelta(
-                item_name=item_name,
-                status="changed",
-                previous_score=previous_record.opportunity_score,
-                latest_score=latest_record.opportunity_score,
-                score_delta=score_delta,
-                previous_action=previous_record.action,
-                latest_action=latest_record.action,
-                action_changed=previous_record.action != latest_record.action,
-            )
-        )
+        deltas.append(changed_item_delta(item_name, previous_record, latest_record))
 
     return SnapshotComparison(
         previous_run_id=previous_run_id,

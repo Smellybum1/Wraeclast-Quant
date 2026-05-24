@@ -19,6 +19,7 @@
 - Tunable local alert candidate previews.
 - Documented local alert rule contract with drift coverage.
 - Snapshot comparison and alert generation split into focused model and rule helpers behind stable intelligence facades.
+- Snapshot delta construction split into focused new, removed, changed, and item-order helpers behind the stable comparison facade.
 - Alert rule helper logic split into focused candidate, threshold, action-rank, and sort helpers behind the stable alert facade.
 - Delta-aware Markdown market brief.
 - Market brief service split into focused model, health, and Markdown rendering helpers behind the stable report facade.

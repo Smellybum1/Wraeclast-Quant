@@ -17,6 +17,8 @@
 - Verification: connector model facade import smoke, connector-policy tests, connector CLI slice, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Completed packet: split calibration report Markdown rendering into focused section helpers behind the stable `calibration_rendering` facade.
 - Verification: calibration/outcome focused tests, calibration CLI slice, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
+- Completed packet: split snapshot delta construction into focused new, removed, changed, and item-order helpers behind the stable `compare_opportunities` facade.
+- Verification: snapshot-delta tests, related alert/public-intel/CLI tests, full `pytest`, `export`, `site`, `site-bundle`, `status --strict`, `publish-check`, `migration-readiness --strict`, and `Get-FileHash -Algorithm SHA256 RESOURCES.md` all passed.
 - Protected resource hash: `79416C69ED4F29B7C540BDCAAD76A8A22F84673738B4F7E2043F1725D6196BF6`.
 - Safety state: no live HTTP, scraping, Discord collection, publishing automation, schema migration, source approval, dependency change, or `RESOURCES.md` edit.
 - Next likely unblocked work: continue bounded maintainability with small test-helper cleanup or status artifact row cleanup while live source work remains blocked.
