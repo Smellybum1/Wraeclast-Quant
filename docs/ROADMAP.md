@@ -96,6 +96,7 @@
 - Report artifact and publishing command rendering split into focused helpers behind stable site, bundle, validation, readiness, handoff, and site-contract commands.
 - Report export command registration decomposed into focused market-brief report and public-intel export modules behind the stable report export aggregator.
 - Market-brief report command sample-data workflow split into a focused helper behind the stable `report` command.
+- Public-intel export command alert validation and payload assembly split into a focused helper behind the stable `export` command.
 - Daily pipeline orchestration decomposed into a shared workflow service used by manual/sample and connector-fixture daily commands.
 - Daily pipeline workflow service split snapshot persistence, provenance, and artifact writing behind the stable workflow facade.
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.

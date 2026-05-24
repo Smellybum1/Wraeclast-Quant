@@ -5,16 +5,15 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from wraeclast_quant.config.compliance import assess_resources
-from wraeclast_quant.config.resources_loader import load_resources
-from wraeclast_quant.intelligence.alerts import AlertRuleSettings
+from wraeclast_quant.commands.report_public_intel_export_workflow import (
+    build_export_payload,
+    public_intel_alert_settings,
+)
 from wraeclast_quant.reports.public_intel import (
     DEFAULT_PUBLIC_INTEL_PATH,
-    build_public_intel,
     write_public_intel,
 )
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
-from wraeclast_quant.storage.repositories import SnapshotRepository
 
 console = Console(width=260)
 
@@ -30,12 +29,10 @@ def register(app: typer.Typer) -> None:
         buy_threshold: float = typer.Option(75.0, "--buy-threshold", min=0, max=100),
         big_delta: float = typer.Option(10.0, "--big-delta", min=0, max=100),
     ) -> None:
-        alert_settings = _alert_settings(watch_threshold, buy_threshold, big_delta)
-        resources = load_resources(resources_path)
-        payload = build_public_intel(
-            repository=SnapshotRepository(database_path),
-            resources=resources,
-            assessments=assess_resources(resources),
+        alert_settings = public_intel_alert_settings(watch_threshold, buy_threshold, big_delta)
+        payload = build_export_payload(
+            database_path=database_path,
+            resources_path=resources_path,
             limit=limit,
             alert_settings=alert_settings,
         )
@@ -47,18 +44,3 @@ def register(app: typer.Typer) -> None:
         console.print(
             f"Wrote public intel export for run #{payload['latest_run']['id']} to {written_path}"
         )
-
-
-def _alert_settings(
-    watch_threshold: float,
-    buy_threshold: float,
-    big_delta: float,
-) -> AlertRuleSettings:
-    try:
-        return AlertRuleSettings(
-            watch_threshold=watch_threshold,
-            buy_threshold=buy_threshold,
-            big_positive_delta=big_delta,
-        )
-    except ValueError as error:
-        raise typer.BadParameter(str(error)) from error
