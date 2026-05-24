@@ -114,6 +114,7 @@
 - Connector review evidence/status command registration split into focused evidence-update and status-display modules behind the stable status aggregator.
 - Connector review status table rendering split into a focused helper behind stable evidence/status commands.
 - Connector review status builder split row assembly behind the stable review status facade.
+- Connector review status rows split into focused core, evidence, safety, limits, execution, and readiness helpers behind the stable row facade.
 - Backup storage service decomposed into focused model, writer, verifier, listing, and restore-guidance modules behind the stable backup facade.
 - Maintenance outcome command registration decomposed into focused record/list, review queue/coverage, and report modules behind the stable outcome aggregator.
 - Maintenance outcome command table rendering split into focused helpers behind the stable outcome command modules.
@@ -183,7 +184,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include source-review helper cleanup or import/test helper cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include preflight service cleanup or resource parser helper cleanup.
 
 ## Later Intelligence Improvements
 
