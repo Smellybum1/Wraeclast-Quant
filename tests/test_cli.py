@@ -106,6 +106,8 @@ from cli_provenance_helpers import (
 )
 from cli_provenance_helpers import missing_provenance_database as _missing_provenance_database
 from cli_provenance_helpers import two_run_provenance_database as _two_run_provenance_database
+from cli_report_helpers import analyze_sample_args as _analyze_sample_args
+from cli_report_helpers import report_sample_args as _report_sample_args
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
@@ -195,7 +197,7 @@ def test_collect_dry_run() -> None:
 def test_analyze_sample_data(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
 
-    result = runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
+    result = runner.invoke(app, _analyze_sample_args(database_path))
 
     assert result.exit_code == 0
     assert "Stormglass Catalyst" in result.output
@@ -2144,7 +2146,7 @@ def test_report_sample_data(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     Path("data/processed").mkdir(parents=True)
 
-    result = runner.invoke(app, ["report", "--sample-data"])
+    result = runner.invoke(app, _report_sample_args())
 
     assert result.exit_code == 0
     assert Path("data/processed/market_brief.md").exists()
@@ -2162,7 +2164,7 @@ def test_analyze_sample_data_records_snapshot(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["analyze", "--sample-data", "--database-path", str(database_path)],
+        _analyze_sample_args(database_path),
     )
 
     assert result.exit_code == 0
@@ -2176,7 +2178,7 @@ def test_report_sample_data_records_artifact(tmp_path: Path, monkeypatch) -> Non
 
     result = runner.invoke(
         app,
-        ["report", "--sample-data", "--database-path", str(database_path)],
+        _report_sample_args(database_path),
     )
 
     assert result.exit_code == 0
@@ -2191,7 +2193,7 @@ def test_report_sample_data_includes_snapshot_changes(tmp_path: Path, monkeypatc
 
     result = runner.invoke(
         app,
-        ["report", "--sample-data", "--database-path", str(database_path)],
+        _report_sample_args(database_path),
     )
 
     report = Path("data/processed/market_brief.md").read_text(encoding="utf-8")
@@ -2201,7 +2203,7 @@ def test_report_sample_data_includes_snapshot_changes(tmp_path: Path, monkeypatc
 
 def test_snapshots_command_prints_latest_run(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
+    runner.invoke(app, _analyze_sample_args(database_path))
 
     result = runner.invoke(app, ["snapshots", "--database-path", str(database_path)])
 
@@ -2456,7 +2458,7 @@ def test_read_only_snapshot_commands_do_not_create_missing_database(tmp_path: Pa
 
 def test_record_outcome_command_saves_manual_outcome(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
+    runner.invoke(app, _analyze_sample_args(database_path))
 
     result = runner.invoke(
         app,
@@ -2473,7 +2475,7 @@ def test_record_outcome_command_saves_manual_outcome(tmp_path: Path) -> None:
 
 def test_record_outcome_command_rejects_missing_item(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
-    runner.invoke(app, ["analyze", "--sample-data", "--database-path", str(database_path)])
+    runner.invoke(app, _analyze_sample_args(database_path))
 
     result = runner.invoke(
         app,
