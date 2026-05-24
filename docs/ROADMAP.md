@@ -97,6 +97,7 @@
 - Daily pipeline workflow service split snapshot persistence, provenance, and artifact writing behind the stable workflow facade.
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.
 - Snapshot command registration and local table rendering decomposed into focused listing, comparison, alert, and rendering modules.
+- Snapshot command rendering split into focused alert, comparison, formatting, and console helpers behind the stable rendering facade.
 - Public intel service decomposed into focused facade, builder, payload, constant, and writer modules.
 - Public intel builder split snapshot/alert context loading from contract payload assembly behind the stable builder facade.
 - Site bundle service decomposed into focused facade, model, manifest, writer, and health modules.
