@@ -51,13 +51,18 @@ from cli_market_flow_helpers import (
 from cli_market_flow_helpers import single_buy_database as _single_buy_database
 from cli_market_flow_helpers import small_mover_database as _small_mover_database
 from cli_market_flow_helpers import stable_watch_database as _stable_watch_database
+from cli_outcome_helpers import calibration_args as _calibration_args
 from cli_outcome_helpers import calibration_report_args as _calibration_report_args
 from cli_outcome_helpers import calibration_reviewed_database as _calibration_reviewed_database
+from cli_outcome_helpers import outcome_review_args as _outcome_review_args
 from cli_outcome_helpers import outcome_report_args as _outcome_report_args
+from cli_outcome_helpers import outcomes_args as _outcomes_args
 from cli_outcome_helpers import (
     partially_reviewed_two_item_database as _partially_reviewed_two_item_database,
 )
 from cli_outcome_helpers import record_outcome_args as _record_outcome_args
+from cli_outcome_helpers import review_coverage_args as _review_coverage_args
+from cli_outcome_helpers import review_queue_args as _review_queue_args
 from cli_outcome_helpers import (
     reviewed_single_opportunity_database as _reviewed_single_opportunity_database,
 )
@@ -2473,7 +2478,7 @@ def test_record_outcome_command_rejects_missing_item(tmp_path: Path) -> None:
 def test_outcomes_command_prints_recent_outcomes_and_summary(tmp_path: Path) -> None:
     database_path, _run = _reviewed_single_opportunity_database(tmp_path)
 
-    result = runner.invoke(app, ["outcomes", "--database-path", str(database_path)])
+    result = runner.invoke(app, _outcomes_args(database_path))
 
     assert result.exit_code == 0
     assert "Recommendation Outcomes" in result.output
@@ -2485,7 +2490,7 @@ def test_outcomes_command_prints_recent_outcomes_and_summary(tmp_path: Path) -> 
 def test_outcomes_command_handles_empty_database(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        ["outcomes", "--database-path", str(tmp_path / "snapshots.db")],
+        _outcomes_args(tmp_path / "snapshots.db"),
     )
 
     assert result.exit_code == 0
@@ -2495,7 +2500,7 @@ def test_outcomes_command_handles_empty_database(tmp_path: Path) -> None:
 def test_review_queue_command_prints_unreviewed_latest_run(tmp_path: Path) -> None:
     database_path, _run = _partially_reviewed_two_item_database(tmp_path)
 
-    result = runner.invoke(app, ["review-queue", "--database-path", str(database_path)])
+    result = runner.invoke(app, _review_queue_args(database_path))
 
     assert result.exit_code == 0
     assert "Recommendation Review Queue" in result.output
@@ -2510,7 +2515,7 @@ def test_review_queue_command_uses_requested_run_id(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["review-queue", "--database-path", str(database_path), "--run-id", str(first.id)],
+        _review_queue_args(database_path, run_id=first.id),
     )
 
     assert result.exit_code == 0
@@ -2521,7 +2526,7 @@ def test_review_queue_command_uses_requested_run_id(tmp_path: Path) -> None:
 def test_review_queue_command_handles_no_snapshots(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        ["review-queue", "--database-path", str(tmp_path / "snapshots.db")],
+        _review_queue_args(tmp_path / "snapshots.db"),
     )
 
     assert result.exit_code == 0
@@ -2534,7 +2539,7 @@ def test_review_queue_command_handles_fully_reviewed_run(tmp_path: Path) -> None
         item_name="Reviewed Catalyst",
     )
 
-    result = runner.invoke(app, ["review-queue", "--database-path", str(database_path)])
+    result = runner.invoke(app, _review_queue_args(database_path))
 
     assert result.exit_code == 0
     assert "No unreviewed recommendations found for run #1." in result.output
@@ -2543,7 +2548,7 @@ def test_review_queue_command_handles_fully_reviewed_run(tmp_path: Path) -> None
 def test_review_queue_command_rejects_missing_run(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        ["review-queue", "--database-path", str(tmp_path / "snapshots.db"), "--run-id", "99"],
+        _review_queue_args(tmp_path / "snapshots.db", run_id=99),
     )
 
     assert result.exit_code != 0
@@ -2553,7 +2558,7 @@ def test_review_queue_command_rejects_missing_run(tmp_path: Path) -> None:
 def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> None:
     database_path, _run = _partially_reviewed_two_item_database(tmp_path)
 
-    result = runner.invoke(app, ["review-coverage", "--database-path", str(database_path)])
+    result = runner.invoke(app, _review_coverage_args(database_path))
 
     assert result.exit_code == 0
     assert "Recommendation Review Coverage" in result.output
@@ -2566,7 +2571,7 @@ def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        ["review-coverage", "--database-path", str(database_path), "--run-id", str(first.id)],
+        _review_coverage_args(database_path, run_id=first.id),
     )
 
     assert result.exit_code == 0
@@ -2576,7 +2581,7 @@ def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
 def test_review_coverage_command_handles_no_snapshots(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        ["review-coverage", "--database-path", str(tmp_path / "snapshots.db")],
+        _review_coverage_args(tmp_path / "snapshots.db"),
     )
 
     assert result.exit_code == 0
@@ -2589,7 +2594,7 @@ def test_outcome_review_command_prints_joined_review_and_summary(tmp_path: Path)
         notes="Manual review.",
     )
 
-    result = runner.invoke(app, ["outcome-review", "--database-path", str(database_path)])
+    result = runner.invoke(app, _outcome_review_args(database_path))
 
     assert result.exit_code == 0
     assert "Recommendation Outcome Review" in result.output
@@ -2603,7 +2608,7 @@ def test_outcome_review_command_prints_joined_review_and_summary(tmp_path: Path)
 def test_outcome_review_command_handles_empty_database(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        ["outcome-review", "--database-path", str(tmp_path / "snapshots.db")],
+        _outcome_review_args(tmp_path / "snapshots.db"),
     )
 
     assert result.exit_code == 0
@@ -2646,7 +2651,7 @@ def test_outcome_report_command_writes_empty_report(tmp_path: Path) -> None:
 def test_calibration_command_prints_local_summaries(tmp_path: Path) -> None:
     database_path = _calibration_reviewed_database(tmp_path)
 
-    result = runner.invoke(app, ["calibration", "--database-path", str(database_path)])
+    result = runner.invoke(app, _calibration_args(database_path))
 
     assert result.exit_code == 0
     assert "Calibration By Action" in result.output
@@ -2660,7 +2665,7 @@ def test_calibration_command_prints_local_summaries(tmp_path: Path) -> None:
 def test_calibration_command_missing_database_is_non_mutating(tmp_path: Path) -> None:
     database_path = tmp_path / "missing" / "snapshots.db"
 
-    result = runner.invoke(app, ["calibration", "--database-path", str(database_path)])
+    result = runner.invoke(app, _calibration_args(database_path))
 
     assert result.exit_code == 0
     assert "No reviewed recommendation outcomes found." in result.output

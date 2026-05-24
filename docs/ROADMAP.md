@@ -187,6 +187,7 @@
 - CLI backup and migration-readiness argument builders moved into backup test helpers without changing assertions.
 - CLI record-outcome argument builder moved into outcome test helpers without changing assertions.
 - CLI outcome and calibration report argument builders moved into outcome test helpers without changing assertions.
+- CLI outcome list, review queue, coverage, and calibration argument builders moved into outcome test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

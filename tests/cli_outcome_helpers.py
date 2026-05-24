@@ -104,6 +104,28 @@ def record_outcome_args(
     return args
 
 
+def outcomes_args(database_path: Path) -> list[str]:
+    return ["outcomes", "--database-path", str(database_path)]
+
+
+def review_queue_args(database_path: Path, *, run_id: int | None = None) -> list[str]:
+    args = ["review-queue", "--database-path", str(database_path)]
+    if run_id is not None:
+        args.extend(["--run-id", str(run_id)])
+    return args
+
+
+def review_coverage_args(database_path: Path, *, run_id: int | None = None) -> list[str]:
+    args = ["review-coverage", "--database-path", str(database_path)]
+    if run_id is not None:
+        args.extend(["--run-id", str(run_id)])
+    return args
+
+
+def outcome_review_args(database_path: Path) -> list[str]:
+    return ["outcome-review", "--database-path", str(database_path)]
+
+
 def outcome_report_args(database_path: Path, output_path: Path) -> list[str]:
     return [
         "outcome-report",
@@ -124,13 +146,22 @@ def calibration_report_args(database_path: Path, output_path: Path) -> list[str]
     ]
 
 
+def calibration_args(database_path: Path) -> list[str]:
+    return ["calibration", "--database-path", str(database_path)]
+
+
 __all__ = [
+    "calibration_args",
     "calibration_report_args",
     "calibration_reviewed_database",
+    "outcome_review_args",
     "outcome_report_args",
+    "outcomes_args",
     "partially_reviewed_two_item_database",
     "record_outcome_args",
     "reviewed_single_opportunity_database",
+    "review_coverage_args",
+    "review_queue_args",
     "two_run_database",
     "two_run_database_with_second_reviewed",
 ]
