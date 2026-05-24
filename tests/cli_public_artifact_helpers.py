@@ -278,6 +278,81 @@ def site_args(intel_path: Path, output_dir: Path) -> list[str]:
     return ["site", "--intel-path", str(intel_path), "--output-dir", str(output_dir)]
 
 
+def site_bundle_args(intel_path: Path, site_dir: Path, output_dir: Path) -> list[str]:
+    return [
+        "site-bundle",
+        "--intel-path",
+        str(intel_path),
+        "--site-dir",
+        str(site_dir),
+        "--output-dir",
+        str(output_dir),
+    ]
+
+
+def publish_check_args(
+    database_path: Path,
+    bundle_dir: Path,
+    *,
+    json_output: bool = False,
+    strict: bool = False,
+) -> list[str]:
+    args = ["publish-check"]
+    if json_output:
+        args.append("--json")
+    if strict:
+        args.append("--strict")
+    return [
+        *args,
+        "--database-path",
+        str(database_path),
+        "--bundle-dir",
+        str(bundle_dir),
+    ]
+
+
+def publish_handoff_args(
+    database_path: Path,
+    bundle_dir: Path,
+    output_path: Path,
+    *,
+    strict: bool = False,
+) -> list[str]:
+    args = ["publish-handoff"]
+    if strict:
+        args.append("--strict")
+    return [
+        *args,
+        "--database-path",
+        str(database_path),
+        "--bundle-dir",
+        str(bundle_dir),
+        "--output-path",
+        str(output_path),
+    ]
+
+
+def site_contract_args(
+    database_path: Path,
+    bundle_dir: Path,
+    output_path: Path,
+    *,
+    strict: bool = False,
+) -> list[str]:
+    args = ["site-contract"]
+    if strict:
+        args.append("--strict")
+    return [
+        *args,
+        "--database-path",
+        str(database_path),
+        "--bundle-dir",
+        str(bundle_dir),
+        "--output-path",
+        str(output_path),
+    ]
+
+
 def public_intel_payload(run_id: int = 7) -> dict[str, object]:
     return {
         "schema_version": "1.0",
@@ -336,8 +411,12 @@ __all__ = [
     "StatusWorkspace",
     "database_with_two_runs",
     "export_args",
+    "publish_check_args",
+    "publish_handoff_args",
     "public_intel_payload",
     "site_args",
+    "site_bundle_args",
+    "site_contract_args",
     "status_args",
     "status_json_args",
     "status_workspace",

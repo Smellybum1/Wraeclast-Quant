@@ -75,8 +75,12 @@ from cli_outcome_helpers import (
 from cli_public_artifact_helpers import (
     database_with_two_runs as _database_with_two_runs,
     export_args as _export_args,
+    publish_check_args as _publish_check_args,
+    publish_handoff_args as _publish_handoff_args,
     public_intel_payload as _public_intel_payload,
     site_args as _site_args,
+    site_bundle_args as _site_bundle_args,
+    site_contract_args as _site_contract_args,
     status_args as _status_args,
     status_json_args as _status_json_args,
     status_workspace as _status_workspace,
@@ -2892,15 +2896,7 @@ def test_site_bundle_command_writes_local_bundle(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "site-bundle",
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-            "--output-dir",
-            str(output_dir),
-        ],
+        _site_bundle_args(intel_path, site_dir, output_dir),
     )
 
     assert result.exit_code == 0
@@ -2919,15 +2915,7 @@ def test_site_bundle_command_rejects_invalid_public_intel(tmp_path: Path) -> Non
 
     result = runner.invoke(
         app,
-        [
-            "site-bundle",
-            "--intel-path",
-            str(intel_path),
-            "--site-dir",
-            str(site_dir),
-            "--output-dir",
-            str(output_dir),
-        ],
+        _site_bundle_args(intel_path, site_dir, output_dir),
     )
 
     assert result.exit_code != 0
@@ -2938,15 +2926,11 @@ def test_site_bundle_command_rejects_invalid_public_intel(tmp_path: Path) -> Non
 def test_site_bundle_command_handles_missing_inputs(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
-        [
-            "site-bundle",
-            "--intel-path",
-            str(tmp_path / "missing.json"),
-            "--site-dir",
-            str(tmp_path / "missing_site"),
-            "--output-dir",
-            str(tmp_path / "bundle"),
-        ],
+        _site_bundle_args(
+            tmp_path / "missing.json",
+            tmp_path / "missing_site",
+            tmp_path / "bundle",
+        ),
     )
 
     assert result.exit_code != 0
@@ -2959,13 +2943,7 @@ def test_publish_check_ready_bundle_prints_readiness(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "publish-check",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(bundle_dir),
-        ],
+        _publish_check_args(database_path, bundle_dir),
     )
 
     assert result.exit_code == 0
@@ -2980,14 +2958,7 @@ def test_publish_check_json_outputs_stable_fields(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "publish-check",
-            "--json",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(bundle_dir),
-        ],
+        _publish_check_args(database_path, bundle_dir, json_output=True),
     )
 
     assert result.exit_code == 0
@@ -3006,14 +2977,7 @@ def test_publish_check_strict_exits_nonzero_when_not_ready(tmp_path: Path) -> No
 
     result = runner.invoke(
         app,
-        [
-            "publish-check",
-            "--strict",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(missing_bundle),
-        ],
+        _publish_check_args(database_path, missing_bundle, strict=True),
     )
 
     assert result.exit_code == 1
@@ -3027,15 +2991,7 @@ def test_publish_handoff_ready_bundle_writes_report(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "publish-handoff",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(bundle_dir),
-            "--output-path",
-            str(output_path),
-        ],
+        _publish_handoff_args(database_path, bundle_dir, output_path),
     )
 
     assert result.exit_code == 0
@@ -3053,16 +3009,7 @@ def test_publish_handoff_strict_exits_nonzero_when_not_ready(tmp_path: Path) -> 
 
     result = runner.invoke(
         app,
-        [
-            "publish-handoff",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(bundle_dir),
-            "--output-path",
-            str(output_path),
-            "--strict",
-        ],
+        _publish_handoff_args(database_path, bundle_dir, output_path, strict=True),
     )
 
     assert result.exit_code == 1
@@ -3077,15 +3024,7 @@ def test_site_contract_ready_bundle_writes_json(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "site-contract",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(bundle_dir),
-            "--output-path",
-            str(output_path),
-        ],
+        _site_contract_args(database_path, bundle_dir, output_path),
     )
 
     payload = json.loads(output_path.read_text(encoding="utf-8"))
@@ -3109,16 +3048,7 @@ def test_site_contract_strict_exits_nonzero_when_not_ready(tmp_path: Path) -> No
 
     result = runner.invoke(
         app,
-        [
-            "site-contract",
-            "--database-path",
-            str(database_path),
-            "--bundle-dir",
-            str(bundle_dir),
-            "--output-path",
-            str(output_path),
-            "--strict",
-        ],
+        _site_contract_args(database_path, bundle_dir, output_path, strict=True),
     )
 
     payload = json.loads(output_path.read_text(encoding="utf-8"))
