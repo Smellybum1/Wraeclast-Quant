@@ -15,6 +15,9 @@ from cli_backup_helpers import sample_data_backup as _sample_data_backup
 from cli_backup_helpers import sample_data_database as _sample_data_database
 from cli_connector_helpers import approved_api_resources_text as _approved_api_resources_text
 from cli_connector_helpers import conditional_api_resources_text as _conditional_api_resources_text
+from cli_connector_helpers import (
+    connector_fixture_daily_tuned_setup as _connector_fixture_daily_tuned_setup,
+)
 from cli_connector_helpers import connector_review as _connector_review
 from cli_connector_helpers import discord_resources_text as _discord_resources_text
 from cli_connector_helpers import manual_source_resources_text as _manual_source_resources_text
@@ -2171,31 +2174,7 @@ def test_connector_fixture_daily_refuses_incomplete_review(tmp_path: Path) -> No
 
 
 def test_connector_fixture_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    fixture_path = tmp_path / "fixture.json"
-    fixture_path.write_text(
-        json.dumps(
-            {
-                "source_name": "Example Approved API",
-                "generated_at": "2026-05-23T00:00:00+00:00",
-                "items": [
-                    {
-                        "name": "Stormglass Catalyst",
-                        "signals": _manual_item("Stormglass Catalyst")["signals"],
-                    }
-                ],
-            }
-        ),
-        encoding="utf-8",
-    )
-    repository = SnapshotRepository(database_path)
-    _save_single_opportunity_run(
-        repository,
-        "Stormglass Catalyst",
-        60.0,
-        "WATCH",
-        source_mode="connector-fixture",
-    )
+    database_path, fixture_path = _connector_fixture_daily_tuned_setup(tmp_path)
 
     result = runner.invoke(
         app,
