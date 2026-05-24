@@ -119,6 +119,7 @@
 - Local connector review prep workflow with human checklist generation.
 - Local connector review evidence update workflow for manually collected source review fields.
 - Local connector candidate report for prioritizing source-specific reviews.
+- Connector candidate command rendering split into a focused helper behind the stable candidate report command.
 - Local connector review status checklist for inspecting incomplete review drafts.
 - Optional connector review evidence fields for local source-term auditability.
 - Connector review evidence gate requiring reviewed URLs, review date, and allowed data shape before readiness.
@@ -142,7 +143,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include connector candidate rendering cleanup or connector review evidence command cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include connector review evidence command cleanup or connector review status rendering cleanup.
 
 ## Later Intelligence Improvements
 
