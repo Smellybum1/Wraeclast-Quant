@@ -83,6 +83,7 @@
 - Report artifact and publishing command rendering split into focused helpers behind stable site, bundle, validation, readiness, handoff, and site-contract commands.
 - Report export command registration decomposed into focused market-brief report and public-intel export modules behind the stable report export aggregator.
 - Daily pipeline orchestration decomposed into a shared workflow service used by manual/sample and connector-fixture daily commands.
+- Daily pipeline workflow service split snapshot persistence, provenance, and artifact writing behind the stable workflow facade.
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.
 - Snapshot command registration and local table rendering decomposed into focused listing, comparison, alert, and rendering modules.
 - Public intel service decomposed into focused facade, builder, payload, constant, and writer modules.
@@ -176,7 +177,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include daily pipeline workflow cleanup or SQLite health service cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include SQLite health service cleanup or connector candidate service cleanup.
 
 ## Later Intelligence Improvements
 
