@@ -130,6 +130,12 @@ Use `wq restore-helper --backup-path <file>` before restoring a local SQLite bac
 
 Use `wq schedule-helper --sample-data` or `wq schedule-helper --input-path <file>` to print Windows Task Scheduler guidance for `wq daily`. The helper validates inputs and prints copy-pasteable commands, but it does not create scheduled tasks, install a service, run in the background, or execute the daily pipeline.
 
+## Autonomous Project Work
+
+Codex agents should follow `AGENTS.md` for project guardrails. When Goal Mode is available, `docs/GOAL_MODE.md` provides a short pasteable goal plus the longer local operating loop for autonomous packet-by-packet work.
+
+The autonomous loop is still bounded: it should choose the highest-impact unblocked local task, work in one small packet at a time, preserve local-first/source-compliance boundaries, and stop for decisions that affect architecture, data model, public APIs, security, source approval, persistence, pricing, or user experience.
+
 ## Resource Configuration
 
 `RESOURCES.md` is the source of truth for configured resources. The loader is intentionally tolerant and supports loose Markdown headings, bullets, links, metadata blocks, and simple tables. Missing metadata is filled with safe defaults. See `docs/RESOURCE_CONFIGURATION.md` for the parser contract.

@@ -35,6 +35,49 @@
 - Before non-trivial edits, state assumptions, success criteria, and the narrow verification path.
 - Push back when a request risks violating the project safety boundary or source terms.
 
+## Autonomous Roadmap Execution
+
+When asked to "advance the project", "continue the roadmap", "work autonomously", "pick the next task", "do the next packet", or similar, operate as a self-directed execution loop even if Goal Mode is unavailable.
+
+Default behavior:
+
+- Read `AGENTS.md`, `README.md`, `docs/ROADMAP.md`, `PLAN.md` if present, relevant TODOs/issues, tests, and recent local logs or generated handoff notes when they exist before choosing work.
+- Run `git status --short --branch` before editing.
+- Rank available work by project impact, user value, dependency-unblocking value, risk, and implementation effort.
+- Pick the highest-impact unblocked task that does not require user input.
+- Work on one small packet at a time: one feature slice, one refactor, one bug fix, one proof path, or one documentation/update task.
+- Before editing, state the packet goal, why it is the best next task, acceptance criteria, likely files touched, narrow verification path, and rollback notes when rollback is non-obvious.
+- Make the smallest useful change that satisfies the acceptance criteria.
+- Run focused verification first, then broader tests/checks when shared behavior, CLI behavior, generated artifacts, persistence, or core paths change.
+- Update the roadmap, progress log, or relevant planning document only when the completed packet changes project state, next steps, or handoff context.
+- After a packet passes verification, continue to the next highest-impact unblocked packet only when the user asked for autonomous progress and context remains safe; otherwise hand off with the next recommended packet.
+- If running in normal chat mode instead of Goal Mode, treat a prompt such as "advance the project according to AGENTS.md" as permission to run this loop packet-by-packet without requiring the user to paste the full instructions again.
+
+Stop and ask the user only when:
+
+- A decision materially changes architecture, product direction, data model, public API, auth/security, deployment, persistence semantics, pricing, major UX behavior, or source approval.
+- Requirements conflict.
+- Validation cannot be run or repeatedly fails for unclear reasons.
+- Secrets, credentials, paid services, deployment access, or external accounts are required.
+- A new dependency, migration, schema change, public command, or risky source edit is needed.
+- The approved task queue is complete.
+- Context is getting too long to continue safely.
+
+Git rules:
+
+- Commit only after verification passes and the diff contains only intended changes.
+- Do not push without explicit user approval.
+- If commits are not requested, leave changes uncommitted and summarize the diff.
+
+Reporting after each packet:
+
+- What changed.
+- Why it was chosen.
+- Files changed.
+- Verification run and results.
+- Risks or follow-ups.
+- Next recommended packet.
+
 ## Implementation Discipline
 
 - Prefer the smallest change that satisfies the request.

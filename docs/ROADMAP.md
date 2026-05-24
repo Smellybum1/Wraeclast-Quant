@@ -72,6 +72,8 @@
 - Static dashboard rendering decomposed into focused facade, health, and HTML rendering modules.
 - Publish readiness decomposed into focused facade, readiness, handoff, and model modules.
 - Report command registration decomposed into focused report/export, static artifact, and publish handoff modules.
+- Static artifact command registration decomposed into focused site, public-intel validation, and site-bundle modules behind the stable report artifact aggregator.
+- Publishing command registration decomposed into focused publish-check, publish-handoff, and site-contract modules behind the stable report publishing aggregator.
 - Daily pipeline orchestration decomposed into a shared workflow service used by manual/sample and connector-fixture daily commands.
 - Connector fixture command registration decomposed into focused inspection, export, and pipeline modules.
 - Snapshot command registration and local table rendering decomposed into focused listing, comparison, alert, and rendering modules.
@@ -93,7 +95,10 @@
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
 - Resource loader decomposed into focused model, type-inference, and Markdown parser modules behind the stable `resources_loader` facade.
 - Resource command registration decomposed into focused collect, compliance, and preflight modules behind the stable resource command aggregator.
+- Status command registration decomposed into focused schema, status-report, and database-check modules behind the stable status command aggregator.
+- Intake command registration decomposed into focused sample-analysis, manual-import, watchlist, and shared-rendering modules behind the stable intake command aggregator.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
+- Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Markdown documentation refreshed to reflect connector review, fixture pipeline, publishing handoff, migration readiness, provenance, calibration, and recent decomposition work.
 - Design documentation updated to match SQLite schema contract version `2`.
 - Read-only SQLite migration-readiness check and documented future schema-change workflow.
@@ -124,7 +129,8 @@
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked.
+- Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include a focused status-health helper split or report export command cleanup.
 
 ## Later Intelligence Improvements
 
