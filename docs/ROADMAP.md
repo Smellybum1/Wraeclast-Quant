@@ -121,6 +121,7 @@
 - Public intel service decomposed into focused facade, builder, payload, constant, and writer modules.
 - Public intel builder split snapshot/alert context loading from contract payload assembly behind the stable builder facade.
 - Public intel document assembly split from build-context orchestration behind the stable builder facade.
+- Public intel snapshot comparison context split from build-context loading behind the stable context facade.
 - Site bundle service decomposed into focused facade, model, manifest, writer, and health modules.
 - Site bundle health inspection split into focused manifest and archive helpers behind the stable health facade.
 - Site bundle writer input validation split from local copy/archive writing behind the stable writer facade.

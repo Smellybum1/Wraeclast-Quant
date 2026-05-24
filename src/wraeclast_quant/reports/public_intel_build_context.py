@@ -3,7 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from wraeclast_quant.intelligence.alerts import AlertCandidate, AlertRuleSettings, generate_alerts
-from wraeclast_quant.intelligence.snapshot_deltas import SnapshotComparison, compare_opportunities
+from wraeclast_quant.intelligence.snapshot_deltas import SnapshotComparison
+from wraeclast_quant.reports.public_intel_snapshot_context import build_snapshot_comparison
 from wraeclast_quant.storage.models import AnalysisRunRecord, StoredOpportunityRecord
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -38,19 +39,4 @@ def load_public_intel_build_context(
         recent_runs=recent_runs,
         comparison=comparison,
         alerts=alerts,
-    )
-
-
-def build_snapshot_comparison(
-    repository: SnapshotRepository,
-    previous: AnalysisRunRecord | None,
-    latest: AnalysisRunRecord,
-) -> SnapshotComparison | None:
-    if previous is None:
-        return None
-    return compare_opportunities(
-        previous=repository.scored_opportunities_for_run(previous.id),
-        latest=repository.scored_opportunities_for_run(latest.id),
-        previous_run_id=previous.id,
-        latest_run_id=latest.id,
     )
