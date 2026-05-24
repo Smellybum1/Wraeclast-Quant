@@ -55,6 +55,7 @@ from cli_outcome_helpers import calibration_reviewed_database as _calibration_re
 from cli_outcome_helpers import (
     partially_reviewed_two_item_database as _partially_reviewed_two_item_database,
 )
+from cli_outcome_helpers import record_outcome_args as _record_outcome_args
 from cli_outcome_helpers import (
     reviewed_single_opportunity_database as _reviewed_single_opportunity_database,
 )
@@ -2442,19 +2443,7 @@ def test_record_outcome_command_saves_manual_outcome(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "record-outcome",
-            "--database-path",
-            str(database_path),
-            "--run-id",
-            "1",
-            "--item-name",
-            "Stormglass Catalyst",
-            "--outcome",
-            "positive",
-            "--notes",
-            "Reviewed manually.",
-        ],
+        _record_outcome_args(database_path, notes="Reviewed manually."),
     )
 
     records = SnapshotRepository(database_path).list_recent_outcomes()
@@ -2471,17 +2460,7 @@ def test_record_outcome_command_rejects_missing_item(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        [
-            "record-outcome",
-            "--database-path",
-            str(database_path),
-            "--run-id",
-            "1",
-            "--item-name",
-            "Missing Item",
-            "--outcome",
-            "positive",
-        ],
+        _record_outcome_args(database_path, item_name="Missing Item"),
     )
 
     assert result.exit_code != 0

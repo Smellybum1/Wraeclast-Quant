@@ -80,9 +80,34 @@ def calibration_reviewed_database(tmp_path: Path) -> Path:
     return database_path
 
 
+def record_outcome_args(
+    database_path: Path,
+    *,
+    run_id: int = 1,
+    item_name: str = "Stormglass Catalyst",
+    outcome: str = "positive",
+    notes: str | None = None,
+) -> list[str]:
+    args = [
+        "record-outcome",
+        "--database-path",
+        str(database_path),
+        "--run-id",
+        str(run_id),
+        "--item-name",
+        item_name,
+        "--outcome",
+        outcome,
+    ]
+    if notes is not None:
+        args.extend(["--notes", notes])
+    return args
+
+
 __all__ = [
     "calibration_reviewed_database",
     "partially_reviewed_two_item_database",
+    "record_outcome_args",
     "reviewed_single_opportunity_database",
     "two_run_database",
     "two_run_database_with_second_reviewed",

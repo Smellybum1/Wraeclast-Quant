@@ -185,6 +185,7 @@
 - CLI connector fixture JSON writers moved into connector test helpers without changing assertions.
 - CLI connector fixture-run, dry-run, and export argument builders moved into connector test helpers without changing assertions.
 - CLI backup and migration-readiness argument builders moved into backup test helpers without changing assertions.
+- CLI record-outcome argument builder moved into outcome test helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.
