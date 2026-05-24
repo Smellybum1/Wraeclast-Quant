@@ -77,6 +77,7 @@
 - Storage repository decomposed into focused snapshot, artifact/provenance, outcome, and shared support modules.
 - Storage repository support split into focused read-connection, row-converter, and timestamp helpers behind the stable support facade.
 - Storage artifact/provenance repository helpers split report artifact and run provenance persistence behind the stable repository mixin.
+- Run provenance repository persistence split into focused query and write helpers behind the stable provenance facade.
 - Snapshot repository persistence split into focused read-query and write-query helpers behind the stable snapshot mixin.
 - Static dashboard rendering decomposed into focused facade, health, and HTML rendering modules.
 - Publish readiness decomposed into focused facade, readiness, handoff, and model modules.
