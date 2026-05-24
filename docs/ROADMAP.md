@@ -109,6 +109,7 @@
 - Connector fixture export command rendering split into a focused helper behind the stable `connector-fixture-export` command.
 - Connector review command registration decomposed into focused draft/prep, evidence/status, and readiness-check modules behind the stable connector review aggregator.
 - Connector review prep command rendering split into a focused helper behind the stable draft/prep command module.
+- Connector review prep service split workspace writing and checklist rendering behind the stable prep facade.
 - Connector review evidence/status command registration split into focused evidence-update and status-display modules behind the stable status aggregator.
 - Connector review status table rendering split into a focused helper behind stable evidence/status commands.
 - Connector review status builder split row assembly behind the stable review status facade.
@@ -180,7 +181,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
-- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include connector review prep cleanup or public handoff helper cleanup.
+- Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include public handoff helper cleanup or connector approval patch cleanup.
 
 ## Later Intelligence Improvements
 
