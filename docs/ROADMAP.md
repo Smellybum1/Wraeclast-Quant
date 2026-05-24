@@ -162,6 +162,7 @@
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector review checks decomposed into focused readiness evaluation and status-row assembly modules behind the stable review-check facade.
+- Connector review readiness gate split into ordered resource, evidence-field, and safety blocker helpers behind the stable readiness facade.
 - Connector review check command rendering split into a focused helper behind the stable `connector-check` command.
 - Connector review check command readiness workflow split into a focused helper behind the stable `connector-check` command.
 - Connector review report command rendering split into a focused helper behind the stable report command.
