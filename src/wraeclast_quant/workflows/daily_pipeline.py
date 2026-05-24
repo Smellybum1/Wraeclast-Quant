@@ -4,22 +4,11 @@ from pathlib import Path
 
 from wraeclast_quant.intelligence.alerts import AlertRuleSettings
 from wraeclast_quant.intelligence.scoring import ScoredOpportunity
+from wraeclast_quant.workflows.daily_pipeline_alerts import create_alert_settings
 from wraeclast_quant.workflows.daily_pipeline_artifacts import write_daily_artifacts
 from wraeclast_quant.workflows.daily_pipeline_models import DailyPipelineResult, RunProvenanceInput
 from wraeclast_quant.workflows.daily_pipeline_provenance import save_run_provenance
 from wraeclast_quant.workflows.daily_pipeline_snapshots import create_analysis_snapshot
-
-
-def create_alert_settings(
-    watch_threshold: float,
-    buy_threshold: float,
-    big_delta: float,
-) -> AlertRuleSettings:
-    return AlertRuleSettings(
-        watch_threshold=watch_threshold,
-        buy_threshold=buy_threshold,
-        big_positive_delta=big_delta,
-    )
 
 
 def run_daily_pipeline(
