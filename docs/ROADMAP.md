@@ -186,6 +186,7 @@
 - Outcome and calibration Markdown table helpers shared behind stable report rendering facades.
 - Calibration metric aggregation split into focused outcome-count and score-bucket helpers behind the stable metrics facade.
 - Calibration report Markdown rendering split into focused section helpers behind the stable rendering facade.
+- Calibration report count sections split from average/recent review sections behind the stable section facade.
 - Connector review file service decomposed into focused draft, evidence update, JSON I/O, and prep/checklist modules behind the stable review-file facade.
 - Connector policy utility helpers decomposed into focused resource, patch, text-formatting, and status-row modules behind the stable utility facade.
 - Connector status row helpers split into focused boolean and text/evidence row modules behind the stable status-row facade.
