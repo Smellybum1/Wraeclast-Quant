@@ -174,6 +174,7 @@
 - CLI connector fixture-daily setup helper extracted from the broad CLI test module without changing assertions.
 - CLI status healthy-workspace fixture helper extracted from the broad CLI test module without changing assertions.
 - CLI migration-readiness JSON setup reused backup fixture helpers without changing assertions.
+- CLI review-queue requested-run setup moved into outcome fixture helpers without changing assertions.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.

@@ -44,6 +44,14 @@ def partially_reviewed_two_item_database(tmp_path: Path) -> tuple[Path, Analysis
     return database_path, run
 
 
+def two_run_database(tmp_path: Path) -> tuple[Path, AnalysisRunRecord, AnalysisRunRecord]:
+    database_path = tmp_path / "snapshots.db"
+    repository = SnapshotRepository(database_path)
+    first = save_single_opportunity_run(repository, "First Run Item", 50.0, "WATCH")
+    second = save_single_opportunity_run(repository, "Second Run Item", 70.0, "BUY")
+    return database_path, first, second
+
+
 def two_run_database_with_second_reviewed(
     tmp_path: Path,
 ) -> tuple[Path, AnalysisRunRecord, AnalysisRunRecord]:
@@ -76,5 +84,6 @@ __all__ = [
     "calibration_reviewed_database",
     "partially_reviewed_two_item_database",
     "reviewed_single_opportunity_database",
+    "two_run_database",
     "two_run_database_with_second_reviewed",
 ]

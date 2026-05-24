@@ -43,6 +43,7 @@ from cli_outcome_helpers import (
 from cli_outcome_helpers import (
     reviewed_single_opportunity_database as _reviewed_single_opportunity_database,
 )
+from cli_outcome_helpers import two_run_database as _two_run_database
 from cli_outcome_helpers import (
     two_run_database_with_second_reviewed as _two_run_database_with_second_reviewed,
 )
@@ -63,7 +64,6 @@ from cli_provenance_helpers import two_run_provenance_database as _two_run_prove
 from cli_readonly_helpers import (
     read_only_missing_database_command_cases as _read_only_missing_database_command_cases,
 )
-from cli_snapshot_helpers import save_single_opportunity_run as _save_single_opportunity_run
 
 
 runner = CliRunner()
@@ -2692,10 +2692,7 @@ def test_review_queue_command_prints_unreviewed_latest_run(tmp_path: Path) -> No
 
 
 def test_review_queue_command_uses_requested_run_id(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    repository = SnapshotRepository(database_path)
-    first = _save_single_opportunity_run(repository, "First Run Item", 50.0, "WATCH")
-    _save_single_opportunity_run(repository, "Second Run Item", 70.0, "BUY")
+    database_path, first, _second = _two_run_database(tmp_path)
 
     result = runner.invoke(
         app,
