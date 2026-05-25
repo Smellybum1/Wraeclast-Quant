@@ -312,6 +312,7 @@
 - CLI backup, database health, backup listing, restore-helper, and migration-readiness command tests moved into a focused backup test module without changing assertions.
 - CLI restore-helper command tests moved into a focused restore-helper CLI test module without changing assertions.
 - CLI backup-listing command tests moved into a focused backup-listing CLI test module without changing assertions.
+- CLI backup-verification command tests moved into a focused backup-verification CLI test module without changing assertions.
 - CLI migration-readiness command tests moved into a focused migration-readiness test module without changing assertions.
 - Database backup listing tests moved into a focused backup listing test module without changing assertions.
 - Database restore guidance tests moved into a focused restore guidance test module without changing assertions.
