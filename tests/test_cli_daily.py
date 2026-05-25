@@ -119,13 +119,3 @@ def test_daily_pipeline_contract_doc_matches_printed_output_labels(tmp_path: Pat
     for label in output_labels:
         assert f"{label}:" in result.output
     assert "Daily run #1 complete." in result.output
-
-
-def test_daily_requires_sample_data_or_input_path(tmp_path: Path) -> None:
-    result = runner.invoke(
-        app,
-        _daily_args(database_path=tmp_path / "snapshots.db"),
-    )
-
-    assert result.exit_code != 0
-    assert "Use --sample-data or --input-path for daily runs." in result.output

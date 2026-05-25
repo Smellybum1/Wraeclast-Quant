@@ -279,7 +279,9 @@
 - CLI outcome, review queue, coverage, outcome report, and calibration command tests moved into a focused outcome test module without changing assertions.
 - CLI record-outcome command tests moved into a focused record-outcome CLI test module without changing assertions.
 - CLI calibration and calibration-report command tests moved into a focused calibration test module without changing assertions.
+- CLI calibration-report command test moved into a focused calibration-report CLI test module without changing assertions.
 - CLI outcome-review and outcome-report command tests moved into a focused outcome review CLI test module without changing assertions.
+- CLI outcome-report command tests moved into a focused outcome-report CLI test module without changing assertions.
 - CLI review-queue and review-coverage command tests moved into a focused review queue test module without changing assertions.
 - CLI review-coverage command tests moved into a focused review coverage CLI test module without changing assertions.
 - CLI outcome command argument builders and reviewed database setup helpers split into focused helper modules while preserving the outcome helper facade.
@@ -344,6 +346,11 @@
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI resource, preflight, compliance, and schema command tests moved into a focused resource test module without changing assertions.
+- CLI collect dry-run command test moved into a focused collect CLI test module without changing assertions.
+- CLI schema command test moved into a focused schema CLI test module without changing assertions.
+- CLI compliance command test moved into a focused compliance CLI test module without changing assertions.
+- CLI preflight command test moved into a focused preflight CLI test module without changing assertions.
+- CLI daily input-validation command test moved into a focused daily validation CLI test module without changing assertions.
 - Connector policy review and resource fixture builders extracted from the broad connector-policy test module without changing assertions.
 - Connector review readiness policy tests moved into a focused readiness test module without changing assertions.
 - Connector fixture payload writers extracted from the broad connector-policy test module without changing assertions.
