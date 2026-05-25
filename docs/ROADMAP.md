@@ -284,6 +284,7 @@
 - CLI outcome command argument builders and reviewed database setup helpers split into focused helper modules while preserving the outcome helper facade.
 - CLI compare and alerts argument builders moved into market-flow test helpers without changing assertions.
 - CLI compare and alerts command tests moved into a focused market-flow test module without changing assertions.
+- CLI compare command tests moved into a focused compare CLI test module without changing assertions.
 - CLI market-flow helper responsibilities split into focused command-argument and market database fixture helpers while preserving the market-flow helper facade.
 - CLI export, validate-intel, and site argument builders moved into public artifact test helpers without changing assertions.
 - CLI site-bundle, publish-check, publish-handoff, and site-contract argument builders moved into public artifact test helpers without changing assertions.
