@@ -303,6 +303,7 @@
 - CLI daily helper responsibilities split into focused command-argument and fixture/setup helpers while preserving the daily helper facade.
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
 - CLI analyze, report sample-data, and watchlist command tests moved into a focused report test module without changing assertions.
+- CLI analyze command tests moved into a focused analyze CLI test module without changing assertions.
 - CLI schedule-helper argument builder moved into daily test helpers without changing assertions.
 - CLI import, validate-import, and inspect-import argument builders moved into manual import test helpers without changing assertions.
 - CLI import, validate-import, and inspect-import command tests moved into a focused manual-import test module without changing assertions.

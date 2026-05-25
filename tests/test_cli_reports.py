@@ -5,21 +5,11 @@ from typer.testing import CliRunner
 from wraeclast_quant.cli import app
 
 from cli_daily_fixture_helpers import previous_stormglass_database as _previous_stormglass_database
-from cli_report_helpers import analyze_sample_args as _analyze_sample_args
 from cli_report_helpers import report_sample_args as _report_sample_args
 from cli_report_helpers import watchlist_args as _watchlist_args
 
 
 runner = CliRunner()
-
-
-def test_analyze_sample_data(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-
-    result = runner.invoke(app, _analyze_sample_args(database_path))
-
-    assert result.exit_code == 0
-    assert "Stormglass Catalyst" in result.output
 
 
 def test_report_sample_data(tmp_path: Path, monkeypatch) -> None:
@@ -37,19 +27,6 @@ def test_watchlist() -> None:
 
     assert result.exit_code == 0
     assert "Watchlist" in result.output
-
-
-def test_analyze_sample_data_records_snapshot(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-
-    result = runner.invoke(
-        app,
-        _analyze_sample_args(database_path),
-    )
-
-    assert result.exit_code == 0
-    assert database_path.exists()
-    assert "Recorded analysis run" in result.output
 
 
 def test_report_sample_data_records_artifact(tmp_path: Path, monkeypatch) -> None:
