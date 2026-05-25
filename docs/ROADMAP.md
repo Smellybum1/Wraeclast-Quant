@@ -305,6 +305,7 @@
 - CLI daily and schedule-helper command tests moved into a focused daily test module without changing assertions.
 - CLI daily input-path command tests moved into a focused daily input test module without changing assertions.
 - CLI schedule-helper command tests moved into a focused schedule-helper test module without changing assertions.
+- CLI schedule-helper validation tests moved into a focused schedule-helper validation CLI test module without changing assertions.
 - CLI daily helper responsibilities split into focused command-argument and fixture/setup helpers while preserving the daily helper facade.
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
 - CLI analyze, report sample-data, and watchlist command tests moved into a focused report test module without changing assertions.
