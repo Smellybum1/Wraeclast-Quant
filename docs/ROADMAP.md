@@ -289,6 +289,8 @@
 - CLI validate-intel command tests moved into a focused validate-intel test module without changing assertions.
 - CLI site command tests moved into a focused site CLI test module without changing assertions.
 - CLI site-bundle command tests moved into a focused site-bundle CLI test module without changing assertions.
+- CLI site-contract command tests moved into a focused site-contract CLI test module without changing assertions.
+- CLI publish-handoff command tests moved into a focused publish-handoff CLI test module without changing assertions.
 - CLI publish-check, publish-handoff, and site-contract command tests moved into a focused publishing test module without changing assertions.
 - CLI public artifact command argument builders and file fixture writers split into focused helper modules while preserving the public artifact helper facade.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
