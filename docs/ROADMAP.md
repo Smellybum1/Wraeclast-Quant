@@ -287,6 +287,8 @@
 - CLI site-bundle, publish-check, publish-handoff, and site-contract argument builders moved into public artifact test helpers without changing assertions.
 - CLI export, validate-intel, site, site-bundle, publish-check, publish-handoff, and site-contract command tests moved into a focused public artifact test module without changing assertions.
 - CLI validate-intel command tests moved into a focused validate-intel test module without changing assertions.
+- CLI site command tests moved into a focused site CLI test module without changing assertions.
+- CLI site-bundle command tests moved into a focused site-bundle CLI test module without changing assertions.
 - CLI publish-check, publish-handoff, and site-contract command tests moved into a focused publishing test module without changing assertions.
 - CLI public artifact command argument builders and file fixture writers split into focused helper modules while preserving the public artifact helper facade.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
@@ -389,6 +391,7 @@
 - Storage review queue and review coverage repository tests moved into a focused storage review coverage test module without changing assertions.
 - Calibration report tests moved into a focused calibration report test module with shared outcome review helper fixtures, without changing assertions.
 - Static-site health tests moved into a focused static-site health test module with a shared static-site payload fixture.
+- Site bundle health tests moved into a focused site-bundle health test module without changing assertions.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
 - Site contract artifact summary loading split from payload assembly behind the stable contract facade.
