@@ -308,6 +308,7 @@
 - CLI schedule-helper argument builder moved into daily test helpers without changing assertions.
 - CLI import, validate-import, and inspect-import argument builders moved into manual import test helpers without changing assertions.
 - CLI import, validate-import, and inspect-import command tests moved into a focused manual-import test module without changing assertions.
+- CLI validate-import command tests moved into a focused validate-import CLI test module without changing assertions.
 - CLI manual-import helper responsibilities split into focused command-argument and file fixture helpers while preserving the manual-import helper facade.
 - CLI run-provenance argument builder moved into provenance test helpers without changing assertions.
 - CLI run-provenance command tests moved into a focused provenance test module without changing assertions.
