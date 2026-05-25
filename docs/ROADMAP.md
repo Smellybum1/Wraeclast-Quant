@@ -255,6 +255,7 @@
 - CLI invalid manual-import fixture writer moved into manual import test helpers without changing assertions.
 - CLI connector fixture-daily argument construction moved into connector test helpers without changing assertions.
 - CLI connector fixture-run, dry-run, fixture-export, and fixture-daily command tests moved into a focused connector fixture test module without changing assertions.
+- CLI connector dry-run command tests moved into a focused connector dry-run CLI test module without changing assertions.
 - CLI connector fixture-export command tests moved into a focused connector fixture export test module without changing assertions.
 - CLI connector fixture-daily command tests moved into a focused connector fixture daily test module without changing assertions.
 - CLI connector fixture-daily provenance tests moved into a focused connector fixture daily provenance test module without changing assertions.
