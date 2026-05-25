@@ -397,6 +397,7 @@
 - CLI connector-review-evidence command tests moved into a focused connector review evidence CLI test module without changing assertions.
 - CLI connector-review-evidence validation test moved into a focused connector review evidence validation CLI test module without changing assertions.
 - CLI connector-review-status command tests moved into a focused connector review status CLI test module without changing assertions.
+- CLI connector-review-status invalid JSON validation test moved into a focused connector review status validation CLI test module without changing assertions.
 - CLI connector-review-prep workspace validation tests moved into a focused connector review workspace validation CLI test module without changing assertions.
 - CLI connector-check validation tests moved into a focused connector check validation CLI test module without changing assertions.
 - Local connector candidate report for prioritizing source-specific reviews.

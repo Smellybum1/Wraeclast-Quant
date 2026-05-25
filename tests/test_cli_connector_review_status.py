@@ -54,29 +54,6 @@ def test_connector_review_status_incomplete_review_exits_zero_with_blockers(tmp_
     assert "Robots.txt or API policy must be reviewed." in status_result.output
 
 
-def test_connector_review_status_invalid_json_exits_nonzero(tmp_path: Path) -> None:
-    resources_path = _write_connector_resources(
-        tmp_path,
-        _approved_api_resources_text(include_id=False),
-    )
-    review_path = tmp_path / "review.json"
-    review_path.write_text("{not json", encoding="utf-8")
-
-    result = runner.invoke(
-        app,
-        [
-            "connector-review-status",
-            "--review-path",
-            str(review_path),
-            "--resources-path",
-            str(resources_path),
-        ],
-    )
-
-    assert result.exit_code != 0
-    assert "Invalid connector review JSON" in result.output
-
-
 def test_connector_review_status_marks_missing_claimed_evidence_blocked(tmp_path: Path) -> None:
     resources_path = _write_connector_resources(
         tmp_path,
