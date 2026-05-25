@@ -174,3 +174,26 @@ def test_connector_review_prep_rejects_discord_resource(tmp_path: Path) -> None:
             ],
             output_dir=tmp_path,
         )
+
+
+def test_poe_ninja_currency_review_workspace_is_incomplete() -> None:
+    review = load_connector_review("examples/poe_ninja_poe2_currency_connector_review.json")
+    result = check_connector_review(
+        review,
+        [
+            Resource(
+                id="poe_ninja_poe2_currency",
+                name="poe.ninja POE2 Currency",
+                type="price_site",
+                url="https://poe.ninja/poe2/economy/vaal/currency",
+                allowed_use="manual-or-api-if-available",
+            )
+        ],
+    )
+
+    assert review.source_terms_reviewed is False
+    assert review.robots_or_api_policy_reviewed is False
+    assert review.source_terms_url == ""
+    assert review.robots_or_api_policy_url == ""
+    assert result.ready is False
+    assert "Source terms must be reviewed." in result.blockers
