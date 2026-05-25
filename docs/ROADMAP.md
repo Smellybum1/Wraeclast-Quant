@@ -337,6 +337,7 @@
 - CLI status JSON documentation-contract test moved into a focused status JSON contract CLI test module without changing assertions.
 - CLI status JSON and stale-artifact status tests moved into a focused status JSON test module without changing assertions.
 - CLI stale-artifact status JSON tests moved into a focused status JSON artifact test module without changing assertions.
+- CLI strict stale-artifact status JSON test moved into a focused status JSON strict artifact test module without changing assertions.
 - CLI invalid status artifact, backup, and database-health command tests moved into a focused status health test module without changing assertions.
 - CLI invalid backup health command tests moved into a focused status backup health test module without changing assertions.
 - CLI invalid database health command test moved into a focused status database health test module without changing assertions.
