@@ -289,6 +289,7 @@
 - CLI validate-intel command tests moved into a focused validate-intel test module without changing assertions.
 - CLI site command tests moved into a focused site CLI test module without changing assertions.
 - CLI site-bundle command tests moved into a focused site-bundle CLI test module without changing assertions.
+- CLI publish-check command tests moved into a focused publish-check CLI test module without changing assertions.
 - CLI site-contract command tests moved into a focused site-contract CLI test module without changing assertions.
 - CLI publish-handoff command tests moved into a focused publish-handoff CLI test module without changing assertions.
 - CLI publish-check, publish-handoff, and site-contract command tests moved into a focused publishing test module without changing assertions.
@@ -322,6 +323,7 @@
 - CLI stale-artifact status JSON tests moved into a focused status JSON artifact test module without changing assertions.
 - CLI invalid status artifact, backup, and database-health command tests moved into a focused status health test module without changing assertions.
 - CLI invalid backup health command tests moved into a focused status backup health test module without changing assertions.
+- CLI invalid database health command test moved into a focused status database health test module without changing assertions.
 - CLI status command tests moved into a focused status test module without changing assertions.
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
