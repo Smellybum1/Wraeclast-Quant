@@ -334,6 +334,7 @@
 - CLI top-level help, command-help, and watchlist argument builders moved into focused test helpers without changing assertions.
 - CLI status JSON row-key documentation parser moved into documentation test helpers without changing assertions.
 - CLI status JSON tests reused the shared status argument builder without changing assertions.
+- CLI status JSON documentation-contract test moved into a focused status JSON contract CLI test module without changing assertions.
 - CLI status JSON and stale-artifact status tests moved into a focused status JSON test module without changing assertions.
 - CLI stale-artifact status JSON tests moved into a focused status JSON artifact test module without changing assertions.
 - CLI invalid status artifact, backup, and database-health command tests moved into a focused status health test module without changing assertions.
