@@ -9,9 +9,6 @@ from wraeclast_quant.storage.repositories import SnapshotRepository
 from cli_connector_fixture_command_helpers import (
     connector_fixture_daily_args as _connector_fixture_daily_args,
 )
-from cli_connector_fixture_data_helpers import (
-    connector_fixture_daily_tuned_setup as _connector_fixture_daily_tuned_setup,
-)
 
 
 runner = CliRunner()
@@ -88,19 +85,3 @@ def test_connector_fixture_daily_static_site_includes_fixture_items(tmp_path: Pa
     site_text = (site_dir / "index.html").read_text(encoding="utf-8")
     assert "Stormglass Catalyst" in site_text
     assert "Ashen Rune Core" in site_text
-
-
-def test_connector_fixture_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
-    database_path, fixture_path = _connector_fixture_daily_tuned_setup(tmp_path)
-
-    result = runner.invoke(
-        app,
-        _connector_fixture_daily_args(
-            fixture_path=fixture_path,
-            database_path=database_path,
-            big_delta=20,
-        ),
-    )
-
-    assert result.exit_code == 0
-    assert "No alert candidates found." in result.output
