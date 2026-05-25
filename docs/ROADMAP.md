@@ -286,6 +286,7 @@
 - CLI public artifact command argument builders and file fixture writers split into focused helper modules while preserving the public artifact helper facade.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
 - CLI daily and schedule-helper command tests moved into a focused daily test module without changing assertions.
+- CLI daily input-path command tests moved into a focused daily input test module without changing assertions.
 - CLI schedule-helper command tests moved into a focused schedule-helper test module without changing assertions.
 - CLI daily helper responsibilities split into focused command-argument and fixture/setup helpers while preserving the daily helper facade.
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
@@ -315,6 +316,7 @@
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI resource, preflight, compliance, and schema command tests moved into a focused resource test module without changing assertions.
 - Connector policy review and resource fixture builders extracted from the broad connector-policy test module without changing assertions.
+- Connector review readiness policy tests moved into a focused readiness test module without changing assertions.
 - Connector fixture payload writers extracted from the broad connector-policy test module without changing assertions.
 - Connector fixture loading, runner, signal-export, and no-cache-write tests moved into a focused connector fixture service test module without changing assertions.
 - Connector fixture approved-resource helpers extracted from the broad connector-policy test module without changing assertions.

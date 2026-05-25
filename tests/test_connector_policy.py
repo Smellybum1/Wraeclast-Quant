@@ -1,112 +1,12 @@
-from pathlib import Path
-
 import pytest
 
 from wraeclast_quant.config.connector_policy import (
     check_connector_review,
-    load_connector_review,
 )
-from wraeclast_quant.config.fetch_policy import build_fetch_plan
 from wraeclast_quant.config.resources_loader import Resource
 
 from connector_policy_helpers import connector_review as _review
 from connector_policy_helpers import eligible_resource as _eligible_resource
-
-
-def test_valid_api_review_for_eligible_resource_passes() -> None:
-    result = check_connector_review(
-        _review(),
-        [
-            Resource(
-                name="Approved API",
-                type="official",
-                url="https://example.test/api",
-                allowed_use="api",
-            )
-        ],
-    )
-
-    assert result.ready is True
-    assert result.blockers == []
-
-
-def test_valid_rss_review_for_eligible_resource_passes() -> None:
-    result = check_connector_review(
-        _review(access_method="rss"),
-        [
-            Resource(
-                name="Approved API",
-                type="official",
-                url="https://example.test/feed.xml",
-                allowed_use="rss",
-            )
-        ],
-    )
-
-    assert result.ready is True
-
-
-def test_valid_download_review_for_eligible_resource_passes() -> None:
-    result = check_connector_review(
-        _review(access_method="download", resource_name="Approved Download"),
-        [
-            Resource(
-                name="Approved Download",
-                type="official",
-                url="https://example.test/data.json",
-                allowed_use="download",
-            )
-        ],
-    )
-
-    assert result.ready is True
-    assert result.blockers == []
-
-
-def test_example_connector_review_files_are_ready_for_matching_resources() -> None:
-    cases = [
-        (
-            Path("examples/connector_review_api_example.json"),
-            Resource(
-                name="Example Approved API",
-                type="official",
-                url="https://example.test/api",
-                allowed_use="api",
-            ),
-            "api",
-        ),
-        (
-            Path("examples/connector_review_rss_example.json"),
-            Resource(
-                name="Example Approved RSS",
-                type="official",
-                url="https://example.test/feed.xml",
-                allowed_use="rss",
-            ),
-            "rss",
-        ),
-        (
-            Path("examples/connector_review_download_example.json"),
-            Resource(
-                name="Example Approved Download",
-                type="official",
-                url="https://example.test/data.json",
-                allowed_use="download",
-            ),
-            "download",
-        ),
-    ]
-
-    for review_path, resource, access_method in cases:
-        review = load_connector_review(review_path)
-        check = check_connector_review(review, [resource])
-        plan = build_fetch_plan(review, [resource])
-
-        assert review.access_method == access_method
-        assert check.ready is True
-        assert check.blockers == []
-        assert plan.plan is not None
-        assert plan.plan.access_method == access_method
 
 
 def test_missing_resource_fails_clearly() -> None:
