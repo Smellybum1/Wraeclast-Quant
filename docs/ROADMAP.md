@@ -326,6 +326,7 @@
 - CLI invalid database health command test moved into a focused status database health test module without changing assertions.
 - CLI invalid public-intel health command tests moved into a focused status public-intel health test module without changing assertions.
 - CLI invalid static-site and site-bundle health command tests moved into focused status artifact health test modules without changing assertions.
+- CLI invalid market-brief health command test moved into a focused status market-brief health test module without changing assertions.
 - CLI status command tests moved into a focused status test module without changing assertions.
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
