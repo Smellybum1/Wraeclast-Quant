@@ -423,6 +423,7 @@
 - CLI connector-review-report validation test moved into a focused connector review report validation CLI test module without changing assertions.
 - CLI connector fixture-daily validation tests moved into a focused connector fixture daily validation CLI test module without changing assertions.
 - CLI connector fixture-daily tuned-alert test moved into a focused connector fixture daily alerts CLI test module without changing assertions.
+- CLI connector-plan validation test moved into a focused connector plan validation CLI test module without changing assertions.
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
 - Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
