@@ -329,6 +329,7 @@
 - Connector approval patch preview tests moved into a focused connector approval patch test module without changing assertions.
 - Connector review report tests moved into a focused connector review report test module without changing assertions.
 - Connector review draft and prep workspace tests moved into a focused connector review workspace policy test module without changing assertions.
+- Connector review draft policy tests moved into a focused connector review draft policy test module without changing assertions.
 - Connector review workspace incompleteness test moved into the focused connector review workspace policy test module without changing assertions.
 - Connector review evidence policy tests moved into a focused connector review evidence policy test module without changing assertions.
 - Connector review JSON loading tests moved into a focused connector review loading test module without changing assertions.
