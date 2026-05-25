@@ -14,8 +14,9 @@ from cli_connector_review_file_helpers import write_connector_review as _write_c
 runner = CliRunner()
 
 
-def test_connector_approval_helper_prints_manual_allowed_use_suggestion(tmp_path: Path) -> None:
-    resources_path = _write_connector_resources(tmp_path, _conditional_api_resources_text())
+def test_connector_approval_helper_is_read_only(tmp_path: Path) -> None:
+    original = _conditional_api_resources_text()
+    resources_path = _write_connector_resources(tmp_path, original)
     review_path = _write_connector_review(tmp_path, resource_name="Conditional API")
 
     result = runner.invoke(
@@ -30,8 +31,4 @@ def test_connector_approval_helper_prints_manual_allowed_use_suggestion(tmp_path
     )
 
     assert result.exit_code == 0
-    assert "Connector Approval Helper" in result.output
-    assert "Conditional API" in result.output
-    assert "manual-or-api-if-available" in result.output
-    assert "allowed_use: api" in result.output
-    assert "read-only" in result.output
+    assert resources_path.read_text(encoding="utf-8") == original
