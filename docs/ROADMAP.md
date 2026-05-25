@@ -346,6 +346,7 @@
 - CLI invalid static-site and site-bundle health command tests moved into focused status artifact health test modules without changing assertions.
 - CLI invalid market-brief health command test moved into a focused status market-brief health test module without changing assertions.
 - CLI status command tests moved into a focused status test module without changing assertions.
+- CLI status read-only command test moved into a focused status read-only CLI test module without changing assertions.
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI resource, preflight, compliance, and schema command tests moved into a focused resource test module without changing assertions.
