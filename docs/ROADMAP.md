@@ -372,6 +372,8 @@
 - Public intel file validation summary/count regression coverage hardened for malformed latest-run and collection fields.
 - Public-intel history, trend, and outcome summary tests moved into a focused public-intel history test module with shared fixtures.
 - Storage outcome, review queue, review coverage, and invalid-outcome tests moved into a focused storage outcome test module without changing assertions.
+- Storage outcome validation tests moved into a focused storage outcome validation test module without changing assertions.
+- Storage review queue and review coverage repository tests moved into a focused storage review coverage test module without changing assertions.
 - Static-site health tests moved into a focused static-site health test module with a shared static-site payload fixture.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
