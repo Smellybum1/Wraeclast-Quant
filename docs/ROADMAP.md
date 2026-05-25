@@ -63,6 +63,7 @@
 - Public-intel contract shape validation split into focused key/schema and nested type-rule helpers behind the stable shape facade.
 - Public-intel contract payload rules split into focused shape and derived-only safety helpers behind the stable rule facade.
 - Public-intel contract nested shape checks split from container type checks behind the stable type-rule facade.
+- Preflight policy tests moved into a focused preflight policy test module without changing assertions.
 - Local SQLite backup command for snapshot history.
 - Immediate post-create verification for local SQLite backups.
 - Read-only SQLite backup verification.
@@ -312,6 +313,7 @@
 - CLI status JSON and stale-artifact status tests moved into a focused status JSON test module without changing assertions.
 - CLI stale-artifact status JSON tests moved into a focused status JSON artifact test module without changing assertions.
 - CLI invalid status artifact, backup, and database-health command tests moved into a focused status health test module without changing assertions.
+- CLI invalid backup health command tests moved into a focused status backup health test module without changing assertions.
 - CLI status command tests moved into a focused status test module without changing assertions.
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
@@ -381,6 +383,7 @@
 - Storage outcome, review queue, review coverage, and invalid-outcome tests moved into a focused storage outcome test module without changing assertions.
 - Storage outcome validation tests moved into a focused storage outcome validation test module without changing assertions.
 - Storage review queue and review coverage repository tests moved into a focused storage review coverage test module without changing assertions.
+- Calibration report tests moved into a focused calibration report test module with shared outcome review helper fixtures, without changing assertions.
 - Static-site health tests moved into a focused static-site health test module with a shared static-site payload fixture.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.

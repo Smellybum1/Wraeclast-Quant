@@ -5,7 +5,6 @@ from typer.testing import CliRunner
 from wraeclast_quant.cli import app
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
-from cli_backup_database_helpers import invalid_backup_dir as _invalid_backup_dir
 from cli_database_helpers import sqlite_table_names as _sqlite_table_names
 from cli_database_helpers import (
     write_unrelated_sqlite_database as _write_unrelated_sqlite_database,
@@ -21,46 +20,6 @@ from cli_status_workspace_helpers import write_manual_resources as _write_manual
 
 
 runner = CliRunner()
-
-
-def test_status_reports_invalid_latest_backup_without_failing(tmp_path: Path) -> None:
-    resources_path = _write_manual_resources(tmp_path)
-    backup_dir = _invalid_backup_dir(tmp_path)
-
-    result = runner.invoke(
-        app,
-        _status_args(
-            tmp_path,
-            database_path=tmp_path / "missing.db",
-            resources_path=resources_path,
-            backup_dir=backup_dir,
-        ),
-    )
-
-    assert result.exit_code == 0
-    assert "Backups" in result.output
-    assert "needs attention" in result.output
-    assert "invalid" in result.output
-    assert "missing required tables" in result.output
-
-
-def test_status_strict_exits_nonzero_for_invalid_latest_backup(tmp_path: Path) -> None:
-    resources_path = _write_manual_resources(tmp_path)
-    backup_dir = _invalid_backup_dir(tmp_path, ensure_new_mtime=True)
-
-    result = runner.invoke(
-        app,
-        _status_args(
-            tmp_path,
-            database_path=tmp_path / "missing.db",
-            resources_path=resources_path,
-            backup_dir=backup_dir,
-            strict=True,
-        ),
-    )
-
-    assert result.exit_code == 1
-    assert "Strict status failed: Backups" in result.output
 
 
 def test_status_command_reports_invalid_public_intel_without_failing(
