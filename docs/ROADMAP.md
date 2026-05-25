@@ -273,6 +273,8 @@
 - CLI outcome list, review queue, coverage, and calibration argument builders moved into outcome test helpers without changing assertions.
 - CLI outcome, review queue, coverage, outcome report, and calibration command tests moved into a focused outcome test module without changing assertions.
 - CLI calibration and calibration-report command tests moved into a focused calibration test module without changing assertions.
+- CLI outcome-review and outcome-report command tests moved into a focused outcome review CLI test module without changing assertions.
+- CLI review-queue and review-coverage command tests moved into a focused review queue test module without changing assertions.
 - CLI outcome command argument builders and reviewed database setup helpers split into focused helper modules while preserving the outcome helper facade.
 - CLI compare and alerts argument builders moved into market-flow test helpers without changing assertions.
 - CLI compare and alerts command tests moved into a focused market-flow test module without changing assertions.
