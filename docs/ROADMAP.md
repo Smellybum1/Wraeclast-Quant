@@ -344,8 +344,10 @@
 - Connector review evidence command result rendering split from update orchestration behind the stable command facade.
 - CLI connector candidate, draft, review-prep, review-evidence, review-status, and check command tests moved into a focused connector review test module without changing assertions.
 - CLI connector-candidates command tests moved into a focused connector candidates CLI test module without changing assertions.
+- CLI connector-draft command tests moved into a focused connector draft CLI test module without changing assertions.
 - CLI connector-draft and connector-review-prep workspace command tests moved into a focused connector review workspace CLI test module without changing assertions.
 - CLI connector-review-evidence command tests moved into a focused connector review evidence CLI test module without changing assertions.
+- CLI connector-review-status command tests moved into a focused connector review status CLI test module without changing assertions.
 - Local connector candidate report for prioritizing source-specific reviews.
 - Connector candidate command rendering split into a focused helper behind the stable candidate report command.
 - Connector candidate service split into focused model, command-text, and ranking helpers behind the stable candidate facade.
