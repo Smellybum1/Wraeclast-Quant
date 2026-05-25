@@ -272,6 +272,7 @@
 - CLI outcome and calibration report argument builders moved into outcome test helpers without changing assertions.
 - CLI outcome list, review queue, coverage, and calibration argument builders moved into outcome test helpers without changing assertions.
 - CLI outcome, review queue, coverage, outcome report, and calibration command tests moved into a focused outcome test module without changing assertions.
+- CLI calibration and calibration-report command tests moved into a focused calibration test module without changing assertions.
 - CLI outcome command argument builders and reviewed database setup helpers split into focused helper modules while preserving the outcome helper facade.
 - CLI compare and alerts argument builders moved into market-flow test helpers without changing assertions.
 - CLI compare and alerts command tests moved into a focused market-flow test module without changing assertions.
@@ -355,6 +356,8 @@
 - Connector approval command table construction split from safety-message rendering behind the stable approval renderer.
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
 - CLI connector approval-helper, review-report, and approval-patch command tests moved into a focused connector approval test module without changing assertions.
+- CLI connector-approval-patch command tests moved into a focused connector approval patch test module without changing assertions.
+- CLI connector-review-report command tests moved into a focused connector review report test module without changing assertions.
 - Public intel payload construction split into focused run, trend, change, and summary helpers behind the stable payload facade.
 - Public intel alert payload construction split from snapshot-change payloads behind the stable change-payload facade.
 - Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
