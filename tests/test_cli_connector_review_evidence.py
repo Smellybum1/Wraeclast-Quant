@@ -89,21 +89,3 @@ def test_connector_review_evidence_preserves_unrelated_fields_and_resources(
     assert updated["rate_limit_per_minute"] == 12
     assert updated["reviewed_at"] == "2026-05-23"
     assert resources_path.read_text(encoding="utf-8") == resources_text
-
-
-def test_connector_review_evidence_invalid_values_exit_nonzero(tmp_path: Path) -> None:
-    review_path = _write_connector_review(tmp_path)
-
-    result = runner.invoke(
-        app,
-        [
-            "connector-review-evidence",
-            "--review-path",
-            str(review_path),
-            "--rate-limit-per-minute",
-            "0",
-        ],
-    )
-
-    assert result.exit_code != 0
-    assert "rate_limit_per_minute must be positive" in result.output

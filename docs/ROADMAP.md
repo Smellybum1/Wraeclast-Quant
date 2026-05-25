@@ -395,6 +395,7 @@
 - CLI connector-draft command tests moved into a focused connector draft CLI test module without changing assertions.
 - CLI connector-draft and connector-review-prep workspace command tests moved into a focused connector review workspace CLI test module without changing assertions.
 - CLI connector-review-evidence command tests moved into a focused connector review evidence CLI test module without changing assertions.
+- CLI connector-review-evidence validation test moved into a focused connector review evidence validation CLI test module without changing assertions.
 - CLI connector-review-status command tests moved into a focused connector review status CLI test module without changing assertions.
 - CLI connector-review-prep workspace validation tests moved into a focused connector review workspace validation CLI test module without changing assertions.
 - CLI connector-check validation tests moved into a focused connector check validation CLI test module without changing assertions.
