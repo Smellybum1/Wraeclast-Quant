@@ -132,6 +132,28 @@ Each resource may include:
 
 
 
+\- id: official\_currency\_exchange\_api
+
+&#x20; name: Path of Exile Currency Exchange API
+
+&#x20; type: official\_api
+
+&#x20; url: https://www.pathofexile.com/developer/docs/reference
+
+&#x20; priority: high
+
+&#x20; allowed\_use: manual-review
+
+&#x20; collector: official\_currency\_exchange\_placeholder
+
+&#x20; refresh: hourly-if-approved
+
+&#x20; reliability: high
+
+&#x20; notes: Official Currency Exchange API candidate for POE2 hourly aggregate market history. Requires service:cxapi, OAuth/app approval, user-agent/contact configuration, dynamic rate-limit handling, cache/backoff policy, and explicit user approval before any live connector work.
+
+
+
 \- id: official\_forum
 
 &#x20; name: Path of Exile Official Forum

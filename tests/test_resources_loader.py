@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from wraeclast_quant.config.preflight import assess_preflight_resource
 from wraeclast_quant.config.resources_loader import infer_resource_type, load_resources, parse_resources_markdown
 
 
@@ -18,6 +19,20 @@ def test_parses_existing_resources_file() -> None:
     assert "discord" in types
     assert any(resource.id == "poe2_scout_currency" for resource in resources)
     assert any(resource.collector == "discord_placeholder" for resource in resources)
+
+
+def test_official_currency_exchange_resource_stays_manual_review() -> None:
+    resources = load_resources(Path("RESOURCES.md"))
+    resource = next(
+        resource for resource in resources if resource.id == "official_currency_exchange_api"
+    )
+    assessment = assess_preflight_resource(resource)
+
+    assert resource.name == "Path of Exile Currency Exchange API"
+    assert resource.allowed_use == "manual-review"
+    assert "service:cxapi" in resource.notes
+    assert assessment.automation_eligible is False
+    assert assessment.status == "manual-review"
 
 
 def test_resource_defaults_and_inference() -> None:

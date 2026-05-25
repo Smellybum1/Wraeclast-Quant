@@ -16,7 +16,7 @@ Default metadata is conservative:
 - `allowed_use`: `manual-review`
 - `notes`: empty string
 
-All current external collection is dry-run or placeholder-only. `wq preflight` currently reports one automation-eligible resource, `poe_ninja_poe2_currency`, after human review evidence and manual `RESOURCES.md` approval. Live connector work remains blocked for every other conditional source until a human completes source review evidence and manually updates the matching `RESOURCES.md` allowed use when appropriate.
+All current external collection is dry-run or placeholder-only. `wq preflight` currently reports one automation-eligible resource, `poe_ninja_poe2_currency`, after human review evidence and manual `RESOURCES.md` approval. `official_currency_exchange_api` is present as a manual-review official API draft only; it remains blocked until the user explicitly approves the resource, OAuth/app-registration path, user-agent/contact configuration, cache/backoff behavior, and live-network tests. Live connector work remains blocked for every other conditional source until a human completes source review evidence and manually updates the matching `RESOURCES.md` allowed use when appropriate.
 
 Use these read-only or local-only helpers before any connector work:
 

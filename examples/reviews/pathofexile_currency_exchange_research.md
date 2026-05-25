@@ -6,10 +6,13 @@ This note is a local source-review handoff for a possible future official Path o
 
 - Review date: `2026-05-26`
 - Candidate resource name: `Path of Exile Currency Exchange API`
+- Resource id: `official_currency_exchange_api`
+- Resource status: present in `RESOURCES.md` as `manual-review`
 - Access method: `api`
 - Current execution status: review evidence only
 - Live implementation status: `blocked`
-- Primary blockers: no approved `RESOURCES.md` entry, OAuth/app-registration handling is not approved, the endpoint requires `service:cxapi`, dynamic rate-limit headers must be implemented, and user-agent/contact configuration must be approved before live HTTP.
+- Primary blockers: no automation-approved `RESOURCES.md` entry, OAuth/app-registration handling is not approved, the endpoint requires `service:cxapi`, dynamic rate-limit headers must be implemented, and user-agent/contact configuration must be approved before live HTTP.
+- OAuth/app-registration plan: `examples/reviews/pathofexile_currency_exchange_oauth_plan.md`
 
 ## Reviewed Official Surfaces
 

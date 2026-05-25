@@ -458,6 +458,7 @@
 - poe.ninja POE2 currency live guard now reports source-specific endpoint, schema, reuse, rate-limit, and cache-policy blockers instead of a generic MVP refusal.
 - Official Path of Exile Currency Exchange API noted as a separate future source candidate requiring its own source review, API scope/user-agent handling, and user approval before live HTTP work.
 - Official Path of Exile Currency Exchange API review evidence recorded as a blocked local candidate; no `RESOURCES.md` approval, OAuth handling, credentials, or live HTTP were added.
+- Official Path of Exile Currency Exchange API added to `RESOURCES.md` as a `manual-review` draft resource with an OAuth/app-registration planning handoff; it is still not automation-eligible.
 
 ## Recommended Next Milestones
 
@@ -466,6 +467,7 @@
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - If pursuing official Path of Exile Currency Exchange data, start a separate review/resource packet for the official API and stop for source approval before adding credentials, scopes, user-agent configuration, or live network behavior.
 - Before official Currency Exchange implementation, get explicit approval for the resource entry, OAuth/app-registration path, user-agent/contact configuration, cache/backoff policy, and failure-closed tests.
+- Keep `official_currency_exchange_api` at `manual-review` until those auth/source decisions are made; do not reuse browser sessions or trade-site cookies for connector automation.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include CLI helper cleanup or public artifact contract cleanup.
