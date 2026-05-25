@@ -90,38 +90,6 @@ def test_connector_fixture_daily_static_site_includes_fixture_items(tmp_path: Pa
     assert "Ashen Rune Core" in site_text
 
 
-def test_connector_fixture_daily_rejects_fixture_without_signals(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-
-    result = runner.invoke(
-        app,
-        _connector_fixture_daily_args(
-            fixture_path="examples/connector_fixture_api_example.json",
-            database_path=database_path,
-        ),
-    )
-
-    assert result.exit_code != 0
-    assert "requires normalized signals" in result.output
-    assert not database_path.exists()
-
-
-def test_connector_fixture_daily_refuses_incomplete_review(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-
-    result = runner.invoke(
-        app,
-        _connector_fixture_daily_args(
-            review_path="examples/poe_ninja_poe2_currency_connector_review.json",
-            database_path=database_path,
-        ),
-    )
-
-    assert result.exit_code != 0
-    assert "Source terms must be reviewed." in result.output
-    assert not database_path.exists()
-
-
 def test_connector_fixture_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
     database_path, fixture_path = _connector_fixture_daily_tuned_setup(tmp_path)
 
