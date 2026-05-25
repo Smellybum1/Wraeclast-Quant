@@ -21,6 +21,7 @@
 - Snapshot comparison and alert generation split into focused model and rule helpers behind stable intelligence facades.
 - Snapshot delta construction split into focused new, removed, changed, and item-order helpers behind the stable comparison facade.
 - Alert rule helper logic split into focused candidate, threshold, action-rank, and sort helpers behind the stable alert facade.
+- Alert contract tests moved into a focused alert contract test module with shared alert fixtures, without changing assertions.
 - Delta-aware Markdown market brief.
 - Market brief service split into focused model, health, and Markdown rendering helpers behind the stable report facade.
 - Market brief Markdown rendering split into focused formatting and section helpers behind the stable rendering facade.
@@ -254,7 +255,9 @@
 - CLI invalid manual-import fixture writer moved into manual import test helpers without changing assertions.
 - CLI connector fixture-daily argument construction moved into connector test helpers without changing assertions.
 - CLI connector fixture-run, dry-run, fixture-export, and fixture-daily command tests moved into a focused connector fixture test module without changing assertions.
+- CLI connector fixture-export command tests moved into a focused connector fixture export test module without changing assertions.
 - CLI connector fixture-daily command tests moved into a focused connector fixture daily test module without changing assertions.
+- CLI connector fixture-daily provenance tests moved into a focused connector fixture daily provenance test module without changing assertions.
 - CLI invalid status artifact fixture writers moved into public artifact test helpers without changing assertions.
 - CLI invalid-backup fixture setup moved into backup test helpers without changing assertions.
 - CLI invalid SQLite database setup moved into focused database test helpers without changing assertions.
@@ -283,6 +286,7 @@
 - CLI export, validate-intel, and site argument builders moved into public artifact test helpers without changing assertions.
 - CLI site-bundle, publish-check, publish-handoff, and site-contract argument builders moved into public artifact test helpers without changing assertions.
 - CLI export, validate-intel, site, site-bundle, publish-check, publish-handoff, and site-contract command tests moved into a focused public artifact test module without changing assertions.
+- CLI validate-intel command tests moved into a focused validate-intel test module without changing assertions.
 - CLI publish-check, publish-handoff, and site-contract command tests moved into a focused publishing test module without changing assertions.
 - CLI public artifact command argument builders and file fixture writers split into focused helper modules while preserving the public artifact helper facade.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
