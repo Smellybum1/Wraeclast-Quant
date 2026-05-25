@@ -14,7 +14,8 @@ from cli_connector_review_file_helpers import write_connector_review as _write_c
 runner = CliRunner()
 
 
-def test_connector_plan_ready_review_prints_fetch_plan(tmp_path: Path) -> None:
+def test_connector_plan_does_not_create_cache_files(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
     resources_path = _write_connector_resources(
         tmp_path,
         _approved_api_resources_text(include_id=False),
@@ -33,8 +34,4 @@ def test_connector_plan_ready_review_prints_fetch_plan(tmp_path: Path) -> None:
     )
 
     assert result.exit_code == 0
-    assert "Safe Fetch Plan" in result.output
-    assert "Approved API" in result.output
-    assert "data\\raw\\cache" in result.output or "data/raw/cache" in result.output
-    assert "2.00s" in result.output
-    assert "No network requests were made" in result.output
+    assert not Path("data/raw/cache").exists()
