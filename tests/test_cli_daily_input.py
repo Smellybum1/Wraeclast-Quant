@@ -86,22 +86,6 @@ def test_daily_input_path_static_site_includes_imported_item(tmp_path: Path) -> 
     assert "Manual Daily Catalyst" in (site_dir / "index.html").read_text(encoding="utf-8")
 
 
-def test_daily_rejects_sample_data_and_input_path(tmp_path: Path) -> None:
-    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
-
-    result = runner.invoke(
-        app,
-        _daily_args(
-            sample_data=True,
-            input_path=input_path,
-            database_path=tmp_path / "snapshots.db",
-        ),
-    )
-
-    assert result.exit_code != 0
-    assert "Use either --sample-data or --input-path, not both." in result.output
-
-
 def test_daily_uses_tuned_alert_settings(tmp_path: Path) -> None:
     database_path, input_path = _small_mover_daily_setup(tmp_path)
 

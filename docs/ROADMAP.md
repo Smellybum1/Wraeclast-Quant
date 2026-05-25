@@ -352,6 +352,7 @@
 - CLI preflight command test moved into a focused preflight CLI test module without changing assertions.
 - CLI daily input-validation command test moved into a focused daily validation CLI test module without changing assertions.
 - CLI daily documentation-contract command test moved into a focused daily contract CLI test module without changing assertions.
+- CLI daily mutually-exclusive input validation test moved into the focused daily validation CLI test module without changing assertions.
 - Connector policy review and resource fixture builders extracted from the broad connector-policy test module without changing assertions.
 - Connector review readiness policy tests moved into a focused readiness test module without changing assertions.
 - Connector fixture payload writers extracted from the broad connector-policy test module without changing assertions.
