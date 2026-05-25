@@ -416,6 +416,7 @@
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
 - CLI connector approval-helper, review-report, and approval-patch command tests moved into a focused connector approval test module without changing assertions.
 - CLI connector-approval-patch command tests moved into a focused connector approval patch test module without changing assertions.
+- CLI connector-approval-patch validation test moved into a focused connector approval patch validation CLI test module without changing assertions.
 - CLI connector-review-report command tests moved into a focused connector review report test module without changing assertions.
 - CLI connector-review-report validation test moved into a focused connector review report validation CLI test module without changing assertions.
 - CLI connector fixture-daily validation tests moved into a focused connector fixture daily validation CLI test module without changing assertions.

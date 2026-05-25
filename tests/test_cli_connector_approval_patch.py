@@ -42,37 +42,6 @@ def test_connector_approval_patch_writes_patch_preview(tmp_path: Path) -> None:
     assert "+  allowed_use: api" in patch_text
 
 
-def test_connector_approval_patch_incomplete_review_writes_no_patch(tmp_path: Path) -> None:
-    resources_path = _write_connector_resources(
-        tmp_path,
-        _conditional_api_resources_text(include_id=False),
-    )
-    review_path = _write_connector_review(
-        tmp_path,
-        resource_name="Conditional API",
-        source_terms_url="",
-    )
-    output_path = tmp_path / "approval.patch"
-
-    result = runner.invoke(
-        app,
-        [
-            "connector-approval-patch",
-            "--review-path",
-            str(review_path),
-            "--resources-path",
-            str(resources_path),
-            "--output-path",
-            str(output_path),
-        ],
-    )
-
-    assert result.exit_code == 1
-    assert "Connector Approval Patch Preview" in result.output
-    assert "source_terms_url is required" in result.output
-    assert not output_path.exists()
-
-
 def test_connector_approval_patch_does_not_modify_resources(tmp_path: Path) -> None:
     original = _conditional_api_resources_text()
     resources_path = _write_connector_resources(tmp_path, original)
