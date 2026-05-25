@@ -5,6 +5,7 @@ This note is a design handoff for `poe_ninja_poe2_currency`. It does not impleme
 ## Status
 
 - Review date: `2026-05-24`
+- Follow-up source check: `2026-05-26`
 - Resource id: `poe_ninja_poe2_currency`
 - Connector id: `poe-ninja-poe2-currency`
 - Current execution status: fixture, dry-run, and fixture-daily only
@@ -20,6 +21,15 @@ This note is a design handoff for `poe_ninja_poe2_currency`. It does not impleme
 - `https://poe.ninja/poe1/data`
 
 The POE2 economy announcement supports the product-level data shape: POE2 economy overviews based on Currency Exchange data, normalized against Chaos Orbs, Divine Orbs, and Exalted Orbs. It does not document a machine endpoint or response schema.
+
+## Separate Official API Candidate
+
+On `2026-05-26`, the official Path of Exile developer docs were checked as a separate source candidate:
+
+- `https://www.pathofexile.com/developer/docs`
+- `https://www.pathofexile.com/developer/docs/reference`
+
+The official docs list a `Currency Exchange` API with `poe2` as a supported realm and documented hourly market fields. This is not poe.ninja evidence and does not unblock the poe.ninja connector. Treat it as a separate future resource/review candidate because it requires official API policy review, the `service:cxapi` scope, application/user-agent requirements, rate-limit handling, and user approval before any live HTTP implementation.
 
 ## Proposed Contract If Officially Confirmed Later
 

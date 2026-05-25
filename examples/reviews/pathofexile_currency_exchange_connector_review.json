@@ -1,0 +1,19 @@
+{
+  "access_method": "api",
+  "allowed_data_shape": "Derived POE2 Currency Exchange hourly aggregate market rows only: league, market_id currency pair, hourly next_change_id timestamp, per-currency volume_traded, lowest_stock, highest_stock, lowest_ratio, highest_ratio, local source timestamp, and normalized 0-100 Wraeclast Quant signals after local transformation. Excludes account profile data, private stash or character data, OAuth tokens, client credentials, cookies, raw full API payloads in public artifacts, and any game-client interaction.",
+  "authentication_required": true,
+  "cache_ttl_seconds": 3600,
+  "captcha_gated": false,
+  "dry_run_supported": true,
+  "login_required": false,
+  "private_data_risk": false,
+  "public_export_derived_only": true,
+  "rate_limit_per_minute": 6.0,
+  "resource_name": "Path of Exile Currency Exchange API",
+  "review_notes": "Official Path of Exile developer docs were reviewed for a separate Currency Exchange API candidate. The API reference documents GET /currency-exchange[/<realm>][/<id>] with poe2 as a supported realm and hourly historical aggregate market fields. The docs also state official APIs use OAuth 2.1, this endpoint requires the service:cxapi scope, only documented API resources/data exports are supported, applications must use an identifiable OAuth user agent, and rate limits are dynamic response headers that clients must parse and obey. This review is evidence only and remains blocked for live collection until the user explicitly approves an official API resource entry, OAuth/app-registration handling, user-agent/contact configuration, cache/backoff behavior, and tests. No credentials, tokens, live HTTP, or RESOURCES.md approval are included.",
+  "reviewed_at": "2026-05-26",
+  "robots_or_api_policy_reviewed": true,
+  "robots_or_api_policy_url": "https://www.pathofexile.com/developer/docs",
+  "source_terms_reviewed": true,
+  "source_terms_url": "https://www.pathofexile.com/legal/terms-of-use-and-privacy-policy"
+}

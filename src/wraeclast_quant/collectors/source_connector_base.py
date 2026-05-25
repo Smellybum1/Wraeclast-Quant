@@ -24,10 +24,11 @@ class SourceConnector:
     def collect_fixture(self, fixture_path: str | Path) -> ConnectorResult:
         raise NotImplementedError
 
+    def live_blockers(self) -> list[str]:
+        return ["Live connector collection is unsupported in the MVP; use fixture dry-runs only."]
+
     def collect_live(self) -> ConnectorResult:
-        raise ConnectorPolicyError(
-            "Live connector collection is unsupported in the MVP; use fixture dry-runs only."
-        )
+        raise ConnectorPolicyError("\n".join(self.live_blockers()))
 
 
 __all__ = ["SourceConnector"]

@@ -86,8 +86,14 @@ def test_poe_ninja_currency_connector_live_collection_is_unsupported() -> None:
         [_poe_ninja_currency_resource()],
     )
 
-    with pytest.raises(ConnectorPolicyError, match="Live connector collection is unsupported"):
+    with pytest.raises(ConnectorPolicyError, match="Live connector collection is unsupported") as exc_info:
         connector.collect_live()
+
+    error = str(exc_info.value)
+    assert "poe.ninja POE2 Currency" in error
+    assert "machine endpoint URL" in error
+    assert "response-field schema" in error
+    assert "source-owner reuse" in error
 
 
 def test_fixture_source_connector_live_collection_is_unsupported() -> None:
