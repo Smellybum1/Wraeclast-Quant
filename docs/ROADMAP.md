@@ -77,6 +77,9 @@
 - Public-intel contract enforcement for local site rendering and bundling.
 - Validated public-intel metadata in local site bundle manifests.
 - Local publish readiness check for static site bundles before manual publishing.
+- Publish-readiness check tests moved into a focused publish-check test module with shared site-bundle fixtures.
+- Publish-handoff report tests moved into a focused publish-handoff test module with shared site-bundle fixtures.
+- Site-contract JSON tests moved into a focused site-contract test module with shared site-bundle fixtures.
 - Local manual publish handoff report for static site bundles before any external publishing.
 - Versioned local public-site contract descriptor for future static publishing handoff.
 - Static dashboard contract metadata tags for local/public artifact inspection.
@@ -183,6 +186,7 @@
 - Migration readiness service decomposed into focused model, row helper, readiness evaluation, and payload modules behind the stable migration facade.
 - Migration readiness evaluator split database, backup, and freshness checks behind the stable migration facade.
 - Migration backup checks split latest-backup and backup-freshness helpers behind the stable backup-check facade.
+- Migration-readiness service tests moved into a focused database migration-readiness test module without changing assertions.
 - Migration database checks split database-health and latest-run helpers behind the stable database-check facade.
 - Maintenance migration/provenance command rendering split into a focused helper behind stable read-only commands.
 - Calibration command table rendering split into a focused helper behind the stable calibration command registration.
@@ -249,6 +253,7 @@
 - CLI invalid manual-import fixture writer moved into manual import test helpers without changing assertions.
 - CLI connector fixture-daily argument construction moved into connector test helpers without changing assertions.
 - CLI connector fixture-run, dry-run, fixture-export, and fixture-daily command tests moved into a focused connector fixture test module without changing assertions.
+- CLI connector fixture-daily command tests moved into a focused connector fixture daily test module without changing assertions.
 - CLI invalid status artifact fixture writers moved into public artifact test helpers without changing assertions.
 - CLI invalid-backup fixture setup moved into backup test helpers without changing assertions.
 - CLI invalid SQLite database setup moved into focused database test helpers without changing assertions.
@@ -294,13 +299,24 @@
 - CLI top-level help, command-help, and watchlist argument builders moved into focused test helpers without changing assertions.
 - CLI status JSON row-key documentation parser moved into documentation test helpers without changing assertions.
 - CLI status JSON tests reused the shared status argument builder without changing assertions.
+- CLI status JSON and stale-artifact status tests moved into a focused status JSON test module without changing assertions.
 - CLI status command tests moved into a focused status test module without changing assertions.
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
 - CLI resource, preflight, compliance, and schema command tests moved into a focused resource test module without changing assertions.
 - Connector policy review and resource fixture builders extracted from the broad connector-policy test module without changing assertions.
 - Connector fixture payload writers extracted from the broad connector-policy test module without changing assertions.
+- Connector fixture loading, runner, signal-export, and no-cache-write tests moved into a focused connector fixture service test module without changing assertions.
 - Connector fixture approved-resource helpers extracted from the broad connector-policy test module without changing assertions.
+- Connector candidate ranking, access-method suggestion, limit, and draft-command tests moved into a focused connector candidate test module without changing assertions.
+- Connector approval helper, review-report, and approval-patch tests moved into a focused connector approval policy test module without changing assertions.
+- Connector review evidence-update, readiness status, and incomplete poe.ninja workspace tests moved into a focused connector review status test module without changing assertions.
+- Fetch plan creation, rate-limit interval, cache-path, and failed-review tests moved into a focused fetch policy test module without changing assertions.
+- Source connector facade, factory, poe.ninja specialization, and live-collection guardrail tests moved into a focused source connector test module without changing assertions.
+- Connector approval patch preview tests moved into a focused connector approval patch test module without changing assertions.
+- Connector review report tests moved into a focused connector review report test module without changing assertions.
+- Connector review draft and prep workspace tests moved into a focused connector review workspace policy test module without changing assertions.
+- Connector review JSON loading tests moved into a focused connector review loading test module without changing assertions.
 - Status health context loading split into focused resource and snapshot context helpers behind the stable status facade.
 - Status health artifact loading split into a focused artifact context helper behind the stable status facade.
 - Status health database and backup loading split into a focused database context helper behind the stable status facade.
@@ -319,6 +335,9 @@
 - Local connector review evidence update workflow for manually collected source review fields.
 - Connector review evidence command result rendering split from update orchestration behind the stable command facade.
 - CLI connector candidate, draft, review-prep, review-evidence, review-status, and check command tests moved into a focused connector review test module without changing assertions.
+- CLI connector-candidates command tests moved into a focused connector candidates CLI test module without changing assertions.
+- CLI connector-draft and connector-review-prep workspace command tests moved into a focused connector review workspace CLI test module without changing assertions.
+- CLI connector-review-evidence command tests moved into a focused connector review evidence CLI test module without changing assertions.
 - Local connector candidate report for prioritizing source-specific reviews.
 - Connector candidate command rendering split into a focused helper behind the stable candidate report command.
 - Connector candidate service split into focused model, command-text, and ranking helpers behind the stable candidate facade.
