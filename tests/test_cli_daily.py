@@ -7,13 +7,9 @@ from wraeclast_quant.cli import app
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
 from cli_daily_command_helpers import daily_args as _daily_args
-from cli_daily_command_helpers import schedule_helper_args as _schedule_helper_args
 from cli_daily_fixture_helpers import previous_stormglass_database as _previous_stormglass_database
 from cli_daily_fixture_helpers import small_mover_daily_setup as _small_mover_daily_setup
 from cli_doc_markdown_helpers import documented_bullets as _documented_bullets
-from cli_manual_import_file_helpers import (
-    write_invalid_manual_import_json as _write_invalid_manual_import_json,
-)
 from cli_manual_import_file_helpers import write_manual_import_json as _write_manual_import_json
 
 
@@ -235,76 +231,3 @@ def test_daily_requires_sample_data_or_input_path(tmp_path: Path) -> None:
 
     assert result.exit_code != 0
     assert "Use --sample-data or --input-path for daily runs." in result.output
-
-
-def test_schedule_helper_sample_data_prints_scheduler_guidance() -> None:
-    result = runner.invoke(app, _schedule_helper_args(sample_data=True, time="09:30"))
-
-    assert result.exit_code == 0
-    assert "Daily command:" in result.output
-    assert "wq daily --sample-data" in result.output
-    assert "schtasks /Create" in result.output
-    assert "/ST 09:30" in result.output
-    assert "PowerShell one-liner alternative:" in result.output
-    assert "does not create scheduled tasks" in result.output
-
-
-def test_schedule_helper_input_path_validates_and_prints_daily_command(tmp_path: Path) -> None:
-    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
-
-    result = runner.invoke(
-        app,
-        _schedule_helper_args(input_path=input_path),
-    )
-
-    assert result.exit_code == 0
-    assert "wq daily --input-path" in result.output
-    assert str(input_path) in result.output
-    assert "schtasks /Create" in result.output
-
-
-def test_schedule_helper_rejects_sample_data_and_input_path(tmp_path: Path) -> None:
-    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
-
-    result = runner.invoke(
-        app,
-        _schedule_helper_args(sample_data=True, input_path=input_path),
-    )
-
-    assert result.exit_code != 0
-    assert "Use either --sample-data or --input-path, not both." in result.output
-
-
-def test_schedule_helper_requires_sample_data_or_input_path() -> None:
-    result = runner.invoke(app, _schedule_helper_args())
-
-    assert result.exit_code != 0
-    assert "Use --sample-data or --input-path for schedule helper." in result.output
-
-
-def test_schedule_helper_rejects_invalid_time() -> None:
-    result = runner.invoke(app, _schedule_helper_args(sample_data=True, time="25:99"))
-
-    assert result.exit_code != 0
-    assert "Use --time in HH:MM 24-hour format." in result.output
-
-
-def test_schedule_helper_rejects_invalid_import_file(tmp_path: Path) -> None:
-    input_path = _write_invalid_manual_import_json(tmp_path, "Manual Daily Catalyst")
-
-    result = runner.invoke(
-        app,
-        _schedule_helper_args(input_path=input_path),
-    )
-
-    assert result.exit_code != 0
-    assert "demand_momentum" in result.output
-
-
-def test_schedule_helper_does_not_create_database(tmp_path: Path, monkeypatch) -> None:
-    monkeypatch.chdir(tmp_path)
-
-    result = runner.invoke(app, _schedule_helper_args(sample_data=True))
-
-    assert result.exit_code == 0
-    assert not Path("data/wraeclast_quant.db").exists()

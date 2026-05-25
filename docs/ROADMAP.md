@@ -279,9 +279,11 @@
 - CLI export, validate-intel, and site argument builders moved into public artifact test helpers without changing assertions.
 - CLI site-bundle, publish-check, publish-handoff, and site-contract argument builders moved into public artifact test helpers without changing assertions.
 - CLI export, validate-intel, site, site-bundle, publish-check, publish-handoff, and site-contract command tests moved into a focused public artifact test module without changing assertions.
+- CLI publish-check, publish-handoff, and site-contract command tests moved into a focused publishing test module without changing assertions.
 - CLI public artifact command argument builders and file fixture writers split into focused helper modules while preserving the public artifact helper facade.
 - CLI daily argument builder moved into daily test helpers without changing assertions.
 - CLI daily and schedule-helper command tests moved into a focused daily test module without changing assertions.
+- CLI schedule-helper command tests moved into a focused schedule-helper test module without changing assertions.
 - CLI daily helper responsibilities split into focused command-argument and fixture/setup helpers while preserving the daily helper facade.
 - CLI analyze and report sample-data argument builders moved into report test helpers without changing assertions.
 - CLI analyze, report sample-data, and watchlist command tests moved into a focused report test module without changing assertions.
@@ -294,12 +296,14 @@
 - CLI provenance helper responsibilities split into focused command-argument and provenance database fixture helpers while preserving the provenance helper facade.
 - CLI backup verification, database health, backup listing, restore-helper, and migration-readiness JSON argument builders moved into backup test helpers without changing assertions.
 - CLI backup, database health, backup listing, restore-helper, and migration-readiness command tests moved into a focused backup test module without changing assertions.
+- CLI migration-readiness command tests moved into a focused migration-readiness test module without changing assertions.
 - CLI snapshots argument builder moved into snapshot test helpers without changing assertions.
 - CLI public command help matrix moved into documentation test helpers without changing assertions.
 - CLI top-level help, command-help, and watchlist argument builders moved into focused test helpers without changing assertions.
 - CLI status JSON row-key documentation parser moved into documentation test helpers without changing assertions.
 - CLI status JSON tests reused the shared status argument builder without changing assertions.
 - CLI status JSON and stale-artifact status tests moved into a focused status JSON test module without changing assertions.
+- CLI invalid status artifact, backup, and database-health command tests moved into a focused status health test module without changing assertions.
 - CLI status command tests moved into a focused status test module without changing assertions.
 - CLI status command argument builders split into a focused status command helper while preserving the status helper facade.
 - CLI resource command argument and preflight fixture helpers extracted from the broad CLI test module without changing assertions.
@@ -356,6 +360,9 @@
 - Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
 - Public intel file validation summary/count extraction split from result assembly behind the stable validator facade.
 - Public intel file validation summary/count regression coverage hardened for malformed latest-run and collection fields.
+- Public-intel history, trend, and outcome summary tests moved into a focused public-intel history test module with shared fixtures.
+- Storage outcome, review queue, review coverage, and invalid-outcome tests moved into a focused storage outcome test module without changing assertions.
+- Static-site health tests moved into a focused static-site health test module with a shared static-site payload fixture.
 - Fixture-backed dry-run source connector interface with live collection explicitly unsupported.
 - Site bundle manifest validation split from manifest assembly behind the stable manifest facade.
 - Site contract artifact summary loading split from payload assembly behind the stable contract facade.

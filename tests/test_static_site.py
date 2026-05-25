@@ -2,11 +2,12 @@ import json
 from pathlib import Path
 
 from wraeclast_quant.reports.static_site import (
-    check_static_site_health,
     load_public_intel,
     render_static_site,
     write_static_site,
 )
+
+from static_site_helpers import payload as _payload
 
 
 def test_static_site_renders_title_timestamp_and_run_metadata() -> None:
@@ -124,134 +125,3 @@ def test_write_static_site_and_load_public_intel(tmp_path: Path) -> None:
     assert output_path.exists()
     assert load_public_intel(intel_path)["latest_run"]["id"] == 7
     assert load_public_intel(tmp_path / "missing.json") is None
-
-
-def test_check_static_site_health_reports_metadata(tmp_path: Path) -> None:
-    output_path = write_static_site(_payload(), tmp_path / "site")
-
-    health = check_static_site_health(output_path)
-
-    assert health is not None
-    assert health.valid is True
-    assert health.missing_markers == []
-    assert health.schema_version == "1.0"
-    assert health.latest_run_id == 7
-    assert health.size_bytes > 0
-
-
-def test_check_static_site_health_reports_missing_markers(tmp_path: Path) -> None:
-    index_path = tmp_path / "site" / "index.html"
-    index_path.parent.mkdir()
-    index_path.write_text("<html><title>Other</title></html>", encoding="utf-8")
-
-    health = check_static_site_health(index_path)
-
-    assert health is not None
-    assert health.valid is False
-    assert "heading" in health.missing_markers
-    assert "schema-version" in health.missing_markers
-    assert health.schema_version == ""
-    assert health.latest_run_id is None
-
-
-def test_check_static_site_health_missing_file_returns_none(tmp_path: Path) -> None:
-    assert check_static_site_health(tmp_path / "missing" / "index.html") is None
-
-
-def _payload():
-    return {
-        "schema_version": "1.0",
-        "generated_at": "2026-05-23T00:00:00+00:00",
-        "latest_run": {
-            "id": 7,
-            "created_at": "2026-05-23T00:00:00+00:00",
-            "source_mode": "sample-data",
-            "item_count": 2,
-        },
-        "compliance_summary": {
-            "total_resources": 3,
-            "automation_eligible_count": 1,
-            "status_counts": {
-                "approved-api": 1,
-                "manual-review": 1,
-                "needs-review": 1,
-            },
-        },
-        "outcome_summary": {
-            "positive": 2,
-            "neutral": 1,
-            "negative": 0,
-        },
-        "review_coverage": {
-            "run_id": 7,
-            "total_recommendations": 2,
-            "reviewed_recommendations": 1,
-            "unreviewed_recommendations": 1,
-            "reviewed_percent": 50.0,
-        },
-        "alerts": [
-            {
-                "severity": "high",
-                "item_name": "Stormglass Catalyst",
-                "reason": "Score crossed into BUY",
-                "latest_score": 76.0,
-                "score_delta": 26.0,
-            }
-        ],
-        "top_opportunities": [
-            {
-                "item_name": "Stormglass Catalyst",
-                "opportunity_score": 76.0,
-                "action": "BUY",
-            }
-        ],
-        "recent_runs": [
-            {
-                "id": 7,
-                "created_at": "2026-05-23T00:00:00+00:00",
-                "source_mode": "sample-data",
-                "item_count": 2,
-            },
-            {
-                "id": 6,
-                "created_at": "2026-05-22T00:00:00+00:00",
-                "source_mode": "manual-import",
-                "item_count": 2,
-            },
-        ],
-        "score_trends": [
-            {
-                "item_name": "Stormglass Catalyst",
-                "points": [
-                    {"run_id": 7, "score": 76.0, "action": "BUY"},
-                    {
-                        "run_id": 6,
-                        "score": 50.0,
-                        "action": "HOLD / SELL SELECTIVELY",
-                    },
-                ],
-            }
-        ],
-        "snapshot_changes": {
-            "previous_run_id": 6,
-            "latest_run_id": 7,
-            "top_movers": [
-                {
-                    "item_name": "Stormglass Catalyst",
-                    "previous_score": 50.0,
-                    "latest_score": 76.0,
-                    "score_delta": 26.0,
-                    "latest_action": "BUY",
-                }
-            ],
-            "status_changes": [
-                {
-                    "item_name": "Stormglass Catalyst",
-                    "status": "changed",
-                    "previous_action": "HOLD / SELL SELECTIVELY",
-                    "latest_action": "BUY",
-                    "score_delta": 26.0,
-                }
-            ],
-        },
-    }
