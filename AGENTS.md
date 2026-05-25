@@ -53,7 +53,8 @@ Default behavior:
 - Update the roadmap, progress log, or relevant planning document only when the completed packet changes project state, next steps, or handoff context.
 - Update `docs/CONTEXT.md` only when a packet creates or clarifies durable project language that future agents should reuse.
 - Add an ADR under `docs/adr/` only for decisions that are hard to reverse, surprising without context, or the result of a real trade-off.
-- After a packet passes verification, continue to the next highest-impact unblocked packet only when the user asked for autonomous progress and context remains safe; otherwise hand off with the next recommended packet.
+- After a packet passes verification, continue to the next highest-impact unblocked packet when the user asked for autonomous progress; otherwise hand off with the next recommended packet.
+- If context becomes long, do not stop solely for that reason. First create or update a concise checkpoint in `.codex/progress.md` with current branch/worktree state, completed packet summaries, verification history, known risks, and the next recommended packet, then continue from that checkpoint after any context compaction.
 - If running in normal chat mode instead of Goal Mode, treat a prompt such as "advance the project according to AGENTS.md" as permission to run this loop packet-by-packet without requiring the user to paste the full instructions again.
 
 Stop and ask the user only when:
@@ -64,7 +65,6 @@ Stop and ask the user only when:
 - Secrets, credentials, paid services, deployment access, or external accounts are required.
 - A new dependency, migration, schema change, public command, or risky source edit is needed.
 - The approved task queue is complete.
-- Context is getting too long to continue safely.
 
 Git rules:
 

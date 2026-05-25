@@ -310,6 +310,8 @@
 - CLI provenance helper responsibilities split into focused command-argument and provenance database fixture helpers while preserving the provenance helper facade.
 - CLI backup verification, database health, backup listing, restore-helper, and migration-readiness JSON argument builders moved into backup test helpers without changing assertions.
 - CLI backup, database health, backup listing, restore-helper, and migration-readiness command tests moved into a focused backup test module without changing assertions.
+- CLI restore-helper command tests moved into a focused restore-helper CLI test module without changing assertions.
+- CLI backup-listing command tests moved into a focused backup-listing CLI test module without changing assertions.
 - CLI migration-readiness command tests moved into a focused migration-readiness test module without changing assertions.
 - Database backup listing tests moved into a focused backup listing test module without changing assertions.
 - Database restore guidance tests moved into a focused restore guidance test module without changing assertions.
