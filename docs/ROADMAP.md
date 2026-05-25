@@ -370,6 +370,7 @@
 - Public intel file validation result assembly split from JSON file loading behind the stable validator facade.
 - Public intel file validation summary/count extraction split from result assembly behind the stable validator facade.
 - Public intel file validation summary/count regression coverage hardened for malformed latest-run and collection fields.
+- Public intel file contract tests moved into a focused file contract test module with shared public-intel contract fixtures.
 - Public-intel history, trend, and outcome summary tests moved into a focused public-intel history test module with shared fixtures.
 - Storage outcome, review queue, review coverage, and invalid-outcome tests moved into a focused storage outcome test module without changing assertions.
 - Storage outcome validation tests moved into a focused storage outcome validation test module without changing assertions.
