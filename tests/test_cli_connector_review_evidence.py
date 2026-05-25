@@ -57,35 +57,3 @@ def test_connector_review_evidence_updates_json_and_prints_status(tmp_path: Path
     assert updated["allowed_data_shape"] == "Derived currency summary rows only."
     assert updated["rate_limit_per_minute"] == 30
     assert updated["cache_ttl_seconds"] == 3600
-
-
-def test_connector_review_evidence_preserves_unrelated_fields_and_resources(
-    tmp_path: Path,
-) -> None:
-    resources_text = _approved_api_resources_text()
-    resources_path = _write_connector_resources(tmp_path, resources_text)
-    review_path = _write_connector_review(
-        tmp_path,
-        review_notes="Existing note.",
-        rate_limit_per_minute=12,
-    )
-
-    result = runner.invoke(
-        app,
-        [
-            "connector-review-evidence",
-            "--review-path",
-            str(review_path),
-            "--resources-path",
-            str(resources_path),
-            "--reviewed-at",
-            "2026-05-23",
-        ],
-    )
-    updated = json.loads(review_path.read_text(encoding="utf-8"))
-
-    assert result.exit_code == 0
-    assert updated["review_notes"] == "Existing note."
-    assert updated["rate_limit_per_minute"] == 12
-    assert updated["reviewed_at"] == "2026-05-23"
-    assert resources_path.read_text(encoding="utf-8") == resources_text
