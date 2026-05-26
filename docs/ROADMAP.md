@@ -529,6 +529,7 @@
 - Public-intel compliance summary and derived-only safety tests split from normal public-intel payload assembly tests.
 - Database migration documentation contract test split from migration readiness behavior tests.
 - Resource configuration documentation/defaults contract test split from resource parser behavior tests.
+- Snapshot comparison documentation/status-view contract test split from snapshot delta behavior tests.
 
 ## Recommended Next Milestones
 
