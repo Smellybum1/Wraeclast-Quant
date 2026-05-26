@@ -592,6 +592,7 @@
 - Connector-candidate access-method mapping test split from ranking and source-compliance policy tests.
 - Static-site recent-run and score-trend rendering test split from general dashboard section rendering tests.
 - Daily manual-input public artifact assertions moved into the public-artifact CLI test module.
+- Calibration score-bucket boundary test split from report rendering and grouping tests.
 
 ## Recommended Next Milestones
 

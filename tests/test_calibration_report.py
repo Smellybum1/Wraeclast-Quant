@@ -4,7 +4,6 @@ from wraeclast_quant.reports.calibration import (
     SCORE_BUCKETS,
     build_calibration,
     render_calibration_report,
-    score_bucket,
 )
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -66,13 +65,6 @@ def test_calibration_recent_reviews_respect_limit() -> None:
     )
 
     assert [review.item_name for review in calibration.recent_reviews] == ["Newest", "Middle"]
-
-
-def test_calibration_score_bucket_boundaries() -> None:
-    assert score_bucket(75.0) == "75+"
-    assert score_bucket(55.0) == "55-74.99"
-    assert score_bucket(35.0) == "35-54.99"
-    assert score_bucket(34.99) == "<35"
 
 
 def test_calibration_report_renders_empty_message() -> None:
