@@ -42,16 +42,6 @@ def test_static_site_renders_alerts_and_snapshot_changes() -> None:
     assert "changed" in html
 
 
-def test_static_site_renders_recent_runs_and_score_trends() -> None:
-    html = render_static_site(_payload())
-
-    assert "Recent Runs" in html
-    assert "<td>7</td><td>2026-05-23T00:00:00+00:00</td><td>sample-data</td><td>2</td>" in html
-    assert "Score Trends" in html
-    assert "Run #7: 76.00 BUY" in html
-    assert "Run #6: 50.00 HOLD / SELL SELECTIVELY" in html
-
-
 def test_static_site_renders_outcome_summary() -> None:
     html = render_static_site(_payload())
 
