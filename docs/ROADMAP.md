@@ -582,6 +582,7 @@
 - Publish-handoff non-mutating and sensitive-value safety tests split from normal handoff rendering tests.
 - Official Currency Exchange secret redaction test split from client-secret loading tests.
 - Daily CLI public-intel/static-site artifact tests split from core daily run tests.
+- Source connector read-only runtime-plan coverage split from generic resource/fetch-plan policy tests.
 
 ## Recommended Next Milestones
 
