@@ -2,9 +2,10 @@ from wraeclast_quant.config.connector_policy import (
     build_connector_review_draft,
     connector_review_report,
 )
-from wraeclast_quant.config.resources_loader import Resource
 
+from connector_policy_helpers import conditional_api_resource as _conditional_api_resource
 from connector_policy_helpers import connector_review as _review
+from connector_policy_helpers import discord_resource as _discord_resource
 from connector_policy_helpers import eligible_resource as _eligible_resource
 
 
@@ -50,15 +51,7 @@ def test_connector_review_report_auth_review_includes_auth_gates() -> None:
 def test_connector_review_report_conditional_review_includes_approval_suggestion() -> None:
     report = connector_review_report(
         _review(resource_name="Conditional API"),
-        [
-            Resource(
-                id="conditional_api",
-                name="Conditional API",
-                type="price_site",
-                url="https://example.test/api",
-                allowed_use="manual-or-api-if-available",
-            )
-        ],
+        [_conditional_api_resource()],
     )
 
     assert report.check_result.ready is False
@@ -71,14 +64,7 @@ def test_connector_review_report_discord_or_missing_resource_has_no_suggestion()
     missing = connector_review_report(_review(resource_name="Missing Source"), [])
     discord = connector_review_report(
         _review(resource_name="Official Discord"),
-        [
-            Resource(
-                name="Official Discord",
-                type="discord",
-                url="https://discord.gg/example",
-                allowed_use="api",
-            )
-        ],
+        [_discord_resource()],
     )
 
     assert missing.approval.suggestion_available is False

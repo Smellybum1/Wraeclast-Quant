@@ -8,9 +8,10 @@ from wraeclast_quant.config.connector_policy import (
     load_connector_review,
     prepare_connector_review_workspace,
 )
-from wraeclast_quant.config.resources_loader import Resource
 
+from connector_policy_helpers import discord_resource as _discord_resource
 from connector_policy_helpers import eligible_resource as _eligible_resource
+from connector_policy_helpers import poe_ninja_currency_review_resource as _poe_ninja_currency_review_resource
 
 
 def test_connector_review_prep_resolves_resource_and_writes_workspace(
@@ -19,15 +20,7 @@ def test_connector_review_prep_resolves_resource_and_writes_workspace(
     prep = prepare_connector_review_workspace(
         resource_name="poe_ninja_poe2_currency",
         access_method="api",
-        resources=[
-            Resource(
-                id="poe_ninja_poe2_currency",
-                name="poe.ninja POE2 Currency",
-                type="price_site",
-                url="https://poe.ninja/poe2/economy/vaal/currency",
-                allowed_use="manual-or-api-if-available",
-            )
-        ],
+        resources=[_poe_ninja_currency_review_resource()],
         output_dir=tmp_path,
     )
     review = load_connector_review(prep.review_path)
@@ -63,14 +56,7 @@ def test_connector_review_prep_rejects_discord_resource(tmp_path: Path) -> None:
         prepare_connector_review_workspace(
             resource_name="Official Discord",
             access_method="api",
-            resources=[
-                Resource(
-                    name="Official Discord",
-                    type="discord",
-                    url="https://discord.gg/example",
-                    allowed_use="api",
-                )
-            ],
+            resources=[_discord_resource()],
             output_dir=tmp_path,
         )
 
@@ -79,15 +65,7 @@ def test_poe_ninja_currency_review_workspace_is_incomplete() -> None:
     review = load_connector_review("examples/poe_ninja_poe2_currency_connector_review.json")
     result = check_connector_review(
         review,
-        [
-            Resource(
-                id="poe_ninja_poe2_currency",
-                name="poe.ninja POE2 Currency",
-                type="price_site",
-                url="https://poe.ninja/poe2/economy/vaal/currency",
-                allowed_use="manual-or-api-if-available",
-            )
-        ],
+        [_poe_ninja_currency_review_resource()],
     )
 
     assert review.source_terms_reviewed is False

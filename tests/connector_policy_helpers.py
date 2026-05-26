@@ -26,6 +26,35 @@ def poe_ninja_currency_resource() -> Resource:
     )
 
 
+def poe_ninja_currency_review_resource() -> Resource:
+    return Resource(
+        id="poe_ninja_poe2_currency",
+        name="poe.ninja POE2 Currency",
+        type="price_site",
+        url="https://poe.ninja/poe2/economy/vaal/currency",
+        allowed_use="manual-or-api-if-available",
+    )
+
+
+def conditional_api_resource() -> Resource:
+    return Resource(
+        id="conditional_api",
+        name="Conditional API",
+        type="price_site",
+        url="https://example.test/api",
+        allowed_use="manual-or-api-if-available",
+    )
+
+
+def discord_resource(*, name: str = "Official Discord") -> Resource:
+    return Resource(
+        name=name,
+        type="discord",
+        url="https://discord.gg/example",
+        allowed_use="api",
+    )
+
+
 def example_approved_api_resources() -> list[Resource]:
     return [
         Resource(
@@ -114,8 +143,10 @@ def minimal_fixture_payload() -> dict[str, object]:
 
 
 __all__ = [
+    "conditional_api_resource",
     "connector_review",
     "connector_review_payload",
+    "discord_resource",
     "eligible_resource",
     "example_approved_api_resources",
     "invalid_signals_fixture_payload",
@@ -123,5 +154,6 @@ __all__ = [
     "missing_items_fixture_payload",
     "unnamed_item_fixture_payload",
     "poe_ninja_currency_resource",
+    "poe_ninja_currency_review_resource",
     "write_connector_fixture",
 ]

@@ -558,6 +558,7 @@
 - Connector dry-run CLI tests split by generic dry-run policy and source-specific connector display coverage.
 - Storage outcome review tests split from recommendation outcome persistence and summary-count tests.
 - Source-connector tests now share the official Currency Exchange resource lookup helper instead of duplicating live `RESOURCES.md` access in each module.
+- Connector-review policy tests now share poe.ninja review, conditional API, and Discord-gated resource fixtures while preserving source-review gate behavior.
 
 ## Recommended Next Milestones
 

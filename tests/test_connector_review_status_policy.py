@@ -2,9 +2,9 @@ from wraeclast_quant.config.connector_policy import (
     build_connector_review_draft,
     connector_review_status,
 )
-from wraeclast_quant.config.resources_loader import Resource
 
 from connector_policy_helpers import connector_review as _review
+from connector_policy_helpers import discord_resource as _discord_resource
 from connector_policy_helpers import eligible_resource as _eligible_resource
 
 
@@ -77,14 +77,7 @@ def test_connector_review_status_reports_missing_resource_as_blocked() -> None:
 def test_connector_review_status_keeps_discord_blocked() -> None:
     status = connector_review_status(
         _review(),
-        [
-            Resource(
-                name="Approved API",
-                type="discord",
-                url="https://discord.gg/example",
-                allowed_use="api",
-            )
-        ],
+        [_discord_resource(name="Approved API")],
     )
     row_by_check = {row.check: row for row in status.rows}
 
