@@ -530,6 +530,7 @@
 - Database migration documentation contract test split from migration readiness behavior tests.
 - Resource configuration documentation/defaults contract test split from resource parser behavior tests.
 - Snapshot comparison documentation/status-view contract test split from snapshot delta behavior tests.
+- Connector-review report redaction and raw-data safety test split from normal report rendering tests.
 
 ## Recommended Next Milestones
 
