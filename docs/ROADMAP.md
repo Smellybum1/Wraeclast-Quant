@@ -519,6 +519,14 @@
 - Official Currency Exchange preview-signal fixture export tests moved into a focused baseline-fixture test module, leaving rolling-baseline diagnostics in the baseline test module.
 - Local status and static dashboard review-coverage wording now points unreviewed recommendations to `wq review-queue` and `wq record-outcome` without adding private outcome data or schema changes.
 - Official Currency Exchange rolling-baseline index and freshness helpers split from diagnostics orchestration while preserving the stable preview facade.
+- Official Currency Exchange rolling-baseline history and diagnostic assembly split from preview orchestration while preserving the stable preview facade.
+- Official Currency Exchange rolling-baseline history indexing split from diagnostic row assembly while preserving the stable diagnostics facade.
+- Official Currency Exchange baseline-to-fixture preview split into focused opportunity-input and signal-fixture helpers while preserving the stable import-preview facade.
+- Official Currency Exchange fixture text parsing and formatting split from connector-row assembly while preserving fixture output.
+- Official Currency Exchange runtime settings-from-env helper split from runtime planning while preserving the stable runtime facade.
+- Official Currency Exchange client-secret value loading split from source validation while preserving failure-closed secret handling.
+- Official Currency Exchange live-unsupported blocker wording split from the connector class while preserving failure-closed live collection.
+- Official Currency Exchange manual snapshot conversion split from JSON loading while preserving the stable manual snapshot facade.
 - Market brief rendering and health tests split by responsibility with shared synthetic opportunity helpers.
 - Official Currency Exchange rolling-baseline freshness warning tests moved into a focused module separate from baseline-history diagnostics.
 - Official Currency Exchange rolling-baseline history-gate tests moved into a focused module separate from composition and thin-market diagnostics.

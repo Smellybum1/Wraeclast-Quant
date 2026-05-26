@@ -7,6 +7,11 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_models import (
     CurrencyExchangeMarket,
     CurrencyExchangePayload,
 )
+from wraeclast_quant.collectors.pathofexile_currency_exchange_market_text import (
+    currency_exchange_currency_label,
+    currency_exchange_market_pair,
+    format_currency_exchange_mapping,
+)
 from wraeclast_quant.collectors.pathofexile_currency_exchange_payload_loader import (
     load_currency_exchange_payload,
 )
@@ -14,7 +19,6 @@ from wraeclast_quant.config.connector_fixture_models import (
     ConnectorFixture,
     ConnectorFixtureItem,
 )
-from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 
 
 def currency_exchange_fixture_from_payload(
@@ -32,51 +36,29 @@ def currency_exchange_market_item(
     next_change_id: int,
     market: CurrencyExchangeMarket,
 ) -> ConnectorFixtureItem:
-    left, right = _market_pair(market.market_id)
-    name = f"{_currency_label(left)} / {_currency_label(right)}"
+    left, right = currency_exchange_market_pair(market.market_id)
+    name = f"{currency_exchange_currency_label(left)} / {currency_exchange_currency_label(right)}"
     return ConnectorFixtureItem(
         name=name,
         category="currency",
         confidence="medium",
         price_text=(
             f"hourly aggregate {market.market_id}; "
-            f"lowest ratio {_format_mapping(market.lowest_ratio)}; "
-            f"highest ratio {_format_mapping(market.highest_ratio)}"
+            f"lowest ratio {format_currency_exchange_mapping(market.lowest_ratio)}; "
+            f"highest ratio {format_currency_exchange_mapping(market.highest_ratio)}"
         ),
         notes=(
             f"Official Currency Exchange historical hour {next_change_id}; "
             f"league {market.league}; "
-            f"volume {_format_mapping(market.volume_traded)}; "
-            f"stock {_format_mapping(market.lowest_stock)} to {_format_mapping(market.highest_stock)}"
+            f"volume {format_currency_exchange_mapping(market.volume_traded)}; "
+            f"stock {format_currency_exchange_mapping(market.lowest_stock)} "
+            f"to {format_currency_exchange_mapping(market.highest_stock)}"
         ),
     )
 
 
 def load_currency_exchange_connector_fixture(path: str | Path) -> ConnectorFixture:
     return currency_exchange_fixture_from_payload(load_currency_exchange_payload(path))
-
-
-def _market_pair(market_id: str) -> tuple[str, str]:
-    parts = [part.strip() for part in market_id.split("|")]
-    if len(parts) != 2 or not all(parts):
-        raise ConnectorPolicyError(
-            "Currency Exchange market_id must contain two currency codes separated by '|'."
-        )
-    return parts[0], parts[1]
-
-
-def _currency_label(code: str) -> str:
-    labels = {
-        "chaos": "Chaos Orb",
-        "divine": "Divine Orb",
-        "exalted": "Exalted Orb",
-        "regal": "Regal Orb",
-    }
-    return labels.get(code, code.replace("_", " ").title())
-
-
-def _format_mapping(values: dict[str, int]) -> str:
-    return ", ".join(f"{key}={values[key]}" for key in sorted(values))
 
 
 __all__ = [
