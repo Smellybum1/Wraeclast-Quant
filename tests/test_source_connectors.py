@@ -160,47 +160,6 @@ def test_official_currency_exchange_connector_refuses_other_resources() -> None:
         OfficialCurrencyExchangeConnector.from_review(_review(), [_eligible_resource()])
 
 
-def test_poe_ninja_currency_connector_live_collection_is_unsupported() -> None:
-    review = load_connector_review("examples/reviews/poe_ninja_poe2_currency_connector_review.json")
-    connector = PoeNinjaCurrencyConnector.from_review(
-        review,
-        [_poe_ninja_currency_resource()],
-    )
-
-    with pytest.raises(ConnectorPolicyError, match="Live connector collection is unsupported") as exc_info:
-        connector.collect_live()
-
-    error = str(exc_info.value)
-    assert "poe.ninja POE2 Currency" in error
-    assert "machine endpoint URL" in error
-    assert "response-field schema" in error
-    assert "source-owner reuse" in error
-
-
-def test_official_currency_exchange_connector_live_collection_is_unsupported() -> None:
-    review = load_connector_review("examples/reviews/pathofexile_currency_exchange_connector_review.json")
-    connector = OfficialCurrencyExchangeConnector.from_review(
-        review,
-        [_official_currency_exchange_resource()],
-    )
-
-    with pytest.raises(ConnectorPolicyError, match="Live connector collection is unsupported") as exc_info:
-        connector.collect_live()
-
-    error = str(exc_info.value)
-    assert "Path of Exile Currency Exchange API" in error
-    assert "OAuth token exchange" in error
-    assert "Credential storage outside the repo" in error
-    assert "cache writes" in error
-
-
-def test_fixture_source_connector_live_collection_is_unsupported() -> None:
-    connector = FixtureSourceConnector.from_review(_review(), [_eligible_resource()])
-
-    with pytest.raises(ConnectorPolicyError, match="Live connector collection is unsupported"):
-        connector.collect_live()
-
-
 def test_fixture_source_connector_refuses_incomplete_review() -> None:
     with pytest.raises(ConnectorPolicyError, match="Source terms must be reviewed"):
         FixtureSourceConnector.from_review(

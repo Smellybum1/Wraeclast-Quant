@@ -508,6 +508,7 @@
 - Official Currency Exchange secret loader/redaction tests moved into a focused test module without changing behavior.
 - Official Currency Exchange token request/response preview tests moved into a focused test module without changing behavior.
 - Official Currency Exchange rolling-baseline diagnostics tests moved into a focused test module without changing behavior.
+- Source connector live-collection unsupported-policy tests moved into a focused test module without changing behavior.
 
 ## Recommended Next Milestones
 
