@@ -557,6 +557,7 @@
 - Currency Exchange manual snapshot bridge tests split by fixture-run, manual-import export, and daily-pipeline proof paths.
 - Connector dry-run CLI tests split by generic dry-run policy and source-specific connector display coverage.
 - Storage outcome review tests split from recommendation outcome persistence and summary-count tests.
+- Source-connector tests now share the official Currency Exchange resource lookup helper instead of duplicating live `RESOURCES.md` access in each module.
 
 ## Recommended Next Milestones
 

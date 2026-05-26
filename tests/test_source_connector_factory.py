@@ -7,19 +7,11 @@ from wraeclast_quant.collectors.source_connector import (
     source_connector_from_review,
 )
 from wraeclast_quant.config.connector_policy import load_connector_review
-from wraeclast_quant.config.resources_loader import load_resources
 
 from connector_policy_helpers import connector_review as _review
 from connector_policy_helpers import eligible_resource as _eligible_resource
 from connector_policy_helpers import poe_ninja_currency_resource as _poe_ninja_currency_resource
-
-
-def _official_currency_exchange_resource():
-    return [
-        resource
-        for resource in load_resources("RESOURCES.md")
-        if resource.id == "official_currency_exchange_api"
-    ][0]
+from source_connector_helpers import official_currency_exchange_resource as _official_currency_exchange_resource
 
 
 def test_source_connector_factory_selects_poe_ninja_currency_connector() -> None:

@@ -13,20 +13,12 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_runtime import (
 from wraeclast_quant.collectors.source_connector import FixtureSourceConnector
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.config.connector_policy import load_connector_review
-from wraeclast_quant.config.resources_loader import load_resources
 
 from connector_policy_helpers import connector_review as _review
 from connector_policy_helpers import eligible_resource as _eligible_resource
 from connector_policy_helpers import minimal_fixture_payload as _minimal_fixture_payload
 from connector_policy_helpers import write_connector_fixture as _write_connector_fixture
-
-
-def _official_currency_exchange_resource():
-    return [
-        resource
-        for resource in load_resources("RESOURCES.md")
-        if resource.id == "official_currency_exchange_api"
-    ][0]
+from source_connector_helpers import official_currency_exchange_resource as _official_currency_exchange_resource
 
 
 def test_official_currency_exchange_connector_exposes_read_only_runtime_plan(
