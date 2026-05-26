@@ -13,6 +13,8 @@ from wraeclast_quant.importers.manual import (
     load_manual_items,
 )
 
+from cli_doc_markdown_helpers import documented_bullet_list as _documented_bullets
+
 
 def test_json_list_imports_successfully(tmp_path: Path) -> None:
     path = tmp_path / "items.json"
@@ -165,12 +167,3 @@ def _item(name: str) -> dict[str, object]:
             "stale_data_penalty": 8.0,
         },
     }
-
-
-def _documented_bullets(doc_text: str, heading: str) -> list[str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return [
-        line.strip()[3:-1]
-        for line in section.splitlines()
-        if line.strip().startswith("- `")
-    ]
