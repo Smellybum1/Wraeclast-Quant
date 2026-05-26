@@ -499,6 +499,7 @@
 - Public-intel contract documentation test now reuses the shared Markdown bullet parser helper.
 - Site bundle tests now reuse shared public-intel payload and Markdown bullet helpers while preserving site-bundle-specific empty opportunity fixtures.
 - Manual import documentation drift tests now reuse the shared ordered Markdown bullet parser helper.
+- Manual import tests split by happy-path loading, documentation/template contract, and validation failures while preserving importer behavior.
 - Alert, backup, scoring, and resource-configuration contract tests now reuse the shared Markdown mapping parser helper.
 - Snapshot comparison and outcome-review report tests now reuse the shared Markdown bullet parser helper.
 - Official Currency Exchange runtime/auth planning tests moved into a focused test module without changing runtime behavior.
