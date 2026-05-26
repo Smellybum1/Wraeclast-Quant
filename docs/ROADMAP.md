@@ -594,6 +594,7 @@
 - Daily manual-input public artifact assertions moved into the public-artifact CLI test module.
 - Calibration score-bucket boundary test split from report rendering and grouping tests.
 - Source-specific fixture collection tests split from the generic source connector smoke test.
+- Currency Exchange payload-sensitivity preview tests split from core deterministic/unwired preview tests.
 
 ## Recommended Next Milestones
 
