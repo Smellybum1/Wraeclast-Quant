@@ -98,20 +98,6 @@ def test_migration_readiness_json_payload_has_stable_keys(tmp_path: Path) -> Non
     assert payload["blockers"] == []
 
 
-def test_migration_contract_doc_mentions_version_and_required_commands() -> None:
-    doc_text = Path("docs/MIGRATIONS.md").read_text(encoding="utf-8")
-
-    assert "The current SQLite schema version is `2`." in doc_text
-    for command in [
-        "wq status --strict",
-        "wq backup-db",
-        "wq migration-readiness --strict",
-        "wq verify-backup --backup-path <file>",
-        "wq restore-helper --backup-path <file>",
-    ]:
-        assert command in doc_text
-
-
 def _write_database_with_backup(tmp_path: Path) -> tuple[Path, Path, int]:
     database_path = tmp_path / "snapshots.db"
     backup_dir = tmp_path / "backups"

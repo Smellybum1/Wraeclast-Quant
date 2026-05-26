@@ -527,6 +527,7 @@
 - Static-site empty-state and HTML-escaping safety tests split from normal dashboard rendering tests.
 - Site-bundle static artifact documentation contract test split from bundle writer behavior tests.
 - Public-intel compliance summary and derived-only safety tests split from normal public-intel payload assembly tests.
+- Database migration documentation contract test split from migration readiness behavior tests.
 
 ## Recommended Next Milestones
 
