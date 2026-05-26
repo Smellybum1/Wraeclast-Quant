@@ -1,6 +1,8 @@
 from wraeclast_quant.config.preflight import assess_preflight_resource
 from wraeclast_quant.config.resources_loader import Resource
 
+from connector_policy_helpers import discord_resource as _discord_resource
+
 
 def test_preflight_api_missing_url_is_ineligible() -> None:
     assessment = assess_preflight_resource(
@@ -14,12 +16,7 @@ def test_preflight_api_missing_url_is_ineligible() -> None:
 
 def test_preflight_discord_is_gated_even_if_marked_api() -> None:
     assessment = assess_preflight_resource(
-        Resource(
-            name="Official Discord",
-            type="discord",
-            allowed_use="api",
-            url="https://discord.com/channels/example",
-        )
+        _discord_resource(url="https://discord.com/channels/example")
     )
 
     assert assessment.status == "discord-gated"

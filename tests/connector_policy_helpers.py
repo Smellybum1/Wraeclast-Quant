@@ -7,13 +7,40 @@ from wraeclast_quant.config.connector_policy import ConnectorReview
 from wraeclast_quant.config.resources_loader import Resource
 
 
-def eligible_resource() -> Resource:
-    return Resource(
+def eligible_resource(*, resource_id: str | None = None) -> Resource:
+    data = dict(
         name="Approved API",
         type="official",
         url="https://example.test/api",
         allowed_use="api",
     )
+    if resource_id is not None:
+        data["id"] = resource_id
+    return Resource(**data)
+
+
+def eligible_rss_resource(*, resource_id: str | None = None) -> Resource:
+    data = dict(
+        name="Approved API",
+        type="official",
+        url="https://example.test/feed.xml",
+        allowed_use="rss",
+    )
+    if resource_id is not None:
+        data["id"] = resource_id
+    return Resource(**data)
+
+
+def eligible_download_resource(*, resource_id: str | None = None) -> Resource:
+    data = dict(
+        name="Approved Download",
+        type="official",
+        url="https://example.test/data.json",
+        allowed_use="download",
+    )
+    if resource_id is not None:
+        data["id"] = resource_id
+    return Resource(**data)
 
 
 def poe_ninja_currency_resource() -> Resource:
@@ -36,22 +63,42 @@ def poe_ninja_currency_review_resource() -> Resource:
     )
 
 
-def conditional_api_resource() -> Resource:
-    return Resource(
-        id="conditional_api",
+def conditional_api_resource(
+    *,
+    resource_id: str | None = "conditional_api",
+    resource_type: str | None = "price_site",
+    url: str = "https://example.test/api",
+    allowed_use: str = "manual-or-api-if-available",
+    priority: str | None = None,
+    notes: str | None = None,
+) -> Resource:
+    data = dict(
         name="Conditional API",
-        type="price_site",
-        url="https://example.test/api",
-        allowed_use="manual-or-api-if-available",
+        url=url,
+        allowed_use=allowed_use,
     )
+    if resource_id is not None:
+        data["id"] = resource_id
+    if resource_type is not None:
+        data["type"] = resource_type
+    if priority is not None:
+        data["priority"] = priority
+    if notes is not None:
+        data["notes"] = notes
+    return Resource(**data)
 
 
-def discord_resource(*, name: str = "Official Discord") -> Resource:
+def discord_resource(
+    *,
+    name: str = "Official Discord",
+    url: str = "https://discord.gg/example",
+    allowed_use: str = "api",
+) -> Resource:
     return Resource(
         name=name,
         type="discord",
-        url="https://discord.gg/example",
-        allowed_use="api",
+        url=url,
+        allowed_use=allowed_use,
     )
 
 
@@ -147,7 +194,9 @@ __all__ = [
     "connector_review",
     "connector_review_payload",
     "discord_resource",
+    "eligible_download_resource",
     "eligible_resource",
+    "eligible_rss_resource",
     "example_approved_api_resources",
     "invalid_signals_fixture_payload",
     "minimal_fixture_payload",

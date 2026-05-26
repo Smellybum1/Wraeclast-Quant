@@ -3,17 +3,18 @@ import pytest
 from wraeclast_quant.config.connector_candidates import connector_candidates, suggested_access_method
 from wraeclast_quant.config.resources_loader import Resource
 
+from connector_policy_helpers import conditional_api_resource as _conditional_api_resource
+from connector_policy_helpers import discord_resource as _discord_resource
+
 
 def test_connector_candidates_rank_needs_review_before_manual_review() -> None:
     candidates = connector_candidates(
         [
             Resource(name="Manual Source", allowed_use="manual-review", priority="critical"),
-            Resource(
-                name="Conditional API",
-                id="conditional_api",
+            _conditional_api_resource(
+                resource_type=None,
                 allowed_use="api-or-manual-review",
                 priority="medium",
-                url="https://example.test/api",
             ),
         ]
     )
@@ -46,14 +47,7 @@ def test_connector_candidate_suggested_access_method_from_allowed_use(
 
 def test_connector_candidates_mark_discord_as_compliance_gated() -> None:
     candidates = connector_candidates(
-        [
-            Resource(
-                name="Official Discord",
-                type="discord",
-                url="https://discord.gg/example",
-                allowed_use="api",
-            )
-        ]
+        [_discord_resource()]
     )
 
     assert candidates[0].preflight.status == "discord-gated"

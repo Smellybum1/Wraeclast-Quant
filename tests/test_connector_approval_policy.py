@@ -1,24 +1,17 @@
 from wraeclast_quant.config.connector_policy import (
     connector_approval_helper,
 )
-from wraeclast_quant.config.resources_loader import Resource
 
+from connector_policy_helpers import conditional_api_resource as _conditional_api_resource
 from connector_policy_helpers import connector_review as _review
+from connector_policy_helpers import discord_resource as _discord_resource
 from connector_policy_helpers import eligible_resource as _eligible_resource
 
 
 def test_connector_approval_helper_suggests_allowed_use_for_complete_conditional_review() -> None:
     result = connector_approval_helper(
         _review(resource_name="Conditional API"),
-        [
-            Resource(
-                id="conditional_api",
-                name="Conditional API",
-                type="price_site",
-                url="https://example.test/api",
-                allowed_use="manual-or-api-if-available",
-            )
-        ],
+        [_conditional_api_resource()],
     )
 
     assert result.suggestion_available is True
@@ -30,13 +23,7 @@ def test_connector_approval_helper_suggests_allowed_use_for_complete_conditional
 def test_connector_approval_helper_with_incomplete_evidence_has_no_suggestion() -> None:
     result = connector_approval_helper(
         _review(resource_name="Conditional API", source_terms_url=""),
-        [
-            Resource(
-                name="Conditional API",
-                url="https://example.test/api",
-                allowed_use="manual-or-api-if-available",
-            )
-        ],
+        [_conditional_api_resource(resource_id=None, resource_type=None)],
     )
 
     assert result.suggestion_available is False
@@ -48,14 +35,7 @@ def test_connector_approval_helper_with_incomplete_evidence_has_no_suggestion() 
 def test_connector_approval_helper_has_no_suggestion_for_discord() -> None:
     result = connector_approval_helper(
         _review(resource_name="Official Discord"),
-        [
-            Resource(
-                name="Official Discord",
-                type="discord",
-                url="https://discord.gg/example",
-                allowed_use="manual-or-api-if-available",
-            )
-        ],
+        [_discord_resource(allowed_use="manual-or-api-if-available")],
     )
 
     assert result.suggestion_available is False
@@ -77,5 +57,4 @@ def test_connector_approval_helper_reports_no_change_for_already_eligible_resour
     assert result.connector_check_ready is True
     assert result.approval_suggestion == "None"
     assert "already automation-eligible" in result.reason
-
 

@@ -560,6 +560,15 @@
 - Source-connector tests now share the official Currency Exchange resource lookup helper instead of duplicating live `RESOURCES.md` access in each module.
 - Connector-review policy tests now share poe.ninja review, conditional API, and Discord-gated resource fixtures while preserving source-review gate behavior.
 - Public-intel file validation failure tests split from summary/count extraction contract tests.
+- Connector-review status resource-failure tests split from normal readiness/evidence row status tests.
+- Connector-review evidence validation and readiness-gate tests split from field-update policy tests.
+- Connector-review report approval-suggestion and resource-failure tests split from normal report rendering tests.
+- Connector-review workspace missing-resource and Discord-resource validation tests split from workspace creation policy tests.
+- Connector-review loading validation and legacy missing-evidence tests split from normal JSON loading tests.
+- Connector-review readiness tests now share approved API/RSS/download resource fixtures.
+- Connector-review draft resolution and validation tests now reuse shared resource fixtures with optional IDs.
+- Connector approval-helper and approval-patch tests now reuse shared conditional API and Discord resource fixtures while preserving approval safety assertions.
+- Connector candidate and preflight policy tests now reuse shared conditional API and Discord resource fixtures while preserving source-compliance statuses.
 
 ## Recommended Next Milestones
 
