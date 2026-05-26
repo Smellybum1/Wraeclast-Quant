@@ -597,6 +597,7 @@
 - Currency Exchange payload-sensitivity preview tests split from core deterministic/unwired preview tests.
 - Currency Exchange runtime preflight validation guardrail tests split from the happy-path user-agent test.
 - Currency Exchange direct baseline diagnostic freshness-warning test split from history and missing-history diagnostics.
+- Currency Exchange preview signal-item metadata test split from opportunity-input mapping tests.
 
 ## Recommended Next Milestones
 
