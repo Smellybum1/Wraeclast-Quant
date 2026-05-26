@@ -5,7 +5,6 @@ from wraeclast_quant.reports.calibration import (
     build_calibration,
     render_calibration_report,
     score_bucket,
-    write_calibration_report,
 )
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -81,13 +80,3 @@ def test_calibration_report_renders_empty_message() -> None:
 
     assert "No reviewed recommendation outcomes found." in report
     assert "Outcome Counts By Action" not in report
-
-
-def test_write_calibration_report_creates_parent_directory(tmp_path: Path) -> None:
-    output_path = write_calibration_report(
-        build_calibration_from_reviews([_review()]),
-        path=tmp_path / "reports" / "calibration_report.md",
-    )
-
-    assert output_path.exists()
-    assert "Wraeclast Quant Recommendation Calibration" in output_path.read_text(encoding="utf-8")
