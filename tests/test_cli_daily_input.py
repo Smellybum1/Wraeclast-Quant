@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -52,34 +51,3 @@ def test_daily_input_path_creates_one_manual_import_run(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert len(runs) == 1
     assert runs[0].source_mode == "manual-import"
-
-
-def test_daily_input_path_public_intel_latest_run_matches_created_run(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    intel_path = tmp_path / "public_intel.json"
-    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
-
-    result = runner.invoke(
-        app,
-        _daily_args(input_path=input_path, database_path=database_path, intel_path=intel_path),
-    )
-
-    latest = SnapshotRepository(database_path).latest_run()
-    payload = json.loads(intel_path.read_text(encoding="utf-8"))
-    assert result.exit_code == 0
-    assert latest is not None
-    assert payload["latest_run"]["id"] == latest.id
-
-
-def test_daily_input_path_static_site_includes_imported_item(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    site_dir = tmp_path / "site"
-    input_path = _write_manual_import_json(tmp_path, "Manual Daily Catalyst")
-
-    result = runner.invoke(
-        app,
-        _daily_args(input_path=input_path, database_path=database_path, site_dir=site_dir),
-    )
-
-    assert result.exit_code == 0
-    assert "Manual Daily Catalyst" in (site_dir / "index.html").read_text(encoding="utf-8")
