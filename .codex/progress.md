@@ -743,3 +743,6 @@
 - Committed packet: `364f0f6 Split static site IO tests`.
 - Completed packet: split publish-check invalid public-intel/archive validation coverage into `tests/test_publish_check_validation.py`, leaving ready, stale, missing-bundle, and JSON payload behavior in `tests/test_publish_check.py`.
 - Verification: bundled Python focused tests `tests/test_publish_check.py tests/test_publish_check_validation.py tests/test_publish_handoff.py tests/test_cli_publish_check.py tests/test_cli_publish_handoff.py tests/test_site_bundle.py tests/test_site_bundle_validation.py --basetemp=.tmp-pytest-publish-check-validation -p no:cacheprovider` passed with 20 tests.
+- Committed packet: `17b4ce2 Split publish check validation tests`.
+- Completed packet: split database-health invalid-schema and directory-path validation coverage into `tests/test_database_health_validation.py`, leaving missing-database read-only behavior and healthy summary counts in `tests/test_database_health.py`.
+- Verification: bundled Python focused tests `tests/test_database_health.py tests/test_database_health_validation.py tests/test_cli_database_check.py tests/test_cli_status.py tests/test_cli_status_json.py tests/test_database_backups.py tests/test_database_backup_verification.py --basetemp=.tmp-pytest-database-health-validation -p no:cacheprovider` passed with 12 tests.

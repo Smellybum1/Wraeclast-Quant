@@ -572,6 +572,7 @@
 - Outcome-review documentation contract coverage split from normal report rendering tests.
 - Static-site file write/load coverage split from dashboard rendering tests.
 - Publish-check invalid artifact validation tests split from readiness and payload-shape tests.
+- Database-health invalid-schema and directory-path validation tests split from healthy summary behavior tests.
 
 ## Recommended Next Milestones
 
