@@ -533,6 +533,7 @@
 - Connector-review report redaction and raw-data safety test split from normal report rendering tests.
 - Official Currency Exchange runtime preflight helpers split from runtime planning while preserving the stable runtime facade.
 - Official Currency Exchange token models, request-plan helper, and response-preview validation split behind the stable token facade.
+- Official Currency Exchange raw payload loading and connector fixture item rendering split behind the stable fixture facade.
 
 ## Recommended Next Milestones
 
