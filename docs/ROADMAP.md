@@ -532,6 +532,7 @@
 - Snapshot comparison documentation/status-view contract test split from snapshot delta behavior tests.
 - Connector-review report redaction and raw-data safety test split from normal report rendering tests.
 - Official Currency Exchange runtime preflight helpers split from runtime planning while preserving the stable runtime facade.
+- Official Currency Exchange token models, request-plan helper, and response-preview validation split behind the stable token facade.
 
 ## Recommended Next Milestones
 
