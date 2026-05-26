@@ -496,6 +496,7 @@
 - Currency Exchange manual snapshot command workflow split from Typer registration/rendering while preserving command behavior.
 - Public-intel contract tests now reuse the shared public-intel payload helper, keeping only contract-specific alert data local to the contract helper.
 - Public-intel contract documentation test now reuses the shared Markdown bullet parser helper.
+- Site bundle tests now reuse shared public-intel payload and Markdown bullet helpers while preserving site-bundle-specific empty opportunity fixtures.
 
 ## Recommended Next Milestones
 
