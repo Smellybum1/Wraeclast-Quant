@@ -576,6 +576,7 @@
 - Calibration report file-write coverage split from report rendering and grouping tests.
 - Alert rule setting override and validation tests split from core alert-generation behavior tests.
 - Public-intel JSON write/read coverage split from payload assembly tests.
+- Storage unreviewed-opportunity query tests split from review-coverage summary tests.
 
 ## Recommended Next Milestones
 
