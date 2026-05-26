@@ -91,7 +91,7 @@ wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_
 wq currency-exchange-manual-snapshot --input-path <current-snapshot> --history-path <previous-snapshot> --output-fixture-path <fixture-output>
 ```
 
-The command validates a local Currency Exchange snapshot, previews derived connector-fixture rows, and can write connector-fixture JSON only when `--output-fixture-path` is supplied. It does not run `wq import`, create SQLite snapshots, fetch live data, read OAuth credentials, write raw caches, or publish artifacts.
+The command validates a local Currency Exchange snapshot, previews derived connector-fixture rows, and can write connector-fixture JSON only when `--output-fixture-path` is supplied. Use `wq connector-fixture-export --fixture-path <fixture-output> --output-path <manual-import-output>` to convert the fixture into the normalized manual-import shape, then `wq validate-import --input-path <manual-import-output>` before any scoring import. It does not run `wq import`, create SQLite snapshots, fetch live data, read OAuth credentials, write raw caches, or publish artifacts.
 
 Each Currency Exchange manual snapshot has:
 
