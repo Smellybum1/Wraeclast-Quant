@@ -10,9 +10,12 @@ This is a planning handoff only. It does not request OAuth access, create or sto
 - Local raw fixture: `examples/pathofexile_currency_exchange_fixture.json`
 - Parser/normalizer proof: `wraeclast_quant.collectors.pathofexile_currency_exchange`
 - Preview signal policy: `examples/reviews/pathofexile_currency_exchange_signal_policy.md`
+- OAuth runtime design: `examples/reviews/pathofexile_currency_exchange_oauth_runtime_design.md`
+- Runtime ADR: `docs/adr/0003-currency-exchange-confidential-client-runtime.md`
 - Source approval status: approved for API planning in `RESOURCES.md`
+- Runtime preflight status: non-network settings and user-agent validation implemented
 - Live implementation status: still blocked
-- Reason: official Currency Exchange access requires `service:cxapi`, OAuth/app-registration handling, identifiable user-agent/contact configuration, dynamic rate-limit handling, cache/backoff behavior, credential storage outside the repo, and failure-closed live-network tests before live HTTP work.
+- Reason: official Currency Exchange access requires `service:cxapi`, OAuth/app-registration credentials outside the repo, token exchange, dynamic rate-limit handling, cache/backoff behavior, and failure-closed live-network tests before live HTTP work.
 
 ## Official Documentation To Review Before Approval
 
@@ -33,6 +36,8 @@ Still ask the user before doing any of these:
 - Adding any client id, client secret, token, redirect URI, contact email, or `.env` configuration.
 - Implementing live HTTP, token exchange, cache reads/writes, or snapshot creation from the API.
 
+Runtime design now recommends a confidential-client `client_credentials` service-token flow for `service:cxapi`. Public-client OAuth, browser-cookie reuse, and trade-site session reuse remain out of scope.
+
 ## Recommended App Registration Packet
 
 If the user approves pursuing official API access, keep the next packet non-code or config-only:
@@ -47,7 +52,7 @@ If the user approves pursuing official API access, keep the next packet non-code
 
 Only after source and auth approval:
 
-1. Add a dry-run connector path that prints the endpoint, realm, cache path, and required headers without network access.
+1. Add a read-only runtime-plan/report helper that prints source readiness, endpoint, realm, cache path, user-agent readiness, and secret-source blockers without network access.
 2. Reuse the existing raw fixture parser/normalizer proof for the documented hourly aggregate fields.
 3. Review and approve the preview signal-normalization policy before manual-import export, daily snapshot, or scoring use.
 4. Add cache-only and fixture tests before any live request code.

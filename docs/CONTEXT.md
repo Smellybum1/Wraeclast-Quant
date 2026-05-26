@@ -19,6 +19,8 @@ Source compliance covers `RESOURCES.md`, source review drafts, connector approva
 - Connector approval: a manual allowed-use change in `RESOURCES.md`, optionally previewed by helper commands. It is not automatic.
 - Auth approval: explicit permission for an authentication-required source review to proceed with local planning or dry-run implementation. It is not permission to commit secrets, store tokens, or make live requests.
 - Credential-storage review: confirmation that credentials/tokens for an auth-required source will be stored outside the repo and excluded from public artifacts, fixtures, logs intended for sharing, and committed files.
+- Confidential-client runtime: a future live-source runtime that uses source-approved application credentials outside the repo for a service-token flow. It is not browser-session reuse, trade-site login automation, or public-client OAuth.
+- Memory-only token: an access token held only for one command invocation and never written to the repo, fixtures, logs intended for sharing, public artifacts, or review notes.
 - Fetch plan: a local plan describing allowed method, rate/cache policy, future cache path, and blockers. A fetch plan is not live collection.
 
 ### Connector Proof Paths

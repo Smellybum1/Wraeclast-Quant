@@ -5,6 +5,11 @@ from pathlib import Path
 from wraeclast_quant.collectors.pathofexile_currency_exchange_fixture import (
     load_currency_exchange_connector_fixture,
 )
+from wraeclast_quant.collectors.pathofexile_currency_exchange_runtime import (
+    CurrencyExchangeRuntimePlan,
+    CurrencyExchangeRuntimeSettings,
+    preview_currency_exchange_runtime_plan,
+)
 from wraeclast_quant.collectors.source_connector_fixture import FixtureSourceConnector
 from wraeclast_quant.collectors.source_connector_models import ConnectorResult
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError, ConnectorReview
@@ -51,6 +56,18 @@ class OfficialCurrencyExchangeConnector(FixtureSourceConnector):
 
     def live_blockers(self) -> list[str]:
         return list(self._LIVE_BLOCKERS)
+
+    def preview_runtime_plan(
+        self,
+        settings: CurrencyExchangeRuntimeSettings,
+        *,
+        workspace_root: str | Path = Path.cwd(),
+    ) -> CurrencyExchangeRuntimePlan:
+        return preview_currency_exchange_runtime_plan(
+            settings,
+            self.fetch_plan,
+            workspace_root=workspace_root,
+        )
 
 
 __all__ = ["OfficialCurrencyExchangeConnector"]

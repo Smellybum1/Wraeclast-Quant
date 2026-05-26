@@ -476,6 +476,11 @@
 - ADR 0002 records the separated gates for source approval, auth approval, credential-storage review, and later live OAuth/runtime implementation.
 - Connector review reports now include authentication approval and credential-storage review fields for auth-required sources.
 - Loose public intel and static site artifacts refreshed after the official Currency Exchange API approval change; strict status and publish-check are green without rebuilding the site bundle.
+- Official Currency Exchange OAuth/runtime design recorded with a proposed confidential-client service-token ADR; it adds no secrets, token exchange, cache writes, or live HTTP.
+- Official Currency Exchange non-network runtime preflight models added for confidential-client settings, user-agent construction, secret-source validation, and failure-closed blockers.
+- Official Currency Exchange read-only runtime plan helper added to combine runtime preflight and fetch-plan details without network access.
+- Official Currency Exchange token-response preview and OAuth secret redaction helpers added without token exchange, secret storage, or live HTTP.
+- Official Currency Exchange token-request plan model added for the OAuth token endpoint, `client_credentials` grant, `service:cxapi` scope, user-agent readiness, and required form-field names without sending requests or reading secrets.
 
 ## Recommended Next Milestones
 
@@ -485,7 +490,7 @@
 - Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
 - Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.
 - Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
-- Review or commit the current official Currency Exchange planning/dry-run packet before starting live OAuth runtime work, because the remaining source work crosses auth, credential, cache, and external-service boundaries.
+- Ask before live OAuth code because the next step requires concrete credential handling, external account/application setup, and network behavior.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include CLI helper cleanup or public artifact contract cleanup.
