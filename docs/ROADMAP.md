@@ -534,6 +534,9 @@
 - Official Currency Exchange runtime preflight helpers split from runtime planning while preserving the stable runtime facade.
 - Official Currency Exchange token models, request-plan helper, and response-preview validation split behind the stable token facade.
 - Official Currency Exchange raw payload loading and connector fixture item rendering split behind the stable fixture facade.
+- Official Currency Exchange collector tests split by fixture, manual-snapshot, and storage-plan responsibilities while preserving facade imports and assertions.
+- Site-bundle writer tests split by happy path, validation failures, and derived-only safety assertions.
+- Public-intel outcome summary and review-coverage privacy tests split from run-history and score-trend tests.
 
 ## Recommended Next Milestones
 
