@@ -541,6 +541,13 @@
 - Migration-readiness JSON payload contract test split from migration readiness behavior tests with shared backup fixture setup.
 - Preflight policy tests split by approved-source eligibility, blocked/gated policy, and summary-count responsibilities.
 - Connector-review draft tests split by resource resolution, validation failures, and conservative default readiness behavior.
+- Database backup service tests split by backup creation, backup verification, and validation/error responsibilities.
+- Site-contract tests split by ready payload, publish-readiness blockers, and derived-only safety responsibilities.
+- Connector-review readiness example-file coverage split from generic eligible-resource readiness policy tests.
+- CLI connector-check draft validation split from invalid review and missing-evidence validation coverage.
+- Currency Exchange manual snapshot bridge tests split by fixture-run, manual-import export, and daily-pipeline proof paths.
+- Connector dry-run CLI tests split by generic dry-run policy and source-specific connector display coverage.
+- Storage outcome review tests split from recommendation outcome persistence and summary-count tests.
 
 ## Recommended Next Milestones
 
