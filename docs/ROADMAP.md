@@ -521,6 +521,7 @@
 - Official Currency Exchange rolling-baseline index and freshness helpers split from diagnostics orchestration while preserving the stable preview facade.
 - Market brief rendering and health tests split by responsibility with shared synthetic opportunity helpers.
 - Official Currency Exchange rolling-baseline freshness warning tests moved into a focused module separate from baseline-history diagnostics.
+- Official Currency Exchange rolling-baseline history-gate tests moved into a focused module separate from composition and thin-market diagnostics.
 - Connector policy source-review gate tests split from broader resource/access-method policy tests.
 - Connector approval patch safety tests split from normal patch availability/no-patch policy tests.
 - Official Currency Exchange connector-review readiness fixture tests split from generic connector readiness examples.
