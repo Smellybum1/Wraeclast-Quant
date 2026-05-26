@@ -583,6 +583,7 @@
 - Official Currency Exchange secret redaction test split from client-secret loading tests.
 - Daily CLI public-intel/static-site artifact tests split from core daily run tests.
 - Source connector read-only runtime-plan coverage split from generic resource/fetch-plan policy tests.
+- Official Currency Exchange token-response preview tests split from token-request plan tests.
 
 ## Recommended Next Milestones
 
