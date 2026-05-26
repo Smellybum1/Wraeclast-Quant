@@ -1,0 +1,70 @@
+import sqlite3
+from pathlib import Path
+
+from wraeclast_quant.storage.migrations import check_migration_readiness
+from wraeclast_quant.storage.repositories import SnapshotRepository
+
+from database_migration_helpers import write_database_with_backup as _write_database_with_backup
+
+
+def test_migration_readiness_missing_database_is_non_mutating(tmp_path: Path) -> None:
+    database_path = tmp_path / "missing" / "snapshots.db"
+    backup_dir = tmp_path / "backups"
+
+    result = check_migration_readiness(database_path=database_path, backup_dir=backup_dir)
+
+    assert result.ready is False
+    assert any("No database found" in blocker for blocker in result.blockers)
+    assert not database_path.exists()
+    assert not database_path.parent.exists()
+    assert not backup_dir.exists()
+
+
+def test_migration_readiness_missing_backup_reports_blocker(tmp_path: Path) -> None:
+    database_path = tmp_path / "snapshots.db"
+    backup_dir = tmp_path / "missing_backups"
+    SnapshotRepository(database_path).create_analysis_run(
+        source_mode="sample-data",
+        item_count=1,
+    )
+
+    result = check_migration_readiness(database_path=database_path, backup_dir=backup_dir)
+
+    assert result.ready is False
+    assert any("No local SQLite backups found" in blocker for blocker in result.blockers)
+    assert not backup_dir.exists()
+
+
+def test_migration_readiness_stale_backup_reports_blocker(tmp_path: Path) -> None:
+    database_path, backup_dir, run_id = _write_database_with_backup(tmp_path)
+    SnapshotRepository(database_path).create_analysis_run(
+        source_mode="manual-import",
+        item_count=1,
+    )
+
+    result = check_migration_readiness(database_path=database_path, backup_dir=backup_dir)
+
+    assert result.ready is False
+    assert result.latest_database_run_id == run_id + 1
+    assert result.latest_backup_run_id == run_id
+    assert any(
+        "latest database run #2, latest backup run #1" in blocker
+        for blocker in result.blockers
+    )
+
+
+def test_migration_readiness_invalid_backup_reports_blocker(tmp_path: Path) -> None:
+    database_path = tmp_path / "snapshots.db"
+    backup_dir = tmp_path / "backups"
+    backup_dir.mkdir()
+    SnapshotRepository(database_path).create_analysis_run(
+        source_mode="sample-data",
+        item_count=1,
+    )
+    with sqlite3.connect(backup_dir / "invalid.db") as connection:
+        connection.execute("CREATE TABLE unrelated (id INTEGER PRIMARY KEY)")
+
+    result = check_migration_readiness(database_path=database_path, backup_dir=backup_dir)
+
+    assert result.ready is False
+    assert any("missing required tables" in blocker for blocker in result.blockers)

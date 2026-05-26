@@ -578,6 +578,7 @@
 - Public-intel JSON write/read coverage split from payload assembly tests.
 - Storage unreviewed-opportunity query tests split from review-coverage summary tests.
 - Resource Markdown parser and type-inference tests split from user-owned `RESOURCES.md` inventory tests.
+- Migration-readiness blocker tests split from ready-path migration health tests.
 
 ## Recommended Next Milestones
 
