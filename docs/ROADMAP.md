@@ -481,6 +481,14 @@
 - Official Currency Exchange read-only runtime plan helper added to combine runtime preflight and fetch-plan details without network access.
 - Official Currency Exchange token-response preview and OAuth secret redaction helpers added without token exchange, secret storage, or live HTTP.
 - Official Currency Exchange token-request plan model added for the OAuth token endpoint, `client_credentials` grant, `service:cxapi` scope, user-agent readiness, and required form-field names without sending requests or reading secrets.
+- Official Currency Exchange client-secret loader added for explicit environment variables or out-of-workspace files, with redacted metadata and failure-closed validation.
+- Official Currency Exchange OAuth application request draft added for user review/editing before any request is sent to GGG.
+- Official Currency Exchange OAuth/live API path parked by user decision; continue without OAuth access using local fixtures, manual imports, and derived-only review workflows.
+- Official Currency Exchange manual snapshot template and converter added so user-provided hourly observations can feed preview diagnostics without OAuth or live HTTP.
+- Local `wq currency-exchange-manual-snapshot` command added to validate manual Currency Exchange snapshots and optionally write connector-fixture JSON from local history.
+- Local official Currency Exchange manual snapshot command documented in the README, connector policy, and manual import contract; public command help coverage now includes the command.
+- Official Currency Exchange manual snapshot field contract documented and checked against the template/model so local observations stay easy to prepare without OAuth.
+- Local official Currency Exchange manual snapshot output covered through the existing connector-fixture runner, proving the exported fixture stays compatible with the no-network connector workflow.
 
 ## Recommended Next Milestones
 
@@ -490,7 +498,8 @@
 - Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
 - Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.
 - Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
-- Ask before live OAuth code because the next step requires concrete credential handling, external account/application setup, and network behavior.
+- Do not pursue GGG OAuth access or live official Currency Exchange HTTP for now; focus on non-OAuth manual/fixture workflows and local decision-support.
+- Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local manual observations; add `--history-path` and `--output-fixture-path` when creating a local preview connector fixture.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include CLI helper cleanup or public artifact contract cleanup.

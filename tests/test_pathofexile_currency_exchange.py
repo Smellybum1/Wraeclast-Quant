@@ -7,9 +7,12 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange import (
     CurrencyExchangeRuntimeSettings,
     CurrencyExchangeSecretSource,
     currency_exchange_market_item,
+    currency_exchange_payload_from_manual_snapshot,
     currency_exchange_runtime_settings_from_env,
     currency_exchange_user_agent,
+    load_currency_exchange_client_secret,
     load_currency_exchange_connector_fixture,
+    load_currency_exchange_manual_snapshot,
     load_currency_exchange_payload,
     preview_currency_exchange_opportunity_inputs,
     preview_currency_exchange_rolling_baseline_diagnostics,
@@ -37,6 +40,41 @@ def _fetch_plan_for_runtime_test(cache_path: Path) -> FetchPlan:
         min_seconds_between_requests=10,
         cache_path=cache_path,
     )
+
+
+def test_currency_exchange_manual_snapshot_template_converts_to_payload() -> None:
+    payload = load_currency_exchange_manual_snapshot(
+        "examples/pathofexile_currency_exchange_manual_snapshot_template.json"
+    )
+
+    assert payload.next_change_id == 1770000000
+    assert [market.market_id for market in payload.markets] == [
+        "chaos|divine",
+        "exalted|divine",
+    ]
+    assert payload.markets[0].volume_traded == {"chaos": 98200, "divine": 812}
+    assert payload.markets[0].highest_ratio == {"chaos": 124, "divine": 1}
+
+
+def test_currency_exchange_manual_snapshot_can_feed_preview_diagnostics() -> None:
+    baseline = load_currency_exchange_payload("examples/pathofexile_currency_exchange_fixture.json")
+    payload = load_currency_exchange_manual_snapshot(
+        "examples/pathofexile_currency_exchange_manual_snapshot_template.json"
+    )
+
+    diagnostics = preview_currency_exchange_rolling_baseline_diagnostics(payload, [baseline])
+
+    assert diagnostics["chaos|divine"].confidence == "preview"
+    assert diagnostics["chaos|divine"].observations == 1
+    assert diagnostics["exalted|divine"].confidence == "preview"
+
+
+def test_currency_exchange_manual_snapshot_rejects_invalid_shape(tmp_path: Path) -> None:
+    snapshot_path = tmp_path / "manual_snapshot.json"
+    snapshot_path.write_text('{"markets": []}', encoding="utf-8")
+
+    with pytest.raises(ConnectorPolicyError, match="manual snapshot"):
+        load_currency_exchange_manual_snapshot(snapshot_path)
 
 
 def test_currency_exchange_fixture_loads_documented_payload_shape() -> None:
@@ -348,6 +386,78 @@ def test_currency_exchange_token_request_plan_reuses_preflight_blockers(
         "app_version is required.",
         "user-agent contact is required.",
         "client secret source is required.",
+    )
+
+
+def test_currency_exchange_client_secret_loads_from_env_without_repr_leak(
+    tmp_path: Path,
+) -> None:
+    result = load_currency_exchange_client_secret(
+        CurrencyExchangeSecretSource("env", "WQ_POE_CLIENT_SECRET"),
+        env={"WQ_POE_CLIENT_SECRET": "super-secret-value"},
+        workspace_root=tmp_path,
+    )
+
+    assert result.ready is True
+    assert result.secret is not None
+    assert result.secret.value == "super-secret-value"
+    assert result.source_description == "env:WQ_POE_CLIENT_SECRET"
+    assert "super-secret-value" not in repr(result.secret)
+    assert "super-secret-value" not in repr(result)
+
+
+def test_currency_exchange_client_secret_env_fails_closed_when_missing(
+    tmp_path: Path,
+) -> None:
+    result = load_currency_exchange_client_secret(
+        CurrencyExchangeSecretSource("env", "WQ_POE_CLIENT_SECRET"),
+        env={},
+        workspace_root=tmp_path,
+    )
+
+    assert result.ready is False
+    assert result.secret is None
+    assert result.blockers == ("client secret environment variable is empty or missing.",)
+
+
+def test_currency_exchange_client_secret_loads_from_out_of_workspace_file(
+    tmp_path: Path,
+) -> None:
+    workspace = tmp_path / "workspace"
+    workspace.mkdir()
+    secret_file = tmp_path / "poe-secret.txt"
+    secret_file.write_text("file-secret-value\n", encoding="utf-8")
+
+    result = load_currency_exchange_client_secret(
+        CurrencyExchangeSecretSource("file", str(secret_file)),
+        env={},
+        workspace_root=workspace,
+    )
+
+    assert result.ready is True
+    assert result.secret is not None
+    assert result.secret.value == "file-secret-value"
+    assert result.source_description == "file"
+    assert str(secret_file) not in repr(result)
+    assert "file-secret-value" not in repr(result)
+
+
+def test_currency_exchange_client_secret_rejects_workspace_file_before_reading(
+    tmp_path: Path,
+) -> None:
+    secret_file = tmp_path / "poe-secret.txt"
+    secret_file.write_text("file-secret-value\n", encoding="utf-8")
+
+    result = load_currency_exchange_client_secret(
+        CurrencyExchangeSecretSource("file", str(secret_file)),
+        env={},
+        workspace_root=tmp_path,
+    )
+
+    assert result.ready is False
+    assert result.secret is None
+    assert result.blockers == (
+        "client secret file must be outside the repository workspace.",
     )
 
 

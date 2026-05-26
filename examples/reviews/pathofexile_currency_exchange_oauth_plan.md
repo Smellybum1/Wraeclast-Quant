@@ -11,11 +11,12 @@ This is a planning handoff only. It does not request OAuth access, create or sto
 - Parser/normalizer proof: `wraeclast_quant.collectors.pathofexile_currency_exchange`
 - Preview signal policy: `examples/reviews/pathofexile_currency_exchange_signal_policy.md`
 - OAuth runtime design: `examples/reviews/pathofexile_currency_exchange_oauth_runtime_design.md`
+- OAuth application request draft: `examples/reviews/pathofexile_currency_exchange_oauth_request_draft.md`
 - Runtime ADR: `docs/adr/0003-currency-exchange-confidential-client-runtime.md`
 - Source approval status: approved for API planning in `RESOURCES.md`
 - Runtime preflight status: non-network settings and user-agent validation implemented
-- Live implementation status: still blocked
-- Reason: official Currency Exchange access requires `service:cxapi`, OAuth/app-registration credentials outside the repo, token exchange, dynamic rate-limit handling, cache/backoff behavior, and failure-closed live-network tests before live HTTP work.
+- Live implementation status: parked by user decision
+- Reason: the project will proceed without OAuth access for now and focus on local/manual/fixture workflows.
 
 ## Official Documentation To Review Before Approval
 
@@ -29,7 +30,7 @@ Completed:
 
 - `official_currency_exchange_api` is approved as `allowed_use: api` in `RESOURCES.md`.
 
-Still ask the user before doing any of these:
+Do not do these unless the user explicitly reopens OAuth work:
 
 - Requesting or using Path of Exile OAuth application access.
 - Choosing public-client versus confidential-client handling.
@@ -47,6 +48,8 @@ If the user approves pursuing official API access, keep the next packet non-code
 3. Confirm whether the user wants to request only `service:cxapi`.
 4. Record the approved scope, redirect URI approach, and secret-storage boundary in a local handoff note.
 5. Do not store tokens or credentials in the repo.
+
+`examples/reviews/pathofexile_currency_exchange_oauth_request_draft.md` is retained as a parked reference only. The current project direction is to continue without sending it.
 
 ## Recommended Implementation Packet After Approval
 

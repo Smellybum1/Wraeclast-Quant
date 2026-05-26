@@ -44,6 +44,7 @@ Open `data/processed/site/index.html` after `wq site` or `wq daily` to view the 
 - `wq connector-fixture-export --review-path <file> --fixture-path <file> --output-path <file>` writes manual-import-compatible JSON from a local fixture with normalized signals.
 - `wq connector-fixture-daily --review-path <file> --fixture-path <file>` runs the full local pipeline from a normalized-signal fixture without network access.
 - `wq connector-plan --review-path <file>` previews a local cache/rate-limit plan for a ready connector review without fetching.
+- `wq currency-exchange-manual-snapshot --input-path <file>` validates a local official Currency Exchange manual snapshot and can write connector-fixture JSON when given `--history-path` and `--output-fixture-path`.
 - `wq analyze --sample-data` scores sample items and records one SQLite run.
 - `wq import --input-path <file>` scores a local JSON or CSV signal file and records one manual-import run.
 - `wq validate-import --input-path <file>` checks a local JSON or CSV signal file without recording a run.
@@ -167,6 +168,8 @@ Use `wq connector-fixture-export --review-path <file> --fixture-path <file> --ou
 Use `wq connector-fixture-daily --review-path <file> --fixture-path <file>` to run the existing local daily pipeline directly from a normalized-signal fixture. It creates one SQLite run with `source_mode="connector-fixture"`, writes the market brief, public intel JSON, and static dashboard, and previews local alert candidates without any network access.
 
 After a review passes, use `wq connector-plan --review-path <file>` to preview the local cache path, cache TTL, and request spacing a future connector would use. This command is read-only and performs no network requests.
+
+Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local official Currency Exchange observations. Add `--history-path <previous-snapshot>` to preview rolling-baseline diagnostics from a prior local observation, and add `--output-fixture-path <file>` to write connector-fixture JSON for local review. This path does not use OAuth, read credentials, call live HTTP, create raw caches, write snapshots, or publish artifacts.
 
 ## Safety Boundary
 

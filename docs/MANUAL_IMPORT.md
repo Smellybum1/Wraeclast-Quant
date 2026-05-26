@@ -82,6 +82,40 @@ Starter templates:
 
 Use `wq validate-import --input-path <file>` before persisting a new manual snapshot.
 
+## Currency Exchange Manual Snapshots
+
+Official Currency Exchange manual snapshots are a source-specific local intake path, not the normalized manual-import format above. Use this path when OAuth/live API access is parked and the user supplies local hourly observations:
+
+```powershell
+wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json
+wq currency-exchange-manual-snapshot --input-path <current-snapshot> --history-path <previous-snapshot> --output-fixture-path <fixture-output>
+```
+
+The command validates a local Currency Exchange snapshot, previews derived connector-fixture rows, and can write connector-fixture JSON only when `--output-fixture-path` is supplied. It does not run `wq import`, create SQLite snapshots, fetch live data, read OAuth credentials, write raw caches, or publish artifacts.
+
+Each Currency Exchange manual snapshot has:
+
+- `next_change_id`
+- `markets`
+
+Each Currency Exchange manual market has:
+
+- `league`
+- `left_currency`
+- `right_currency`
+- `left_volume_traded`
+- `right_volume_traded`
+- `left_lowest_stock`
+- `right_lowest_stock`
+- `left_highest_stock`
+- `right_highest_stock`
+- `left_lowest_ratio`
+- `right_lowest_ratio`
+- `left_highest_ratio`
+- `right_highest_ratio`
+
+Currency names are normalized to lowercase underscore codes before fixture conversion, so either `divine` or `Divine Orb` can be used in local manual observations.
+
 ## Safety Notes
 
 Manual import files remain user-owned local inputs. Wraeclast Quant does not rewrite, move, normalize in place, or delete them.

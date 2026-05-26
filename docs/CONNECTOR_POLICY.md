@@ -64,6 +64,8 @@ Use `wq connector-fixture-export --review-path <file> --fixture-path <file> --ou
 
 Use `wq connector-fixture-daily --review-path <file> --fixture-path <file>` to prove that a fixture-backed connector shape can drive the full local pipeline. The command requires a ready review and normalized fixture signals, creates a local `connector-fixture` snapshot run, and writes local derived artifacts only. It is not live collection approval.
 
+Use `wq currency-exchange-manual-snapshot --input-path <file>` for user-supplied official Currency Exchange observations when OAuth or live HTTP is unavailable or intentionally parked. The command reads only local manual snapshot JSON, validates the Currency Exchange shape, and optionally writes connector-fixture JSON when `--output-fixture-path` is supplied. It does not approve live collection, reuse browser sessions, read credentials, exchange tokens, fetch from the trade site or API, create raw caches, write database snapshots, or publish artifacts.
+
 Use `wq connector-check --review-path <file>` with a machine-readable review based on `examples/connector_review_template.json`, `examples/connector_review_api_example.json`, `examples/connector_review_rss_example.json`, or `examples/connector_review_download_example.json` before implementation planning. A passing connector check is still a readiness gate only; it does not approve live collection by itself.
 
 Use `wq connector-plan --review-path <file>` after a review passes to preview the local cache path, cache TTL, rate limit, and minimum request interval for a future connector. This planning step is read-only and performs no network requests.

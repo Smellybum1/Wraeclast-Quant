@@ -20,6 +20,27 @@ class CurrencyExchangePayload(BaseModel):
     markets: list[CurrencyExchangeMarket]
 
 
+class CurrencyExchangeManualMarket(BaseModel):
+    league: str
+    left_currency: str
+    right_currency: str
+    left_volume_traded: int
+    right_volume_traded: int
+    left_lowest_stock: int
+    right_lowest_stock: int
+    left_highest_stock: int
+    right_highest_stock: int
+    left_lowest_ratio: int
+    right_lowest_ratio: int
+    left_highest_ratio: int
+    right_highest_ratio: int
+
+
+class CurrencyExchangeManualSnapshot(BaseModel):
+    next_change_id: int
+    markets: list[CurrencyExchangeManualMarket]
+
+
 @dataclass(frozen=True)
 class CurrencyExchangeMarketObservation:
     league: str
@@ -47,6 +68,8 @@ class CurrencyExchangeBaselineDiagnostics:
 
 __all__ = [
     "CurrencyExchangeBaselineDiagnostics",
+    "CurrencyExchangeManualMarket",
+    "CurrencyExchangeManualSnapshot",
     "CurrencyExchangeMarket",
     "CurrencyExchangeMarketObservation",
     "CurrencyExchangePayload",

@@ -173,6 +173,22 @@ The next safe code packet added redaction helpers and token-response shape model
 
 The next safe code packet added a token-request plan model that records the token endpoint, grant type, scope, client id, user-agent readiness, and required form-field names without sending a request or reading a secret.
 
-## Next Implementation Packet
+## Completed Secret Loader Packet
 
-The next implementation packet would cross into live token exchange or live HTTP design. Ask the user before proceeding because it requires concrete credential handling, external account/application setup, and network behavior.
+The next safe code packet added a redaction-safe client-secret loader for explicit environment variables or out-of-workspace files. It fails closed for missing, empty, unreadable, or repo-local secret sources and does not expose file paths or secret values in display metadata.
+
+## Parked OAuth Path
+
+The user chose to continue without OAuth access for now. Do not implement live token exchange, live HTTP, credential prompts, token storage, or cache writes unless the user explicitly reopens OAuth work.
+
+## Next Non-OAuth Packet
+
+Improve local/manual Currency Exchange intake so user-provided or fixture-like hourly snapshots can feed preview diagnostics without live source access.
+
+## Completed Manual Snapshot Packet
+
+A local manual snapshot template and converter now allow user-provided Currency Exchange observations to feed the existing preview diagnostics without OAuth, live HTTP, token exchange, credential storage, or cache writes.
+
+## Completed Manual Snapshot CLI Packet
+
+`wq currency-exchange-manual-snapshot` validates local manual Currency Exchange snapshots and can write a local connector-fixture JSON when a local history snapshot is supplied. It does not call live APIs, read credentials, write raw caches, create database snapshots, or publish artifacts.
