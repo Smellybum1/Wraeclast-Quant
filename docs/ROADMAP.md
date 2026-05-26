@@ -617,6 +617,7 @@
 - Storage outcome-review summary grouping test split from review row listing and limit tests.
 - Currency Exchange baseline diagnostic builder logic split behind the existing diagnostics facade.
 - Connector-fixture daily public artifact assertions split from core connector-fixture daily run tests.
+- Connector fixture payload test helpers split behind the existing connector policy helper facade.
 
 ## Later Intelligence Improvements
 
