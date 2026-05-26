@@ -5,7 +5,7 @@ from wraeclast_quant.config.connector_policy import (
     load_connector_review,
 )
 from wraeclast_quant.config.fetch_policy import build_fetch_plan
-from wraeclast_quant.config.resources_loader import Resource, load_resources
+from wraeclast_quant.config.resources_loader import Resource
 
 from connector_policy_helpers import connector_review as _review
 
@@ -104,31 +104,3 @@ def test_example_connector_review_files_are_ready_for_matching_resources() -> No
         assert check.blockers == []
         assert plan.plan is not None
         assert plan.plan.access_method == access_method
-
-
-def test_official_currency_exchange_review_requires_resource_match() -> None:
-    review = load_connector_review(
-        Path("examples/reviews/pathofexile_currency_exchange_connector_review.json")
-    )
-    result = check_connector_review(review, [])
-    plan = build_fetch_plan(review, [])
-
-    assert result.ready is False
-    assert "No matching resource found in RESOURCES.md." in result.blockers
-    assert plan.plan is None
-
-
-def test_official_currency_exchange_review_passes_after_source_and_auth_approval() -> None:
-    review = load_connector_review(
-        Path("examples/reviews/pathofexile_currency_exchange_connector_review.json")
-    )
-    resources = load_resources(Path("RESOURCES.md"))
-    result = check_connector_review(review, resources)
-    plan = build_fetch_plan(review, resources)
-
-    assert result.ready is True
-    assert result.blockers == []
-    assert result.preflight is not None
-    assert result.preflight.status == "approved-api"
-    assert plan.plan is not None
-    assert plan.plan.cache_ttl_seconds == 3600

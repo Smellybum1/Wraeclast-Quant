@@ -523,6 +523,7 @@
 - Official Currency Exchange rolling-baseline freshness warning tests moved into a focused module separate from baseline-history diagnostics.
 - Connector policy source-review gate tests split from broader resource/access-method policy tests.
 - Connector approval patch safety tests split from normal patch availability/no-patch policy tests.
+- Official Currency Exchange connector-review readiness fixture tests split from generic connector readiness examples.
 
 ## Recommended Next Milestones
 
