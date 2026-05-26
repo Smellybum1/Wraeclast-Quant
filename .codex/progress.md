@@ -791,3 +791,5 @@
 - Committed packet: `1c0a351 Split storage missing database tests`.
 - Completed packet: moved resource compliance metadata parser coverage from `tests/test_compliance.py` into `tests/test_resources_parser.py`, leaving compliance policy tests focused on assessment statuses and ordering.
 - Verification: bundled Python focused tests `tests/test_compliance.py tests/test_resources_parser.py tests/test_resources_loader.py tests/test_resources_loader_contract.py tests/test_cli_compliance.py tests/test_preflight_policy.py tests/test_preflight_approved_sources.py tests/test_cli_preflight.py --basetemp=.tmp-pytest-compliance-parser -p no:cacheprovider` passed with 24 tests.
+- Full-suite checkpoint: bundled Python `pytest --basetemp=.tmp-pytest-full-maintainability -p no:cacheprovider` passed with 516 tests after the recent test-locality packets.
+- Health checkpoint: loose public-intel/static-site artifacts were stale after the full suite, then bundled Python CLI `export` and `site` refreshed them; `status --strict`, `publish-check`, and `git diff --check` passed.
