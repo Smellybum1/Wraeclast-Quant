@@ -15,13 +15,18 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_secrets import (
     secret_source_blockers,
     secret_source_from_env,
 )
+from wraeclast_quant.collectors.pathofexile_currency_exchange_tokens import (
+    CurrencyExchangeTokenRequestPlan,
+    CurrencyExchangeTokenResponsePreview,
+    currency_exchange_token_request_plan,
+    preview_currency_exchange_token_response,
+)
 from wraeclast_quant.config.fetch_policy_models import FetchPlan
 
 
 DEFAULT_REALM = "poe2"
 DEFAULT_SCOPE = "service:cxapi"
 DEFAULT_REQUEST_BUDGET = 1
-TOKEN_ENDPOINT_URL = "https://www.pathofexile.com/oauth/token"
 
 
 @dataclass(frozen=True)
@@ -52,28 +57,6 @@ class CurrencyExchangeRuntimePlan:
     cache_path: Path
     request_budget: int
     user_agent: str | None
-    ready: bool
-    blockers: tuple[str, ...]
-
-
-@dataclass(frozen=True)
-class CurrencyExchangeTokenResponsePreview:
-    ready: bool
-    token_type: str | None
-    scope: str | None
-    expires_in: int | None
-    access_token_present: bool
-    blockers: tuple[str, ...]
-
-
-@dataclass(frozen=True)
-class CurrencyExchangeTokenRequestPlan:
-    token_url: str
-    grant_type: str
-    scope: str
-    client_id: str
-    user_agent: str | None
-    form_fields: tuple[str, ...]
     ready: bool
     blockers: tuple[str, ...]
 
@@ -148,31 +131,6 @@ def currency_exchange_user_agent(settings: CurrencyExchangeRuntimeSettings) -> s
     )
 
 
-def preview_currency_exchange_token_response(
-    payload: Mapping[str, object],
-    *,
-    expected_scope: str = DEFAULT_SCOPE,
-) -> CurrencyExchangeTokenResponsePreview:
-    token_type = _optional_str(payload.get("token_type"))
-    scope = _optional_str(payload.get("scope"))
-    expires_in = _optional_int(payload.get("expires_in"))
-    access_token_present = bool(_optional_str(payload.get("access_token")))
-    blockers = _token_response_blockers(
-        access_token_present=access_token_present,
-        token_type=token_type,
-        scope=scope,
-        expected_scope=expected_scope,
-    )
-    return CurrencyExchangeTokenResponsePreview(
-        ready=not blockers,
-        token_type=token_type,
-        scope=scope,
-        expires_in=expires_in,
-        access_token_present=access_token_present,
-        blockers=tuple(blockers),
-    )
-
-
 def preview_currency_exchange_token_request_plan(
     settings: CurrencyExchangeRuntimeSettings,
     *,
@@ -182,13 +140,10 @@ def preview_currency_exchange_token_request_plan(
         settings,
         workspace_root=workspace_root,
     )
-    return CurrencyExchangeTokenRequestPlan(
-        token_url=TOKEN_ENDPOINT_URL,
-        grant_type="client_credentials",
+    return currency_exchange_token_request_plan(
         scope=settings.scope,
         client_id=settings.client_id.strip(),
         user_agent=preflight.user_agent,
-        form_fields=("client_id", "client_secret", "grant_type", "scope"),
         ready=preflight.ready,
         blockers=preflight.blockers,
     )
@@ -213,35 +168,6 @@ def _runtime_blockers(
         blockers.append("request_budget must be at least 1.")
     blockers.extend(secret_source_blockers(settings.secret_source, workspace_root))
     return blockers
-
-
-def _token_response_blockers(
-    *,
-    access_token_present: bool,
-    token_type: str | None,
-    scope: str | None,
-    expected_scope: str,
-) -> list[str]:
-    blockers: list[str] = []
-    if not access_token_present:
-        blockers.append("access token is missing.")
-    if (token_type or "").lower() != "bearer":
-        blockers.append("token_type must be bearer.")
-    if scope != expected_scope:
-        blockers.append("token scope must be service:cxapi.")
-    return blockers
-
-
-def _optional_str(value: object) -> str | None:
-    if isinstance(value, str) and value.strip():
-        return value.strip()
-    return None
-
-
-def _optional_int(value: object) -> int | None:
-    if isinstance(value, int):
-        return value
-    return None
 
 
 __all__ = [
