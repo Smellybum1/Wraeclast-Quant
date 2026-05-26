@@ -418,6 +418,7 @@
 - Local connector fixture runner for synthetic output-shape validation before live connector work.
 - Connector approval command table construction split from safety-message rendering behind the stable approval renderer.
 - Connector fixture service split into focused models, JSON loading, readiness-gated run, and signal export helpers behind the stable fixture facade.
+- Connector fixture tests split by loader validation, runner behavior, and signal export while preserving fixture service behavior.
 - CLI connector approval-helper, review-report, and approval-patch command tests moved into a focused connector approval test module without changing assertions.
 - CLI connector approval-helper validation test moved into a focused connector approval validation CLI test module without changing assertions.
 - CLI connector approval-helper read-only test moved into a focused connector approval read-only CLI test module without changing assertions.
