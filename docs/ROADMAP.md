@@ -616,6 +616,7 @@
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; recent full-suite and health checkpoint passed after the latest test-locality packets.
 - Storage outcome-review summary grouping test split from review row listing and limit tests.
 - Currency Exchange baseline diagnostic builder logic split behind the existing diagnostics facade.
+- Connector-fixture daily public artifact assertions split from core connector-fixture daily run tests.
 
 ## Later Intelligence Improvements
 
