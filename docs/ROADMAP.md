@@ -584,6 +584,7 @@
 - Daily CLI public-intel/static-site artifact tests split from core daily run tests.
 - Source connector read-only runtime-plan coverage split from generic resource/fetch-plan policy tests.
 - Official Currency Exchange token-response preview tests split from token-request plan tests.
+- Status JSON strict-failure CLI test split from normal machine-readable row-shape test.
 
 ## Recommended Next Milestones
 
