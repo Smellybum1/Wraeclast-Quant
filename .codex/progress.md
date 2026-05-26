@@ -554,3 +554,5 @@
 - Verification: `git diff --check` passed with normal LF-to-CRLF warnings; `status --strict` passed; `publish-check` passed.
 - Completed packet: extracted Currency Exchange manual snapshot CLI argument construction into a focused test helper while preserving command coverage and behavior.
 - Verification: bundled Python focused tests `tests/test_cli_currency_exchange_manual_snapshot.py tests/test_cli_helper_facades.py --basetemp=.tmp-pytest-cx-manual-helper-split -p no:cacheprovider` passed with 7 tests; `git diff --check` passed with normal LF-to-CRLF warnings; `status --strict` passed; `publish-check` passed.
+- Completed packet: split Currency Exchange manual snapshot workflow helpers from the Typer registration/rendering module while preserving command name, options, output, errors, and local-only behavior.
+- Verification: bundled Python focused tests `tests/test_cli_currency_exchange_manual_snapshot.py --basetemp=.tmp-pytest-cx-manual-workflow-split -p no:cacheprovider` passed with 6 tests; workflow helper import smoke passed; `git diff --check` passed with normal LF-to-CRLF warnings; `status --strict` passed; `publish-check` passed.
