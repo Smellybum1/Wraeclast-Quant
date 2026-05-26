@@ -589,6 +589,7 @@
 - Storage missing-database read-only contract test split from snapshot write/query behavior tests.
 - Resource compliance metadata parser test moved from compliance policy tests into parser coverage.
 - Fetch-plan cache-path safety test split from general fetch-plan readiness tests.
+- Connector-candidate access-method mapping test split from ranking and source-compliance policy tests.
 
 ## Recommended Next Milestones
 
