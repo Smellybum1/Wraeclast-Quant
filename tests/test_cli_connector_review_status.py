@@ -83,20 +83,3 @@ def test_connector_review_status_marks_missing_claimed_evidence_blocked(tmp_path
     assert "Source terms URL" in result.output
     assert "blocked" in result.output
     assert "source_terms_url is required" in result.output
-
-
-def test_connector_review_status_escapes_endpoint_brackets() -> None:
-    result = runner.invoke(
-        app,
-        [
-            "connector-review-status",
-            "--review-path",
-            "examples/reviews/pathofexile_currency_exchange_connector_review.json",
-        ],
-    )
-
-    assert result.exit_code == 0
-    assert "Connector Review Status" in result.output
-    assert "Path of Exile Currency Exchange API" in result.output
-    assert "Authentication approved" in result.output
-    assert "Credential storage reviewed" in result.output

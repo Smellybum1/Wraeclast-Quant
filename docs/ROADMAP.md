@@ -599,6 +599,7 @@
 - Currency Exchange direct baseline diagnostic freshness-warning test split from history and missing-history diagnostics.
 - Currency Exchange preview signal-item metadata test split from opportunity-input mapping tests.
 - Status JSON stale site-bundle artifact test split from loose public-intel/static-site artifact tests.
+- Connector-review-status CLI rendering smoke test split from blocker and missing-evidence behavior tests.
 
 ## Recommended Next Milestones
 
