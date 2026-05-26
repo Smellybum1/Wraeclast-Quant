@@ -752,3 +752,6 @@
 - Committed packet: `0f6f020 Split calibration report IO tests`.
 - Completed packet: split alert rule setting override and validation coverage into `tests/test_alert_settings.py`, leaving core alert-generation scenarios in `tests/test_alerts.py`.
 - Verification: bundled Python focused tests `tests/test_alerts.py tests/test_alert_settings.py tests/test_alert_contract.py tests/test_cli_alerts.py tests/test_public_intel.py tests/test_static_site.py --basetemp=.tmp-pytest-alert-settings -p no:cacheprovider` passed with 25 tests.
+- Committed packet: `a053816 Split alert settings tests`.
+- Completed packet: split public-intel JSON write/read coverage into `tests/test_public_intel_io.py`, leaving latest-run, opportunity, delta, alert, and empty-snapshot payload assembly tests in `tests/test_public_intel.py`.
+- Verification: bundled Python focused tests `tests/test_public_intel.py tests/test_public_intel_io.py tests/test_public_intel_contract.py tests/test_public_intel_file_contract.py tests/test_public_intel_file_validation.py tests/test_public_intel_safety.py tests/test_static_site.py tests/test_publish_check.py --basetemp=.tmp-pytest-public-intel-io -p no:cacheprovider` passed with 28 tests after restoring the `Path` type import in the payload test module.

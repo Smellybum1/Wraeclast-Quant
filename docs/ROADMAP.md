@@ -575,6 +575,7 @@
 - Database-health invalid-schema and directory-path validation tests split from healthy summary behavior tests.
 - Calibration report file-write coverage split from report rendering and grouping tests.
 - Alert rule setting override and validation tests split from core alert-generation behavior tests.
+- Public-intel JSON write/read coverage split from payload assembly tests.
 
 ## Recommended Next Milestones
 
