@@ -585,6 +585,7 @@
 - Source connector read-only runtime-plan coverage split from generic resource/fetch-plan policy tests.
 - Official Currency Exchange token-response preview tests split from token-request plan tests.
 - Status JSON strict-failure CLI test split from normal machine-readable row-shape test.
+- Market brief snapshot-change rendering tests split from base report rendering test.
 
 ## Recommended Next Milestones
 

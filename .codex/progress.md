@@ -782,3 +782,6 @@
 - Committed packet: `61bb259 Split Currency Exchange token response tests`.
 - Completed packet: split status JSON strict-failure CLI coverage into `tests/test_cli_status_json_strict.py`, leaving normal machine-readable row-shape coverage in `tests/test_cli_status_json.py`.
 - Verification: bundled Python focused tests `tests/test_cli_status_json.py tests/test_cli_status_json_strict.py tests/test_cli_status_json_contract.py tests/test_cli_status_json_artifacts.py tests/test_cli_status_json_strict_artifacts.py tests/test_cli_status_strict.py tests/test_cli_status.py --basetemp=.tmp-pytest-status-json-strict -p no:cacheprovider` passed with 9 tests.
+- Committed packet: `230b107 Split status JSON strict tests`.
+- Completed packet: split market-brief snapshot-change rendering coverage into `tests/test_market_brief_snapshot_changes.py`, leaving base no-comparison report rendering in `tests/test_market_brief.py`.
+- Verification: bundled Python focused tests `tests/test_market_brief.py tests/test_market_brief_snapshot_changes.py tests/test_snapshot_deltas.py tests/test_snapshot_delta_contract.py tests/test_cli_reports.py tests/test_cli_daily.py tests/test_cli_daily_public_artifacts.py --basetemp=.tmp-pytest-market-brief-snapshot -p no:cacheprovider` passed with 17 tests.
