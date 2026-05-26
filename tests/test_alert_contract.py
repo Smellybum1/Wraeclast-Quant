@@ -8,6 +8,7 @@ from wraeclast_quant.intelligence.alerts import (
 
 from alert_helpers import actual_alert_reasons as _actual_alert_reasons
 from cli_doc_markdown_helpers import documented_bullets as _documented_bullets
+from cli_doc_markdown_helpers import documented_mapping as _documented_mapping
 
 
 def test_alert_rules_contract_doc_matches_defaults_and_reasons() -> None:
@@ -33,16 +34,4 @@ def test_alert_rules_contract_doc_matches_defaults_and_reasons() -> None:
         "New WATCH-or-better item",
         "Action changed upward",
         f"Score increased by at least +{BIG_POSITIVE_DELTA:.2f}",
-    }
-
-
-def _documented_mapping(doc_text: str, heading: str) -> dict[str, str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        key.strip("`"): value.strip("`")
-        for key, value in (
-            line.strip()[2:].split(": ", 1)
-            for line in section.splitlines()
-            if line.strip().startswith("- `")
-        )
     }

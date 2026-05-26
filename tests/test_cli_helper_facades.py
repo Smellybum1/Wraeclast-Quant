@@ -78,6 +78,7 @@ def test_cli_helper_facades_preserve_reexported_names() -> None:
             "command_help_args",
             "documented_bullet_list",
             "documented_bullets",
+            "documented_mapping",
             "documented_status_row_keys",
         },
     }

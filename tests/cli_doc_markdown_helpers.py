@@ -14,6 +14,18 @@ def documented_bullets(doc_text: str, heading: str) -> set[str]:
     return set(documented_bullet_list(doc_text, heading))
 
 
+def documented_mapping(doc_text: str, heading: str) -> dict[str, str]:
+    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
+    return {
+        key.strip("`"): value.strip("`")
+        for key, value in (
+            line.strip()[2:].split(": ", 1)
+            for line in section.splitlines()
+            if line.strip().startswith("- `")
+        )
+    }
+
+
 def documented_status_row_keys(doc_text: str) -> list[str]:
     documented_keys_section = doc_text.split("Current row keys:\n\n", 1)[1].split(
         "\n\n", 1
@@ -28,5 +40,6 @@ def documented_status_row_keys(doc_text: str) -> list[str]:
 __all__ = [
     "documented_bullet_list",
     "documented_bullets",
+    "documented_mapping",
     "documented_status_row_keys",
 ]

@@ -498,6 +498,7 @@
 - Public-intel contract documentation test now reuses the shared Markdown bullet parser helper.
 - Site bundle tests now reuse shared public-intel payload and Markdown bullet helpers while preserving site-bundle-specific empty opportunity fixtures.
 - Manual import documentation drift tests now reuse the shared ordered Markdown bullet parser helper.
+- Alert, backup, scoring, and resource-configuration contract tests now reuse the shared Markdown mapping parser helper.
 
 ## Recommended Next Milestones
 

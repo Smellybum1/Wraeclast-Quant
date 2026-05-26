@@ -2,6 +2,8 @@ from pathlib import Path
 
 from wraeclast_quant.intelligence.scoring import OpportunityInputs, action_for_score, score_opportunity
 
+from cli_doc_markdown_helpers import documented_mapping as _documented_mapping
+
 
 def test_score_formula_is_deterministic() -> None:
     inputs = OpportunityInputs(
@@ -52,15 +54,3 @@ def _live_signal_weights() -> dict[str, str]:
         weight = (score_opportunity(high_inputs) - score_opportunity(low_inputs)) / 100
         weights[field] = f"{weight:+.2f}"
     return weights
-
-
-def _documented_mapping(doc_text: str, heading: str) -> dict[str, str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        key.strip("`"): value.strip("`")
-        for key, value in (
-            line.strip()[2:].split(": ", 1)
-            for line in section.splitlines()
-            if line.strip().startswith("- `")
-        )
-    }

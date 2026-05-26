@@ -5,6 +5,7 @@ from cli_doc_command_helpers import command_help_args
 from cli_doc_command_helpers import top_level_help_args
 from cli_doc_markdown_helpers import documented_bullet_list
 from cli_doc_markdown_helpers import documented_bullets
+from cli_doc_markdown_helpers import documented_mapping
 from cli_doc_markdown_helpers import documented_status_row_keys
 
 
@@ -13,6 +14,7 @@ __all__ = [
     "command_help_args",
     "documented_bullet_list",
     "documented_bullets",
+    "documented_mapping",
     "documented_status_row_keys",
     "top_level_help_args",
 ]

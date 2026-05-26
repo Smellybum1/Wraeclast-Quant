@@ -3,6 +3,9 @@ from pathlib import Path
 from wraeclast_quant.config.preflight import assess_preflight_resource
 from wraeclast_quant.config.resources_loader import infer_resource_type, load_resources, parse_resources_markdown
 
+from cli_doc_markdown_helpers import documented_bullets as _documented_bullets
+from cli_doc_markdown_helpers import documented_mapping as _documented_mapping
+
 
 def test_parses_existing_resources_file() -> None:
     resources = load_resources(Path("RESOURCES.md"))
@@ -113,25 +116,4 @@ def test_resource_configuration_contract_doc_matches_loader_defaults() -> None:
         "youtube",
         "official",
         "unknown",
-    }
-
-
-def _documented_mapping(doc_text: str, heading: str) -> dict[str, str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        key.strip("`"): value.strip("`")
-        for key, value in (
-            line.strip()[2:].split(": ", 1)
-            for line in section.splitlines()
-            if line.strip().startswith("- `")
-        )
-    }
-
-
-def _documented_bullets(doc_text: str, heading: str) -> set[str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        line.strip()[3:-1]
-        for line in section.splitlines()
-        if line.strip().startswith("- `")
     }
