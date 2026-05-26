@@ -54,21 +54,3 @@ def test_fetch_plan_is_not_created_for_failed_connector_review() -> None:
     assert result.plan is None
     assert result.check.ready is False
     assert "Source terms must be reviewed." in result.check.blockers
-
-
-def test_fetch_plan_cache_path_hides_query_string_and_unsafe_characters() -> None:
-    resource = Resource(
-        name="Approved API: Query/Unsafe?",
-        type="official",
-        url="https://example.test/api?token=secret&league=Dawn",
-        allowed_use="api",
-    )
-    result = build_fetch_plan(_review(resource_name=resource.name), [resource])
-
-    assert result.plan is not None
-    cache_name = result.plan.cache_path.name
-    assert "?" not in cache_name
-    assert "&" not in cache_name
-    assert "secret" not in cache_name
-    assert ":" not in cache_name
-    assert "/" not in cache_name

@@ -588,6 +588,7 @@
 - Market brief snapshot-change rendering tests split from base report rendering test.
 - Storage missing-database read-only contract test split from snapshot write/query behavior tests.
 - Resource compliance metadata parser test moved from compliance policy tests into parser coverage.
+- Fetch-plan cache-path safety test split from general fetch-plan readiness tests.
 
 ## Recommended Next Milestones
 
