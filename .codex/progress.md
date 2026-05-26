@@ -737,3 +737,6 @@
 - Committed packet: `d8415f3 Split connector review policy tests`.
 - Completed packet: split outcome-review documentation contract coverage into `tests/test_outcome_contract.py`, leaving normal rendering, escaping, empty-state, and writer behavior in `tests/test_outcome_review_report.py`.
 - Verification: bundled Python focused tests `tests/test_outcome_review_report.py tests/test_outcome_contract.py tests/test_calibration_report.py tests/test_cli_outcome_report.py tests/test_cli_calibration_report.py --basetemp=.tmp-pytest-outcome-contract -p no:cacheprovider` passed with 14 tests.
+- Committed packet: `4994109 Split outcome contract test`.
+- Completed packet: split static-site file write/load coverage into `tests/test_static_site_io.py`, leaving dashboard section rendering assertions in `tests/test_static_site.py`.
+- Verification: bundled Python focused tests `tests/test_static_site.py tests/test_static_site_io.py tests/test_static_site_safety.py tests/test_static_site_health.py tests/test_cli_site.py --basetemp=.tmp-pytest-static-site-io -p no:cacheprovider` passed with 15 tests.
