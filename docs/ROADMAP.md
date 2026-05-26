@@ -595,6 +595,7 @@
 - Calibration score-bucket boundary test split from report rendering and grouping tests.
 - Source-specific fixture collection tests split from the generic source connector smoke test.
 - Currency Exchange payload-sensitivity preview tests split from core deterministic/unwired preview tests.
+- Currency Exchange runtime preflight validation guardrail tests split from the happy-path user-agent test.
 
 ## Recommended Next Milestones
 
