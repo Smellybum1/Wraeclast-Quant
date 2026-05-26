@@ -749,3 +749,6 @@
 - Committed packet: `2906842 Split database health validation tests`.
 - Completed packet: split calibration report file-write coverage into `tests/test_calibration_report_io.py`, leaving read-only missing-database behavior, grouping, score-bucket, and empty rendering tests in `tests/test_calibration_report.py`.
 - Verification: bundled Python focused tests `tests/test_calibration_report.py tests/test_calibration_report_io.py tests/test_cli_calibration.py tests/test_cli_calibration_report.py tests/test_outcome_contract.py tests/test_outcome_review_report.py --basetemp=.tmp-pytest-calibration-io -p no:cacheprovider` passed with 14 tests after restoring the `Path` type import in the rendering test module.
+- Committed packet: `0f6f020 Split calibration report IO tests`.
+- Completed packet: split alert rule setting override and validation coverage into `tests/test_alert_settings.py`, leaving core alert-generation scenarios in `tests/test_alerts.py`.
+- Verification: bundled Python focused tests `tests/test_alerts.py tests/test_alert_settings.py tests/test_alert_contract.py tests/test_cli_alerts.py tests/test_public_intel.py tests/test_static_site.py --basetemp=.tmp-pytest-alert-settings -p no:cacheprovider` passed with 25 tests.

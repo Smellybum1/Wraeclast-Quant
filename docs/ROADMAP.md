@@ -574,6 +574,7 @@
 - Publish-check invalid artifact validation tests split from readiness and payload-shape tests.
 - Database-health invalid-schema and directory-path validation tests split from healthy summary behavior tests.
 - Calibration report file-write coverage split from report rendering and grouping tests.
+- Alert rule setting override and validation tests split from core alert-generation behavior tests.
 
 ## Recommended Next Milestones
 
