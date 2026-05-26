@@ -615,6 +615,7 @@
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; recent full-suite and health checkpoint passed after the latest test-locality packets.
 - Storage outcome-review summary grouping test split from review row listing and limit tests.
+- Currency Exchange baseline diagnostic builder logic split behind the existing diagnostics facade.
 
 ## Later Intelligence Improvements
 
