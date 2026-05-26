@@ -510,6 +510,7 @@
 - Official Currency Exchange rolling-baseline diagnostics tests moved into a focused test module without changing behavior.
 - Source connector live-collection unsupported-policy tests moved into a focused test module without changing behavior.
 - Source connector factory-selection and resource/fetch-plan policy tests moved into focused test modules, leaving fixture collection tests local to `tests/test_source_connectors.py`.
+- Official Currency Exchange preview-signal fixture export tests moved into a focused baseline-fixture test module, leaving rolling-baseline diagnostics in the baseline test module.
 
 ## Recommended Next Milestones
 
