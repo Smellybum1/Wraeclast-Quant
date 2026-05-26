@@ -520,6 +520,7 @@
 - Local status and static dashboard review-coverage wording now points unreviewed recommendations to `wq review-queue` and `wq record-outcome` without adding private outcome data or schema changes.
 - Official Currency Exchange rolling-baseline index and freshness helpers split from diagnostics orchestration while preserving the stable preview facade.
 - Market brief rendering and health tests split by responsibility with shared synthetic opportunity helpers.
+- Official Currency Exchange rolling-baseline freshness warning tests moved into a focused module separate from baseline-history diagnostics.
 
 ## Recommended Next Milestones
 
