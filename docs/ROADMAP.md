@@ -511,6 +511,7 @@
 - Source connector live-collection unsupported-policy tests moved into a focused test module without changing behavior.
 - Source connector factory-selection and resource/fetch-plan policy tests moved into focused test modules, leaving fixture collection tests local to `tests/test_source_connectors.py`.
 - Official Currency Exchange preview-signal fixture export tests moved into a focused baseline-fixture test module, leaving rolling-baseline diagnostics in the baseline test module.
+- Local status and static dashboard review-coverage wording now points unreviewed recommendations to `wq review-queue` and `wq record-outcome` without adding private outcome data or schema changes.
 
 ## Recommended Next Milestones
 

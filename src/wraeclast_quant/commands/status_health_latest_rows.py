@@ -3,6 +3,7 @@ from __future__ import annotations
 from wraeclast_quant.commands.status_health_context import StatusHealthContext
 from wraeclast_quant.commands.status_health_rows import add_status_row
 from wraeclast_quant.commands.status_health_storage import latest_run_empty_details
+from wraeclast_quant.storage.models import ReviewCoverageRecord
 
 
 def add_latest_run_rows(
@@ -28,10 +29,20 @@ def add_latest_run_rows(
             status_rows,
             "Review coverage",
             "ok",
-            (
-                f"{context.coverage.reviewed_recommendations}/"
-                f"{context.coverage.total_recommendations} reviewed; "
-                f"{context.coverage.reviewed_percent:.1f}%; "
-                f"{context.coverage.unreviewed_recommendations} unreviewed"
-            ),
+            review_coverage_details(context.coverage),
         )
+
+
+def review_coverage_details(coverage: ReviewCoverageRecord) -> str:
+    details = (
+        f"{coverage.reviewed_recommendations}/"
+        f"{coverage.total_recommendations} reviewed; "
+        f"{coverage.reviewed_percent:.1f}%; "
+        f"{coverage.unreviewed_recommendations} unreviewed"
+    )
+    if coverage.unreviewed_recommendations:
+        return (
+            f"{details}; next: wq review-queue; "
+            "wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative"
+        )
+    return f"{details}; all recommendations reviewed"

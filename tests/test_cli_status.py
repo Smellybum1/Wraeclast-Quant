@@ -40,6 +40,8 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
     assert "Review coverage" in result.output
     assert "1/2 reviewed" in result.output
     assert "50.0%" in result.output
+    assert "wq review-queue" in result.output
+    assert "wq record-outcome" in result.output
     assert "Market brief" in result.output
     assert "no snapshot changes" in result.output
     assert "Public intel" in result.output

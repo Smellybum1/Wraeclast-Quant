@@ -75,6 +75,9 @@ def test_static_site_renders_review_coverage() -> None:
     assert "<th>Reviewed</th><td>1</td>" in html
     assert "<th>Unreviewed</th><td>1</td>" in html
     assert "<th>Reviewed %</th><td>50.0%</td>" in html
+    assert "<th>Next review action</th>" in html
+    assert "wq review-queue" in html
+    assert "wq record-outcome --run-id 7" in html
 
 
 def test_static_site_renders_empty_states() -> None:

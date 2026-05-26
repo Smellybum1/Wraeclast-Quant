@@ -15,14 +15,27 @@ def compliance_section(compliance: dict[str, Any], status_counts: dict[str, Any]
 
 
 def review_coverage_section(coverage: dict[str, Any]) -> str:
+    run_id = coverage.get("run_id", "")
+    unreviewed = int(coverage.get("unreviewed_recommendations", 0) or 0)
     rows = [
-        ("Run", coverage.get("run_id", "")),
+        ("Run", run_id),
         ("Total recommendations", coverage.get("total_recommendations", 0)),
         ("Reviewed", coverage.get("reviewed_recommendations", 0)),
-        ("Unreviewed", coverage.get("unreviewed_recommendations", 0)),
+        ("Unreviewed", unreviewed),
         ("Reviewed %", f"{float(coverage.get('reviewed_percent', 0.0)):.1f}%"),
     ]
+    if unreviewed:
+        rows.append(("Next review action", _review_action_text(run_id)))
     return section("Recommendation Review Coverage", key_value_table(rows))
+
+
+def _review_action_text(run_id: object) -> str:
+    run_arg = run_id if run_id != "" else "<id>"
+    return (
+        "Run wq review-queue, then "
+        f"wq record-outcome --run-id {run_arg} --item-name <name> "
+        "--outcome positive|neutral|negative"
+    )
 
 
 def outcome_summary_section(summary: dict[str, Any]) -> str:
