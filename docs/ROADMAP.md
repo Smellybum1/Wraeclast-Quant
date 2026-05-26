@@ -569,6 +569,7 @@
 - Connector-review draft resolution and validation tests now reuse shared resource fixtures with optional IDs.
 - Connector approval-helper and approval-patch tests now reuse shared conditional API and Discord resource fixtures while preserving approval safety assertions.
 - Connector candidate and preflight policy tests now reuse shared conditional API and Discord resource fixtures while preserving source-compliance statuses.
+- Outcome-review documentation contract coverage split from normal report rendering tests.
 
 ## Recommended Next Milestones
 
