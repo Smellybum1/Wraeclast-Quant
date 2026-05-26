@@ -30,6 +30,7 @@ Connector proof paths validate shape and safety before live network access.
 - Fixture: a local synthetic or reviewed sample payload used to prove connector-shaped output.
 - Dry-run connector: a connector interface that returns fetch-plan and fixture proof information without network access or cache writes.
 - Fixture-daily run: an end-to-end local proof that writes a SQLite run from fixture data and regenerates derived artifacts.
+- Currency Exchange manual snapshot: a user-supplied local JSON observation of official Currency Exchange hourly market rows. It can be converted into connector-fixture and manual-import formats, but it is not live API access, browser-session reuse, source approval, raw cache storage, or automatic trading.
 - Live connector: a future network-capable source implementation. Live connectors stay unsupported until official endpoint, query parameters, response-field schema, reuse terms, auth/runtime requirements when applicable, cache/rate policy, and failure behavior are confirmed.
 - poe.ninja POE2 Currency: the first approved API resource for fixture and dry-run proof. Live fetching remains blocked.
 

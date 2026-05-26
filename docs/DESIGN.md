@@ -19,6 +19,8 @@ It does not automate gameplay, perform trades, send whispers, scrape without app
 
 `wq connector-fixture-daily` proves that a reviewed, fixture-backed connector shape can drive the same local pipeline without live source access. It requires normalized local fixture signals, writes a `connector-fixture` run, and stays local-only.
 
+`wq currency-exchange-manual-snapshot` is a source-specific local bridge for user-supplied official Currency Exchange observations when live API access is parked. It validates local JSON, can write connector-fixture JSON, and can be chained through `connector-fixture-export`, `validate-import`, or `daily --input-path` without OAuth, live HTTP, raw cache writes, or publishing.
+
 ## Storage and History
 
 SQLite is the canonical local history store for the MVP. The default database path is `data/wraeclast_quant.db`.
@@ -49,6 +51,7 @@ The export includes a top-level `schema_version` plus derived fields such as ite
 - `preflight`, `connector-candidates`, connector review, approval, fixture, dry-run, and connector-plan commands gate future connector work.
 - `analyze`, `report`, and `watchlist` support deterministic sample-data workflows.
 - `import`, `validate-import`, and `inspect-import` handle local normalized JSON/CSV signal files using the contract documented in `docs/MANUAL_IMPORT.md`.
+- `currency-exchange-manual-snapshot` validates user-supplied local Currency Exchange observations and can bridge them into connector-fixture or manual-import workflows without live source access.
 - `snapshots`, `compare`, and `alerts` inspect persisted local history. Snapshot comparisons are documented in `docs/SNAPSHOT_COMPARISONS.md`, and alert rules are documented in `docs/ALERTS.md`.
 - `export`, `validate-intel`, `site`, `site-bundle`, `publish-check`, `publish-handoff`, and `site-contract` render and validate derived local static artifacts.
 - `daily` orchestrates one local pipeline run from sample data or a manual import file using the contract documented in `docs/DAILY_PIPELINE.md`.
