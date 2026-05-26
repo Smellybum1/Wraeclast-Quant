@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from statistics import median
-
+from wraeclast_quant.collectors.pathofexile_currency_exchange_baseline_metrics import (
+    baseline_freshness,
+    baseline_index,
+    freshness_blocker,
+)
 from wraeclast_quant.collectors.pathofexile_currency_exchange_metrics import (
-    clamp_score,
     currency_exchange_market_observation,
 )
 from wraeclast_quant.collectors.pathofexile_currency_exchange_models import (
@@ -49,27 +51,27 @@ def preview_currency_exchange_rolling_baseline_diagnostics(
             )
             continue
 
-        volume_index = _baseline_index(
+        volume_index = baseline_index(
             current.volume_total,
             [observation.volume_total for observation in market_history],
         )
-        stock_index = _baseline_index(
+        stock_index = baseline_index(
             current.highest_stock_total,
             [observation.highest_stock_total for observation in market_history],
         )
-        spread_index = _baseline_index(
+        spread_index = baseline_index(
             current.ratio_spread_percent,
             [observation.ratio_spread_percent for observation in market_history],
         )
         latest_history_change_id = max(observation.next_change_id for observation in market_history)
-        freshness_lag_seconds, freshness_status, stale_data_penalty = _baseline_freshness(
+        freshness_lag_seconds, freshness_status, stale_data_penalty = baseline_freshness(
             payload.next_change_id,
             latest_history_change_id,
             expected_cadence_seconds=expected_cadence_seconds,
             fresh_tolerance_intervals=fresh_tolerance_intervals,
         )
         if stale_data_penalty:
-            blockers.append(_freshness_blocker(freshness_status))
+            blockers.append(freshness_blocker(freshness_status))
 
         diagnostics[current.market_id] = CurrencyExchangeBaselineDiagnostics(
             league=current.league,
@@ -85,40 +87,6 @@ def preview_currency_exchange_rolling_baseline_diagnostics(
             blockers=tuple(blockers),
         )
     return diagnostics
-
-
-def _baseline_index(current_value: float, baseline_values: list[float]) -> float:
-    baseline = median([max(value, 0.0) for value in baseline_values])
-    if baseline <= 0:
-        return 0.0
-    return clamp_score((current_value / baseline) * 50.0)
-
-
-def _baseline_freshness(
-    current_next_change_id: int,
-    latest_history_change_id: int,
-    *,
-    expected_cadence_seconds: int,
-    fresh_tolerance_intervals: int,
-) -> tuple[int, str, float]:
-    cadence = max(expected_cadence_seconds, 1)
-    tolerance = cadence * max(fresh_tolerance_intervals, 1)
-    lag_seconds = current_next_change_id - latest_history_change_id
-    if lag_seconds < 0:
-        return lag_seconds, "out-of-order", 40.0
-    if lag_seconds <= tolerance:
-        return lag_seconds, "fresh", 0.0
-    if lag_seconds <= tolerance * 2:
-        return lag_seconds, "stale", 20.0
-    return lag_seconds, "very-stale", 40.0
-
-
-def _freshness_blocker(freshness_status: str) -> str:
-    if freshness_status == "out-of-order":
-        return "current payload predates local baseline history"
-    if freshness_status == "very-stale":
-        return "current payload is very stale versus local baseline cadence"
-    return "current payload is stale versus local baseline cadence"
 
 
 __all__ = ["preview_currency_exchange_rolling_baseline_diagnostics"]
