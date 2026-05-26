@@ -3,6 +3,8 @@ from pathlib import Path
 from wraeclast_quant.intelligence.snapshot_deltas import compare_opportunities
 from wraeclast_quant.storage.models import StoredOpportunityRecord
 
+from cli_doc_markdown_helpers import documented_bullets as _documented_bullets
+
 
 def test_score_increases_and_decreases_are_calculated() -> None:
     comparison = compare_opportunities(
@@ -115,12 +117,3 @@ def _stored(name: str, score: float, action: str) -> StoredOpportunityRecord:
             "stale_data_penalty": 0,
         },
     )
-
-
-def _documented_bullets(doc_text: str, heading: str) -> set[str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        line.strip()[3:-1]
-        for line in section.splitlines()
-        if line.strip().startswith("- `")
-    }

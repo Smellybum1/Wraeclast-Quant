@@ -566,3 +566,5 @@
 - Verification: bundled Python focused tests `tests/test_manual_import.py tests/test_cli_helper_facades.py --basetemp=.tmp-pytest-manual-import-doc-helper-2 -p no:cacheprovider` passed with 12 tests.
 - Completed packet: reused a shared Markdown mapping parser across alert, backup, scoring, and resource-configuration contract tests, removing four local parser copies while preserving contract assertions.
 - Verification: bundled Python focused tests `tests/test_alert_contract.py tests/test_database_backup_contract.py tests/test_scoring.py tests/test_resources_loader.py tests/test_cli_helper_facades.py --basetemp=.tmp-pytest-doc-mapping-helper -p no:cacheprovider` passed with 13 tests.
+- Completed packet: reused the shared Markdown bullet parser in snapshot-comparison and outcome-review report test helpers, removing the last local bullet parser copies outside the shared helper.
+- Verification: bundled Python focused tests `tests/test_snapshot_deltas.py tests/test_outcome_review_report.py tests/test_cli_helper_facades.py --basetemp=.tmp-pytest-doc-bullet-helper-final -p no:cacheprovider` passed with 11 tests.

@@ -3,6 +3,8 @@ from __future__ import annotations
 from wraeclast_quant.reports.calibration import build_calibration
 from wraeclast_quant.storage.models import OutcomeReviewRecord
 
+from cli_doc_markdown_helpers import documented_bullets
+
 
 def review_record(
     id: int = 1,
@@ -35,15 +37,6 @@ def build_calibration_from_reviews(
             return reviews[:limit]
 
     return build_calibration(FakeRepository(), limit=limit)  # type: ignore[arg-type]
-
-
-def documented_bullets(doc_text: str, heading: str) -> set[str]:
-    section = doc_text.split(f"{heading}\n\n", 1)[1].split("\n\n", 1)[0]
-    return {
-        line.strip()[3:-1]
-        for line in section.splitlines()
-        if line.strip().startswith("- `")
-    }
 
 
 __all__ = [
