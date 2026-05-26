@@ -1,11 +1,10 @@
 from wraeclast_quant.intelligence.snapshot_deltas import compare_opportunities
-from wraeclast_quant.intelligence.scoring import OpportunityInputs, ScoredOpportunity
 from wraeclast_quant.reports.market_brief import (
-    check_market_brief_health,
     render_market_brief,
-    write_market_brief,
 )
-from wraeclast_quant.storage.models import StoredOpportunityRecord
+
+from market_brief_helpers import scored_opportunity as _opportunity
+from market_brief_helpers import stored_opportunity as _stored
 
 
 def test_report_renders_without_comparison() -> None:
@@ -73,72 +72,3 @@ def test_report_includes_stable_message_when_no_changes() -> None:
 
     assert "## Snapshot Changes" in report
     assert "No score, action, new, or removed item changes were detected." in report
-
-
-def test_check_market_brief_health_reports_valid_brief(tmp_path) -> None:
-    path = write_market_brief(
-        [_opportunity("Stormglass Catalyst", 70.4, "WATCH")],
-        path=tmp_path / "market_brief.md",
-    )
-
-    health = check_market_brief_health(path)
-
-    assert health is not None
-    assert health.valid is True
-    assert health.missing_markers == []
-    assert health.includes_snapshot_changes is False
-    assert health.size_bytes > 0
-
-
-def test_check_market_brief_health_reports_missing_markers(tmp_path) -> None:
-    path = tmp_path / "market_brief.md"
-    path.write_text("# Not A Brief", encoding="utf-8")
-
-    health = check_market_brief_health(path)
-
-    assert health is not None
-    assert health.valid is False
-    assert "title" in health.missing_markers
-    assert "recommendation-table" in health.missing_markers
-
-
-def test_check_market_brief_health_missing_file_returns_none(tmp_path) -> None:
-    assert check_market_brief_health(tmp_path / "missing.md") is None
-
-
-def _stored(name: str, score: float, action: str) -> StoredOpportunityRecord:
-    return StoredOpportunityRecord(
-        id=1,
-        run_id=1,
-        item_name=name,
-        opportunity_score=score,
-        action=action,
-        inputs={
-            "demand_momentum": 0,
-            "build_dependency_score": 0,
-            "price_discount_score": 0,
-            "liquidity_score": 0,
-            "historical_spike_score": 0,
-            "patch_relevance_score": 0,
-            "manipulation_risk": 0,
-            "stale_data_penalty": 0,
-        },
-    )
-
-
-def _opportunity(name: str, score: float, action: str) -> ScoredOpportunity:
-    return ScoredOpportunity(
-        item_name=name,
-        opportunity_score=score,
-        action=action,
-        inputs=OpportunityInputs(
-            demand_momentum=0,
-            build_dependency_score=0,
-            price_discount_score=0,
-            liquidity_score=0,
-            historical_spike_score=0,
-            patch_relevance_score=0,
-            manipulation_risk=0,
-            stale_data_penalty=0,
-        ),
-    )
