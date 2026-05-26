@@ -740,3 +740,6 @@
 - Committed packet: `4994109 Split outcome contract test`.
 - Completed packet: split static-site file write/load coverage into `tests/test_static_site_io.py`, leaving dashboard section rendering assertions in `tests/test_static_site.py`.
 - Verification: bundled Python focused tests `tests/test_static_site.py tests/test_static_site_io.py tests/test_static_site_safety.py tests/test_static_site_health.py tests/test_cli_site.py --basetemp=.tmp-pytest-static-site-io -p no:cacheprovider` passed with 15 tests.
+- Committed packet: `364f0f6 Split static site IO tests`.
+- Completed packet: split publish-check invalid public-intel/archive validation coverage into `tests/test_publish_check_validation.py`, leaving ready, stale, missing-bundle, and JSON payload behavior in `tests/test_publish_check.py`.
+- Verification: bundled Python focused tests `tests/test_publish_check.py tests/test_publish_check_validation.py tests/test_publish_handoff.py tests/test_cli_publish_check.py tests/test_cli_publish_handoff.py tests/test_site_bundle.py tests/test_site_bundle_validation.py --basetemp=.tmp-pytest-publish-check-validation -p no:cacheprovider` passed with 20 tests.

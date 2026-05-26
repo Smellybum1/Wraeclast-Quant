@@ -571,6 +571,7 @@
 - Connector candidate and preflight policy tests now reuse shared conditional API and Discord resource fixtures while preserving source-compliance statuses.
 - Outcome-review documentation contract coverage split from normal report rendering tests.
 - Static-site file write/load coverage split from dashboard rendering tests.
+- Publish-check invalid artifact validation tests split from readiness and payload-shape tests.
 
 ## Recommended Next Milestones
 

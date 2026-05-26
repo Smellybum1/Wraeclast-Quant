@@ -47,26 +47,6 @@ def test_publish_check_missing_bundle_is_non_mutating(tmp_path: Path) -> None:
     assert not missing_dir.exists()
 
 
-def test_publish_check_reports_invalid_public_intel(tmp_path: Path) -> None:
-    database_path, bundle_dir, _run_id = _write_publish_ready_bundle(tmp_path)
-    (bundle_dir / "public_intel.json").write_text("{}", encoding="utf-8")
-
-    result = check_publish_readiness(database_path=database_path, bundle_dir=bundle_dir)
-
-    assert result.ready is False
-    assert any("Public intel contract" in blocker for blocker in result.blockers)
-
-
-def test_publish_check_reports_invalid_archive(tmp_path: Path) -> None:
-    database_path, bundle_dir, _run_id = _write_publish_ready_bundle(tmp_path)
-    (bundle_dir / "wraeclast_quant_site_bundle.zip").write_bytes(b"not a zip")
-
-    result = check_publish_readiness(database_path=database_path, bundle_dir=bundle_dir)
-
-    assert result.ready is False
-    assert any("not a valid zip file" in blocker for blocker in result.blockers)
-
-
 def test_publish_check_json_payload_has_stable_keys(tmp_path: Path) -> None:
     database_path, bundle_dir, run_id = _write_publish_ready_bundle(tmp_path)
 
