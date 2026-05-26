@@ -507,6 +507,7 @@
 - Official Currency Exchange runtime settings and runtime-plan tests moved into focused modules, leaving runtime preflight behavior in the runtime test module.
 - Official Currency Exchange preview signal and rolling-baseline tests moved into a focused test module without changing behavior.
 - Official Currency Exchange secret-source loading and redaction helpers split from runtime planning while preserving the stable runtime facade.
+- Official Currency Exchange secret models, source validation, secret loading, and redaction split behind the stable secret facade.
 - Official Currency Exchange token request/response preview helpers split from runtime planning while preserving the stable runtime facade.
 - Official Currency Exchange runtime settings, preflight, and runtime-plan implementation split into focused model and planning helpers while preserving the stable runtime facade.
 - Official Currency Exchange manual snapshot loading/conversion split from connector-fixture rendering while preserving the stable fixture facade.
