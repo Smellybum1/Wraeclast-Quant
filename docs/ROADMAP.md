@@ -524,6 +524,7 @@
 - Connector policy source-review gate tests split from broader resource/access-method policy tests.
 - Connector approval patch safety tests split from normal patch availability/no-patch policy tests.
 - Official Currency Exchange connector-review readiness fixture tests split from generic connector readiness examples.
+- Static-site empty-state and HTML-escaping safety tests split from normal dashboard rendering tests.
 
 ## Recommended Next Milestones
 
