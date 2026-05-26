@@ -169,7 +169,7 @@ Use `wq connector-fixture-daily --review-path <file> --fixture-path <file>` to r
 
 After a review passes, use `wq connector-plan --review-path <file>` to preview the local cache path, cache TTL, and request spacing a future connector would use. This command is read-only and performs no network requests.
 
-Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local official Currency Exchange observations. Add `--history-path <previous-snapshot>` to preview rolling-baseline diagnostics from a prior local observation, and add `--output-fixture-path <file>` to write connector-fixture JSON for local review. That fixture can then be passed to `wq connector-fixture-export` and `wq validate-import` before any manual scoring import. This path does not use OAuth, read credentials, call live HTTP, create raw caches, write snapshots, or publish artifacts.
+Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local official Currency Exchange observations. Add `--history-path <previous-snapshot>` to preview rolling-baseline diagnostics from a prior local observation, and add `--output-fixture-path <file>` to write connector-fixture JSON for local review. That fixture can then be passed to `wq connector-fixture-export` and `wq validate-import` before any manual scoring import or `wq daily --input-path` run. This path does not use OAuth, read credentials, call live HTTP, create raw caches, write snapshots, or publish artifacts.
 
 ## Safety Boundary
 

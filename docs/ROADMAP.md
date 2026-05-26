@@ -490,6 +490,7 @@
 - Official Currency Exchange manual snapshot field contract documented and checked against the template/model so local observations stay easy to prepare without OAuth.
 - Local official Currency Exchange manual snapshot output covered through the existing connector-fixture runner, proving the exported fixture stays compatible with the no-network connector workflow.
 - Local official Currency Exchange manual snapshot output covered through connector-fixture export and manual-import validation, proving the no-OAuth path can reach normalized scoring input without writing snapshots.
+- Local official Currency Exchange manual snapshot output covered through the existing daily `--input-path` pipeline using temp SQLite/artifacts, proving the no-OAuth path can produce local derived outputs without live collection.
 
 ## Recommended Next Milestones
 

@@ -4,11 +4,13 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from wraeclast_quant.cli import app
+from wraeclast_quant.storage.repositories import SnapshotRepository
 
 from cli_connector_fixture_command_helpers import (
     connector_fixture_export_args as _connector_fixture_export_args,
     connector_fixture_run_args as _connector_fixture_run_args,
 )
+from cli_daily_command_helpers import daily_args as _daily_args
 from cli_manual_import_command_helpers import validate_import_args as _validate_import_args
 
 
@@ -117,6 +119,53 @@ def test_currency_exchange_manual_snapshot_output_exports_to_manual_import(
     assert validate_result.exit_code == 0
     assert payload["items"][0]["name"] == "Chaos Orb / Divine Orb"
     assert "signals" in payload["items"][0]
+
+
+def test_currency_exchange_manual_snapshot_output_runs_daily_pipeline(
+    tmp_path: Path,
+) -> None:
+    fixture_path = tmp_path / "currency_exchange_fixture.json"
+    import_path = tmp_path / "currency_exchange_manual_import.json"
+    database_path = tmp_path / "snapshots.db"
+    intel_path = tmp_path / "public_intel.json"
+    site_dir = tmp_path / "site"
+    runner.invoke(
+        app,
+        [
+            "currency-exchange-manual-snapshot",
+            "--input-path",
+            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
+            "--history-path",
+            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
+            "--output-fixture-path",
+            str(fixture_path),
+        ],
+    )
+    runner.invoke(
+        app,
+        _connector_fixture_export_args(
+            fixture_path=fixture_path,
+            output_path=import_path,
+        ),
+    )
+
+    daily_result = runner.invoke(
+        app,
+        _daily_args(
+            input_path=import_path,
+            database_path=database_path,
+            intel_path=intel_path,
+            site_dir=site_dir,
+        ),
+    )
+    runs = SnapshotRepository(database_path).list_recent_runs(limit=10)
+    intel_text = intel_path.read_text(encoding="utf-8")
+
+    assert daily_result.exit_code == 0
+    assert len(runs) == 1
+    assert runs[0].source_mode == "manual-import"
+    assert "Chaos Orb / Divine Orb" in intel_text
+    assert "Chaos Orb / Divine Orb" in (site_dir / "index.html").read_text(encoding="utf-8")
 
 
 def test_currency_exchange_manual_snapshot_rejects_invalid_input(tmp_path: Path) -> None:
