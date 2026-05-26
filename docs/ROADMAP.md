@@ -538,6 +538,7 @@
 - Site-bundle writer tests split by happy path, validation failures, and derived-only safety assertions.
 - Public-intel outcome summary and review-coverage privacy tests split from run-history and score-trend tests.
 - Storage artifact and run-provenance persistence tests split from snapshot repository run/scoring behavior tests.
+- Migration-readiness JSON payload contract test split from migration readiness behavior tests with shared backup fixture setup.
 
 ## Recommended Next Milestones
 
