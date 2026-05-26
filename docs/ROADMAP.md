@@ -540,6 +540,7 @@
 - Storage artifact and run-provenance persistence tests split from snapshot repository run/scoring behavior tests.
 - Migration-readiness JSON payload contract test split from migration readiness behavior tests with shared backup fixture setup.
 - Preflight policy tests split by approved-source eligibility, blocked/gated policy, and summary-count responsibilities.
+- Connector-review draft tests split by resource resolution, validation failures, and conservative default readiness behavior.
 
 ## Recommended Next Milestones
 
