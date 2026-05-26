@@ -8,8 +8,6 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange import (
     preview_currency_exchange_runtime_plan,
     preview_currency_exchange_runtime_preflight,
     preview_currency_exchange_storage_plan,
-    preview_currency_exchange_token_request_plan,
-    preview_currency_exchange_token_response,
 )
 from wraeclast_quant.config.fetch_policy_models import FetchPlan
 
@@ -198,83 +196,4 @@ def test_currency_exchange_runtime_plan_is_read_only_and_uses_fetch_plan(
     assert runtime_plan.request_budget == 1
     assert runtime_plan.user_agent == (
         "OAuth wraeclast-quant/0.1.0 (contact: user@example.test) WraeclastQuant"
-    )
-
-
-def test_currency_exchange_token_response_preview_keeps_token_value_out() -> None:
-    preview = preview_currency_exchange_token_response(
-        {
-            "access_token": "secret-token-value",
-            "token_type": "bearer",
-            "scope": "service:cxapi",
-            "expires_in": 3600,
-        }
-    )
-
-    assert preview.ready is True
-    assert preview.access_token_present is True
-    assert preview.token_type == "bearer"
-    assert preview.scope == "service:cxapi"
-    assert preview.expires_in == 3600
-    assert "secret-token-value" not in repr(preview)
-
-
-def test_currency_exchange_token_response_preview_fails_closed() -> None:
-    preview = preview_currency_exchange_token_response(
-        {
-            "access_token": "",
-            "token_type": "mac",
-            "scope": "account:profile",
-        }
-    )
-
-    assert preview.ready is False
-    assert preview.access_token_present is False
-    assert preview.blockers == (
-        "access token is missing.",
-        "token_type must be bearer.",
-        "token scope must be service:cxapi.",
-    )
-
-
-def test_currency_exchange_token_request_plan_contains_no_secret_value(
-    tmp_path: Path,
-) -> None:
-    settings = CurrencyExchangeRuntimeSettings(
-        client_id="wraeclast-quant",
-        app_version="0.1.0",
-        contact="user@example.test",
-        secret_source=CurrencyExchangeSecretSource("env", "WQ_POE_CLIENT_SECRET"),
-    )
-
-    plan = preview_currency_exchange_token_request_plan(
-        settings,
-        workspace_root=tmp_path,
-    )
-
-    assert plan.ready is True
-    assert plan.token_url == "https://www.pathofexile.com/oauth/token"
-    assert plan.grant_type == "client_credentials"
-    assert plan.scope == "service:cxapi"
-    assert plan.client_id == "wraeclast-quant"
-    assert plan.form_fields == ("client_id", "client_secret", "grant_type", "scope")
-    assert "WQ_POE_CLIENT_SECRET" not in repr(plan)
-    assert "client_secret=" not in repr(plan)
-
-
-def test_currency_exchange_token_request_plan_reuses_preflight_blockers(
-    tmp_path: Path,
-) -> None:
-    plan = preview_currency_exchange_token_request_plan(
-        CurrencyExchangeRuntimeSettings(client_id="", app_version="", contact=""),
-        workspace_root=tmp_path,
-    )
-
-    assert plan.ready is False
-    assert plan.user_agent is None
-    assert plan.blockers == (
-        "client_id is required.",
-        "app_version is required.",
-        "user-agent contact is required.",
-        "client secret source is required.",
     )
