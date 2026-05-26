@@ -596,6 +596,7 @@
 - Source-specific fixture collection tests split from the generic source connector smoke test.
 - Currency Exchange payload-sensitivity preview tests split from core deterministic/unwired preview tests.
 - Currency Exchange runtime preflight validation guardrail tests split from the happy-path user-agent test.
+- Currency Exchange direct baseline diagnostic freshness-warning test split from history and missing-history diagnostics.
 
 ## Recommended Next Milestones
 
