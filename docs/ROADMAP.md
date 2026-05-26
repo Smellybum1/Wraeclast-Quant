@@ -580,6 +580,7 @@
 - Resource Markdown parser and type-inference tests split from user-owned `RESOURCES.md` inventory tests.
 - Migration-readiness blocker tests split from ready-path migration health tests.
 - Publish-handoff non-mutating and sensitive-value safety tests split from normal handoff rendering tests.
+- Official Currency Exchange secret redaction test split from client-secret loading tests.
 
 ## Recommended Next Milestones
 
