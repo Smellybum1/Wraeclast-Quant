@@ -6,6 +6,7 @@ from wraeclast_quant.reports.public_intel_contract import (
 )
 from wraeclast_quant.reports.public_intel import PUBLIC_INTEL_SCHEMA_VERSION
 
+from cli_doc_markdown_helpers import documented_bullets as _documented_bullets
 from public_intel_contract_helpers import public_intel_payload as _payload
 
 
@@ -50,14 +51,6 @@ def test_public_intel_contract_doc_matches_validator() -> None:
     documented_version = doc_text.split(
         "The current public intel schema version is `", 1
     )[1].split("`", 1)[0]
-    documented_fields_section = doc_text.split("Required top-level fields:\n\n", 1)[
-        1
-    ].split("\n\n", 1)[0]
-    documented_fields = {
-        line.strip()[3:-1]
-        for line in documented_fields_section.splitlines()
-        if line.strip().startswith("- `")
-    }
 
     assert documented_version == PUBLIC_INTEL_SCHEMA_VERSION
-    assert documented_fields == REQUIRED_TOP_LEVEL_KEYS
+    assert _documented_bullets(doc_text, "Required top-level fields:") == REQUIRED_TOP_LEVEL_KEYS

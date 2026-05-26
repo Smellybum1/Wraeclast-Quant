@@ -494,6 +494,8 @@
 - Shared context, data-source, and design docs aligned with the Currency Exchange manual snapshot bridge so future work treats it as local-only rather than live collection.
 - Currency Exchange manual snapshot CLI test arguments extracted into a focused helper while preserving command coverage and behavior.
 - Currency Exchange manual snapshot command workflow split from Typer registration/rendering while preserving command behavior.
+- Public-intel contract tests now reuse the shared public-intel payload helper, keeping only contract-specific alert data local to the contract helper.
+- Public-intel contract documentation test now reuses the shared Markdown bullet parser helper.
 
 ## Recommended Next Milestones
 
