@@ -507,6 +507,7 @@
 - Official Currency Exchange manual snapshot loading/conversion split from connector-fixture rendering while preserving the stable fixture facade.
 - Official Currency Exchange secret loader/redaction tests moved into a focused test module without changing behavior.
 - Official Currency Exchange token request/response preview tests moved into a focused test module without changing behavior.
+- Official Currency Exchange rolling-baseline diagnostics tests moved into a focused test module without changing behavior.
 
 ## Recommended Next Milestones
 
