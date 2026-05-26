@@ -502,6 +502,7 @@
 - Snapshot comparison and outcome-review report tests now reuse the shared Markdown bullet parser helper.
 - Official Currency Exchange runtime/auth planning tests moved into a focused test module without changing runtime behavior.
 - Official Currency Exchange preview signal and rolling-baseline tests moved into a focused test module without changing behavior.
+- Official Currency Exchange secret-source loading and redaction helpers split from runtime planning while preserving the stable runtime facade.
 
 ## Recommended Next Milestones
 
