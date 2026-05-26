@@ -501,6 +501,7 @@
 - Alert, backup, scoring, and resource-configuration contract tests now reuse the shared Markdown mapping parser helper.
 - Snapshot comparison and outcome-review report tests now reuse the shared Markdown bullet parser helper.
 - Official Currency Exchange runtime/auth planning tests moved into a focused test module without changing runtime behavior.
+- Official Currency Exchange preview signal and rolling-baseline tests moved into a focused test module without changing behavior.
 
 ## Recommended Next Milestones
 
