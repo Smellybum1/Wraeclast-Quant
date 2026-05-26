@@ -46,3 +46,24 @@ def test_simple_table() -> None:
 
 def test_infer_resource_type_from_url() -> None:
     assert infer_resource_type(url="https://www.reddit.com/r/PathOfExile2/") == "social"
+
+
+def test_parser_preserves_compliance_metadata() -> None:
+    resources = parse_resources_markdown(
+        """
+## Price Data
+- id: example_market
+  name: Example Market
+  type: price_site
+  url: https://example.test
+  allowed_use: manual-review
+  collector: price_site_placeholder
+  refresh: hourly
+  reliability: medium
+"""
+    )
+
+    assert resources[0].id == "example_market"
+    assert resources[0].collector == "price_site_placeholder"
+    assert resources[0].refresh == "hourly"
+    assert resources[0].reliability == "medium"

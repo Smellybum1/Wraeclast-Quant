@@ -1,5 +1,5 @@
 from wraeclast_quant.config.compliance import assess_resource, assess_resources
-from wraeclast_quant.config.resources_loader import Resource, parse_resources_markdown
+from wraeclast_quant.config.resources_loader import Resource
 
 
 def test_api_resource_is_automation_eligible() -> None:
@@ -66,24 +66,3 @@ def test_assess_resources_preserves_order() -> None:
     )
 
     assert [assessment.resource.name for assessment in assessments] == ["First", "Second"]
-
-
-def test_parser_preserves_compliance_metadata() -> None:
-    resources = parse_resources_markdown(
-        """
-## Price Data
-- id: example_market
-  name: Example Market
-  type: price_site
-  url: https://example.test
-  allowed_use: manual-review
-  collector: price_site_placeholder
-  refresh: hourly
-  reliability: medium
-"""
-    )
-
-    assert resources[0].id == "example_market"
-    assert resources[0].collector == "price_site_placeholder"
-    assert resources[0].refresh == "hourly"
-    assert resources[0].reliability == "medium"

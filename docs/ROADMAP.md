@@ -587,6 +587,7 @@
 - Status JSON strict-failure CLI test split from normal machine-readable row-shape test.
 - Market brief snapshot-change rendering tests split from base report rendering test.
 - Storage missing-database read-only contract test split from snapshot write/query behavior tests.
+- Resource compliance metadata parser test moved from compliance policy tests into parser coverage.
 
 ## Recommended Next Milestones
 
