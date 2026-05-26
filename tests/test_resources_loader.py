@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from wraeclast_quant.config.preflight import assess_preflight_resource
-from wraeclast_quant.config.resources_loader import infer_resource_type, load_resources, parse_resources_markdown
+from wraeclast_quant.config.resources_loader import load_resources
 
 
 def test_parses_existing_resources_file() -> None:
@@ -34,47 +34,3 @@ def test_official_currency_exchange_resource_is_source_approved_but_auth_gated()
     assert "credential storage outside the repo" in resource.notes
     assert assessment.automation_eligible is True
     assert assessment.status == "approved-api"
-
-
-def test_resource_defaults_and_inference() -> None:
-    markdown = """
-## Price Data
-- [Example Market](https://example.test/economy/items)
-
-## Other
-- name: Mystery Source
-  url: https://example.test/feed
-"""
-    resources = parse_resources_markdown(markdown)
-
-    assert resources[0].type == "price_site"
-    assert resources[0].priority == "medium"
-    assert resources[0].allowed_use == "manual-review"
-    assert resources[1].type == "unknown"
-
-
-def test_parser_tolerates_utf8_bom_before_first_heading() -> None:
-    markdown = "\ufeff## Official Sources\n- name: Approved API\n  url: https://example.test/api\n  allowed_use: api\n"
-
-    resources = parse_resources_markdown(markdown)
-
-    assert len(resources) == 1
-    assert resources[0].name == "Approved API"
-    assert resources[0].allowed_use == "api"
-
-
-def test_simple_table() -> None:
-    markdown = """
-## Build Data
-| name | url | priority |
-| --- | --- | --- |
-| Example Builds | https://example.test/builds | high |
-"""
-    resources = parse_resources_markdown(markdown)
-
-    assert resources[0].name == "Example Builds"
-    assert resources[0].type == "build_site"
-
-
-def test_infer_resource_type_from_url() -> None:
-    assert infer_resource_type(url="https://www.reddit.com/r/PathOfExile2/") == "social"

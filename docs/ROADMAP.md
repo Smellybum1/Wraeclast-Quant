@@ -577,6 +577,7 @@
 - Alert rule setting override and validation tests split from core alert-generation behavior tests.
 - Public-intel JSON write/read coverage split from payload assembly tests.
 - Storage unreviewed-opportunity query tests split from review-coverage summary tests.
+- Resource Markdown parser and type-inference tests split from user-owned `RESOURCES.md` inventory tests.
 
 ## Recommended Next Milestones
 
