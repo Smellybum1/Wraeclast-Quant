@@ -17,6 +17,8 @@ Source compliance covers `RESOURCES.md`, source review drafts, connector approva
 - Automation-eligible resource: a resource whose configured allowed use and completed review evidence permit local automation planning.
 - Source review: a source-specific evidence file documenting terms, access method, robots/API policy, auth/CAPTCHA/private-data flags, rate limits, cache TTL, and allowed data shape.
 - Connector approval: a manual allowed-use change in `RESOURCES.md`, optionally previewed by helper commands. It is not automatic.
+- Auth approval: explicit permission for an authentication-required source review to proceed with local planning or dry-run implementation. It is not permission to commit secrets, store tokens, or make live requests.
+- Credential-storage review: confirmation that credentials/tokens for an auth-required source will be stored outside the repo and excluded from public artifacts, fixtures, logs intended for sharing, and committed files.
 - Fetch plan: a local plan describing allowed method, rate/cache policy, future cache path, and blockers. A fetch plan is not live collection.
 
 ### Connector Proof Paths
@@ -26,7 +28,7 @@ Connector proof paths validate shape and safety before live network access.
 - Fixture: a local synthetic or reviewed sample payload used to prove connector-shaped output.
 - Dry-run connector: a connector interface that returns fetch-plan and fixture proof information without network access or cache writes.
 - Fixture-daily run: an end-to-end local proof that writes a SQLite run from fixture data and regenerates derived artifacts.
-- Live connector: a future network-capable source implementation. Live connectors stay unsupported until official endpoint, query parameters, response-field schema, reuse terms, cache/rate policy, and failure behavior are confirmed.
+- Live connector: a future network-capable source implementation. Live connectors stay unsupported until official endpoint, query parameters, response-field schema, reuse terms, auth/runtime requirements when applicable, cache/rate policy, and failure behavior are confirmed.
 - poe.ninja POE2 Currency: the first approved API resource for fixture and dry-run proof. Live fetching remains blocked.
 
 ### Public Artifacts

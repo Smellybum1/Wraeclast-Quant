@@ -98,6 +98,8 @@ def test_connector_review_draft_defaults_are_conservative_and_not_ready() -> Non
     assert review.review_notes == ""
     assert review.allowed_data_shape == ""
     assert review.authentication_required is False
+    assert review.authentication_approved is False
+    assert review.credential_storage_reviewed is False
     assert review.login_required is False
     assert review.captcha_gated is False
     assert review.private_data_risk is False

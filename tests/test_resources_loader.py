@@ -21,7 +21,7 @@ def test_parses_existing_resources_file() -> None:
     assert any(resource.collector == "discord_placeholder" for resource in resources)
 
 
-def test_official_currency_exchange_resource_stays_manual_review() -> None:
+def test_official_currency_exchange_resource_is_source_approved_but_auth_gated() -> None:
     resources = load_resources(Path("RESOURCES.md"))
     resource = next(
         resource for resource in resources if resource.id == "official_currency_exchange_api"
@@ -29,10 +29,11 @@ def test_official_currency_exchange_resource_stays_manual_review() -> None:
     assessment = assess_preflight_resource(resource)
 
     assert resource.name == "Path of Exile Currency Exchange API"
-    assert resource.allowed_use == "manual-review"
+    assert resource.allowed_use == "api"
     assert "service:cxapi" in resource.notes
-    assert assessment.automation_eligible is False
-    assert assessment.status == "manual-review"
+    assert "credential storage outside the repo" in resource.notes
+    assert assessment.automation_eligible is True
+    assert assessment.status == "approved-api"
 
 
 def test_resource_defaults_and_inference() -> None:

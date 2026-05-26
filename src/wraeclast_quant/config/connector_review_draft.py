@@ -37,6 +37,8 @@ def build_connector_review_draft(
         review_notes="",
         allowed_data_shape="",
         authentication_required=False,
+        authentication_approved=False,
+        credential_storage_reviewed=False,
         login_required=False,
         captcha_gated=False,
         private_data_risk=False,

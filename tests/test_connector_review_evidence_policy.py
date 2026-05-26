@@ -48,6 +48,21 @@ def test_connector_review_evidence_preserves_omitted_fields() -> None:
     assert updated.allowed_data_shape == "Derived currency summary rows only."
 
 
+def test_connector_review_evidence_updates_auth_approval_fields() -> None:
+    review = build_connector_review_draft("Approved API", "api", [_eligible_resource()])
+
+    updated = update_connector_review_evidence(
+        review,
+        authentication_required=True,
+        authentication_approved=True,
+        credential_storage_reviewed=True,
+    )
+
+    assert updated.authentication_required is True
+    assert updated.authentication_approved is True
+    assert updated.credential_storage_reviewed is True
+
+
 def test_connector_review_evidence_rejects_invalid_rate_limit_or_cache_ttl() -> None:
     review = build_connector_review_draft("Approved API", "api", [_eligible_resource()])
 

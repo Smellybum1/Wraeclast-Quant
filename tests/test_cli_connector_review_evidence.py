@@ -41,6 +41,9 @@ def test_connector_review_evidence_updates_json_and_prints_status(tmp_path: Path
             "30",
             "--cache-ttl-seconds",
             "3600",
+            "--authentication-required",
+            "--authentication-approved",
+            "--credential-storage-reviewed",
         ],
     )
     updated = json.loads(review_path.read_text(encoding="utf-8"))
@@ -55,5 +58,8 @@ def test_connector_review_evidence_updates_json_and_prints_status(tmp_path: Path
     assert updated["robots_or_api_policy_url"] == "https://example.test/api-policy"
     assert updated["reviewed_at"] == "2026-05-23"
     assert updated["allowed_data_shape"] == "Derived currency summary rows only."
+    assert updated["authentication_required"] is True
+    assert updated["authentication_approved"] is True
+    assert updated["credential_storage_reviewed"] is True
     assert updated["rate_limit_per_minute"] == 30
     assert updated["cache_ttl_seconds"] == 3600

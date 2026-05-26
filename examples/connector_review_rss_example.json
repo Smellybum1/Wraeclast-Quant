@@ -9,6 +9,8 @@
   "review_notes": "Example review fixture for an approved RSS source.",
   "allowed_data_shape": "Feed entry titles, timestamps, links, and derived tags only.",
   "authentication_required": false,
+  "authentication_approved": false,
+  "credential_storage_reviewed": false,
   "login_required": false,
   "captcha_gated": false,
   "private_data_risk": false,

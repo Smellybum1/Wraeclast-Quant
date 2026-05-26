@@ -9,6 +9,8 @@
   "review_notes": "Example review fixture for an approved downloadable data source.",
   "allowed_data_shape": "Downloaded public rows normalized into derived local summaries only.",
   "authentication_required": false,
+  "authentication_approved": false,
+  "credential_storage_reviewed": false,
   "login_required": false,
   "captcha_gated": false,
   "private_data_risk": false,

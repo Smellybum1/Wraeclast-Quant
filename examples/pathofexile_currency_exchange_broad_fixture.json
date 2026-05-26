@@ -1,0 +1,101 @@
+{
+  "next_change_id": "1770007200",
+  "markets": [
+    {
+      "league": "Dawn of the Hunt",
+      "market_id": "chaos|divine",
+      "volume_traded": {
+        "chaos": 98200,
+        "divine": 812
+      },
+      "lowest_stock": {
+        "chaos": 4100,
+        "divine": 42
+      },
+      "highest_stock": {
+        "chaos": 6800,
+        "divine": 96
+      },
+      "lowest_ratio": {
+        "chaos": 121,
+        "divine": 1
+      },
+      "highest_ratio": {
+        "chaos": 128,
+        "divine": 1
+      }
+    },
+    {
+      "league": "Dawn of the Hunt",
+      "market_id": "exalted|divine",
+      "volume_traded": {
+        "exalted": 51100,
+        "divine": 704
+      },
+      "lowest_stock": {
+        "exalted": 5200,
+        "divine": 38
+      },
+      "highest_stock": {
+        "exalted": 9100,
+        "divine": 81
+      },
+      "lowest_ratio": {
+        "exalted": 69,
+        "divine": 1
+      },
+      "highest_ratio": {
+        "exalted": 74,
+        "divine": 1
+      }
+    },
+    {
+      "league": "Dawn of the Hunt",
+      "market_id": "chaos|regal",
+      "volume_traded": {
+        "chaos": 140000,
+        "regal": 13500
+      },
+      "lowest_stock": {
+        "chaos": 16000,
+        "regal": 2200
+      },
+      "highest_stock": {
+        "chaos": 21000,
+        "regal": 3100
+      },
+      "lowest_ratio": {
+        "chaos": 10,
+        "regal": 1
+      },
+      "highest_ratio": {
+        "chaos": 11,
+        "regal": 1
+      }
+    },
+    {
+      "league": "Dawn of the Hunt",
+      "market_id": "alchemy|chaos",
+      "volume_traded": {
+        "alchemy": 210000,
+        "chaos": 24000
+      },
+      "lowest_stock": {
+        "alchemy": 35000,
+        "chaos": 6200
+      },
+      "highest_stock": {
+        "alchemy": 42000,
+        "chaos": 8100
+      },
+      "lowest_ratio": {
+        "alchemy": 7,
+        "chaos": 1
+      },
+      "highest_ratio": {
+        "alchemy": 8,
+        "chaos": 1
+      }
+    }
+  ]
+}

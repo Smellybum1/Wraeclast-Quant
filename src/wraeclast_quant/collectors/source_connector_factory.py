@@ -19,6 +19,16 @@ def source_connector_from_review(
             review=connector.review,
             fetch_plan=connector.fetch_plan,
         )
+    if connector.resource.id == "official_currency_exchange_api":
+        from wraeclast_quant.collectors.pathofexile_currency_exchange_connector import (
+            OfficialCurrencyExchangeConnector,
+        )
+
+        return OfficialCurrencyExchangeConnector(
+            resource=connector.resource,
+            review=connector.review,
+            fetch_plan=connector.fetch_plan,
+        )
     return connector
 
 

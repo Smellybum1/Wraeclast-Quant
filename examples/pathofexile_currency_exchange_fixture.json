@@ -1,0 +1,53 @@
+{
+  "markets": [
+    {
+      "highest_ratio": {
+        "chaos": 128,
+        "divine": 1
+      },
+      "highest_stock": {
+        "chaos": 6800,
+        "divine": 96
+      },
+      "league": "Dawn of the Hunt",
+      "lowest_ratio": {
+        "chaos": 121,
+        "divine": 1
+      },
+      "lowest_stock": {
+        "chaos": 4300,
+        "divine": 42
+      },
+      "market_id": "chaos|divine",
+      "volume_traded": {
+        "chaos": 98200,
+        "divine": 812
+      }
+    },
+    {
+      "highest_ratio": {
+        "divine": 1,
+        "exalted": 74
+      },
+      "highest_stock": {
+        "divine": 81,
+        "exalted": 9100
+      },
+      "league": "Dawn of the Hunt",
+      "lowest_ratio": {
+        "divine": 1,
+        "exalted": 69
+      },
+      "lowest_stock": {
+        "divine": 37,
+        "exalted": 6200
+      },
+      "market_id": "exalted|divine",
+      "volume_traded": {
+        "divine": 704,
+        "exalted": 51100
+      }
+    }
+  ],
+  "next_change_id": 1770000000
+}

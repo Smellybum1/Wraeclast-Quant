@@ -34,6 +34,22 @@ def test_connector_review_report_ready_review_includes_fetch_plan() -> None:
     assert "Minimum request interval: `2.00s`" in report.markdown
 
 
+def test_connector_review_report_auth_review_includes_auth_gates() -> None:
+    report = connector_review_report(
+        _review(
+            authentication_required=True,
+            authentication_approved=True,
+            credential_storage_reviewed=True,
+        ),
+        [_eligible_resource()],
+    )
+
+    assert report.check_result.ready is True
+    assert "Authentication required: `yes`" in report.markdown
+    assert "Authentication approved: `yes`" in report.markdown
+    assert "Credential storage reviewed: `yes`" in report.markdown
+
+
 def test_connector_review_report_conditional_review_includes_approval_suggestion() -> None:
     report = connector_review_report(
         _review(resource_name="Conditional API"),

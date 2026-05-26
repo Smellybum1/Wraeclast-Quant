@@ -21,6 +21,8 @@ Copy this template when proposing a future source-specific connector. Do not pas
 - Reviewed at:
 - Allowed data shape:
 - Authentication required:
+- Authentication approved:
+- Credential storage reviewed:
 - Login wall, CAPTCHA, or access-control concerns:
 - Discord-specific review required:
 - Private data or private-message risk:

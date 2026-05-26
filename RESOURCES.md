@@ -142,7 +142,7 @@ Each resource may include:
 
 &#x20; priority: high
 
-&#x20; allowed\_use: manual-review
+&#x20; allowed\_use: api
 
 &#x20; collector: official\_currency\_exchange\_placeholder
 
@@ -150,7 +150,7 @@ Each resource may include:
 
 &#x20; reliability: high
 
-&#x20; notes: Official Currency Exchange API candidate for POE2 hourly aggregate market history. Requires service:cxapi, OAuth/app approval, user-agent/contact configuration, dynamic rate-limit handling, cache/backoff policy, and explicit user approval before any live connector work.
+&#x20; notes: User-approved official API source for POE2 hourly aggregate Currency Exchange market history. Live access still requires service:cxapi OAuth/app registration, identifiable user-agent/contact configuration, dynamic rate-limit handling, cache/backoff policy, credential storage outside the repo, and failure-closed tests before any live connector code is enabled.
 
 
 

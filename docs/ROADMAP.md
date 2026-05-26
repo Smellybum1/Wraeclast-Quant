@@ -458,16 +458,34 @@
 - poe.ninja POE2 currency live guard now reports source-specific endpoint, schema, reuse, rate-limit, and cache-policy blockers instead of a generic MVP refusal.
 - Official Path of Exile Currency Exchange API noted as a separate future source candidate requiring its own source review, API scope/user-agent handling, and user approval before live HTTP work.
 - Official Path of Exile Currency Exchange API review evidence recorded as a blocked local candidate; no `RESOURCES.md` approval, OAuth handling, credentials, or live HTTP were added.
-- Official Path of Exile Currency Exchange API added to `RESOURCES.md` as a `manual-review` draft resource with an OAuth/app-registration planning handoff; it is still not automation-eligible.
+- Official Path of Exile Currency Exchange API initially added to `RESOURCES.md` as a `manual-review` draft resource with an OAuth/app-registration planning handoff.
+- Official Path of Exile Currency Exchange API approved in `RESOURCES.md` for API planning; OAuth, credentials, live HTTP, cache writes, schema changes, and recommendation wiring remain separately gated.
+- Official Path of Exile Currency Exchange API raw fixture parser/normalizer proof added for the documented hourly aggregate market shape; it does not add signals, scoring, OAuth, cache writes, or live HTTP.
+- Official Path of Exile Currency Exchange API preview signal policy added for inspection only; it remains unwired from exports, snapshots, recommendations, public intel, and live HTTP.
+- Official Path of Exile Currency Exchange API preview signal policy reviewed and kept preview-only because relative single-payload scoring, neutral placeholders, stale-data behavior, and spread-risk proxies need more fixture coverage before recommendations.
+- Official Path of Exile Currency Exchange API low-liquidity/high-spread and broad multi-market fixtures added; preview tests confirm thin-market risk is surfaced and relative liquidity scores are payload-sensitive.
+- Official Path of Exile Currency Exchange API preview scoring direction set to a rolling local baseline, with fixed thresholds limited to conservative blockers or warning labels.
+- Official Path of Exile Currency Exchange API rolling-baseline diagnostics prototyped fixture-only; they compare markets against local history, block missing-history markets, and remain unwired from recommendations.
+- Official Path of Exile Currency Exchange API rolling-baseline freshness diagnostics added for `next_change_id` cadence, stale warnings, and out-of-order captures.
+- Official Path of Exile Currency Exchange API rolling-baseline coverage added for league separation and minimum local history requirements.
+- Official Path of Exile Currency Exchange API collector prototype split into focused model, fixture, metric, signal-preview, and baseline-preview helpers behind the stable facade.
+- Official Path of Exile Currency Exchange API cache/storage planning added with non-writing preview paths and a preview-only baseline-to-signal fixture conversion for unblocked diagnostics.
+- Official Path of Exile Currency Exchange API source-specific dry-run connector added for local raw fixture conversion, with live collection still blocked on OAuth, credential storage, dynamic rate limits, and cache writes.
+- Official Path of Exile Currency Exchange API dry-run connector covered through the existing `connector-dry-run` CLI workflow.
+- Connector review templates, generated checklists, and evidence-update commands now carry explicit auth approval and credential-storage review fields for authentication-required sources.
+- ADR 0002 records the separated gates for source approval, auth approval, credential-storage review, and later live OAuth/runtime implementation.
+- Connector review reports now include authentication approval and credential-storage review fields for auth-required sources.
+- Loose public intel and static site artifacts refreshed after the official Currency Exchange API approval change; strict status and publish-check are green without rebuilding the site bundle.
 
 ## Recommended Next Milestones
 
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
-- If pursuing official Path of Exile Currency Exchange data, start a separate review/resource packet for the official API and stop for source approval before adding credentials, scopes, user-agent configuration, or live network behavior.
-- Before official Currency Exchange implementation, get explicit approval for the resource entry, OAuth/app-registration path, user-agent/contact configuration, cache/backoff policy, and failure-closed tests.
-- Keep `official_currency_exchange_api` at `manual-review` until those auth/source decisions are made; do not reuse browser sessions or trade-site cookies for connector automation.
+- Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
+- Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.
+- Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
+- Review or commit the current official Currency Exchange planning/dry-run packet before starting live OAuth runtime work, because the remaining source work crosses auth, credential, cache, and external-service boundaries.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; likely next targets include CLI helper cleanup or public artifact contract cleanup.

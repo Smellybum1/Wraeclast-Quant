@@ -9,10 +9,14 @@ This note is a local source-review handoff for a possible future official Path o
 - Resource id: `official_currency_exchange_api`
 - Resource status: present in `RESOURCES.md` as `manual-review`
 - Access method: `api`
-- Current execution status: review evidence only
+- Current execution status: review evidence, local raw-fixture parser/normalizer proof, and preview-only signal policy
 - Live implementation status: `blocked`
 - Primary blockers: no automation-approved `RESOURCES.md` entry, OAuth/app-registration handling is not approved, the endpoint requires `service:cxapi`, dynamic rate-limit headers must be implemented, and user-agent/contact configuration must be approved before live HTTP.
 - OAuth/app-registration plan: `examples/reviews/pathofexile_currency_exchange_oauth_plan.md`
+- Raw fixture proof: `examples/pathofexile_currency_exchange_fixture.json`
+- Parser/normalizer: `wraeclast_quant.collectors.pathofexile_currency_exchange`
+- Preview signal policy: `examples/reviews/pathofexile_currency_exchange_signal_policy.md`
+- Preview policy review: `examples/reviews/pathofexile_currency_exchange_signal_policy_review.md`
 
 ## Reviewed Official Surfaces
 
@@ -40,6 +44,12 @@ The documented response shape includes:
 
 The endpoint requires the `service:cxapi` scope. The developer docs describe OAuth 2.1, application registration, identifiable OAuth user-agent requirements, dynamic rate-limit response headers, retry-after handling, and invalid-request restrictions.
 
+## Local Fixture Proof
+
+The local fixture proof reads a synthetic raw response matching the documented `next_change_id` and `markets` shape, validates the documented fields, and converts each market into the existing `ConnectorFixture` row contract for dry-run display.
+
+The converter intentionally does not attach normalized Wraeclast Quant signal scores to connector rows. A separate preview-only policy now defines candidate `0-100` signal formulas for inspection, but those signals remain unwired from manual-import export, daily snapshots, recommendations, public intel, and static dashboards.
+
 ## Allowed Draft Data Shape
 
 If this source is approved later, keep the local data shape narrow:
@@ -58,7 +68,7 @@ Do not store or export OAuth tokens, client credentials, cookies, private accoun
 
 - Ask the user before editing `RESOURCES.md` to add or approve this resource.
 - Ask the user before adding OAuth/app-registration configuration, credentials, scopes, client id handling, contact email/user-agent configuration, or live network behavior.
-- Implement only a dry-run and fixture path first.
+- Keep the raw fixture parser, converter, and preview signal policy local-only until source/auth approval is complete.
 - Specify cache reads/writes, TTL behavior, dynamic rate-limit parsing, retry-after handling, invalid-request limits, and failure-closed behavior.
 - Add tests for dry-run, fixture shape, cache hit, cache miss, 401/403/429, retry-after, malformed JSON, unknown schema, missing fields, and no snapshot writes on failures.
 - Keep public artifacts derived-only.

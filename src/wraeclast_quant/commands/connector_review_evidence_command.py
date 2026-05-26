@@ -29,6 +29,14 @@ def register(app: typer.Typer) -> None:
             None,
             "--authentication-required/--no-authentication-required",
         ),
+        authentication_approved: bool | None = typer.Option(
+            None,
+            "--authentication-approved/--no-authentication-approved",
+        ),
+        credential_storage_reviewed: bool | None = typer.Option(
+            None,
+            "--credential-storage-reviewed/--no-credential-storage-reviewed",
+        ),
         login_required: bool | None = typer.Option(None, "--login-required/--no-login-required"),
         captcha_gated: bool | None = typer.Option(None, "--captcha-gated/--no-captcha-gated"),
         private_data_risk: bool | None = typer.Option(
@@ -46,6 +54,8 @@ def register(app: typer.Typer) -> None:
             rate_limit_per_minute=rate_limit_per_minute,
             cache_ttl_seconds=cache_ttl_seconds,
             authentication_required=authentication_required,
+            authentication_approved=authentication_approved,
+            credential_storage_reviewed=credential_storage_reviewed,
             login_required=login_required,
             captcha_gated=captcha_gated,
             private_data_risk=private_data_risk,

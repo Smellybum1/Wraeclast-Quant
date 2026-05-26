@@ -18,6 +18,8 @@ def update_connector_review_evidence(
     rate_limit_per_minute: float | None = None,
     cache_ttl_seconds: int | None = None,
     authentication_required: bool | None = None,
+    authentication_approved: bool | None = None,
+    credential_storage_reviewed: bool | None = None,
     login_required: bool | None = None,
     captcha_gated: bool | None = None,
     private_data_risk: bool | None = None,
@@ -47,6 +49,10 @@ def update_connector_review_evidence(
         data["cache_ttl_seconds"] = cache_ttl_seconds
     if authentication_required is not None:
         data["authentication_required"] = authentication_required
+    if authentication_approved is not None:
+        data["authentication_approved"] = authentication_approved
+    if credential_storage_reviewed is not None:
+        data["credential_storage_reviewed"] = credential_storage_reviewed
     if login_required is not None:
         data["login_required"] = login_required
     if captcha_gated is not None:

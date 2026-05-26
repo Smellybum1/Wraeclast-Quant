@@ -13,6 +13,8 @@ Before implementation, complete a source-specific review that answers:
 - Have source terms, API terms, and usage policies been reviewed?
 - Has robots.txt or the source API policy been reviewed where applicable?
 - Does the source require authentication, login, cookies, tokens, or account access?
+- If authentication is required, has the auth method been explicitly approved?
+- If authentication is required, has credential storage outside the repo been reviewed?
 - What rate limit, backoff behavior, and retry budget will the connector use?
 - What cache TTL will be used to avoid repeated source hits?
 - What data shape will be collected, normalized, stored, and exported?
@@ -41,6 +43,8 @@ Use `wq connector-review-prep --resource <id-or-name> --access-method api|rss|do
 Use `wq connector-draft --resource <id-or-name> --access-method api|rss|download|manual-export --output-path <file>` to create a local machine-readable review draft from a configured resource. The draft keeps human review confirmations set to false and evidence fields empty, so it should not pass the gate until source terms and API/robots policy have been manually reviewed and edited.
 
 Evidence fields are optional while a review is still a draft. Once `source_terms_reviewed` and `robots_or_api_policy_reviewed` are set to true, `wq connector-check` requires the reviewed terms URL, reviewed robots/API policy URL, review date, and allowed data shape. Review notes remain optional.
+
+Authentication-required sources must also set `authentication_approved` and `credential_storage_reviewed` before `wq connector-check` can pass. These fields approve planning and dry-run implementation only. They do not permit secrets in the repo, token storage, live HTTP, cache writes, or background polling unless a later implementation packet explicitly adds and verifies that runtime behavior.
 
 Use `wq connector-review-evidence --review-path <file>` after manual human review to update the local review JSON without hand-editing. Evidence update only records user-provided values, writes the local review file, and prints review status. It does not verify URLs, browse, fetch, approve a source, edit `RESOURCES.md`, or implement a connector.
 
@@ -85,6 +89,8 @@ Discord is always compliance-gated. Future Discord work must use an approved bot
 
 Every real connector must keep a dry-run path that performs no network access and explains what would be collected. Live collection must cache aggressively, obey source limits, and fail closed when compliance metadata is missing or unclear.
 
+Authentication-required connectors must also fail closed when credentials, token refresh, user-agent/contact configuration, rate-limit headers, or cache writes are missing or invalid. Credentials and tokens must be configured outside the repo and must never appear in review files, source code, fixtures, public artifacts, logs intended for sharing, or `.env` files committed to the project.
+
 The first implementation for a source should be narrow: one source, one data shape, one cache policy, and focused tests. Broad scraping frameworks are out of scope.
 
 ## Derived Public Intel
@@ -111,6 +117,7 @@ A future connector can be considered for implementation only when:
 - `wq connector-plan --review-path <file>` produces a safe local fetch plan
 - rate limits, backoff, cache TTL, and dry-run behavior are specified
 - review evidence records source terms URL, policy URL, review date, notes, and allowed data shape
+- authentication-required reviews record explicit auth approval and credential-storage review
 - raw-vs-derived data handling is specified
 - tests are planned for success, dry-run, cache use, limit handling, and failure modes
 

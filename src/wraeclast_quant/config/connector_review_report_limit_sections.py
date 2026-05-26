@@ -9,6 +9,8 @@ def safety_section(review: ConnectorReview) -> list[str]:
         "## Safety Flags",
         "",
         f"- Authentication required: `{yes_no(review.authentication_required)}`",
+        f"- Authentication approved: `{yes_no(review.authentication_approved)}`",
+        f"- Credential storage reviewed: `{yes_no(review.credential_storage_reviewed)}`",
         f"- Login required: `{yes_no(review.login_required)}`",
         f"- CAPTCHA gated: `{yes_no(review.captcha_gated)}`",
         f"- Private data risk: `{yes_no(review.private_data_risk)}`",

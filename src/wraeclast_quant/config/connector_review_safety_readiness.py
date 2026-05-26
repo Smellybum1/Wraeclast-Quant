@@ -4,8 +4,10 @@ from wraeclast_quant.config.connector_policy_models import ConnectorReview
 
 
 def add_review_safety_blockers(review: ConnectorReview, blockers: list[str]) -> None:
-    if review.authentication_required:
-        blockers.append("Authentication-required sources are not eligible in this gate.")
+    if review.authentication_required and not review.authentication_approved:
+        blockers.append("Authentication-required sources need explicit auth approval.")
+    if review.authentication_required and not review.credential_storage_reviewed:
+        blockers.append("Authentication-required sources need credential-storage review.")
     if review.login_required:
         blockers.append("Login-required sources are not eligible in this gate.")
     if review.captcha_gated:

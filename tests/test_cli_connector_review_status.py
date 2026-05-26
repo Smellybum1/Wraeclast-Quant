@@ -98,4 +98,5 @@ def test_connector_review_status_escapes_endpoint_brackets() -> None:
     assert result.exit_code == 0
     assert "Connector Review Status" in result.output
     assert "Path of Exile Currency Exchange API" in result.output
-    assert "Authentication-required sources are not eligible" in result.output
+    assert "Authentication approved" in result.output
+    assert "Credential storage reviewed" in result.output

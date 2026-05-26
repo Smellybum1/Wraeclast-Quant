@@ -2,6 +2,8 @@
   "access_method": "api",
   "allowed_data_shape": "",
   "authentication_required": false,
+  "authentication_approved": false,
+  "credential_storage_reviewed": false,
   "cache_ttl_seconds": 86400,
   "captcha_gated": false,
   "dry_run_supported": true,

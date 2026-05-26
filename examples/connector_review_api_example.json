@@ -9,6 +9,8 @@
   "review_notes": "Example review fixture for an approved API source.",
   "allowed_data_shape": "Derived public API summary rows only.",
   "authentication_required": false,
+  "authentication_approved": false,
+  "credential_storage_reviewed": false,
   "login_required": false,
   "captcha_gated": false,
   "private_data_risk": false,

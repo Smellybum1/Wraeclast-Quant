@@ -24,6 +24,8 @@ def render_review_checklist(review: ConnectorReview, review_path: Path) -> str:
             "- [ ] Reviewed date",
             "- [ ] Allowed data shape",
             "- [ ] Authentication required: yes/no",
+            "- [ ] Authentication approved: yes/no",
+            "- [ ] Credential storage reviewed: yes/no",
             "- [ ] Login required: yes/no",
             "- [ ] CAPTCHA gated: yes/no",
             "- [ ] Private data risk: yes/no",

@@ -16,6 +16,8 @@ class ConnectorReview(BaseModel):
     review_notes: str = ""
     allowed_data_shape: str = ""
     authentication_required: bool = False
+    authentication_approved: bool = False
+    credential_storage_reviewed: bool = False
     login_required: bool = False
     captcha_gated: bool = False
     private_data_risk: bool = False
