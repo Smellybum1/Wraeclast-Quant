@@ -11,6 +11,12 @@ from cli_connector_fixture_command_helpers import (
     connector_fixture_run_args as _connector_fixture_run_args,
 )
 from cli_daily_command_helpers import daily_args as _daily_args
+from cli_currency_exchange_manual_snapshot_helpers import (
+    MANUAL_SNAPSHOT_TEMPLATE as _MANUAL_SNAPSHOT_TEMPLATE,
+)
+from cli_currency_exchange_manual_snapshot_helpers import (
+    currency_exchange_manual_snapshot_args as _currency_exchange_manual_snapshot_args,
+)
 from cli_manual_import_command_helpers import validate_import_args as _validate_import_args
 
 
@@ -20,11 +26,7 @@ runner = CliRunner()
 def test_currency_exchange_manual_snapshot_prints_rows() -> None:
     result = runner.invoke(
         app,
-        [
-            "currency-exchange-manual-snapshot",
-            "--input-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-        ],
+        _currency_exchange_manual_snapshot_args(),
     )
 
     assert result.exit_code == 0
@@ -41,15 +43,10 @@ def test_currency_exchange_manual_snapshot_writes_connector_fixture_with_history
 
     result = runner.invoke(
         app,
-        [
-            "currency-exchange-manual-snapshot",
-            "--input-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--history-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--output-fixture-path",
-            str(output_path),
-        ],
+        _currency_exchange_manual_snapshot_args(
+            history_path=_MANUAL_SNAPSHOT_TEMPLATE,
+            output_fixture_path=output_path,
+        ),
     )
     payload = json.loads(output_path.read_text(encoding="utf-8"))
 
@@ -65,15 +62,10 @@ def test_currency_exchange_manual_snapshot_output_feeds_fixture_runner(
     output_path = tmp_path / "currency_exchange_fixture.json"
     write_result = runner.invoke(
         app,
-        [
-            "currency-exchange-manual-snapshot",
-            "--input-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--history-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--output-fixture-path",
-            str(output_path),
-        ],
+        _currency_exchange_manual_snapshot_args(
+            history_path=_MANUAL_SNAPSHOT_TEMPLATE,
+            output_fixture_path=output_path,
+        ),
     )
 
     run_result = runner.invoke(
@@ -94,15 +86,10 @@ def test_currency_exchange_manual_snapshot_output_exports_to_manual_import(
     import_path = tmp_path / "currency_exchange_manual_import.json"
     write_result = runner.invoke(
         app,
-        [
-            "currency-exchange-manual-snapshot",
-            "--input-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--history-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--output-fixture-path",
-            str(fixture_path),
-        ],
+        _currency_exchange_manual_snapshot_args(
+            history_path=_MANUAL_SNAPSHOT_TEMPLATE,
+            output_fixture_path=fixture_path,
+        ),
     )
     export_result = runner.invoke(
         app,
@@ -131,15 +118,10 @@ def test_currency_exchange_manual_snapshot_output_runs_daily_pipeline(
     site_dir = tmp_path / "site"
     runner.invoke(
         app,
-        [
-            "currency-exchange-manual-snapshot",
-            "--input-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--history-path",
-            "examples/pathofexile_currency_exchange_manual_snapshot_template.json",
-            "--output-fixture-path",
-            str(fixture_path),
-        ],
+        _currency_exchange_manual_snapshot_args(
+            history_path=_MANUAL_SNAPSHOT_TEMPLATE,
+            output_fixture_path=fixture_path,
+        ),
     )
     runner.invoke(
         app,
@@ -174,11 +156,7 @@ def test_currency_exchange_manual_snapshot_rejects_invalid_input(tmp_path: Path)
 
     result = runner.invoke(
         app,
-        [
-            "currency-exchange-manual-snapshot",
-            "--input-path",
-            str(input_path),
-        ],
+        _currency_exchange_manual_snapshot_args(input_path=input_path),
     )
 
     assert result.exit_code != 0

@@ -492,6 +492,7 @@
 - Local official Currency Exchange manual snapshot output covered through connector-fixture export and manual-import validation, proving the no-OAuth path can reach normalized scoring input without writing snapshots.
 - Local official Currency Exchange manual snapshot output covered through the existing daily `--input-path` pipeline using temp SQLite/artifacts, proving the no-OAuth path can produce local derived outputs without live collection.
 - Shared context, data-source, and design docs aligned with the Currency Exchange manual snapshot bridge so future work treats it as local-only rather than live collection.
+- Currency Exchange manual snapshot CLI test arguments extracted into a focused helper while preserving command coverage and behavior.
 
 ## Recommended Next Milestones
 
