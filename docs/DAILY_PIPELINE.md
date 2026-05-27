@@ -41,7 +41,7 @@ One daily run:
 
 Daily does not call other CLI commands internally. It reuses lower-level scoring, storage, report, export, site, and alert functions so one run id is used consistently across artifacts.
 
-Manual-import daily runs record local provenance with the input file name, suffix, relative path when one was supplied, redacted absolute-path metadata when needed, item count, and explicit `live_collection=false` / `source_approval=false` flags. Connector fixture daily uses the shared workflow after connector review/check and fetch-plan readiness pass. It records `source_mode="connector-fixture"` and local provenance for the created run, then writes the same market brief, public intel, static dashboard, and alert preview artifacts from that run.
+Manual-import daily runs record local provenance with the input file name, suffix, relative path when one was supplied, redacted absolute-path metadata when needed, file size, SHA-256 hash, item count, and explicit `live_collection=false` / `source_approval=false` flags. Connector fixture daily uses the shared workflow after connector review/check and fetch-plan readiness pass. It records `source_mode="connector-fixture"` and local provenance for the created run, then writes the same market brief, public intel, static dashboard, and alert preview artifacts from that run.
 
 ## Default Paths
 

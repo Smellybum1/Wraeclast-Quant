@@ -681,6 +681,7 @@
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.
 - Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.
+- Manual-import daily provenance now includes file size and SHA-256 hash metadata so future no-OAuth runs can be verified against the local input file without storing raw signals in public artifacts.
 
 ## Later Intelligence Improvements
 

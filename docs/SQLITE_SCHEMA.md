@@ -78,7 +78,7 @@ Required SQLite tables:
 - `metadata_json`
 - `created_at`
 
-Manual-import daily provenance uses this table for local audit metadata such as input file name, suffix, path kind, redacted absolute-path details when applicable, item count, and explicit no-live-collection flags. Connector-fixture provenance uses the same table for fixture/review audit metadata.
+Manual-import daily provenance uses this table for local audit metadata such as input file name, suffix, path kind, redacted absolute-path details when applicable, file size, SHA-256 hash, item count, and explicit no-live-collection flags. Connector-fixture provenance uses the same table for fixture/review audit metadata.
 
 ## Read-Only Behavior
 

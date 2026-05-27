@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -82,6 +83,9 @@ def test_daily_input_path_records_local_manual_import_provenance(tmp_path: Path)
     assert provenance.access_method == "local-file"
     assert provenance.metadata["input_file_name"] == input_path.name
     assert provenance.metadata["input_path"] == "<absolute path omitted>"
+    input_bytes = input_path.read_bytes()
+    assert provenance.metadata["input_file_size_bytes"] == len(input_bytes)
+    assert provenance.metadata["input_sha256"] == hashlib.sha256(input_bytes).hexdigest()
     assert provenance.metadata["manual_import_item_count"] == 1
     assert provenance.metadata["live_collection"] is False
     assert provenance.metadata["source_approval"] is False
@@ -111,5 +115,6 @@ def test_daily_input_path_run_provenance_cli_shows_redacted_local_metadata(tmp_p
     assert "Source kind" in provenance_result.output
     assert "manual-import" in provenance_result.output
     assert "input_file_name" in provenance_result.output
+    assert "input_sha256" in provenance_result.output
     assert "<absolute path omitted>" in provenance_result.output
     assert "Run provenance is local-only and read-only" in provenance_result.output

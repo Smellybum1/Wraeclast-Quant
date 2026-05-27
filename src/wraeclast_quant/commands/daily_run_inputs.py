@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 
 import typer
@@ -42,6 +43,10 @@ def daily_manual_import_provenance(
 ) -> RunProvenanceInput | None:
     if input_path is None:
         return None
+    try:
+        input_bytes = input_path.read_bytes()
+    except OSError as error:
+        raise typer.BadParameter(f"Could not read manual import for provenance: {error}") from error
     return RunProvenanceInput(
         source_kind="manual-import",
         resource_name="Local manual import",
@@ -52,6 +57,8 @@ def daily_manual_import_provenance(
             "input_file_suffix": input_path.suffix.lower(),
             "input_path_kind": "absolute" if input_path.is_absolute() else "relative",
             "input_path": "<absolute path omitted>" if input_path.is_absolute() else str(input_path),
+            "input_file_size_bytes": len(input_bytes),
+            "input_sha256": hashlib.sha256(input_bytes).hexdigest(),
             "manual_import_item_count": item_count,
             "live_collection": False,
             "source_approval": False,
