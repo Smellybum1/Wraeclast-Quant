@@ -605,12 +605,14 @@
 
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
+- Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
 - Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.
 - Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
 - Do not pursue GGG OAuth access or live official Currency Exchange HTTP for now; focus on non-OAuth manual/fixture workflows and local decision-support.
 - Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local manual observations; add `--history-path` and `--output-fixture-path` when creating a local preview connector fixture.
+- For the next no-OAuth MVP proof, prefer a user-supplied current manual Currency Exchange snapshot, then run `wq daily --input-path <validated-local-input>` and review the resulting recommendations.
 - Exile-UI/Stash-Ninja companion support now starts with a derived-only local watchlist export; do not write Exile-UI settings or price caches.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
@@ -672,6 +674,7 @@
 - Stash-Ninja handoff health has direct contract tests for missing files, valid payloads, invalid JSON, stale schema, and required manual-only safety flags.
 - Watchlist table rendering and review-guidance text are split from command registration behind a focused helper, preserving CLI output and local review next actions.
 - Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
+- Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 
 ## Later Intelligence Improvements
 
