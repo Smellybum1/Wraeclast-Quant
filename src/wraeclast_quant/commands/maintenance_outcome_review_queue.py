@@ -10,6 +10,7 @@ from wraeclast_quant.commands.maintenance_outcome_review_queue_rendering import 
     print_review_coverage,
     print_review_queue,
 )
+from wraeclast_quant.reports.review_queue_worksheet import write_review_queue_worksheet
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -20,6 +21,11 @@ def register(app: typer.Typer) -> None:
         database_path: Path = typer.Option(DEFAULT_DATABASE_PATH, "--database-path"),
         run_id: int | None = typer.Option(None, "--run-id", min=1, help="Analysis run id. Defaults to the latest run."),
         limit: int = typer.Option(20, "--limit", min=1, max=100),
+        output_path: Path | None = typer.Option(
+            None,
+            "--output-path",
+            help="Write a local Markdown review worksheet for the unreviewed queue.",
+        ),
     ) -> None:
         repository = SnapshotRepository(database_path)
         run = repository.analysis_run(run_id) if run_id is not None else repository.latest_run()
@@ -35,6 +41,14 @@ def register(app: typer.Typer) -> None:
             return
 
         print_review_queue(run.id, run.source_mode, opportunities)
+        if output_path is not None:
+            write_review_queue_worksheet(
+                output_path,
+                run_id=run.id,
+                source_mode=run.source_mode,
+                opportunities=opportunities,
+            )
+            typer.echo(f"Wrote review queue worksheet to {output_path}")
 
     @app.command("review-coverage")
     def review_coverage(

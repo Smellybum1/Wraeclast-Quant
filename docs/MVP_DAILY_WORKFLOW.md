@@ -40,6 +40,7 @@ wq daily --input-path <manual-import-output>
 ```powershell
 wq status --strict
 wq review-queue
+wq review-queue --output-path data/processed/review_queue.md
 wq review-coverage
 ```
 

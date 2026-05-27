@@ -31,10 +31,17 @@ def outcomes_args(database_path: Path) -> list[str]:
     return ["outcomes", "--database-path", str(database_path)]
 
 
-def review_queue_args(database_path: Path, *, run_id: int | None = None) -> list[str]:
+def review_queue_args(
+    database_path: Path,
+    *,
+    run_id: int | None = None,
+    output_path: Path | None = None,
+) -> list[str]:
     args = ["review-queue", "--database-path", str(database_path)]
     if run_id is not None:
         args.extend(["--run-id", str(run_id)])
+    if output_path is not None:
+        args.extend(["--output-path", str(output_path)])
     return args
 
 

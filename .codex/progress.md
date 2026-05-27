@@ -849,3 +849,5 @@
 - Verification: bundled Python focused tests `tests/test_cli_review_coverage.py tests/test_cli_review_queue.py tests/test_cli_record_outcome.py --basetemp=.tmp-pytest-mvp-coverage-next -p no:cacheprovider` passed with 11 tests.
 - Completed packet: static dashboard review guidance now points to the run-specific `wq review-queue --run-id <id>` command before outcome recording.
 - Verification: bundled Python focused tests `tests/test_static_site.py tests/test_static_site_safety.py tests/test_static_site_io.py tests/test_cli_site.py --basetemp=.tmp-pytest-mvp-static-review-action -p no:cacheprovider` passed with 12 tests.
+- Completed packet: added `wq review-queue --output-path <file>` to write a local Markdown review worksheet for unreviewed recommendations without recording outcomes or changing public artifacts.
+- Verification: bundled Python focused review/outcome and MVP/docs helper tests passed with 21 tests; `review-queue --output-path .tmp-review-worksheet\review_queue.md` wrote the current run #10 worksheet; `git diff --check`, `status --strict`, and `publish-check` passed.

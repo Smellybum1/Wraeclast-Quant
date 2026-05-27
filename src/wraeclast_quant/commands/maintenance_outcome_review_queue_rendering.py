@@ -3,6 +3,11 @@ from __future__ import annotations
 from rich.console import Console
 from rich.table import Table
 
+from wraeclast_quant.reports.review_queue_worksheet import (
+    local_review_caveat,
+    outcome_label_guide,
+    record_outcome_command,
+)
 from wraeclast_quant.storage.models import ReviewCoverageRecord, StoredOpportunityRecord
 
 console = Console(width=260)
@@ -32,8 +37,8 @@ def print_review_queue(
             opportunity.action,
     )
     console.print(table)
-    console.print(_local_review_caveat(source_mode))
-    console.print(_outcome_label_guide())
+    console.print(local_review_caveat(source_mode))
+    console.print(outcome_label_guide())
     console.print(_record_outcome_command_templates(run_id, opportunities))
 
 
@@ -50,24 +55,10 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
         f"{coverage.reviewed_percent:.1f}%",
     )
     console.print(table)
-    console.print(_local_review_caveat(source_mode))
-    console.print(_outcome_label_guide())
+    console.print(local_review_caveat(source_mode))
+    console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
         console.print(f"Next: run wq review-queue --run-id {run_id} to see item-specific review commands.")
-
-
-def _local_review_caveat(source_mode: str) -> str:
-    return (
-        f"Run source: {source_mode}. Review outcomes are local decision-support only; "
-        "no trades, whispers, gameplay, publishing, or live collection are performed."
-    )
-
-
-def _outcome_label_guide() -> str:
-    return (
-        "Outcome labels: positive=useful signal, neutral=mixed or unclear, "
-        "negative=not useful after review."
-    )
 
 
 def _record_outcome_command_templates(
@@ -76,14 +67,5 @@ def _record_outcome_command_templates(
 ) -> str:
     lines = ["Suggested review commands:"]
     for opportunity in opportunities:
-        lines.append(
-            "  wq record-outcome "
-            f"--run-id {run_id} "
-            f'--item-name "{_powershell_double_quoted_text(opportunity.item_name)}" '
-            "--outcome positive|neutral|negative"
-        )
+        lines.append(f"  {record_outcome_command(run_id, opportunity.item_name)}")
     return "\n".join(lines)
-
-
-def _powershell_double_quoted_text(value: str) -> str:
-    return value.replace("`", "``").replace('"', '`"')

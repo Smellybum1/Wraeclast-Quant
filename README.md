@@ -60,7 +60,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq restore-helper --backup-path <file>` verifies a backup and prints a manual PowerShell restore command without writing files.
 - `wq migration-readiness` checks whether the current database and latest backup are ready before future SQLite schema work. See `docs/MIGRATIONS.md`.
 - `wq run-provenance` inspects local audit metadata for the latest run or a selected run.
-- `wq review-queue` shows recommendations from the latest run that still need manual outcome review.
+- `wq review-queue` shows recommendations from the latest run that still need manual outcome review; add `--output-path <file>` to write a local Markdown review worksheet without recording outcomes.
 - `wq review-coverage` shows how much of a run has recorded manual outcome review.
 - `wq record-outcome --run-id <id> --item-name <name> --outcome positive` records a local manual review result for a recommendation. See `docs/OUTCOMES.md` for the outcome review contract.
 - `wq outcomes` shows recent local recommendation outcomes and summary counts.
