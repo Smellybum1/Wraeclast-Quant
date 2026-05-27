@@ -8,35 +8,10 @@ from wraeclast_quant.storage.repositories import SnapshotRepository
 
 from cli_domain_helpers import opportunity as _opportunity
 from cli_snapshot_helpers import save_scored_run as _save_scored_run
+from cli_stash_ninja_helpers import stash_ninja_args as _stash_ninja_args
 
 
 runner = CliRunner()
-
-
-def _stash_ninja_args(
-    database_path: Path,
-    output_path: Path,
-    markdown_output_path: Path | None = None,
-    run_id: int | None = None,
-    limit: int | None = None,
-    min_score: float | None = None,
-) -> list[str]:
-    args = [
-        "stash-ninja-watchlist",
-        "--database-path",
-        str(database_path),
-        "--output-path",
-        str(output_path),
-    ]
-    if markdown_output_path is not None:
-        args.extend(["--markdown-output-path", str(markdown_output_path)])
-    if run_id is not None:
-        args.extend(["--run-id", str(run_id)])
-    if limit is not None:
-        args.extend(["--limit", str(limit)])
-    if min_score is not None:
-        args.extend(["--min-score", str(min_score)])
-    return args
 
 
 def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: Path) -> None:
@@ -108,59 +83,3 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert f"wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in markdown
     assert "| Divine Orb | 82.50 | BUY | bookmark-candidate |" in markdown
     assert "Low Signal Base" not in markdown
-
-
-def test_stash_ninja_watchlist_can_select_run_and_score_threshold(tmp_path: Path) -> None:
-    repository = SnapshotRepository(tmp_path / "snapshots.db")
-    selected = _save_scored_run(
-        repository,
-        [
-            _opportunity("Selected Watch", 60.0, "WATCH"),
-            _opportunity("Selected Skip", 54.0, "HOLD / SELL SELECTIVELY"),
-        ],
-        source_mode="manual-import",
-    )
-    _save_scored_run(
-        repository,
-        [_opportunity("Latest Item", 90.0, "BUY")],
-        source_mode="connector-fixture",
-    )
-    output_path = tmp_path / "selected.json"
-
-    result = runner.invoke(
-        app,
-        _stash_ninja_args(
-            repository.database_path,
-            output_path,
-            run_id=selected.id,
-            min_score=55.0,
-        ),
-    )
-
-    assert result.exit_code == 0
-    payload = json.loads(output_path.read_text(encoding="utf-8"))
-    assert payload["latest_run"]["id"] == selected.id
-    assert [item["item_name"] for item in payload["items"]] == ["Selected Watch"]
-
-
-def test_stash_ninja_watchlist_reports_missing_database(tmp_path: Path) -> None:
-    result = runner.invoke(
-        app,
-        _stash_ninja_args(tmp_path / "missing.db", tmp_path / "stash_ninja.json"),
-    )
-
-    assert result.exit_code == 0
-    assert "No snapshots found." in result.output
-
-
-def test_stash_ninja_watchlist_reports_missing_run(tmp_path: Path) -> None:
-    repository = SnapshotRepository(tmp_path / "snapshots.db")
-    _save_scored_run(repository, [_opportunity("Known Item", 60.0, "WATCH")])
-
-    result = runner.invoke(
-        app,
-        _stash_ninja_args(repository.database_path, tmp_path / "stash_ninja.json", run_id=99),
-    )
-
-    assert result.exit_code == 0
-    assert "Analysis run #99 was not found." in result.output
