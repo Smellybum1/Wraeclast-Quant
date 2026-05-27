@@ -7,6 +7,7 @@ from typing import Any
 import typer
 
 from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
+    post_outcome_record_next_steps,
     print_no_outcomes,
     print_outcome_record,
     print_recent_outcomes,
@@ -76,10 +77,7 @@ def register(app: typer.Typer) -> None:
             raise typer.BadParameter(str(error)) from error
 
         typer.echo(f"Recorded {len(records)} outcome(s) for run #{run_id} from {input_path}.")
-        typer.echo(
-            f"Next: wq review-coverage --run-id {run_id}; "
-            "run wq export, wq site, and wq site-bundle when you want derived artifacts refreshed."
-        )
+        typer.echo(post_outcome_record_next_steps(run_id))
 
     @app.command()
     def outcomes(

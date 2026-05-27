@@ -9,12 +9,17 @@ from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 console = Console(width=260)
 
 
+def post_outcome_record_next_steps(run_id: int) -> str:
+    return (
+        f"Next: wq review-coverage --run-id {run_id}; "
+        "then wq outcomes, wq outcome-review, and wq calibration for local feedback. "
+        "Run wq export, wq site, and wq site-bundle when you want derived artifacts refreshed."
+    )
+
+
 def print_outcome_record(record: RecommendationOutcomeRecord) -> None:
     console.print(f"Recorded {record.outcome} outcome for '{record.item_name}' from run #{record.run_id}.")
-    console.print(
-        f"Next: wq review-coverage --run-id {record.run_id}; "
-        "run wq export, wq site, and wq site-bundle when you want derived artifacts refreshed."
-    )
+    console.print(post_outcome_record_next_steps(record.run_id))
 
 
 def print_recent_outcomes(
@@ -51,3 +56,11 @@ def print_recent_outcomes(
 
 def print_no_outcomes() -> None:
     console.print("No recommendation outcomes recorded.")
+
+
+__all__ = [
+    "post_outcome_record_next_steps",
+    "print_no_outcomes",
+    "print_outcome_record",
+    "print_recent_outcomes",
+]

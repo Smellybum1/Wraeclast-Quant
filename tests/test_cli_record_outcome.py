@@ -27,6 +27,7 @@ def test_record_outcome_command_saves_manual_outcome(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert "Recorded positive outcome" in result.output
     assert "wq review-coverage --run-id 1" in result.output
+    assert "wq outcomes, wq outcome-review, and wq calibration" in result.output
     assert "wq export, wq site, and wq site-bundle" in result.output
     assert len(records) == 1
     assert records[0].item_name == "Stormglass Catalyst"
@@ -77,6 +78,7 @@ def test_record_outcomes_command_saves_human_reviewed_batch(tmp_path: Path) -> N
     assert result.exit_code == 0
     assert "Recorded 2 outcome(s) for run #1" in result.output
     assert "wq review-coverage --run-id 1" in result.output
+    assert "wq outcomes, wq outcome-review, and wq calibration" in result.output
     assert len(records) == 2
     assert {record.item_name for record in records} == {"Stormglass Catalyst", "Ashen Rune Core"}
     assert {record.outcome for record in records} == {"positive", "neutral"}
