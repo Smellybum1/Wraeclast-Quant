@@ -5,6 +5,7 @@ import pytest
 
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation import (
     currency_exchange_ui_observation_manual_import_payload,
+    currency_exchange_ui_observation_review_notes,
     load_currency_exchange_ui_observation,
     ratio_to_float,
 )
@@ -80,6 +81,21 @@ def test_ui_observation_output_is_manual_import_compatible(tmp_path: Path) -> No
 
     assert len(items) == 2
     assert items[0]["name"] == "Chaos Orb / Divine Orb (Standard UI)"
+
+
+def test_ui_observation_review_notes_summarize_visible_rows(tmp_path: Path) -> None:
+    input_path = tmp_path / "ui_observation.json"
+    write_ui_observation(input_path)
+    snapshot = load_currency_exchange_ui_observation(input_path)
+
+    notes = currency_exchange_ui_observation_review_notes(snapshot)
+
+    assert "Currency Exchange UI Observation Review Notes" in notes
+    assert "Chaos Orb / Divine Orb (Standard UI)" in notes
+    assert "<22:1 stock 214,257" in notes
+    assert "Divine Orb / Regal Orb (Standard UI)" in notes
+    assert "No Stock" in notes
+    assert "Do not record outcomes until a human review decision has been made." in notes
 
 
 def test_ui_observation_rejects_empty_observations(tmp_path: Path) -> None:

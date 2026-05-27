@@ -52,14 +52,22 @@ def write_ui_observation(path: Path) -> None:
     )
 
 
-def ui_observation_args(input_path: Path, output_path: Path) -> list[str]:
-    return [
+def ui_observation_args(
+    input_path: Path,
+    output_path: Path,
+    *,
+    review_notes_output_path: Path | None = None,
+) -> list[str]:
+    args = [
         "currency-exchange-ui-observation",
         "--input-path",
         str(input_path),
         "--output-path",
         str(output_path),
     ]
+    if review_notes_output_path is not None:
+        args.extend(["--review-notes-output-path", str(review_notes_output_path)])
+    return args
 
 
 def test_currency_exchange_ui_observation_writes_manual_import_json(tmp_path: Path) -> None:
@@ -76,6 +84,29 @@ def test_currency_exchange_ui_observation_writes_manual_import_json(tmp_path: Pa
     assert "wq validate-import" in result.output
     assert payload["items"][0]["name"] == "Chaos Orb / Divine Orb (Standard UI)"
     assert "signals" in payload["items"][0]
+
+
+def test_currency_exchange_ui_observation_writes_review_notes_sidecar(tmp_path: Path) -> None:
+    input_path = tmp_path / "ui_observation.json"
+    output_path = tmp_path / "manual_import.json"
+    review_notes_path = tmp_path / "ui_observation_review.md"
+    write_ui_observation(input_path)
+
+    result = runner.invoke(
+        app,
+        ui_observation_args(
+            input_path,
+            output_path,
+            review_notes_output_path=review_notes_path,
+        ),
+    )
+    notes = review_notes_path.read_text(encoding="utf-8")
+
+    assert result.exit_code == 0
+    assert "Review sidecar" in result.output
+    assert "Chaos Orb / Divine Orb (Standard UI)" in notes
+    assert "<621:1 stock 1,230,149" in notes
+    assert "No OAuth, live HTTP, scraping, OCR, game-client automation" in notes
 
 
 def test_currency_exchange_ui_observation_output_runs_daily_pipeline(tmp_path: Path) -> None:

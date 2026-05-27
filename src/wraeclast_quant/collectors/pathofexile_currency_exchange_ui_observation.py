@@ -42,6 +42,7 @@ class CurrencyExchangeUiObservationExportResult:
     output_path: Path
     item_count: int
     source_name: str
+    review_notes_path: Path | None = None
 
 
 def load_currency_exchange_ui_observation(path: str | Path) -> CurrencyExchangeUiObservationSnapshot:
@@ -70,6 +71,7 @@ def write_currency_exchange_ui_observation_manual_import(
     *,
     input_path: str | Path,
     output_path: str | Path,
+    review_notes_output_path: str | Path | None = None,
 ) -> CurrencyExchangeUiObservationExportResult:
     snapshot = load_currency_exchange_ui_observation(input_path)
     payload = currency_exchange_ui_observation_manual_import_payload(snapshot)
@@ -79,10 +81,19 @@ def write_currency_exchange_ui_observation_manual_import(
         json.dumps(payload, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    review_notes_path = None
+    if review_notes_output_path is not None:
+        review_notes_path = Path(review_notes_output_path)
+        review_notes_path.parent.mkdir(parents=True, exist_ok=True)
+        review_notes_path.write_text(
+            currency_exchange_ui_observation_review_notes(snapshot),
+            encoding="utf-8",
+        )
     return CurrencyExchangeUiObservationExportResult(
         output_path=destination,
         item_count=len(payload["items"]),
         source_name="Path of Exile Currency Exchange UI Observation",
+        review_notes_path=review_notes_path,
     )
 
 
@@ -110,6 +121,52 @@ def currency_exchange_ui_observation_item(
         "name": f"{currency_name(observation.want_currency)} / {currency_name(observation.have_currency)} ({league} UI)",
         "signals": signals.model_dump(),
     }
+
+
+def currency_exchange_ui_observation_review_notes(
+    snapshot: CurrencyExchangeUiObservationSnapshot,
+) -> str:
+    lines = [
+        "# Currency Exchange UI Observation Review Notes",
+        "",
+        "Local review notes only. This file is generated from manually transcribed in-game UI rows.",
+        "No OAuth, live HTTP, scraping, OCR, game-client automation, snapshots, outcome recording, or publishing were performed.",
+        "",
+        f"- League: {snapshot.league}",
+        f"- Observed at: {snapshot.observed_at or 'not supplied'}",
+        f"- Observations: {len(snapshot.observations)}",
+        "",
+        "| Pair | Market ratio | Visible stock | Rows | Notes |",
+        "| --- | --- | ---: | --- | --- |",
+    ]
+    for observation in snapshot.observations:
+        league = observation.league or snapshot.league
+        pair = f"{currency_name(observation.want_currency)} / {currency_name(observation.have_currency)} ({league} UI)"
+        rows = "; ".join(_stock_row_summary(row) for row in observation.stock_rows)
+        if observation.no_stock and not rows:
+            rows = "No stock"
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    _markdown_cell(pair),
+                    _markdown_cell(_ratio_summary(observation.market_ratio, observation.no_stock)),
+                    str(visible_stock_total(observation)),
+                    _markdown_cell(rows or "none"),
+                    _markdown_cell(observation.notes or ""),
+                ]
+            )
+            + " |"
+        )
+    lines.extend(
+        [
+            "",
+            "Use this sidecar while choosing local outcome labels after `wq daily --input-path <manual-import-output>`.",
+            "Do not record outcomes until a human review decision has been made.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def currency_exchange_ui_observation_signals(
@@ -197,6 +254,29 @@ def currency_name(value: str) -> str:
     return " ".join(part.capitalize() for part in value.replace("_", " ").split())
 
 
+def _stock_row_summary(row: CurrencyExchangeUiStockRow) -> str:
+    prefix = {"exact": "", "less_than": "<", "greater_than": ">"}[row.comparator]
+    return f"{prefix}{format_ratio_value(row.ratio)} stock {row.stock:,}"
+
+
+def _ratio_summary(value: RatioValue | None, no_stock: bool) -> str:
+    if no_stock:
+        return "No Stock"
+    if value is None:
+        return "not supplied"
+    return format_ratio_value(value)
+
+
+def format_ratio_value(value: RatioValue) -> str:
+    if isinstance(value, str):
+        return value
+    return f"{value['want']:g}:{value['have']:g}"
+
+
+def _markdown_cell(value: str) -> str:
+    return value.replace("\\", "\\\\").replace("|", "\\|").replace("\r", " ").replace("\n", " ")
+
+
 __all__ = [
     "CurrencyExchangeUiObservation",
     "CurrencyExchangeUiObservationExportResult",
@@ -204,7 +284,9 @@ __all__ = [
     "CurrencyExchangeUiStockRow",
     "currency_exchange_ui_observation_item",
     "currency_exchange_ui_observation_manual_import_payload",
+    "currency_exchange_ui_observation_review_notes",
     "currency_exchange_ui_observation_signals",
+    "format_ratio_value",
     "load_currency_exchange_ui_observation",
     "ratio_to_float",
     "visible_ratio_spread_percent",

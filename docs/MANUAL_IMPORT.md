@@ -121,12 +121,12 @@ Currency names are normalized to lowercase underscore codes before fixture conve
 Currency Exchange UI observations are a separate local intake path for manually transcribed in-game ratio and stock-ladder rows when API-shaped hourly fields are not available:
 
 ```powershell
-wq currency-exchange-ui-observation --input-path examples/pathofexile_currency_exchange_ui_observation_template.json --output-path <manual-import-output>
+wq currency-exchange-ui-observation --input-path examples/pathofexile_currency_exchange_ui_observation_template.json --output-path <manual-import-output> --review-notes-output-path data/processed/ui_observation_review.md
 wq validate-import --input-path <manual-import-output>
 wq daily --input-path <manual-import-output>
 ```
 
-The UI observation command writes normal manual-import JSON using conservative derived signals from visible UI data only. It does not use OAuth, read credentials, call live HTTP, scrape or OCR screenshots, create SQLite snapshots, approve a source, or publish artifacts.
+The UI observation command writes normal manual-import JSON using conservative derived signals from visible UI data only. The optional review-notes sidecar is a local Markdown summary of the transcribed ratios and visible stock rows for human outcome review. It does not use OAuth, read credentials, call live HTTP, scrape or OCR screenshots, create SQLite snapshots, approve a source, record outcomes, or publish artifacts.
 
 UI observation JSON has:
 

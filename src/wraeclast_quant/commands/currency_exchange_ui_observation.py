@@ -26,11 +26,17 @@ def register(app: typer.Typer) -> None:
             "--output-path",
             help="Manual-import-compatible JSON output path.",
         ),
+        review_notes_output_path: Path | None = typer.Option(
+            None,
+            "--review-notes-output-path",
+            help="Optional local Markdown sidecar summarizing the transcribed UI rows for human review.",
+        ),
     ) -> None:
         try:
             result = write_currency_exchange_ui_observation_manual_import(
                 input_path=input_path,
                 output_path=output_path,
+                review_notes_output_path=review_notes_output_path,
             )
         except ConnectorPolicyError as error:
             raise typer.BadParameter(str(error)) from error
