@@ -14,6 +14,30 @@ def compliance_section(compliance: dict[str, Any], status_counts: dict[str, Any]
     return section("Compliance Summary", key_value_table(rows))
 
 
+def mvp_readiness_section(latest_run: dict[str, Any], coverage: dict[str, Any]) -> str:
+    run_id = latest_run.get("id", "")
+    if run_id == "":
+        rows = [
+            ("Local loop", "Needs first run"),
+            ("Next action", "Validate a manual import, then run wq daily --input-path <file>"),
+        ]
+        return section("MVP Readiness", key_value_table(rows))
+
+    total = int(coverage.get("total_recommendations", 0) or 0)
+    reviewed = int(coverage.get("reviewed_recommendations", 0) or 0)
+    unreviewed = int(coverage.get("unreviewed_recommendations", 0) or 0)
+    rows = [
+        ("Local loop", "No-OAuth local decision-support ready"),
+        ("Latest run", run_id),
+        ("Review state", f"{reviewed}/{total} reviewed"),
+    ]
+    if unreviewed:
+        rows.append(("Next action", _review_action_text(run_id)))
+    else:
+        rows.append(("Next action", "Prepare the next local manual snapshot or run wq daily --input-path <file>"))
+    return section("MVP Readiness", key_value_table(rows))
+
+
 def review_coverage_section(coverage: dict[str, Any]) -> str:
     run_id = coverage.get("run_id", "")
     unreviewed = int(coverage.get("unreviewed_recommendations", 0) or 0)

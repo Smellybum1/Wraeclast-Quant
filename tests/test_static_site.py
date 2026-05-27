@@ -31,6 +31,16 @@ def test_static_site_renders_compliance_summary_and_opportunities() -> None:
     assert "76.00" in html
 
 
+def test_static_site_renders_mvp_readiness() -> None:
+    html = render_static_site(_payload())
+
+    assert "MVP Readiness" in html
+    assert "<th>Local loop</th><td>No-OAuth local decision-support ready</td>" in html
+    assert "<th>Latest run</th><td>7</td>" in html
+    assert "<th>Review state</th><td>1/2 reviewed</td>" in html
+    assert "wq record-outcome --run-id 7" in html
+
+
 def test_static_site_renders_alerts_and_snapshot_changes() -> None:
     html = render_static_site(_payload())
 

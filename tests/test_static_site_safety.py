@@ -20,6 +20,7 @@ def test_static_site_renders_empty_states() -> None:
     assert "No action, new, or removed changes." in html
     assert "No recent runs." in html
     assert "No score trends." in html
+    assert "MVP Readiness" in html
     assert "<th>Reviewed %</th><td>0.0%</td>" in html
     assert "<th>positive</th><td>0</td>" in html
 

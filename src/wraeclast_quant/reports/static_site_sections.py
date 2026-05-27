@@ -8,6 +8,7 @@ from wraeclast_quant.reports.static_site_market_sections import (
 )
 from wraeclast_quant.reports.static_site_review_sections import (
     compliance_section,
+    mvp_readiness_section,
     outcome_summary_section,
     review_coverage_section,
 )
@@ -21,6 +22,7 @@ __all__ = [
     "alerts_section",
     "compliance_section",
     "movers_section",
+    "mvp_readiness_section",
     "opportunities_section",
     "outcome_summary_section",
     "recent_runs_section",

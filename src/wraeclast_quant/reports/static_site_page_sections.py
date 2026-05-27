@@ -5,6 +5,7 @@ from typing import Any
 from wraeclast_quant.reports.static_site_sections import (
     alerts_section,
     compliance_section,
+    mvp_readiness_section,
     movers_section,
     opportunities_section,
     outcome_summary_section,
@@ -25,6 +26,7 @@ def dashboard_sections(
 ) -> list[str]:
     return [
         summary_section(payload, latest_run),
+        mvp_readiness_section(latest_run, payload.get("review_coverage") or {}),
         recent_runs_section(payload.get("recent_runs") or []),
         score_trends_section(payload.get("score_trends") or []),
         review_coverage_section(payload.get("review_coverage") or {}),
