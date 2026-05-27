@@ -45,11 +45,22 @@ def register(app: typer.Typer) -> None:
             help="Local JSON file with run_id and human-reviewed outcome decisions.",
         ),
         database_path: Path = typer.Option(DEFAULT_DATABASE_PATH, "--database-path"),
+        dry_run: bool = typer.Option(
+            False,
+            "--dry-run",
+            help="Validate the local outcome batch without writing records.",
+        ),
     ) -> None:
         repository = SnapshotRepository(database_path)
         try:
             run_id, decisions = load_batch_outcome_decisions(input_path)
             validate_batch_outcome_decisions(repository, run_id, decisions)
+            if dry_run:
+                typer.echo(
+                    f"Validated {len(decisions)} outcome decision(s) for run #{run_id} "
+                    f"from {input_path}; no records written."
+                )
+                return
             records = [
                 repository.save_recommendation_outcome(
                     run_id=run_id,

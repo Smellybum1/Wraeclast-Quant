@@ -71,10 +71,11 @@ For a reviewed batch, put the human decisions in local JSON and record them toge
 
 ```powershell
 wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions.json
+wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run
 wq record-outcomes --input-path data/processed/outcome_decisions.json
 ```
 
-The batch command validates the whole file before writing any outcome.
+The dry run validates the edited file without writing records. The batch write command validates the whole file again before writing any outcome.
 
 9. Inspect the local feedback loop after recording outcomes:
 

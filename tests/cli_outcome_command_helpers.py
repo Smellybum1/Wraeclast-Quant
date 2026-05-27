@@ -27,14 +27,22 @@ def record_outcome_args(
     return args
 
 
-def record_outcomes_args(database_path: Path, input_path: Path) -> list[str]:
-    return [
+def record_outcomes_args(
+    database_path: Path,
+    input_path: Path,
+    *,
+    dry_run: bool = False,
+) -> list[str]:
+    args = [
         "record-outcomes",
         "--database-path",
         str(database_path),
         "--input-path",
         str(input_path),
     ]
+    if dry_run:
+        args.append("--dry-run")
+    return args
 
 
 def outcomes_args(database_path: Path) -> list[str]:

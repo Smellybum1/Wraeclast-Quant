@@ -642,6 +642,7 @@
 - Review queue worksheets now include exact positive, neutral, and negative `record-outcome` command options per item to reduce manual editing errors.
 - Review queue worksheets can now embed an optional local Markdown context file, keeping UI-observation sidecars beside exact outcome commands without recording outcomes or changing public artifacts.
 - Review queue can now write an editable local outcome-decisions JSON template for `record-outcomes`, keeping batch outcome recording tied to the same unreviewed queue.
+- `wq record-outcomes --input-path <file> --dry-run` now validates an edited local outcome-decisions batch without writing records, so the human review file can be checked before the final write.
 - Site-bundle safety coverage now explicitly keeps local review queue worksheets out of public handoff bundles.
 - Review queue worksheets now include per-item local notes fields for the human outcome review step.
 - Empty outcome-review and calibration states now point to the worksheet-first review flow.

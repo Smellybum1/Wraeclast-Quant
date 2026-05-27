@@ -11,6 +11,7 @@ wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_dec
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md --context-path data/processed/ui_observation_review.md
 wq review-coverage
 wq record-outcome --run-id <id> --item-name <name> --outcome positive
+wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run
 wq record-outcomes --input-path data/processed/outcome_decisions.json
 wq outcomes
 wq outcome-review
@@ -25,7 +26,7 @@ wq calibration-report
 
 `record-outcome` records one local manual outcome for an item from an existing analysis run. After recording, rerun `wq review-coverage --run-id <id>` and refresh derived artifacts with `wq export`, `wq site`, and `wq site-bundle` when you want local dashboard or public handoff files to reflect the new review state.
 
-`record-outcomes` records a local batch of human-reviewed outcome decisions from a JSON file. The whole file is validated before any outcome is written, so a bad item name, duplicate item, missing run, invalid label, or malformed decision prevents partial writes.
+`record-outcomes` records a local batch of human-reviewed outcome decisions from a JSON file. The whole file is validated before any outcome is written, so a bad item name, duplicate item, missing run, invalid label, or malformed decision prevents partial writes. Add `--dry-run` to validate the same file without writing outcome records.
 
 Batch outcome JSON shape:
 
