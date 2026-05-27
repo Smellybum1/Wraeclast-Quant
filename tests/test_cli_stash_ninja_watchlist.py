@@ -104,6 +104,7 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
 
     markdown = markdown_path.read_text(encoding="utf-8")
     assert "Manual application required" in markdown
+    assert f"wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in markdown
     assert "| Divine Orb | 82.50 | BUY | bookmark-candidate |" in markdown
     assert "Low Signal Base" not in markdown
 

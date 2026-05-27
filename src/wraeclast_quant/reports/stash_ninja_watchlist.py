@@ -63,6 +63,11 @@ def render_stash_ninja_watchlist_markdown(payload: dict[str, Any]) -> str:
             f"{coverage['reviewed_recommendations']}/{coverage['total_recommendations']} reviewed "
             f"({coverage['reviewed_percent']:.1f}%)"
         ),
+        (
+            "- Next manual review: "
+            f"wq review-queue --run-id {run['id']} "
+            "--output-path data/processed/review_queue.md"
+        ),
         "",
         "| Item | Score | Action | Suggested manual treatment |",
         "| --- | ---: | --- | --- |",
