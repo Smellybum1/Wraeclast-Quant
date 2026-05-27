@@ -16,7 +16,8 @@ def test_static_site_renders_mvp_readiness() -> None:
     assert "<th>Review state</th><td>1/2 reviewed</td>" in html
     assert "wq review-queue --run-id 7" in html
     assert "data/processed/review_queue.md" in html
-    assert "wq record-outcome --run-id 7" in html
+    assert "--decisions-output-path data/processed/outcome_decisions.json" in html
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in html
 
 
 def test_static_site_points_fully_reviewed_runs_to_manual_snapshot_loop() -> None:
@@ -53,4 +54,5 @@ def test_static_site_renders_review_coverage() -> None:
     assert "<th>Reviewed %</th><td>50.0%</td>" in html
     assert "<th>Next review action</th>" in html
     assert "wq review-queue --run-id 7" in html
-    assert "wq record-outcome --run-id 7" in html
+    assert "--decisions-output-path data/processed/outcome_decisions.json" in html
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in html

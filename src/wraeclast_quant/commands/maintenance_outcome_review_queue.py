@@ -10,6 +10,7 @@ from wraeclast_quant.commands.maintenance_outcome_review_queue_rendering import 
     print_review_coverage,
     print_review_queue,
 )
+from wraeclast_quant.reports.review_queue_commands import record_outcomes_dry_run_command
 from wraeclast_quant.reports.review_queue_decisions import (
     write_review_queue_decisions_template,
 )
@@ -77,7 +78,7 @@ def register(app: typer.Typer) -> None:
             typer.echo(f"Wrote outcome decisions template to {decisions_output_path}")
             typer.echo(
                 f"Next: fill outcome labels, then run "
-                f"wq record-outcomes --input-path {decisions_output_path} --dry-run."
+                f"{record_outcomes_dry_run_command(str(decisions_output_path))}."
             )
 
     @app.command("review-coverage")

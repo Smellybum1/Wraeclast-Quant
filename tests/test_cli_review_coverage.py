@@ -28,6 +28,9 @@ def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> N
     assert "positive=useful signal" in result.output
     assert "wq review-queue --run-id 1" in result.output
     assert "data/processed/review_queue.md" in result.output
+    assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json" in result.output
+    assert "--dry-run" in result.output
 
 
 def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
@@ -42,6 +45,7 @@ def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
     assert "0.0%" in result.output
     assert f"wq review-queue --run-id {first.id}" in result.output
     assert "data/processed/review_queue.md" in result.output
+    assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
 
 
 def test_review_coverage_command_handles_no_snapshots(tmp_path: Path) -> None:

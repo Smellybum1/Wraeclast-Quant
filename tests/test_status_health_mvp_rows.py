@@ -41,6 +41,49 @@ def test_mvp_readiness_points_fully_reviewed_runs_to_manual_snapshot_loop() -> N
     assert "wq daily --input-path <manual-import-output>" in details
 
 
+def test_mvp_readiness_points_unreviewed_runs_to_batch_dry_run_loop() -> None:
+    context = StatusHealthContext(
+        resources=[],
+        assessments=[],
+        eligible_count=0,
+        backups=[],
+        database_health=None,
+        database_exists=True,
+        latest=AnalysisRunRecord(
+            id=7,
+            created_at="2026-05-24T00:00:00+00:00",
+            source_mode="manual-import",
+            item_count=2,
+        ),
+        latest_run_id=7,
+        coverage=ReviewCoverageRecord(
+            run_id=7,
+            total_recommendations=2,
+            reviewed_recommendations=1,
+            unreviewed_recommendations=1,
+            reviewed_percent=50.0,
+        ),
+        market_brief_health=None,
+        intel_validation=None,
+        intel_error="",
+        static_site_health=None,
+        site_bundle_health=None,
+        stash_ninja_health=None,
+    )
+
+    details = mvp_readiness_details(context)
+
+    assert "1/2 reviewed" in details
+    assert "wq review-queue --run-id 7 --output-path data/processed/review_queue.md" in details
+    assert (
+        "wq review-queue --run-id 7 --decisions-output-path "
+        "data/processed/outcome_decisions.json"
+    ) in details
+    assert (
+        "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run"
+    ) in details
+
+
 def test_mvp_readiness_points_empty_state_to_manual_snapshot_loop() -> None:
     context = StatusHealthContext(
         resources=[],

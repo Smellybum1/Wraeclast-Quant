@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
 from wraeclast_quant.reports.static_site_html import key_value_table, section
 
 
@@ -62,12 +63,7 @@ def review_coverage_section(coverage: dict[str, Any]) -> str:
 
 def _review_action_text(run_id: object) -> str:
     run_arg = run_id if run_id != "" else "<id>"
-    return (
-        f"Run wq review-queue --run-id {run_arg} "
-        "--output-path data/processed/review_queue.md, then "
-        f"wq record-outcome --run-id {run_arg} --item-name <name> "
-        "--outcome positive|neutral|negative"
-    )
+    return f"Run {batch_outcome_review_next_action(str(run_arg))}"
 
 
 def outcome_summary_section(summary: dict[str, Any]) -> str:

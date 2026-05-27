@@ -3,6 +3,7 @@ from __future__ import annotations
 from rich.console import Console
 from rich.table import Table
 
+from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
 from wraeclast_quant.reports.review_queue_worksheet import (
     local_review_caveat,
     outcome_label_guide,
@@ -59,8 +60,7 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
     console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
         console.print(
-            f"Next: run wq review-queue --run-id {run_id} "
-            "--output-path data/processed/review_queue.md to write a local review worksheet."
+            f"Next: {batch_outcome_review_next_action(run_id)}."
         )
 
 

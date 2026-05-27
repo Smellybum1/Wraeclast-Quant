@@ -43,8 +43,9 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
     assert "50.0%" in result.output
     assert "wq review-queue" in result.output
     assert "data/processed/review_queue.md" in result.output
+    assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in result.output
     assert "--run-id 1" in result.output
-    assert "wq record-outcome" in result.output
     assert "MVP readiness" in result.output
     assert "No-OAuth local loop ready on run #1" in result.output
     assert "Market brief" in result.output

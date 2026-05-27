@@ -106,7 +106,7 @@ wq daily --input-path <manual-import-output> --stash-ninja-watchlist
 
 ## MVP Readiness
 
-`wq status` includes an `MVP readiness` row. It summarizes whether the local no-OAuth loop has a latest run and points to the next manual action, usually a run-specific `wq review-queue --run-id <id> --output-path data/processed/review_queue.md`, `wq record-outcome`, or the next `wq daily --input-path` run.
+`wq status` includes an `MVP readiness` row. It summarizes whether the local no-OAuth loop has a latest run and points to the next manual action, usually a run-specific review worksheet, outcome-decisions JSON template, `record-outcomes --dry-run`, or the next `wq daily --input-path` run.
 
 Before sharing or manually publishing static artifacts, run:
 
