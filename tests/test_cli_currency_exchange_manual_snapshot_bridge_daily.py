@@ -18,6 +18,7 @@ from cli_daily_command_helpers import daily_args as _daily_args
 
 
 runner = CliRunner()
+_CURRENCY_EXCHANGE_REVIEW = Path("examples/reviews/pathofexile_currency_exchange_connector_review.json")
 
 
 def test_currency_exchange_manual_snapshot_output_runs_daily_pipeline(
@@ -38,6 +39,7 @@ def test_currency_exchange_manual_snapshot_output_runs_daily_pipeline(
     runner.invoke(
         app,
         _connector_fixture_export_args(
+            review_path=_CURRENCY_EXCHANGE_REVIEW,
             fixture_path=fixture_path,
             output_path=import_path,
         ),

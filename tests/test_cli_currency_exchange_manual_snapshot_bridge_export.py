@@ -18,6 +18,7 @@ from cli_manual_import_command_helpers import validate_import_args as _validate_
 
 
 runner = CliRunner()
+_CURRENCY_EXCHANGE_REVIEW = Path("examples/reviews/pathofexile_currency_exchange_connector_review.json")
 
 
 def test_currency_exchange_manual_snapshot_output_exports_to_manual_import(
@@ -35,6 +36,7 @@ def test_currency_exchange_manual_snapshot_output_exports_to_manual_import(
     export_result = runner.invoke(
         app,
         _connector_fixture_export_args(
+            review_path=_CURRENCY_EXCHANGE_REVIEW,
             fixture_path=fixture_path,
             output_path=import_path,
         ),

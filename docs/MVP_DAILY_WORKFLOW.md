@@ -20,7 +20,7 @@ wq currency-exchange-manual-snapshot --input-path <current-snapshot> --history-p
 4. Convert the local fixture into normalized manual-import JSON:
 
 ```powershell
-wq connector-fixture-export --review-path examples/connector_review_api_example.json --fixture-path <fixture-output> --output-path <manual-import-output>
+wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_exchange_connector_review.json --fixture-path <fixture-output> --output-path <manual-import-output>
 ```
 
 5. Validate the normalized input before recording a run:
