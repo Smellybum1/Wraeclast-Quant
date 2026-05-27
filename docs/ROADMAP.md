@@ -659,9 +659,9 @@
 - `wq stash-ninja-watchlist` writes derived-only local JSON/Markdown companion handoffs for manual Exile-UI Stash-Ninja review without overlay automation, game-client interaction, live HTTP, raw signals, or third-party file writes.
 - Local status now reports optional Stash-Ninja handoff freshness and safety metadata, while allowing the handoff to be absent in strict mode.
 - `wq daily --stash-ninja-watchlist` can now write the derived-only Stash-Ninja companion handoff for the newly created run.
-- `wq watchlist` now also shows the shared local-only caveat, review coverage, and the run-specific review worksheet next action for stored runs, keeping the daily MVP watchlist loop connected to human outcome review.
-- Stash-Ninja companion Markdown now points to the same run-specific local review worksheet command, so manual overlay review and recommendation outcome review stay connected without changing Exile-UI files.
-- Stash-Ninja CLI output and daily opt-in handoff output now also print the run-specific review worksheet command, using one shared helper for the worksheet command text.
+- `wq watchlist` now also shows the shared local-only caveat, review coverage, and the run-specific batch review next action for stored runs, keeping the daily MVP watchlist loop connected to human outcome review.
+- Stash-Ninja companion Markdown now points to the same run-specific worksheet plus outcome-decisions dry-run flow, so manual overlay review and recommendation outcome review stay connected without changing Exile-UI files.
+- Stash-Ninja CLI output and daily opt-in handoff output now also print the run-specific batch review next action, using one shared helper for the command text.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.
 - `wq record-outcomes --input-path <file>` can now record a human-reviewed local outcome batch after validating the entire JSON file, avoiding partial writes when one decision is invalid.

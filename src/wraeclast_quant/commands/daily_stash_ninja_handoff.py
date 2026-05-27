@@ -4,7 +4,7 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.reports.review_queue_worksheet import review_queue_worksheet_command
+from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
 from wraeclast_quant.reports.stash_ninja_watchlist import (
     build_stash_ninja_watchlist,
     write_stash_ninja_watchlist,
@@ -49,7 +49,7 @@ def print_daily_stash_ninja_handoff(
 
     typer.echo(f"Stash-Ninja handoff: {paths[0]}")
     typer.echo(f"Stash-Ninja handoff Markdown: {paths[1]}")
-    typer.echo(f"Next: {review_queue_worksheet_command(result.run.id)}")
+    typer.echo(f"Next: {batch_outcome_review_next_action(result.run.id)}")
 
 
 __all__ = [

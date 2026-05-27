@@ -5,9 +5,9 @@ from typing import Protocol
 from rich.table import Table
 
 from wraeclast_quant.commands.intake_rendering import console
+from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
 from wraeclast_quant.reports.review_queue_worksheet import (
     local_review_caveat,
-    review_queue_worksheet_command,
 )
 from wraeclast_quant.storage.models import ReviewCoverageRecord
 
@@ -52,7 +52,7 @@ def review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
     if coverage.unreviewed_recommendations:
         return (
             f"Review coverage: {reviewed}; {coverage.unreviewed_recommendations} unreviewed. "
-            f"Next: {review_queue_worksheet_command(run_id)}."
+            f"Next: {batch_outcome_review_next_action(run_id)}."
         )
     return f"Review coverage: {reviewed}; all recommendations for run #{run_id} have outcomes."
 

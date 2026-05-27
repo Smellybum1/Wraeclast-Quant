@@ -46,4 +46,10 @@ def test_watchlist_defaults_to_latest_stored_run(tmp_path: Path) -> None:
         f"wq review-queue --run-id {latest.id} --output-path data/processed/review_queue.md"
         in result.output
     )
+    assert (
+        f"wq review-queue --run-id {latest.id} --decisions-output-path "
+        "data/processed/outcome_decisions.json"
+    ) in result.output
+    assert "wq record-outcomes --input-path" in result.output
+    assert "data/processed/outcome_decisions.json --dry-run" in result.output
     assert "Old Catalyst" not in result.output
