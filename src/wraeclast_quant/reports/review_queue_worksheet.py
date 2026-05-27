@@ -21,6 +21,7 @@ def render_review_queue_worksheet(
     run_id: int,
     source_mode: str,
     opportunities: list[StoredOpportunityRecord],
+    context_markdown: str | None = None,
 ) -> str:
     rows = [
         "# Wraeclast Quant Review Queue",
@@ -31,17 +32,32 @@ def render_review_queue_worksheet(
         f"- Run: #{run_id}",
         f"- Source mode: {source_mode}",
         "",
-        "## Outcome Labels",
-        "",
-        "- `positive`: useful signal after manual review.",
-        "- `neutral`: mixed, stale, or unclear after manual review.",
-        "- `negative`: not useful after manual review.",
-        "",
-        "## Unreviewed Recommendations",
-        "",
-        "| Item | Score | Action | Outcome decision | Command |",
-        "| --- | ---: | --- | --- | --- |",
     ]
+    if context_markdown:
+        rows.extend(
+            [
+                "## Local Review Context",
+                "",
+                "Included from a user-supplied local context file. Keep this worksheet local; do not publish it.",
+                "",
+                context_markdown.strip(),
+                "",
+            ]
+        )
+    rows.extend(
+        [
+            "## Outcome Labels",
+            "",
+            "- `positive`: useful signal after manual review.",
+            "- `neutral`: mixed, stale, or unclear after manual review.",
+            "- `negative`: not useful after manual review.",
+            "",
+            "## Unreviewed Recommendations",
+            "",
+            "| Item | Score | Action | Outcome decision | Command |",
+            "| --- | ---: | --- | --- | --- |",
+        ]
+    )
     rows.extend(opportunity_rows(run_id, opportunities))
     rows.extend(
         [
@@ -77,10 +93,16 @@ def write_review_queue_worksheet(
     run_id: int,
     source_mode: str,
     opportunities: list[StoredOpportunityRecord],
+    context_markdown: str | None = None,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        render_review_queue_worksheet(run_id, source_mode, opportunities),
+        render_review_queue_worksheet(
+            run_id,
+            source_mode,
+            opportunities,
+            context_markdown=context_markdown,
+        ),
         encoding="utf-8",
     )
 

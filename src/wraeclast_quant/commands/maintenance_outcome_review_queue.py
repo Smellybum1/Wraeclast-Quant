@@ -14,6 +14,8 @@ from wraeclast_quant.reports.review_queue_worksheet import write_review_queue_wo
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
+MAX_REVIEW_CONTEXT_BYTES = 64 * 1024
+
 
 def register(app: typer.Typer) -> None:
     @app.command("review-queue")
@@ -26,7 +28,14 @@ def register(app: typer.Typer) -> None:
             "--output-path",
             help="Write a local Markdown review worksheet for the unreviewed queue.",
         ),
+        context_path: Path | None = typer.Option(
+            None,
+            "--context-path",
+            help="Optional local Markdown context file to embed in the review worksheet.",
+        ),
     ) -> None:
+        if context_path is not None and output_path is None:
+            raise typer.BadParameter("Use --context-path together with --output-path.")
         repository = SnapshotRepository(database_path)
         run = repository.analysis_run(run_id) if run_id is not None else repository.latest_run()
         if run is None:
@@ -42,11 +51,13 @@ def register(app: typer.Typer) -> None:
 
         print_review_queue(run.id, run.source_mode, opportunities)
         if output_path is not None:
+            context_markdown = read_review_queue_context(context_path) if context_path is not None else None
             write_review_queue_worksheet(
                 output_path,
                 run_id=run.id,
                 source_mode=run.source_mode,
                 opportunities=opportunities,
+                context_markdown=context_markdown,
             )
             typer.echo(f"Wrote review queue worksheet to {output_path}")
 
@@ -65,3 +76,14 @@ def register(app: typer.Typer) -> None:
 
         coverage = repository.review_coverage_for_run(run.id)
         print_review_coverage(run.id, run.source_mode, coverage)
+
+
+def read_review_queue_context(path: Path) -> str:
+    try:
+        if path.stat().st_size > MAX_REVIEW_CONTEXT_BYTES:
+            raise typer.BadParameter(
+                f"review context is too large; limit is {MAX_REVIEW_CONTEXT_BYTES} bytes"
+            )
+        return path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise typer.BadParameter(f"could not read review context: {error}") from error

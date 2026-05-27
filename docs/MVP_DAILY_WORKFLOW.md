@@ -52,12 +52,13 @@ wq run-provenance --run-id <id>
 wq watchlist
 wq review-queue
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md
+wq review-queue --run-id <id> --output-path data/processed/review_queue.md --context-path data/processed/ui_observation_review.md
 wq review-coverage
 ```
 
 Run provenance is local-only audit metadata for the run. For manual-import daily runs it records path-safe input metadata, item count, and explicit no-live-collection flags.
 
-The worksheet is local-only and includes exact positive, neutral, and negative `record-outcome` commands plus local notes fields for each unreviewed item. Choose only one outcome per item after manual review.
+The worksheet is local-only and includes exact positive, neutral, and negative `record-outcome` commands plus local notes fields for each unreviewed item. When you have a local context sidecar from `currency-exchange-ui-observation`, pass it with `--context-path` so the transcribed ratios and stock rows sit beside the outcome commands. Choose only one outcome per item after manual review.
 
 8. Record outcomes only after a human review decision:
 

@@ -7,6 +7,7 @@ Wraeclast Quant can record local manual review outcomes for recommendations. Thi
 ```powershell
 wq review-queue
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md
+wq review-queue --run-id <id> --output-path data/processed/review_queue.md --context-path data/processed/ui_observation_review.md
 wq review-coverage
 wq record-outcome --run-id <id> --item-name <name> --outcome positive
 wq outcomes
@@ -16,7 +17,7 @@ wq calibration
 wq calibration-report
 ```
 
-`review-queue` shows recommendations from a run that do not yet have a recorded outcome. It includes the run source mode, a local decision-support caveat, outcome-label guidance, and item-specific `record-outcome` command templates. Add `--run-id <id> --output-path <file>` to write the same local-only queue as a Markdown worksheet without recording outcomes. The worksheet includes exact positive, neutral, and negative command options plus local notes fields for each item so a human can choose one outcome without editing the outcome label by hand.
+`review-queue` shows recommendations from a run that do not yet have a recorded outcome. It includes the run source mode, a local decision-support caveat, outcome-label guidance, and item-specific `record-outcome` command templates. Add `--run-id <id> --output-path <file>` to write the same local-only queue as a Markdown worksheet without recording outcomes. Add `--context-path <file>` with `--output-path` to embed a local Markdown context file, such as a Currency Exchange UI-observation sidecar, into the worksheet. The worksheet includes exact positive, neutral, and negative command options plus local notes fields for each item so a human can choose one outcome without editing the outcome label by hand.
 
 `review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a `review-queue --run-id <id> --output-path data/processed/review_queue.md` next action when unreviewed recommendations remain.
 

@@ -45,6 +45,47 @@ def test_review_queue_command_writes_local_review_worksheet(tmp_path: Path) -> N
     assert "Reviewed Catalyst" not in worksheet
 
 
+def test_review_queue_worksheet_can_include_local_context(tmp_path: Path) -> None:
+    database_path, _run = _partially_reviewed_two_item_database(tmp_path)
+    output_path = tmp_path / "review_queue.md"
+    context_path = tmp_path / "ui_observation_review.md"
+    context_path.write_text(
+        "# Currency Exchange UI Observation Review Notes\n\n"
+        "| Pair | Market ratio | Visible stock |\n"
+        "| --- | --- | ---: |\n"
+        "| Open Catalyst | 30:1 | 42,000 |\n",
+        encoding="utf-8",
+    )
+
+    result = runner.invoke(
+        app,
+        _review_queue_args(
+            database_path,
+            output_path=output_path,
+            context_path=context_path,
+        ),
+    )
+
+    worksheet = output_path.read_text(encoding="utf-8")
+    assert result.exit_code == 0
+    assert "## Local Review Context" in worksheet
+    assert "Included from a user-supplied local context file" in worksheet
+    assert "# Currency Exchange UI Observation Review Notes" in worksheet
+    assert "| Open Catalyst | 30:1 | 42,000 |" in worksheet
+    assert "## Outcome Labels" in worksheet
+
+
+def test_review_queue_context_path_requires_output_path(tmp_path: Path) -> None:
+    database_path, _run = _partially_reviewed_two_item_database(tmp_path)
+    context_path = tmp_path / "context.md"
+    context_path.write_text("local context", encoding="utf-8")
+
+    result = runner.invoke(app, _review_queue_args(database_path, context_path=context_path))
+
+    assert result.exit_code != 0
+    assert "Use --context-path together with --output-path." in result.output
+
+
 def test_review_queue_worksheet_escapes_markdown_and_commands(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
     output_path = tmp_path / "review_queue.md"

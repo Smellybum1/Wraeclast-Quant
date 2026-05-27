@@ -36,12 +36,15 @@ def review_queue_args(
     *,
     run_id: int | None = None,
     output_path: Path | None = None,
+    context_path: Path | None = None,
 ) -> list[str]:
     args = ["review-queue", "--database-path", str(database_path)]
     if run_id is not None:
         args.extend(["--run-id", str(run_id)])
     if output_path is not None:
         args.extend(["--output-path", str(output_path)])
+    if context_path is not None:
+        args.extend(["--context-path", str(context_path)])
     return args
 
 
