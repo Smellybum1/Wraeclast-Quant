@@ -633,6 +633,7 @@
 - Local status review-coverage and MVP-readiness guidance now points directly to a run-specific review worksheet export before outcome recording.
 - Static dashboard review guidance now also points to the local review worksheet export before outcome recording.
 - `wq review-coverage` now points unreviewed runs to the local review worksheet export before outcome recording.
+- Review queue worksheets now include exact positive, neutral, and negative `record-outcome` command options per item to reduce manual editing errors.
 
 ## Later Intelligence Improvements
 

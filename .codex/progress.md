@@ -857,3 +857,5 @@
 - Verification: bundled Python focused static-site/status tests passed with 16 tests; regenerated `site` and `site-bundle`; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Completed packet: `wq review-coverage` now points unreviewed runs to `wq review-queue --run-id <id> --output-path data/processed/review_queue.md` so every primary review readout leads to the worksheet before outcome recording.
 - Verification: bundled Python focused review/status tests passed with 15 tests; `review-coverage` smoke showed the run #10 worksheet next action; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: review queue worksheets now include exact positive, neutral, and negative `record-outcome` command options for each unreviewed item, reducing placeholder editing in the manual MVP feedback step.
+- Verification: bundled Python focused review/MVP workflow tests passed with 15 tests; regenerated `data/processed/review_queue.md` for run #10; `status --strict`, `publish-check`, and `git diff --check` passed.

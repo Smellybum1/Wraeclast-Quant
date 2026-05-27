@@ -63,6 +63,10 @@ def render_review_queue_worksheet(
     rows.extend(
         [
             "",
+            "## Outcome Command Options",
+            "",
+            *_outcome_command_option_rows(run_id, opportunities),
+            "",
             "Choose one outcome decision per item, then run the matching command locally.",
             "Do not record outcomes until a human review decision has been made.",
             "",
@@ -100,6 +104,22 @@ def _opportunity_rows(run_id: int, opportunities: list[StoredOpportunityRecord])
             "positive / neutral / negative | "
             f"`{escape_cell(command)}` |"
         )
+    return rows
+
+
+def _outcome_command_option_rows(
+    run_id: int,
+    opportunities: list[StoredOpportunityRecord],
+) -> list[str]:
+    rows = []
+    for index, opportunity in enumerate(opportunities):
+        if index:
+            rows.append("")
+        rows.append(f"### {opportunity.item_name}")
+        rows.append("")
+        for outcome in ["positive", "neutral", "negative"]:
+            command = record_outcome_command(run_id, opportunity.item_name, outcome=outcome)
+            rows.append(f"- `{outcome}`: `{command}`")
     return rows
 
 
