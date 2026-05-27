@@ -25,6 +25,7 @@ def test_calibration_command_prints_local_summaries(tmp_path: Path) -> None:
     assert "Recent Reviewed Recommendations" in result.output
     assert "Stormglass Catalyst" in result.output
     assert "local-only and read-only" in result.output
+    assert "wq calibration-report --output-path data/processed/calibration_report.md" in result.output
 
 
 def test_calibration_command_missing_database_is_non_mutating(tmp_path: Path) -> None:

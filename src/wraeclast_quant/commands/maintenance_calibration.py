@@ -30,6 +30,10 @@ def register(app: typer.Typer) -> None:
         console.print(
             "Calibration is local-only and read-only. It did not change scoring weights or thresholds."
         )
+        console.print(
+            "Next: run wq calibration-report --output-path data/processed/calibration_report.md "
+            "to write the local Markdown calibration artifact."
+        )
 
     @app.command("calibration-report")
     def calibration_report(

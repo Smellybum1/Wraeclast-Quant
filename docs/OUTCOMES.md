@@ -28,7 +28,7 @@ wq calibration-report
 
 `outcome-report` writes `data/processed/outcome_review.md`.
 
-`calibration` summarizes reviewed recommendations by action, score bucket, and outcome label. It is read-only and does not change scoring weights or thresholds.
+`calibration` summarizes reviewed recommendations by action, score bucket, and outcome label. It is read-only, does not change scoring weights or thresholds, and points to `wq calibration-report --output-path data/processed/calibration_report.md` when you want a local Markdown calibration artifact.
 
 `calibration-report` writes `data/processed/calibration_report.md` for local calibration review.
 
