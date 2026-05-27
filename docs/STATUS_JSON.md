@@ -57,6 +57,7 @@ Current row keys:
 - `database_health`
 - `latest_run`
 - `review_coverage`
+- `mvp_readiness`
 - `market_brief`
 - `public_intel`
 - `static_site`

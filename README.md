@@ -23,6 +23,8 @@ wq site-contract
 
 Open `data/processed/site/index.html` after `wq site` or `wq daily` to view the local static dashboard preview.
 
+For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
+
 ## Common Commands
 
 - `wq collect --dry-run` loads `RESOURCES.md` and previews placeholder collectors.

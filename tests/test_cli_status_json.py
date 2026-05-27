@@ -36,10 +36,12 @@ def test_status_json_outputs_machine_readable_rows(tmp_path: Path) -> None:
     assert payload["ok"] is True
     assert payload["strict_failures"] == []
     assert payload["strict_failure_keys"] == []
-    assert payload["status_counts"] == {"no": 6, "none": 3, "ok": 2}
+    assert payload["status_counts"] == {"no": 6, "none": 4, "ok": 2}
     rows_by_key = {row["key"]: row for row in payload["rows"]}
     assert payload["rows_by_key"] == rows_by_key
     assert rows_by_key["database_health"]["check"] == "Database health"
+    assert rows_by_key["mvp_readiness"]["status"] == "none"
+    assert "wq daily --input-path" in rows_by_key["mvp_readiness"]["details"]
     assert payload["rows_by_key"]["public_intel"]["status"] == "no"
     assert payload["rows_by_key"]["safety_boundary"] == {
         "key": "safety_boundary",

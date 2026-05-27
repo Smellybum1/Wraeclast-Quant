@@ -620,6 +620,7 @@
 - Connector fixture payload test helpers split behind the existing connector policy helper facade.
 - Connector review payload test helpers split behind the existing connector policy helper facade.
 - Connector resource builder test helpers split behind the existing connector policy helper facade.
+- MVP daily workflow guide added for the no-OAuth manual/fixture decision-support loop, and local status now includes an `MVP readiness` row that points to the next manual review or daily-run action.
 
 ## Later Intelligence Improvements
 
