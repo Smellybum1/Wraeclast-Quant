@@ -671,6 +671,7 @@
 - Daily Stash-Ninja handoff writing and output are split from daily command registration behind a focused helper, preserving the opt-in local-only companion export.
 - Stash-Ninja handoff health has direct contract tests for missing files, valid payloads, invalid JSON, stale schema, and required manual-only safety flags.
 - Watchlist table rendering and review-guidance text are split from command registration behind a focused helper, preserving CLI output and local review next actions.
+- Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
 
 ## Later Intelligence Improvements
 
