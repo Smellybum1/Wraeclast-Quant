@@ -87,6 +87,9 @@ def test_review_queue_command_writes_local_review_worksheet(tmp_path: Path) -> N
     assert '`wq record-outcome --run-id 1 --item-name "Open Catalyst"' in worksheet
     assert "--outcome <decision>" in worksheet
     assert "## Outcome Command Options" in worksheet
+    assert "## Review Checklist" in worksheet
+    assert "Inspect each item in your local market context" in worksheet
+    assert "wq review-coverage --run-id 1" in worksheet
     assert "### Open Catalyst" in worksheet
     assert '`positive`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome positive`' in worksheet
     assert '`neutral`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome neutral`' in worksheet

@@ -79,6 +79,7 @@ The local review queue worksheet includes:
 - `# Wraeclast Quant Review Queue`
 - `## Outcome Labels`
 - `## Unreviewed Recommendations`
+- `## Review Checklist`
 - `## Outcome Command Options`
 - `## Manual Review Notes`
 

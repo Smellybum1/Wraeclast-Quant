@@ -70,6 +70,14 @@ def render_review_queue_worksheet(
     rows.extend(
         [
             "",
+            "## Review Checklist",
+            "",
+            "- Inspect each item in your local market context before choosing an outcome.",
+            "- Choose exactly one outcome label per item: positive, neutral, or negative.",
+            "- Run only the matching local `record-outcome` command after you decide.",
+            "- Rerun `wq review-coverage --run-id "
+            f"{run_id}` to confirm the reviewed count changed.",
+            "",
             "## Outcome Command Options",
             "",
             *_outcome_command_option_rows(run_id, opportunities),
