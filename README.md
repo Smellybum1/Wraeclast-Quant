@@ -66,11 +66,11 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq review-queue` shows recommendations from the latest run that still need manual outcome review; add `--run-id <id> --output-path <file>` to write a local Markdown review worksheet without recording outcomes.
 - `wq review-coverage` shows how much of a run has recorded manual outcome review.
 - `wq record-outcome --run-id <id> --item-name <name> --outcome positive` records a local manual review result for a recommendation. See `docs/OUTCOMES.md` for the outcome review contract.
-- `wq outcomes` shows recent local recommendation outcomes and summary counts.
-- `wq outcome-review` joins recorded outcomes to their original scores and actions for local review.
-- `wq outcome-report` writes `data/processed/outcome_review.md` for local recommendation review.
+- `wq outcomes` shows recent local recommendation outcomes and summary counts, then points to read-only review and calibration commands.
+- `wq outcome-review` joins recorded outcomes to their original scores and actions, then points to local summary/report follow-up.
+- `wq outcome-report --output-path data/processed/outcome_review.md` writes a local recommendation review artifact.
 - `wq calibration` summarizes recorded outcomes by action, score bucket, and outcome label without changing scoring.
-- `wq calibration-report` writes `data/processed/calibration_report.md` for local recommendation calibration review.
+- `wq calibration-report --output-path data/processed/calibration_report.md` writes a local recommendation calibration artifact.
 - `wq compare` compares the latest run against the previous run using the contract documented in `docs/SNAPSHOT_COMPARISONS.md`.
 - `wq alerts` previews local alert candidates from snapshot changes.
 - `wq export` writes derived public intel to `data/processed/public_intel.json`.

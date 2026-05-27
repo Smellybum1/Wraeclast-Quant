@@ -53,7 +53,20 @@ The worksheet is local-only and includes exact positive, neutral, and negative `
 wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative
 ```
 
-9. Optionally write a derived-only local companion handoff for manual Exile-UI Stash-Ninja review:
+9. Inspect the local feedback loop after recording outcomes:
+
+```powershell
+wq review-coverage --run-id <id>
+wq outcomes
+wq outcome-review
+wq calibration
+wq outcome-report --output-path data/processed/outcome_review.md
+wq calibration-report --output-path data/processed/calibration_report.md
+```
+
+These commands are local review aids. They do not retune scoring, publish artifacts, automate trades, or change recommendations without a separate implementation packet.
+
+10. Optionally write a derived-only local companion handoff for manual Exile-UI Stash-Ninja review:
 
 ```powershell
 wq stash-ninja-watchlist

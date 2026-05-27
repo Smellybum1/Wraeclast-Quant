@@ -904,3 +904,5 @@
 - Verification: bundled Python focused tests `tests/test_cli_outcome_report.py tests/test_cli_calibration_report.py tests/test_outcome_contract.py --basetemp=.tmp-pytest-local-report-handoff -p no:cacheprovider` passed with 4 tests; `git diff --check` passed.
 - Full-suite checkpoint: bundled Python `pytest --basetemp=.tmp-pytest-full-mvp-handoff -p no:cacheprovider` passed with 536 tests after the latest MVP review/handoff packets.
 - Health checkpoint: `status --strict` and `publish-check` passed after the full suite; no derived artifact refresh was needed and the temporary pytest directory was removed.
+- Completed packet: README and `docs/MVP_DAILY_WORKFLOW.md` now document the post-outcome local feedback loop through `review-coverage`, `outcomes`, `outcome-review`, `calibration`, `outcome-report`, and `calibration-report`, matching the current CLI handoff guidance.
+- Verification: bundled Python focused docs/CLI tests `tests/test_mvp_daily_workflow_contract.py tests/test_outcome_contract.py tests/test_cli.py --basetemp=.tmp-pytest-mvp-doc-handoff -p no:cacheprovider` passed with 6 tests; `git diff --check` passed.

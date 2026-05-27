@@ -10,5 +10,10 @@ def test_mvp_daily_workflow_uses_currency_exchange_review() -> None:
     assert "wq daily --input-path <manual-import-output>" in text
     assert "wq watchlist" in text
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in text
+    assert "wq outcome-review" in text
+    assert "wq calibration" in text
+    assert "wq outcome-report --output-path data/processed/outcome_review.md" in text
+    assert "wq calibration-report --output-path data/processed/calibration_report.md" in text
+    assert "They do not retune scoring" in text
     assert "wq stash-ninja-watchlist" in text
     assert "do not write Exile-UI settings or caches" in text
