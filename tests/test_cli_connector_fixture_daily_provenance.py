@@ -19,7 +19,12 @@ def test_connector_fixture_daily_stores_sanitized_run_provenance(tmp_path: Path)
 
     result = runner.invoke(
         app,
-        _connector_fixture_daily_args(database_path=database_path),
+        _connector_fixture_daily_args(
+            database_path=database_path,
+            brief_path=tmp_path / "market_brief.md",
+            intel_path=tmp_path / "public_intel.json",
+            site_dir=tmp_path / "site",
+        ),
     )
 
     provenance = SnapshotRepository(database_path).latest_run_provenance()

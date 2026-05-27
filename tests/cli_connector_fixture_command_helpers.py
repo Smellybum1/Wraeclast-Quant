@@ -71,6 +71,9 @@ def connector_fixture_daily_args(
     ]
     if database_path is not None:
         args.extend(["--database-path", str(database_path)])
+        brief_path = brief_path or database_path.parent / "market_brief.md"
+        intel_path = intel_path or database_path.parent / "public_intel.json"
+        site_dir = site_dir or database_path.parent / "site"
     if brief_path is not None:
         args.extend(["--brief-path", str(brief_path)])
     if intel_path is not None:

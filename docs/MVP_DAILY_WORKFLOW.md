@@ -61,6 +61,12 @@ wq stash-ninja-watchlist
 
 This writes `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` from the latest local run. The files include item names, scores, actions, review coverage, and suggested manual Stash-Ninja treatment. They do not write Exile-UI settings or caches, automate the overlay, call live HTTP, read game-client state, include raw signals, or record outcomes.
 
+You can also generate the same handoff during the daily run:
+
+```powershell
+wq daily --input-path <manual-import-output> --stash-ninja-watchlist
+```
+
 ## MVP Readiness
 
 `wq status` includes an `MVP readiness` row. It summarizes whether the local no-OAuth loop has a latest run and points to the next manual action, usually a run-specific `wq review-queue --run-id <id> --output-path data/processed/review_queue.md`, `wq record-outcome`, or the next `wq daily --input-path` run.

@@ -11,6 +11,7 @@ It is orchestration only. It is not a daemon, scheduler, scraper, publisher, web
 ```powershell
 wq daily --sample-data
 wq daily --input-path <file>
+wq daily --input-path <file> --stash-ninja-watchlist
 wq connector-fixture-daily --review-path <file> --fixture-path <file>
 ```
 
@@ -34,7 +35,8 @@ One daily run:
 7. Records the market brief as a report artifact.
 8. Builds and writes derived-only `public_intel.json`.
 9. Renders the local static dashboard from the same public intel payload.
-10. Prints local alert candidates when a comparison exists.
+10. Optionally writes a derived-only Stash-Ninja companion handoff when `--stash-ninja-watchlist` is passed.
+11. Prints local alert candidates when a comparison exists.
 
 Daily does not call other CLI commands internally. It reuses lower-level scoring, storage, report, export, site, and alert functions so one run id is used consistently across artifacts.
 
@@ -47,6 +49,9 @@ Connector fixture daily uses the shared workflow after connector review/check an
 - `brief_path`: `data/processed/market_brief.md`
 - `intel_path`: `data/processed/public_intel.json`
 - `site_dir`: `data/processed/site`
+- `stash_ninja_path`: `data/processed/exile_ui_stash_ninja_watchlist.json`
+
+The Stash-Ninja handoff is opt-in for daily runs. When `--stash-ninja-watchlist` is passed, the command also writes JSON and Markdown companion files for the created run. They are local manual handoffs only and do not write Exile-UI files, call live HTTP, include raw signals, or interact with the game client.
 
 ## Printed Output Labels
 
@@ -58,6 +63,8 @@ Successful daily runs print these output labels:
 - `Dashboard`
 
 The command also prints the completed daily run id.
+
+When `--stash-ninja-watchlist` is passed, the command also prints `Stash-Ninja handoff` and `Stash-Ninja handoff Markdown` output paths.
 
 ## Alert Settings
 

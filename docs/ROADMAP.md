@@ -645,6 +645,7 @@
 - `wq watchlist` now reads stored local runs by default while keeping deterministic sample data opt-in.
 - `wq stash-ninja-watchlist` writes derived-only local JSON/Markdown companion handoffs for manual Exile-UI Stash-Ninja review without overlay automation, game-client interaction, live HTTP, raw signals, or third-party file writes.
 - Local status now reports optional Stash-Ninja handoff freshness and safety metadata, while allowing the handoff to be absent in strict mode.
+- `wq daily --stash-ninja-watchlist` can now write the derived-only Stash-Ninja companion handoff for the newly created run.
 
 ## Later Intelligence Improvements
 

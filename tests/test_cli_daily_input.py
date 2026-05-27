@@ -44,7 +44,13 @@ def test_daily_input_path_creates_one_manual_import_run(tmp_path: Path) -> None:
 
     result = runner.invoke(
         app,
-        _daily_args(input_path=input_path, database_path=database_path),
+        _daily_args(
+            input_path=input_path,
+            database_path=database_path,
+            brief_path=tmp_path / "market_brief.md",
+            intel_path=tmp_path / "public_intel.json",
+            site_dir=tmp_path / "site",
+        ),
     )
 
     runs = SnapshotRepository(database_path).list_recent_runs(limit=10)

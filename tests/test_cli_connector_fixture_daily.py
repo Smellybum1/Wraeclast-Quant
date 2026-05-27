@@ -43,7 +43,12 @@ def test_connector_fixture_daily_creates_one_connector_fixture_run(tmp_path: Pat
 
     result = runner.invoke(
         app,
-        _connector_fixture_daily_args(database_path=database_path),
+        _connector_fixture_daily_args(
+            database_path=database_path,
+            brief_path=tmp_path / "market_brief.md",
+            intel_path=tmp_path / "public_intel.json",
+            site_dir=tmp_path / "site",
+        ),
     )
 
     runs = SnapshotRepository(database_path).list_recent_runs(limit=10)
