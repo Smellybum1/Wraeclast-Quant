@@ -78,7 +78,7 @@ If no reviewed recommendations exist, the report says:
 
 ```text
 No reviewed recommendation outcomes found.
-Next: run wq review-queue, then record human decisions with wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative.
+Next: run wq review-queue --output-path data/processed/review_queue.md, then record human decisions with wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative.
 Outcome labels: positive=useful signal, neutral=mixed or unclear, negative=not useful after review.
 ```
 

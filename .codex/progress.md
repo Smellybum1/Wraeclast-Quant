@@ -865,3 +865,5 @@
 - Health checkpoint: full suite left loose public-intel/static-site artifacts stale, then bundled Python CLI `export` and `site` refreshed them; `status --strict` and `publish-check` passed, and no generated artifact diff remained.
 - Completed packet: review queue worksheets now include per-item manual decision, local notes, and chosen-command fields, plus local-only `--notes` guidance for outcome recording.
 - Verification: bundled Python focused review/MVP workflow tests passed with 15 tests; regenerated `data/processed/review_queue.md` for run #10; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: empty outcome-review and calibration guidance now points to `wq review-queue --output-path data/processed/review_queue.md` before outcome recording.
+- Verification: bundled Python focused outcome/calibration tests passed with 16 tests; `outcome-review` empty-state smoke showed worksheet-first guidance; `status --strict`, `publish-check`, and `git diff --check` passed.

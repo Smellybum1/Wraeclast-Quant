@@ -27,4 +27,5 @@ def test_outcome_contract_doc_matches_allowed_outcomes_and_report_markers() -> N
         assert marker in calibration_report
     assert "No reviewed recommendation outcomes found." in render_outcome_review([], {})
     assert "wq review-queue" in render_outcome_review([], {})
+    assert "data/processed/review_queue.md" in render_outcome_review([], {})
     assert "positive=useful signal" in render_calibration_report(build_calibration_from_reviews([]))

@@ -3,7 +3,8 @@ from __future__ import annotations
 
 NO_OUTCOME_REVIEWS_MESSAGE = "No reviewed recommendation outcomes found."
 NO_OUTCOME_NEXT_STEP = (
-    "Next: run wq review-queue, then record human decisions with "
+    "Next: run wq review-queue --output-path data/processed/review_queue.md, "
+    "then record human decisions with "
     "wq record-outcome --run-id <id> --item-name <name> "
     "--outcome positive|neutral|negative."
 )
