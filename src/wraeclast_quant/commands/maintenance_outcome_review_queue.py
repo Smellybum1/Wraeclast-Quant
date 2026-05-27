@@ -10,6 +10,9 @@ from wraeclast_quant.commands.maintenance_outcome_review_queue_rendering import 
     print_review_coverage,
     print_review_queue,
 )
+from wraeclast_quant.reports.review_queue_decisions import (
+    write_review_queue_decisions_template,
+)
 from wraeclast_quant.reports.review_queue_worksheet import write_review_queue_worksheet
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
@@ -27,6 +30,11 @@ def register(app: typer.Typer) -> None:
             None,
             "--output-path",
             help="Write a local Markdown review worksheet for the unreviewed queue.",
+        ),
+        decisions_output_path: Path | None = typer.Option(
+            None,
+            "--decisions-output-path",
+            help="Write a local JSON outcome decisions template for record-outcomes.",
         ),
         context_path: Path | None = typer.Option(
             None,
@@ -60,6 +68,13 @@ def register(app: typer.Typer) -> None:
                 context_markdown=context_markdown,
             )
             typer.echo(f"Wrote review queue worksheet to {output_path}")
+        if decisions_output_path is not None:
+            write_review_queue_decisions_template(
+                decisions_output_path,
+                run_id=run.id,
+                opportunities=opportunities,
+            )
+            typer.echo(f"Wrote outcome decisions template to {decisions_output_path}")
 
     @app.command("review-coverage")
     def review_coverage(

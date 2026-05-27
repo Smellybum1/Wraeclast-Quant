@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -73,6 +74,33 @@ def test_review_queue_worksheet_can_include_local_context(tmp_path: Path) -> Non
     assert "# Currency Exchange UI Observation Review Notes" in worksheet
     assert "| Open Catalyst | 30:1 | 42,000 |" in worksheet
     assert "## Outcome Labels" in worksheet
+
+
+def test_review_queue_command_writes_outcome_decisions_template(tmp_path: Path) -> None:
+    database_path, _run = _partially_reviewed_two_item_database(tmp_path)
+    decisions_path = tmp_path / "outcome_decisions.json"
+
+    result = runner.invoke(
+        app,
+        _review_queue_args(
+            database_path,
+            decisions_output_path=decisions_path,
+        ),
+    )
+
+    payload = json.loads(decisions_path.read_text(encoding="utf-8"))
+    assert result.exit_code == 0
+    assert "Wrote outcome decisions template" in result.output
+    assert payload == {
+        "run_id": 1,
+        "decisions": [
+            {
+                "item_name": "Open Catalyst",
+                "outcome": "",
+                "notes": "",
+            }
+        ],
+    }
 
 
 def test_review_queue_context_path_requires_output_path(tmp_path: Path) -> None:
