@@ -38,6 +38,7 @@ def test_static_site_renders_mvp_readiness() -> None:
     assert "<th>Local loop</th><td>No-OAuth local decision-support ready</td>" in html
     assert "<th>Latest run</th><td>7</td>" in html
     assert "<th>Review state</th><td>1/2 reviewed</td>" in html
+    assert "wq review-queue --run-id 7" in html
     assert "wq record-outcome --run-id 7" in html
 
 
@@ -71,5 +72,5 @@ def test_static_site_renders_review_coverage() -> None:
     assert "<th>Unreviewed</th><td>1</td>" in html
     assert "<th>Reviewed %</th><td>50.0%</td>" in html
     assert "<th>Next review action</th>" in html
-    assert "wq review-queue" in html
+    assert "wq review-queue --run-id 7" in html
     assert "wq record-outcome --run-id 7" in html

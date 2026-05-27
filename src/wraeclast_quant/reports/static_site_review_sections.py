@@ -56,7 +56,7 @@ def review_coverage_section(coverage: dict[str, Any]) -> str:
 def _review_action_text(run_id: object) -> str:
     run_arg = run_id if run_id != "" else "<id>"
     return (
-        "Run wq review-queue, then "
+        f"Run wq review-queue --run-id {run_arg}, then "
         f"wq record-outcome --run-id {run_arg} --item-name <name> "
         "--outcome positive|neutral|negative"
     )

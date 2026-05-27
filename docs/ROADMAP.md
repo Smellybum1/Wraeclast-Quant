@@ -628,6 +628,7 @@
 - Review queue output now includes item-specific `record-outcome` command templates for each unreviewed recommendation.
 - Outcome review and calibration empty states now point back to `wq review-queue` and `wq record-outcome` so the MVP feedback loop no longer dead-ends before the first reviewed outcome.
 - Review coverage output now points directly to `wq review-queue --run-id <id>` when unreviewed recommendations remain.
+- Static dashboard review guidance now uses the same run-specific `wq review-queue --run-id <id>` action as the CLI review coverage command.
 
 ## Later Intelligence Improvements
 

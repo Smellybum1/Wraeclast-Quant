@@ -847,3 +847,5 @@
 - Verification: bundled Python focused tests `tests/test_cli_outcome_review.py tests/test_cli_outcome_report.py tests/test_cli_calibration.py tests/test_cli_calibration_report.py tests/test_calibration_report.py tests/test_outcome_review_report.py tests/test_outcome_contract.py --basetemp=.tmp-pytest-mvp-empty-feedback -p no:cacheprovider` passed with 16 tests.
 - Completed packet: review coverage now prints a direct `wq review-queue --run-id <id>` next action when unreviewed recommendations remain.
 - Verification: bundled Python focused tests `tests/test_cli_review_coverage.py tests/test_cli_review_queue.py tests/test_cli_record_outcome.py --basetemp=.tmp-pytest-mvp-coverage-next -p no:cacheprovider` passed with 11 tests.
+- Completed packet: static dashboard review guidance now points to the run-specific `wq review-queue --run-id <id>` command before outcome recording.
+- Verification: bundled Python focused tests `tests/test_static_site.py tests/test_static_site_safety.py tests/test_static_site_io.py tests/test_cli_site.py --basetemp=.tmp-pytest-mvp-static-review-action -p no:cacheprovider` passed with 12 tests.
