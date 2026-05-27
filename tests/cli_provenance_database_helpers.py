@@ -47,9 +47,9 @@ def two_run_provenance_database(
     return database_path, first, second
 
 
-def missing_provenance_database(tmp_path: Path) -> Path:
+def missing_provenance_database(tmp_path: Path, *, source_mode: str = "sample-data") -> Path:
     database_path = tmp_path / "snapshots.db"
-    SnapshotRepository(database_path).create_analysis_run(source_mode="sample-data", item_count=0)
+    SnapshotRepository(database_path).create_analysis_run(source_mode=source_mode, item_count=0)
     return database_path
 
 

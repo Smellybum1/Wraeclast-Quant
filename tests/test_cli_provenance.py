@@ -50,7 +50,23 @@ def test_run_provenance_missing_provenance_prints_clear_message(tmp_path: Path) 
     result = runner.invoke(app, _run_provenance_args(database_path))
 
     assert result.exit_code == 0
-    assert "No run provenance found." in result.output
+    assert "No run provenance found for run #1" in result.output
+    assert "source mode: sample-data" in result.output
+    assert "local-only and read-only" in result.output
+
+
+def test_run_provenance_missing_manual_import_provenance_explains_legacy_gap(
+    tmp_path: Path,
+) -> None:
+    database_path = _missing_provenance_database(tmp_path, source_mode="manual-import")
+
+    result = runner.invoke(app, _run_provenance_args(database_path, run_id=1))
+
+    assert result.exit_code == 0
+    assert "No run provenance found for run #1" in result.output
+    assert "source mode: manual-import" in result.output
+    assert "may predate manual-import provenance recording" in result.output
+    assert "Future wq daily --input-path runs record path-safe local input metadata" in result.output
 
 
 def test_run_provenance_missing_database_does_not_create_database(tmp_path: Path) -> None:

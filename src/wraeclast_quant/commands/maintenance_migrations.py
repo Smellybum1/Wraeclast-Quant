@@ -48,9 +48,30 @@ def register(app: typer.Typer) -> None:
         )
         if provenance is None:
             if run_id is None:
-                console.print("No run provenance found.")
+                run = repository.latest_run()
+                if run is None:
+                    console.print("No run provenance found.")
+                    return
+                console.print(_missing_run_provenance_message(run.id, run.source_mode))
                 return
-            console.print(f"No run provenance found for run #{run_id}.")
+            run = repository.analysis_run(run_id)
+            source_mode = run.source_mode if run is not None else None
+            console.print(_missing_run_provenance_message(run_id, source_mode))
             return
 
         print_run_provenance(provenance)
+
+
+def _missing_run_provenance_message(run_id: int, source_mode: str | None) -> str:
+    if source_mode is None:
+        return f"No run provenance found for run #{run_id}."
+    lines = [
+        f"No run provenance found for run #{run_id} (source mode: {source_mode}).",
+        "Run provenance is local-only and read-only; no files were written.",
+    ]
+    if source_mode == "manual-import":
+        lines.append(
+            "This run may predate manual-import provenance recording. "
+            "Future wq daily --input-path runs record path-safe local input metadata."
+        )
+    return "\n".join(lines)
