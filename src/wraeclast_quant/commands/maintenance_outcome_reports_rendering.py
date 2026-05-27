@@ -50,6 +50,11 @@ def print_outcome_review(
             *(str(counts.get(label, 0)) for label in sorted(ALLOWED_OUTCOMES)),
         )
     console.print(summary_table)
+    console.print(
+        "Next: run wq calibration for read-only score/action summaries, "
+        "or wq outcome-report --output-path data/processed/outcome_review.md "
+        "to write a local Markdown report."
+    )
 
 
 def print_outcome_report_written(written_path: Path, *, has_reviews: bool) -> None:

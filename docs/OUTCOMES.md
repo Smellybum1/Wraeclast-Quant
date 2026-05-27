@@ -24,7 +24,7 @@ wq calibration-report
 
 `outcomes` lists recent local outcome records and summary counts.
 
-`outcome-review` joins outcomes back to original recommendation score and action.
+`outcome-review` joins outcomes back to original recommendation score and action, then points to `wq calibration` and `wq outcome-report --output-path data/processed/outcome_review.md` for the next read-only summary/report steps.
 
 `outcome-report` writes `data/processed/outcome_review.md`.
 

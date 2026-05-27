@@ -28,6 +28,8 @@ def test_outcome_review_command_prints_joined_review_and_summary(tmp_path: Path)
     assert "BUY" in result.output
     assert "positive" in result.output
     assert "Outcome Review By Action" in result.output
+    assert "wq calibration" in result.output
+    assert "wq outcome-report --output-path data/processed/outcome_review.md" in result.output
 
 
 def test_outcome_review_command_handles_empty_database(tmp_path: Path) -> None:
