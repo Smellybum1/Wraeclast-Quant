@@ -27,6 +27,7 @@ def test_review_queue_command_prints_unreviewed_latest_run(tmp_path: Path) -> No
     assert "#1" in result.output
     assert "sample-data" in result.output
     assert "local decision-support only" in result.output
+    assert "positive=useful signal" in result.output
     assert "Open Catalyst" in result.output
     assert "Reviewed Catalyst" not in result.output
     assert "record-outcome" in result.output

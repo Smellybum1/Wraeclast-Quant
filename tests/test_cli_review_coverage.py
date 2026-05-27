@@ -25,6 +25,7 @@ def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> N
     assert "Recommendation Review Coverage" in result.output
     assert "#1" in result.output
     assert "50.0%" in result.output
+    assert "positive=useful signal" in result.output
 
 
 def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:

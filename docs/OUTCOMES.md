@@ -41,6 +41,12 @@ Allowed outcome labels:
 
 Outcome labels are normalized to lowercase. Any other label is rejected.
 
+MVP review wording:
+
+- `positive`: the recommendation was useful after manual review.
+- `neutral`: the recommendation was mixed, stale, or unclear.
+- `negative`: the recommendation was not useful after manual review.
+
 ## Required References
 
 An outcome can only be recorded when:

@@ -30,9 +30,10 @@ def print_review_queue(
             opportunity.item_name,
             f"{opportunity.opportunity_score:.2f}",
             opportunity.action,
-        )
+    )
     console.print(table)
     console.print(_local_review_caveat(source_mode))
+    console.print(_outcome_label_guide())
     console.print(
         "Use wq record-outcome --run-id "
         f"{run_id} --item-name <name> --outcome positive|neutral|negative"
@@ -53,10 +54,18 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
     )
     console.print(table)
     console.print(_local_review_caveat(source_mode))
+    console.print(_outcome_label_guide())
 
 
 def _local_review_caveat(source_mode: str) -> str:
     return (
         f"Run source: {source_mode}. Review outcomes are local decision-support only; "
         "no trades, whispers, gameplay, publishing, or live collection are performed."
+    )
+
+
+def _outcome_label_guide() -> str:
+    return (
+        "Outcome labels: positive=useful signal, neutral=mixed or unclear, "
+        "negative=not useful after review."
     )
