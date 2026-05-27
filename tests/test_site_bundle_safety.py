@@ -37,3 +37,26 @@ def test_site_bundle_excludes_local_review_queue_worksheet(tmp_path: Path) -> No
     assert not (output_dir / "review_queue.md").exists()
     with zipfile.ZipFile(result.archive_path) as archive:
         assert "review_queue.md" not in archive.namelist()
+
+
+def test_site_bundle_excludes_stash_ninja_companion_exports(tmp_path: Path) -> None:
+    intel_path, site_dir = _write_inputs(tmp_path)
+    output_dir = tmp_path / "bundle"
+    (intel_path.parent / "exile_ui_stash_ninja_watchlist.json").write_text("{}", encoding="utf-8")
+    (intel_path.parent / "exile_ui_stash_ninja_watchlist.md").write_text(
+        "local companion handoff",
+        encoding="utf-8",
+    )
+    (site_dir / "exile_ui_stash_ninja_watchlist.json").write_text("{}", encoding="utf-8")
+
+    result = write_site_bundle(
+        intel_path=intel_path,
+        site_dir=site_dir,
+        output_dir=output_dir,
+    )
+
+    assert not (output_dir / "exile_ui_stash_ninja_watchlist.json").exists()
+    assert not (output_dir / "exile_ui_stash_ninja_watchlist.md").exists()
+    with zipfile.ZipFile(result.archive_path) as archive:
+        assert "exile_ui_stash_ninja_watchlist.json" not in archive.namelist()
+        assert "exile_ui_stash_ninja_watchlist.md" not in archive.namelist()
