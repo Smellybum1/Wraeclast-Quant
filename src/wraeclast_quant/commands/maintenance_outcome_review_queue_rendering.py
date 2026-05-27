@@ -5,7 +5,6 @@ from rich.table import Table
 
 from wraeclast_quant.reports.review_queue_commands import (
     OUTCOME_DECISIONS_PATH,
-    batch_outcome_review_next_action,
     record_outcomes_dry_run_command,
     review_queue_decisions_template_command,
     review_queue_worksheet_command,
@@ -66,9 +65,7 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
     console.print(local_review_caveat(source_mode))
     console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
-        console.print(
-            f"Next: {batch_outcome_review_next_action(run_id)}."
-        )
+        console.print(_batch_review_next_steps(run_id))
 
 
 def _record_outcome_command_templates(
