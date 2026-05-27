@@ -25,6 +25,7 @@ PUBLIC_COMMANDS = [
     "migration-readiness",
     "run-provenance",
     "record-outcome",
+    "record-outcomes",
     "outcomes",
     "review-queue",
     "review-coverage",

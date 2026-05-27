@@ -67,6 +67,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq review-queue` shows recommendations from the latest run that still need manual outcome review; add `--run-id <id> --output-path <file>` to write a local Markdown review worksheet without recording outcomes, and optionally add `--context-path <file>` to embed local review context such as a UI-observation sidecar.
 - `wq review-coverage` shows how much of a run has recorded manual outcome review.
 - `wq record-outcome --run-id <id> --item-name <name> --outcome positive` records a local manual review result for a recommendation. See `docs/OUTCOMES.md` for the outcome review contract.
+- `wq record-outcomes --input-path <file>` records a local batch of human-reviewed outcome decisions after validating the whole JSON file.
 - `wq outcomes` shows recent local recommendation outcomes and summary counts, then points to read-only review and calibration commands.
 - `wq outcome-review` joins recorded outcomes to their original scores and actions, then points to local summary/report follow-up.
 - `wq outcome-report --output-path data/processed/outcome_review.md` writes a local recommendation review artifact.

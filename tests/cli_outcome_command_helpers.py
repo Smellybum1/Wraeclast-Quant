@@ -27,6 +27,16 @@ def record_outcome_args(
     return args
 
 
+def record_outcomes_args(database_path: Path, input_path: Path) -> list[str]:
+    return [
+        "record-outcomes",
+        "--database-path",
+        str(database_path),
+        "--input-path",
+        str(input_path),
+    ]
+
+
 def outcomes_args(database_path: Path) -> list[str]:
     return ["outcomes", "--database-path", str(database_path)]
 
@@ -90,6 +100,7 @@ __all__ = [
     "outcome_report_args",
     "outcomes_args",
     "record_outcome_args",
+    "record_outcomes_args",
     "review_coverage_args",
     "review_queue_args",
 ]

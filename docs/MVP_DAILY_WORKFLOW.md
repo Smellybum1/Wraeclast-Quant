@@ -66,6 +66,14 @@ The worksheet is local-only and includes exact positive, neutral, and negative `
 wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative
 ```
 
+For a reviewed batch, put the human decisions in local JSON and record them together:
+
+```powershell
+wq record-outcomes --input-path data/processed/outcome_decisions.json
+```
+
+The batch command validates the whole file before writing any outcome.
+
 9. Inspect the local feedback loop after recording outcomes:
 
 ```powershell

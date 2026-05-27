@@ -10,6 +10,7 @@ wq review-queue --run-id <id> --output-path data/processed/review_queue.md
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md --context-path data/processed/ui_observation_review.md
 wq review-coverage
 wq record-outcome --run-id <id> --item-name <name> --outcome positive
+wq record-outcomes --input-path data/processed/outcome_decisions.json
 wq outcomes
 wq outcome-review
 wq outcome-report
@@ -22,6 +23,23 @@ wq calibration-report
 `review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a `review-queue --run-id <id> --output-path data/processed/review_queue.md` next action when unreviewed recommendations remain.
 
 `record-outcome` records one local manual outcome for an item from an existing analysis run. After recording, rerun `wq review-coverage --run-id <id>` and refresh derived artifacts with `wq export`, `wq site`, and `wq site-bundle` when you want local dashboard or public handoff files to reflect the new review state.
+
+`record-outcomes` records a local batch of human-reviewed outcome decisions from a JSON file. The whole file is validated before any outcome is written, so a bad item name, duplicate item, missing run, invalid label, or malformed decision prevents partial writes.
+
+Batch outcome JSON shape:
+
+```json
+{
+  "run_id": 11,
+  "decisions": [
+    {
+      "item_name": "Exalted Orb / Divine Orb (Standard UI)",
+      "outcome": "neutral",
+      "notes": "Optional local note."
+    }
+  ]
+}
+```
 
 `outcomes` lists recent local outcome records and summary counts.
 

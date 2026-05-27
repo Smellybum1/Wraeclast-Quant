@@ -657,6 +657,7 @@
 - Stash-Ninja CLI output and daily opt-in handoff output now also print the run-specific review worksheet command, using one shared helper for the worksheet command text.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.
+- `wq record-outcomes --input-path <file>` can now record a human-reviewed local outcome batch after validating the entire JSON file, avoiding partial writes when one decision is invalid.
 - `wq outcomes` now points reviewed summaries to `wq outcome-review` and `wq calibration` so the manual feedback loop naturally continues into read-only performance review.
 - `wq outcome-review` now points joined recommendation/outcome rows to `wq calibration` and `wq outcome-report --output-path data/processed/outcome_review.md` for local summary/report follow-up.
 - `wq calibration` now points to `wq calibration-report --output-path data/processed/calibration_report.md` after its local-only read-only summary without changing scoring.
