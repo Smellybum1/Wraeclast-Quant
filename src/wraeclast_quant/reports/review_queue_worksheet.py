@@ -7,6 +7,8 @@ from wraeclast_quant.reports.review_queue_commands import (
     outcome_label_guide,
     powershell_double_quoted_text,
     record_outcome_command,
+    record_outcomes_dry_run_command,
+    review_queue_decisions_template_command,
     review_queue_worksheet_command,
 )
 from wraeclast_quant.reports.review_queue_worksheet_sections import (
@@ -70,6 +72,15 @@ def render_review_queue_worksheet(
             "- Rerun `wq review-coverage --run-id "
             f"{run_id}` to confirm the reviewed count changed.",
             "",
+            "## Batch Outcome Template",
+            "",
+            "For batch review, write the editable decisions JSON, fill one outcome per item, "
+            "dry-run the file, then record it:",
+            "",
+            f"- Template: `{review_queue_decisions_template_command(run_id)}`",
+            f"- Dry run: `{record_outcomes_dry_run_command()}`",
+            "- Record: `wq record-outcomes --input-path data/processed/outcome_decisions.json`",
+            "",
             "## Outcome Command Options",
             "",
             *outcome_command_option_rows(run_id, opportunities),
@@ -111,7 +122,9 @@ __all__ = [
     "local_review_caveat",
     "outcome_label_guide",
     "powershell_double_quoted_text",
+    "record_outcomes_dry_run_command",
     "record_outcome_command",
+    "review_queue_decisions_template_command",
     "render_review_queue_worksheet",
     "review_queue_worksheet_command",
     "write_review_queue_worksheet",

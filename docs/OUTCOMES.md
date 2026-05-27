@@ -101,6 +101,7 @@ The local review queue worksheet includes:
 - `## Outcome Labels`
 - `## Unreviewed Recommendations`
 - `## Review Checklist`
+- `## Batch Outcome Template`
 - `## Outcome Command Options`
 - `## Manual Review Notes`
 
