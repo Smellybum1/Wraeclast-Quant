@@ -60,3 +60,36 @@ def test_site_bundle_excludes_stash_ninja_companion_exports(tmp_path: Path) -> N
     with zipfile.ZipFile(result.archive_path) as archive:
         assert "exile_ui_stash_ninja_watchlist.json" not in archive.namelist()
         assert "exile_ui_stash_ninja_watchlist.md" not in archive.namelist()
+
+
+def test_site_bundle_excludes_local_outcome_and_calibration_reports(tmp_path: Path) -> None:
+    intel_path, site_dir = _write_inputs(tmp_path)
+    output_dir = tmp_path / "bundle"
+    (intel_path.parent / "outcome_review.md").write_text(
+        "local outcome notes: private context",
+        encoding="utf-8",
+    )
+    (intel_path.parent / "calibration_report.md").write_text(
+        "local calibration review",
+        encoding="utf-8",
+    )
+    (site_dir / "outcome_review.md").write_text(
+        "local outcome notes: private context",
+        encoding="utf-8",
+    )
+    (site_dir / "calibration_report.md").write_text(
+        "local calibration review",
+        encoding="utf-8",
+    )
+
+    result = write_site_bundle(
+        intel_path=intel_path,
+        site_dir=site_dir,
+        output_dir=output_dir,
+    )
+
+    assert not (output_dir / "outcome_review.md").exists()
+    assert not (output_dir / "calibration_report.md").exists()
+    with zipfile.ZipFile(result.archive_path) as archive:
+        assert "outcome_review.md" not in archive.namelist()
+        assert "calibration_report.md" not in archive.namelist()

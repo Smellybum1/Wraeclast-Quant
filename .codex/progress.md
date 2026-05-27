@@ -906,3 +906,5 @@
 - Health checkpoint: `status --strict` and `publish-check` passed after the full suite; no derived artifact refresh was needed and the temporary pytest directory was removed.
 - Completed packet: README and `docs/MVP_DAILY_WORKFLOW.md` now document the post-outcome local feedback loop through `review-coverage`, `outcomes`, `outcome-review`, `calibration`, `outcome-report`, and `calibration-report`, matching the current CLI handoff guidance.
 - Verification: bundled Python focused docs/CLI tests `tests/test_mvp_daily_workflow_contract.py tests/test_outcome_contract.py tests/test_cli.py --basetemp=.tmp-pytest-mvp-doc-handoff -p no:cacheprovider` passed with 6 tests; `git diff --check` passed.
+- Completed packet: site-bundle safety coverage and static artifact docs now explicitly keep local outcome and calibration Markdown reports out of public static handoff bundles.
+- Verification: bundled Python focused tests `tests/test_site_bundle_safety.py tests/test_site_bundle.py tests/test_site_bundle_contract_docs.py tests/test_cli_site_bundle.py --basetemp=.tmp-pytest-report-bundle-safety -p no:cacheprovider` passed with 10 tests; `git diff --check` passed.

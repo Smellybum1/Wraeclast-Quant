@@ -21,6 +21,8 @@ Local review worksheets such as `data/processed/review_queue.md` are not site-bu
 
 Local companion handoffs such as `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` are also not site-bundle inputs. They are for manual local review only and must stay out of public static handoff bundles.
 
+Local outcome and calibration reports such as `data/processed/outcome_review.md` and `data/processed/calibration_report.md` are local feedback-loop artifacts. They may include manual review context and must stay out of public static handoff bundles.
+
 `wq publish-check` verifies that the bundle is valid, derived-only, contract-compliant, and fresh against the latest SQLite run.
 
 `wq publish-handoff` writes `data/processed/publish_handoff.md` with readiness evidence, blockers if present, archive details, bundled file names, and a manual publishing checklist. It does not upload, host, publish, or make network requests.
@@ -114,7 +116,7 @@ Static artifacts may include derived fields from `public_intel.json`: item names
 
 They must not include raw source pages, raw signal inputs, resource notes, full source inventories, private data, secrets, cookies, tokens, API keys, credentials, `.env` values, or manual outcome notes.
 
-Local review worksheets and Stash-Ninja companion watchlists are for the manual feedback loop only. They are not public site artifacts and must not be bundled for static handoff.
+Local review worksheets, Stash-Ninja companion watchlists, outcome reports, and calibration reports are for the manual feedback loop only. They are not public site artifacts and must not be bundled for static handoff.
 
 ## Safety Notes
 
