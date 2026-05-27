@@ -667,6 +667,7 @@
 - Site-bundle local artifact exclusion tests are split from manifest source-path and secret safety coverage.
 - Stash-Ninja status strict stale/missing handoff tests are split from fresh handoff row rendering coverage.
 - Static-site MVP readiness, outcome summary, and review coverage tests are split from base metadata/compliance/opportunity/alert rendering coverage.
+- Review-queue worksheet command text and section-row helpers are split behind the existing worksheet facade, preserving CLI guidance and import compatibility.
 
 ## Later Intelligence Improvements
 
