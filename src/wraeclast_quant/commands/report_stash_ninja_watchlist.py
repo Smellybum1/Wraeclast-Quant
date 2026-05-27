@@ -5,6 +5,7 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
+from wraeclast_quant.reports.review_queue_worksheet import review_queue_worksheet_command
 from wraeclast_quant.reports.stash_ninja_watchlist import (
     DEFAULT_STASH_NINJA_WATCHLIST_PATH,
     build_stash_ninja_watchlist,
@@ -54,3 +55,4 @@ def register(app: typer.Typer) -> None:
         )
         console.print(f"Wrote manual handoff Markdown to {written_markdown}")
         console.print("Manual application required; no Exile-UI files or game-client state were touched.")
+        console.print(f"Next: {review_queue_worksheet_command(int(payload['latest_run']['id']))}")

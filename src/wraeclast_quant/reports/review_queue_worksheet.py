@@ -20,6 +20,13 @@ def outcome_label_guide() -> str:
     )
 
 
+def review_queue_worksheet_command(run_id: int) -> str:
+    return (
+        f"wq review-queue --run-id {run_id} "
+        "--output-path data/processed/review_queue.md"
+    )
+
+
 def record_outcome_command(
     run_id: int,
     item_name: str,
@@ -146,5 +153,6 @@ __all__ = [
     "powershell_double_quoted_text",
     "record_outcome_command",
     "render_review_queue_worksheet",
+    "review_queue_worksheet_command",
     "write_review_queue_worksheet",
 ]

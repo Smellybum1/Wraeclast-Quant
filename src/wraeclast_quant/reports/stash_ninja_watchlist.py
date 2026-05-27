@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from wraeclast_quant.reports.review_queue_worksheet import review_queue_worksheet_command
 from wraeclast_quant.storage.models import (
     AnalysisRunRecord,
     ReviewCoverageRecord,
@@ -65,8 +66,7 @@ def render_stash_ninja_watchlist_markdown(payload: dict[str, Any]) -> str:
         ),
         (
             "- Next manual review: "
-            f"wq review-queue --run-id {run['id']} "
-            "--output-path data/processed/review_queue.md"
+            f"{review_queue_worksheet_command(int(run['id']))}"
         ),
         "",
         "| Item | Score | Action | Suggested manual treatment |",

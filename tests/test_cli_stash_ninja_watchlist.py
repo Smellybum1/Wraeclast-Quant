@@ -67,6 +67,7 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert result.exit_code == 0
     assert "Wrote derived-only Stash-Ninja companion watchlist" in result.output
     assert "no Exile-UI files or game-client state were touched" in result.output
+    assert f"Next: wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in result.output
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     assert payload["schema_version"] == "1.0"
     assert payload["latest_run"]["id"] == run.id

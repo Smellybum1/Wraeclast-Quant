@@ -10,6 +10,7 @@ from wraeclast_quant.commands.daily_run_inputs import (
 )
 from wraeclast_quant.commands.daily_run_rendering import print_daily_result
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
+from wraeclast_quant.reports.review_queue_worksheet import review_queue_worksheet_command
 from wraeclast_quant.reports.stash_ninja_watchlist import (
     DEFAULT_STASH_NINJA_WATCHLIST_PATH,
     build_stash_ninja_watchlist,
@@ -80,3 +81,4 @@ def register(app: typer.Typer) -> None:
         if stash_ninja_paths is not None:
             typer.echo(f"Stash-Ninja handoff: {stash_ninja_paths[0]}")
             typer.echo(f"Stash-Ninja handoff Markdown: {stash_ninja_paths[1]}")
+            typer.echo(f"Next: {review_queue_worksheet_command(result.run.id)}")

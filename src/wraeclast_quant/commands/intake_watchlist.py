@@ -6,7 +6,10 @@ import typer
 from rich.table import Table
 
 from wraeclast_quant.commands.intake_rendering import console
-from wraeclast_quant.reports.review_queue_worksheet import local_review_caveat
+from wraeclast_quant.reports.review_queue_worksheet import (
+    local_review_caveat,
+    review_queue_worksheet_command,
+)
 from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
 from wraeclast_quant.reports.watchlist import top_watchlist
 from wraeclast_quant.sample_data.items import SAMPLE_ITEMS
@@ -63,7 +66,6 @@ def _review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
     if coverage.unreviewed_recommendations:
         return (
             f"Review coverage: {reviewed}; {coverage.unreviewed_recommendations} unreviewed. "
-            f"Next: wq review-queue --run-id {run_id} "
-            "--output-path data/processed/review_queue.md."
+            f"Next: {review_queue_worksheet_command(run_id)}."
         )
     return f"Review coverage: {reviewed}; all recommendations for run #{run_id} have outcomes."
