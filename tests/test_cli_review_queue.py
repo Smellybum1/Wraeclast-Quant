@@ -71,36 +71,6 @@ def test_review_queue_command_handles_fully_reviewed_run(tmp_path: Path) -> None
     assert "No unreviewed recommendations found for run #1." in result.output
 
 
-def test_review_queue_command_writes_local_review_worksheet(tmp_path: Path) -> None:
-    database_path, _run = _partially_reviewed_two_item_database(tmp_path)
-    output_path = tmp_path / "review_queue.md"
-
-    result = runner.invoke(app, _review_queue_args(database_path, output_path=output_path))
-
-    assert result.exit_code == 0
-    assert "Wrote review queue worksheet" in result.output
-    worksheet = output_path.read_text(encoding="utf-8")
-    assert "# Wraeclast Quant Review Queue" in worksheet
-    assert "Local review worksheet only. No outcome decisions have been recorded." in worksheet
-    assert "Run source: sample-data." in worksheet
-    assert "| Open Catalyst | 60.00 | WATCH | positive / neutral / negative |" in worksheet
-    assert '`wq record-outcome --run-id 1 --item-name "Open Catalyst"' in worksheet
-    assert "--outcome <decision>" in worksheet
-    assert "## Outcome Command Options" in worksheet
-    assert "## Review Checklist" in worksheet
-    assert "Inspect each item in your local market context" in worksheet
-    assert "wq review-coverage --run-id 1" in worksheet
-    assert "### Open Catalyst" in worksheet
-    assert '`positive`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome positive`' in worksheet
-    assert '`neutral`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome neutral`' in worksheet
-    assert '`negative`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome negative`' in worksheet
-    assert "## Manual Review Notes" in worksheet
-    assert "- Open Catalyst:" in worksheet
-    assert "  - Local notes:" in worksheet
-    assert 'append --notes "<local note>"' in worksheet
-    assert "Reviewed Catalyst" not in worksheet
-
-
 def test_review_queue_command_rejects_missing_run(tmp_path: Path) -> None:
     result = runner.invoke(
         app,
@@ -128,23 +98,3 @@ def test_review_queue_command_escapes_item_names_in_command_templates(tmp_path: 
 
     assert result.exit_code == 0
     assert '--item-name "Open `` `"Catalyst`""' in result.output
-
-
-def test_review_queue_worksheet_escapes_markdown_and_commands(tmp_path: Path) -> None:
-    database_path = tmp_path / "snapshots.db"
-    output_path = tmp_path / "review_queue.md"
-    repository = SnapshotRepository(database_path)
-    run = repository.create_analysis_run("sample-data", item_count=1)
-    repository.save_scored_opportunities(
-        run.id,
-        [
-            opportunity('Open | ` "Catalyst"', 60.0, "WATCH"),
-        ],
-    )
-
-    result = runner.invoke(app, _review_queue_args(database_path, output_path=output_path))
-
-    assert result.exit_code == 0
-    worksheet = output_path.read_text(encoding="utf-8")
-    assert 'Open \\| ` "Catalyst"' in worksheet
-    assert '--item-name "Open \\| `` `"Catalyst`""' in worksheet

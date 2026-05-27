@@ -662,6 +662,7 @@
 - Stash-Ninja companion watchlist payload assembly and Markdown rendering are now split behind the existing report facade, preserving CLI and import compatibility.
 - Stash-Ninja CLI run-selection and missing-run tests are split from the JSON/Markdown writer-shape test, with a shared command-argument helper.
 - Watchlist CLI run-selection and missing-run tests are split from default latest-run/sample-output coverage.
+- Review-queue worksheet file-write and worksheet escaping tests are split from main review-queue CLI behavior tests.
 
 ## Later Intelligence Improvements
 
