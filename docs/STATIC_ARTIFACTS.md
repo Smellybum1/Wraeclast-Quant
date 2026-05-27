@@ -17,6 +17,8 @@ wq status
 
 `wq site-bundle` validates `public_intel.json`, copies the static dashboard and JSON export into `data/processed/site_bundle/`, writes `manifest.json`, and creates `wraeclast_quant_site_bundle.zip` for manual inspection.
 
+Local review worksheets such as `data/processed/review_queue.md` are not site-bundle inputs and must stay out of `data/processed/site_bundle/` and `wraeclast_quant_site_bundle.zip`.
+
 `wq publish-check` verifies that the bundle is valid, derived-only, contract-compliant, and fresh against the latest SQLite run.
 
 `wq publish-handoff` writes `data/processed/publish_handoff.md` with readiness evidence, blockers if present, archive details, bundled file names, and a manual publishing checklist. It does not upload, host, publish, or make network requests.
@@ -109,6 +111,8 @@ The descriptor is for future static-site and manual publishing handoff work. It 
 Static artifacts may include derived fields from `public_intel.json`: item names, scores, actions, deltas, alert reasons, run metadata, aggregate compliance counts, and aggregate review counts.
 
 They must not include raw source pages, raw signal inputs, resource notes, full source inventories, private data, secrets, cookies, tokens, API keys, credentials, `.env` values, or manual outcome notes.
+
+Local review worksheets are for the manual feedback loop only. They are not public site artifacts and must not be bundled for static handoff.
 
 ## Safety Notes
 

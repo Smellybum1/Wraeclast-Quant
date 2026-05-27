@@ -859,3 +859,5 @@
 - Verification: bundled Python focused review/status tests passed with 15 tests; `review-coverage` smoke showed the run #10 worksheet next action; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Completed packet: review queue worksheets now include exact positive, neutral, and negative `record-outcome` command options for each unreviewed item, reducing placeholder editing in the manual MVP feedback step.
 - Verification: bundled Python focused review/MVP workflow tests passed with 15 tests; regenerated `data/processed/review_queue.md` for run #10; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: added explicit site-bundle safety coverage and docs confirming local review queue worksheets stay out of public handoff bundles.
+- Verification: bundled Python focused site-bundle/publish safety tests passed with 14 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
