@@ -74,6 +74,14 @@ The local calibration report includes:
 - `## Average Score By Outcome`
 - `## Recent Reviewed Recommendations`
 
+The local review queue worksheet includes:
+
+- `# Wraeclast Quant Review Queue`
+- `## Outcome Labels`
+- `## Unreviewed Recommendations`
+- `## Outcome Command Options`
+- `## Manual Review Notes`
+
 If no reviewed recommendations exist, the report says:
 
 ```text

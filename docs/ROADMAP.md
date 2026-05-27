@@ -637,6 +637,7 @@
 - Site-bundle safety coverage now explicitly keeps local review queue worksheets out of public handoff bundles.
 - Review queue worksheets now include per-item local notes fields for the human outcome review step.
 - Empty outcome-review and calibration states now point to the worksheet-first review flow.
+- Recommendation outcome contract coverage now includes local review queue worksheet section markers.
 
 ## Later Intelligence Improvements
 

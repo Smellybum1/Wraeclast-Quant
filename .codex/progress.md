@@ -867,3 +867,5 @@
 - Verification: bundled Python focused review/MVP workflow tests passed with 15 tests; regenerated `data/processed/review_queue.md` for run #10; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Completed packet: empty outcome-review and calibration guidance now points to `wq review-queue --output-path data/processed/review_queue.md` before outcome recording.
 - Verification: bundled Python focused outcome/calibration tests passed with 16 tests; `outcome-review` empty-state smoke showed worksheet-first guidance; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: outcome contract documentation and tests now cover the required local review queue worksheet section markers.
+- Verification: bundled Python focused outcome contract/review tests passed with 13 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
