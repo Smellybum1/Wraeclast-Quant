@@ -23,6 +23,8 @@ def test_outcomes_command_prints_recent_outcomes_and_summary(tmp_path: Path) -> 
     assert "Stormglass Catalyst" in result.output
     assert "Outcome Summary" in result.output
     assert "positive" in result.output
+    assert "wq outcome-review" in result.output
+    assert "wq calibration" in result.output
 
 
 def test_outcomes_command_handles_empty_database(tmp_path: Path) -> None:

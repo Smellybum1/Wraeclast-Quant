@@ -43,6 +43,10 @@ def print_recent_outcomes(
     for label in sorted(ALLOWED_OUTCOMES):
         summary_table.add_row(label, str(summary.get(label, 0)))
     console.print(summary_table)
+    console.print(
+        "Next: run wq outcome-review to inspect scores/actions with outcomes, "
+        "or wq calibration to summarize reviewed recommendations."
+    )
 
 
 def print_no_outcomes() -> None:
