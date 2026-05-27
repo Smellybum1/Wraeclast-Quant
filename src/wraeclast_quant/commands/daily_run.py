@@ -9,13 +9,13 @@ from wraeclast_quant.commands.daily_run_inputs import (
     daily_opportunities,
 )
 from wraeclast_quant.commands.daily_run_rendering import print_daily_result
+from wraeclast_quant.commands.daily_stash_ninja_handoff import (
+    print_daily_stash_ninja_handoff,
+    write_daily_stash_ninja_handoff,
+)
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
-from wraeclast_quant.reports.review_queue_worksheet import review_queue_worksheet_command
 from wraeclast_quant.reports.stash_ninja_watchlist import (
     DEFAULT_STASH_NINJA_WATCHLIST_PATH,
-    build_stash_ninja_watchlist,
-    write_stash_ninja_watchlist,
-    write_stash_ninja_watchlist_markdown,
 )
 from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
@@ -63,22 +63,13 @@ def register(app: typer.Typer) -> None:
             limit=limit,
             alert_settings=alert_settings,
         )
-        stash_ninja_paths: tuple[Path, Path] | None = None
-        if result is not None and stash_ninja_watchlist:
-            payload = build_stash_ninja_watchlist(
-                repository=result.repository,
-                run_id=result.run.id,
-                limit=limit,
-            )
-            if payload is not None:
-                written_json = write_stash_ninja_watchlist(payload, stash_ninja_path)
-                written_markdown = write_stash_ninja_watchlist_markdown(
-                    payload,
-                    stash_ninja_markdown_path or stash_ninja_path.with_suffix(".md"),
-                )
-                stash_ninja_paths = (written_json, written_markdown)
+        stash_ninja_paths = write_daily_stash_ninja_handoff(
+            result,
+            enabled=stash_ninja_watchlist,
+            limit=limit,
+            stash_ninja_path=stash_ninja_path,
+            stash_ninja_markdown_path=stash_ninja_markdown_path,
+        )
         print_daily_result(result, database_path=database_path, limit=limit)
-        if stash_ninja_paths is not None:
-            typer.echo(f"Stash-Ninja handoff: {stash_ninja_paths[0]}")
-            typer.echo(f"Stash-Ninja handoff Markdown: {stash_ninja_paths[1]}")
-            typer.echo(f"Next: {review_queue_worksheet_command(result.run.id)}")
+        if result is not None:
+            print_daily_stash_ninja_handoff(result, stash_ninja_paths)
