@@ -635,6 +635,7 @@
 - `wq review-coverage` now points unreviewed runs to the local review worksheet export before outcome recording.
 - Review queue worksheets now include exact positive, neutral, and negative `record-outcome` command options per item to reduce manual editing errors.
 - Site-bundle safety coverage now explicitly keeps local review queue worksheets out of public handoff bundles.
+- Review queue worksheets now include per-item local notes fields for the human outcome review step.
 
 ## Later Intelligence Improvements
 

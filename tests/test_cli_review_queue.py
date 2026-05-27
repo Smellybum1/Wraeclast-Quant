@@ -91,6 +91,10 @@ def test_review_queue_command_writes_local_review_worksheet(tmp_path: Path) -> N
     assert '`positive`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome positive`' in worksheet
     assert '`neutral`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome neutral`' in worksheet
     assert '`negative`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome negative`' in worksheet
+    assert "## Manual Review Notes" in worksheet
+    assert "- Open Catalyst:" in worksheet
+    assert "  - Local notes:" in worksheet
+    assert 'append --notes "<local note>"' in worksheet
     assert "Reviewed Catalyst" not in worksheet
 
 

@@ -863,3 +863,5 @@
 - Verification: bundled Python focused site-bundle/publish safety tests passed with 14 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Full-suite checkpoint: bundled Python `pytest --basetemp=.tmp-pytest-full-mvp-review-loop -p no:cacheprovider` passed with 522 tests after the MVP review-loop packets.
 - Health checkpoint: full suite left loose public-intel/static-site artifacts stale, then bundled Python CLI `export` and `site` refreshed them; `status --strict` and `publish-check` passed, and no generated artifact diff remained.
+- Completed packet: review queue worksheets now include per-item manual decision, local notes, and chosen-command fields, plus local-only `--notes` guidance for outcome recording.
+- Verification: bundled Python focused review/MVP workflow tests passed with 15 tests; regenerated `data/processed/review_queue.md` for run #10; `status --strict`, `publish-check`, and `git diff --check` passed.

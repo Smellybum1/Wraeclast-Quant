@@ -44,7 +44,7 @@ wq review-queue --output-path data/processed/review_queue.md
 wq review-coverage
 ```
 
-The worksheet is local-only and includes exact positive, neutral, and negative `record-outcome` commands for each unreviewed item. Choose only one outcome per item after manual review.
+The worksheet is local-only and includes exact positive, neutral, and negative `record-outcome` commands plus local notes fields for each unreviewed item. Choose only one outcome per item after manual review.
 
 8. Record outcomes only after a human review decision:
 
