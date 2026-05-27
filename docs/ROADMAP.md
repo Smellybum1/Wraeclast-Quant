@@ -650,6 +650,7 @@
 - Stash-Ninja companion Markdown now points to the same run-specific local review worksheet command, so manual overlay review and recommendation outcome review stay connected without changing Exile-UI files.
 - Stash-Ninja CLI output and daily opt-in handoff output now also print the run-specific review worksheet command, using one shared helper for the worksheet command text.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
+- `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.
 
 ## Later Intelligence Improvements
 

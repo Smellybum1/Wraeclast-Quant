@@ -24,6 +24,8 @@ def test_record_outcome_command_saves_manual_outcome(tmp_path: Path) -> None:
     records = SnapshotRepository(database_path).list_recent_outcomes()
     assert result.exit_code == 0
     assert "Recorded positive outcome" in result.output
+    assert "wq review-coverage --run-id 1" in result.output
+    assert "wq export, wq site, and wq site-bundle" in result.output
     assert len(records) == 1
     assert records[0].item_name == "Stormglass Catalyst"
     assert records[0].notes == "Reviewed manually."

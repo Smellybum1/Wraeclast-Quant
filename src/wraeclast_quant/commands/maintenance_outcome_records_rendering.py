@@ -11,6 +11,10 @@ console = Console(width=260)
 
 def print_outcome_record(record: RecommendationOutcomeRecord) -> None:
     console.print(f"Recorded {record.outcome} outcome for '{record.item_name}' from run #{record.run_id}.")
+    console.print(
+        f"Next: wq review-coverage --run-id {record.run_id}; "
+        "run wq export, wq site, and wq site-bundle when you want derived artifacts refreshed."
+    )
 
 
 def print_recent_outcomes(

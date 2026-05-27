@@ -20,7 +20,7 @@ wq calibration-report
 
 `review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a `review-queue --run-id <id> --output-path data/processed/review_queue.md` next action when unreviewed recommendations remain.
 
-`record-outcome` records one local manual outcome for an item from an existing analysis run.
+`record-outcome` records one local manual outcome for an item from an existing analysis run. After recording, rerun `wq review-coverage --run-id <id>` and refresh derived artifacts with `wq export`, `wq site`, and `wq site-bundle` when you want local dashboard or public handoff files to reflect the new review state.
 
 `outcomes` lists recent local outcome records and summary counts.
 
