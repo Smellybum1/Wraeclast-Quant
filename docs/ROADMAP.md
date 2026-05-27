@@ -658,6 +658,7 @@
 - README and the MVP daily workflow now document the full post-outcome local feedback loop through review coverage, outcome review, calibration, and local report artifacts.
 - Site-bundle safety coverage and static artifact docs now explicitly keep local outcome and calibration Markdown reports out of public static handoff bundles.
 - Publish handoff checklists now explicitly flag local review worksheets, Stash-Ninja companion exports, outcome reports, and calibration reports as excluded from public handoff inputs.
+- README generated-artifact inventory now names the local review worksheet and publish handoff report alongside outcome, calibration, public intel, static-site, and Stash-Ninja handoff artifacts.
 
 ## Later Intelligence Improvements
 

@@ -123,11 +123,13 @@ Starter templates live at `examples/manual_import_template.json` and `examples/m
 - `data/wraeclast_quant.db` stores local SQLite snapshot history.
 - `data/backups/` contains optional local SQLite backups when generated.
 - `data/processed/market_brief.md` contains the Markdown market brief.
+- `data/processed/review_queue.md` contains a local manual recommendation review worksheet when generated.
 - `data/processed/outcome_review.md` contains a local recommendation outcome review report when generated.
 - `data/processed/calibration_report.md` contains a local recommendation calibration report when generated.
 - `data/processed/public_intel.json` contains versioned, derived public intelligence only, including aggregate recommendation outcome counts and review coverage but not outcome notes.
 - `data/processed/site/index.html` is a local static dashboard preview.
 - `data/processed/site_bundle/` contains an optional local bundle and zip for manual inspection.
+- `data/processed/publish_handoff.md` contains the local manual publishing handoff report when generated.
 - `data/processed/site_contract.json` contains a local derived-only static-site handoff contract when generated.
 - `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` are optional local companion handoffs for manual Stash-Ninja review; they are not site-bundle inputs.
 
