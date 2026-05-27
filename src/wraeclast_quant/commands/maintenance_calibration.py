@@ -45,5 +45,14 @@ def register(app: typer.Typer) -> None:
         written_path = write_calibration_report(result, output_path)
         if not result.has_outcomes:
             console.print(f"Wrote empty calibration report to {written_path}")
+            console.print(_local_report_next_action())
             return
         console.print(f"Wrote calibration report to {written_path}")
+        console.print(_local_report_next_action())
+
+
+def _local_report_next_action() -> str:
+    return (
+        "Local report artifact only. Run wq status --strict and wq publish-check "
+        "before any manual handoff."
+    )

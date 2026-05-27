@@ -654,6 +654,7 @@
 - `wq outcomes` now points reviewed summaries to `wq outcome-review` and `wq calibration` so the manual feedback loop naturally continues into read-only performance review.
 - `wq outcome-review` now points joined recommendation/outcome rows to `wq calibration` and `wq outcome-report --output-path data/processed/outcome_review.md` for local summary/report follow-up.
 - `wq calibration` now points to `wq calibration-report --output-path data/processed/calibration_report.md` after its local-only read-only summary without changing scoring.
+- Outcome-review and calibration report writer commands now remind users that reports are local artifacts and to run `wq status --strict` plus `wq publish-check` before any manual handoff.
 
 ## Later Intelligence Improvements
 

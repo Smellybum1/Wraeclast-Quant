@@ -28,6 +28,8 @@ def test_outcome_report_command_writes_markdown_report(tmp_path: Path) -> None:
     report = output_path.read_text(encoding="utf-8")
     assert result.exit_code == 0
     assert "Wrote outcome review report" in result.output
+    assert "Local report artifact only." in result.output
+    assert "wq status --strict and wq publish-check" in result.output
     assert "# Wraeclast Quant Outcome Review" in report
     assert "Stormglass Catalyst" in report
     assert "Manual review." in report
@@ -43,6 +45,7 @@ def test_outcome_report_command_writes_empty_report(tmp_path: Path) -> None:
 
     assert result.exit_code == 0
     assert "Wrote empty outcome review report" in result.output
+    assert "Local report artifact only." in result.output
     report = output_path.read_text(encoding="utf-8")
     assert "No reviewed recommendation outcomes found." in report
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in report

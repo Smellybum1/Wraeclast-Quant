@@ -25,6 +25,8 @@ def test_calibration_report_command_writes_markdown(tmp_path: Path) -> None:
     report = output_path.read_text(encoding="utf-8")
     assert result.exit_code == 0
     assert "Wrote calibration report" in result.output
+    assert "Local report artifact only." in result.output
+    assert "wq status --strict and wq publish-check" in result.output
     assert "# Wraeclast Quant Recommendation Calibration" in report
     assert "Stormglass Catalyst" in report
     assert "Outcome Counts By Action" in report
