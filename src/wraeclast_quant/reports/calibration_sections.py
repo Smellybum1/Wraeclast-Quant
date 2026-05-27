@@ -6,6 +6,7 @@ from wraeclast_quant.reports.calibration_count_sections import (
 )
 from wraeclast_quant.reports.calibration_models import CalibrationResult
 from wraeclast_quant.reports.outcome_markdown import reviewed_recommendation_row
+from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
 
@@ -19,7 +20,7 @@ def calibration_report_header() -> list[str]:
 
 
 def empty_calibration_report_body() -> list[str]:
-    return ["No reviewed recommendation outcomes found.", ""]
+    return no_outcome_review_lines()
 
 
 def average_score_by_outcome_section(result: CalibrationResult) -> list[str]:

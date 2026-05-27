@@ -10,6 +10,7 @@ from wraeclast_quant.reports.calibration import (
     build_calibration,
     write_calibration_report,
 )
+from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -22,7 +23,7 @@ def register(app: typer.Typer) -> None:
     ) -> None:
         result = build_calibration(SnapshotRepository(database_path), limit=limit)
         if not result.has_outcomes:
-            console.print("No reviewed recommendation outcomes found.")
+            console.print("\n".join(line for line in no_outcome_review_lines() if line))
             return
 
         print_calibration_tables(result)

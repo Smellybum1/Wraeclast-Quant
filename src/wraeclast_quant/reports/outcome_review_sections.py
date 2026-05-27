@@ -4,6 +4,7 @@ from wraeclast_quant.reports.outcome_markdown import (
     outcome_summary_row,
     reviewed_recommendation_row,
 )
+from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
 from wraeclast_quant.storage.models import OutcomeReviewRecord
 
 
@@ -17,7 +18,7 @@ def outcome_review_header() -> list[str]:
 
 
 def empty_outcome_review_body() -> list[str]:
-    return ["No reviewed recommendation outcomes found.", ""]
+    return no_outcome_review_lines()
 
 
 def outcome_summary_by_action_section(summary_by_action: dict[str, dict[str, int]]) -> list[str]:

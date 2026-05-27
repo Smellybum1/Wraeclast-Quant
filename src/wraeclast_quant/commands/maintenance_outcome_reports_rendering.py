@@ -5,6 +5,7 @@ from pathlib import Path
 from rich.console import Console
 from rich.table import Table
 
+from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
 from wraeclast_quant.storage.models import OutcomeReviewRecord
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
@@ -12,7 +13,7 @@ console = Console(width=260)
 
 
 def print_no_outcome_reviews() -> None:
-    console.print("No reviewed recommendation outcomes found.")
+    console.print("\n".join(line for line in no_outcome_review_lines() if line))
 
 
 def print_outcome_review(

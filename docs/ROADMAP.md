@@ -626,6 +626,7 @@
 - Review queue and coverage output now include run source mode plus a local decision-support caveat before users record recommendation outcomes.
 - Review queue and coverage output now include concise positive/neutral/negative outcome-label guidance for the manual MVP review loop.
 - Review queue output now includes item-specific `record-outcome` command templates for each unreviewed recommendation.
+- Outcome review and calibration empty states now point back to `wq review-queue` and `wq record-outcome` so the MVP feedback loop no longer dead-ends before the first reviewed outcome.
 
 ## Later Intelligence Improvements
 

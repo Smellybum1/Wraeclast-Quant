@@ -34,5 +34,7 @@ def test_calibration_command_missing_database_is_non_mutating(tmp_path: Path) ->
 
     assert result.exit_code == 0
     assert "No reviewed recommendation outcomes found." in result.output
+    assert "wq review-queue" in result.output
+    assert "positive=useful signal" in result.output
     assert not database_path.exists()
     assert not database_path.parent.exists()

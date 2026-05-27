@@ -38,3 +38,5 @@ def test_outcome_review_command_handles_empty_database(tmp_path: Path) -> None:
 
     assert result.exit_code == 0
     assert "No reviewed recommendation outcomes found." in result.output
+    assert "wq review-queue" in result.output
+    assert "positive=useful signal" in result.output

@@ -71,4 +71,6 @@ def test_calibration_report_renders_empty_message() -> None:
     report = render_calibration_report(build_calibration_from_reviews([]))
 
     assert "No reviewed recommendation outcomes found." in report
+    assert "wq review-queue" in report
+    assert "positive=useful signal" in report
     assert "Outcome Counts By Action" not in report
