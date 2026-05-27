@@ -14,6 +14,10 @@ from wraeclast_quant.commands.status_health_artifacts import (
     static_site_status,
 )
 from wraeclast_quant.commands.status_health_context import StatusHealthContext
+from wraeclast_quant.commands.status_health_stash_ninja_artifact import (
+    stash_ninja_run_id,
+    stash_ninja_status,
+)
 
 
 @dataclass(frozen=True)
@@ -22,6 +26,7 @@ class ArtifactRowStatuses:
     public_intel: str
     static_site: str
     site_bundle: str
+    stash_ninja: str
 
     def strict_rows(self) -> list[tuple[str, str]]:
         return [
@@ -29,6 +34,7 @@ class ArtifactRowStatuses:
             ("Public intel", self.public_intel),
             ("Static site", self.static_site),
             ("Site bundle", self.site_bundle),
+            ("Stash-Ninja handoff", self.stash_ninja),
         ]
 
 
@@ -52,6 +58,11 @@ def build_artifact_row_statuses(
         site_bundle=fresh_artifact_status(
             site_bundle_status(context.site_bundle_health),
             site_bundle_run_id(context.site_bundle_health),
+            context.latest_run_id,
+        ),
+        stash_ninja=fresh_artifact_status(
+            stash_ninja_status(context.stash_ninja_health),
+            stash_ninja_run_id(context.stash_ninja_health),
             context.latest_run_id,
         ),
     )

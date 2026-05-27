@@ -10,6 +10,7 @@ from wraeclast_quant.commands.status_health_models import (
 from wraeclast_quant.commands.status_health_report_builder import build_status_report_from_context
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
 from wraeclast_quant.reports.site_bundle import DEFAULT_SITE_BUNDLE_DIR
+from wraeclast_quant.reports.stash_ninja_watchlist import DEFAULT_STASH_NINJA_WATCHLIST_PATH
 from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
 from wraeclast_quant.storage.backups import DEFAULT_BACKUP_DIR
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
@@ -23,6 +24,7 @@ def build_status_report(
     intel_path: Path = DEFAULT_PUBLIC_INTEL_PATH,
     site_dir: Path = DEFAULT_SITE_DIR,
     bundle_dir: Path = DEFAULT_SITE_BUNDLE_DIR,
+    stash_ninja_path: Path = DEFAULT_STASH_NINJA_WATCHLIST_PATH,
     backup_dir: Path = DEFAULT_BACKUP_DIR,
 ) -> StatusHealthReport:
     context = load_status_health_context(
@@ -32,6 +34,7 @@ def build_status_report(
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
         backup_dir=backup_dir,
     )
     return build_status_report_from_context(
@@ -41,4 +44,5 @@ def build_status_report(
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
     )

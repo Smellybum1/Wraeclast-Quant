@@ -62,6 +62,7 @@ Current row keys:
 - `public_intel`
 - `static_site`
 - `site_bundle`
+- `stash_ninja_handoff`
 - `backups`
 - `safety_boundary`
 
@@ -81,7 +82,7 @@ Current status values:
 
 Treat `needs attention` and non-empty `strict_failure_keys` as actionable. Missing optional local artifacts can appear as `no` or `none` without failing strict mode.
 
-Existing derived artifacts are also checked for freshness. When a valid `public_intel.json`, static site, or site bundle reports a latest run id that differs from the latest SQLite run id, the matching row is marked `needs attention` with guidance to regenerate the local artifact. Missing optional artifacts remain non-fatal.
+Existing derived artifacts are also checked for freshness. When a valid `public_intel.json`, static site, site bundle, or Stash-Ninja companion handoff reports a latest run id that differs from the latest SQLite run id, the matching row is marked `needs attention` with guidance to regenerate the local artifact. Missing optional artifacts remain non-fatal.
 
 ## Compatibility Rules
 

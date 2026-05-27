@@ -11,6 +11,7 @@ def status_json_args(
     intel_path: Path | None = None,
     site_dir: Path | None = None,
     bundle_dir: Path | None = None,
+    stash_ninja_path: Path | None = None,
 ) -> list[str]:
     return status_args(
         tmp_path,
@@ -19,6 +20,7 @@ def status_json_args(
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
         json_output=True,
     )
 
@@ -32,6 +34,7 @@ def status_args(
     intel_path: Path | None = None,
     site_dir: Path | None = None,
     bundle_dir: Path | None = None,
+    stash_ninja_path: Path | None = None,
     backup_dir: Path | None = None,
     strict: bool = False,
     json_output: bool = False,
@@ -55,6 +58,8 @@ def status_args(
         str(site_dir or tmp_path / "missing_site"),
         "--bundle-dir",
         str(bundle_dir or tmp_path / "missing_bundle"),
+        "--stash-ninja-path",
+        str(stash_ninja_path or tmp_path / "missing_stash_ninja.json"),
         "--backup-dir",
         str(backup_dir or tmp_path / "missing_backups"),
     ]

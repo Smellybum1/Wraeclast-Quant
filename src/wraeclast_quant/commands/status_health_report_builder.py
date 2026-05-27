@@ -20,6 +20,7 @@ def build_status_report_from_context(
     intel_path: Path,
     site_dir: Path,
     bundle_dir: Path,
+    stash_ninja_path: Path,
 ) -> StatusHealthReport:
     status_rows: list[dict[str, str]] = []
     strict_rows: list[tuple[str, str]] = []
@@ -34,6 +35,7 @@ def build_status_report_from_context(
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
     )
     add_backup_and_safety_rows(status_rows, strict_rows, context)
     strict_failures = [label for label, row_status in strict_rows if row_status == "needs attention"]

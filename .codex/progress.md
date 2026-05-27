@@ -878,3 +878,5 @@
 - Verification: bundled Python focused watchlist tests passed with 5 tests; nearby helper facade tests passed with 6 total tests; `git diff --check` passed.
 - Completed packet: added `wq stash-ninja-watchlist`, a derived-only JSON/Markdown companion handoff for manual Exile-UI Stash-Ninja review. It includes run metadata, review coverage, item names, scores, actions, suggested manual treatment, and safety flags, while excluding raw signals, outcome notes, local paths, live HTTP, game-client interaction, and third-party file writes.
 - Verification: bundled Python focused Stash-Ninja and site-bundle safety tests passed with 7 tests; `git diff --check` passed.
+- Completed packet: local status now includes an optional `Stash-Ninja handoff` row that reports schema, latest-run freshness, item count, and manual-only handoff safety. Missing handoffs remain non-fatal, while stale or invalid handoffs are strict failures.
+- Verification: bundled Python focused status/Stash-Ninja tests passed with 10 tests.

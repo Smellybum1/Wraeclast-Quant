@@ -27,7 +27,7 @@ Local companion handoffs such as `data/processed/exile_ui_stash_ninja_watchlist.
 
 `wq site-contract` writes `data/processed/site_contract.json`, a versioned local descriptor of the static-site handoff contract. It summarizes artifact run IDs, bundle metadata, required files, publish readiness, blockers, and the derived-only safety boundary.
 
-`wq status` checks the generated static site and bundle metadata without writing files.
+`wq status` checks the generated static site, bundle metadata, and optional Stash-Ninja companion handoff metadata without writing files.
 
 The safe manual handoff flow is:
 

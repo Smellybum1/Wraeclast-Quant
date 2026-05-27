@@ -6,6 +6,10 @@ from pathlib import Path
 
 from wraeclast_quant.reports.market_brief import write_market_brief
 from wraeclast_quant.reports.site_bundle import write_site_bundle
+from wraeclast_quant.reports.stash_ninja_watchlist import (
+    build_stash_ninja_watchlist,
+    write_stash_ninja_watchlist,
+)
 from wraeclast_quant.reports.static_site import write_static_site
 from wraeclast_quant.storage.backups import backup_database
 from wraeclast_quant.storage.repositories import SnapshotRepository
@@ -23,6 +27,7 @@ class StatusWorkspace:
     intel_path: Path
     site_dir: Path
     bundle_dir: Path
+    stash_ninja_path: Path
     backup_dir: Path
 
 
@@ -66,6 +71,7 @@ def status_workspace(tmp_path: Path) -> StatusWorkspace:
     intel_path = tmp_path / "public_intel.json"
     site_dir = tmp_path / "site"
     bundle_dir = tmp_path / "site_bundle"
+    stash_ninja_path = tmp_path / "exile_ui_stash_ninja_watchlist.json"
     backup_dir = tmp_path / "backups"
     write_market_brief(
         [opportunity("Reviewed Catalyst", 76.0, "BUY")],
@@ -75,6 +81,9 @@ def status_workspace(tmp_path: Path) -> StatusWorkspace:
     intel_path.write_text(json.dumps(intel_payload), encoding="utf-8")
     write_static_site(intel_payload, site_dir)
     write_site_bundle(intel_path=intel_path, site_dir=site_dir, output_dir=bundle_dir)
+    stash_payload = build_stash_ninja_watchlist(repository)
+    assert stash_payload is not None
+    write_stash_ninja_watchlist(stash_payload, stash_ninja_path)
     backup_database(
         database_path=database_path,
         output_dir=backup_dir,
@@ -87,6 +96,7 @@ def status_workspace(tmp_path: Path) -> StatusWorkspace:
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
         backup_dir=backup_dir,
     )
 

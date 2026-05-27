@@ -30,7 +30,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 
 - `wq collect --dry-run` loads `RESOURCES.md` and previews placeholder collectors.
 - `wq compliance` summarizes configured resource compliance status.
-- `wq status` shows local resource, snapshot, SQLite health, market brief, public-intel contract, static dashboard, site bundle, backup, review, and artifact health without writing data.
+- `wq status` shows local resource, snapshot, SQLite health, market brief, public-intel contract, static dashboard, site bundle, optional Stash-Ninja handoff, backup, review, and artifact health without writing data.
 - `wq status --json` prints versioned machine-readable JSON with stable row maps and failure keys for local automation. See `docs/STATUS_JSON.md` for the contract.
 - `wq status --strict` prints the same status table and exits nonzero if any health row, including backup verification, needs attention.
 - `wq schema` prints the current local SQLite schema contract without opening the database. See `docs/SQLITE_SCHEMA.md` for the storage contract.

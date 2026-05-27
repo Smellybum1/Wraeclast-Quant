@@ -17,6 +17,7 @@ def add_artifact_rows(
     intel_path: Path,
     site_dir: Path,
     bundle_dir: Path,
+    stash_ninja_path: Path,
 ) -> None:
     row_statuses = build_artifact_row_statuses(context, intel_path=intel_path)
     strict_rows.extend(row_statuses.strict_rows())
@@ -26,6 +27,7 @@ def add_artifact_rows(
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
         row_statuses=row_statuses,
     ):
         add_status_row(status_rows, row.label, row.status, row.details)

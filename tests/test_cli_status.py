@@ -24,6 +24,7 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
             intel_path=workspace.intel_path,
             site_dir=workspace.site_dir,
             bundle_dir=workspace.bundle_dir,
+            stash_ninja_path=workspace.stash_ninja_path,
             backup_dir=workspace.backup_dir,
         ),
     )
@@ -55,6 +56,8 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
     assert "latest run #1" in result.output
     assert "Site bundle" in result.output
     assert "opportunities" in result.output
+    assert "Stash-Ninja handoff" in result.output
+    assert "manual-only companion handoff" in result.output
     assert "Backups" in result.output
     assert "Backups" in result.output
     assert "ok" in result.output

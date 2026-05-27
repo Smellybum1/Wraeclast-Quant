@@ -11,6 +11,7 @@ from wraeclast_quant.commands.status_health_artifacts import (
     static_site_details,
 )
 from wraeclast_quant.commands.status_health_context import StatusHealthContext
+from wraeclast_quant.commands.status_health_stash_ninja_artifact import stash_ninja_details
 
 
 @dataclass(frozen=True)
@@ -27,6 +28,7 @@ def artifact_status_rows(
     intel_path: Path,
     site_dir: Path,
     bundle_dir: Path,
+    stash_ninja_path: Path,
     row_statuses: ArtifactRowStatuses,
 ) -> list[ArtifactStatusRow]:
     return [
@@ -58,6 +60,15 @@ def artifact_status_rows(
             "Site bundle",
             row_statuses.site_bundle,
             site_bundle_details(bundle_dir, context.site_bundle_health, context.latest_run_id),
+        ),
+        ArtifactStatusRow(
+            "Stash-Ninja handoff",
+            row_statuses.stash_ninja,
+            stash_ninja_details(
+                stash_ninja_path,
+                context.stash_ninja_health,
+                context.latest_run_id,
+            ),
         ),
     ]
 

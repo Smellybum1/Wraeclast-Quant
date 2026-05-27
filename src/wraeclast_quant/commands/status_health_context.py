@@ -17,6 +17,7 @@ def load_status_health_context(
     intel_path: Path,
     site_dir: Path,
     bundle_dir: Path,
+    stash_ninja_path: Path,
     backup_dir: Path,
 ) -> StatusHealthContext:
     resource_context = load_resource_status_context(resources_path)
@@ -27,6 +28,7 @@ def load_status_health_context(
         intel_path=intel_path,
         site_dir=site_dir,
         bundle_dir=bundle_dir,
+        stash_ninja_path=stash_ninja_path,
     )
 
     return StatusHealthContext(
@@ -44,6 +46,7 @@ def load_status_health_context(
         intel_error=artifact_context.intel_error,
         static_site_health=artifact_context.static_site_health,
         site_bundle_health=artifact_context.site_bundle_health,
+        stash_ninja_health=artifact_context.stash_ninja_health,
     )
 
 

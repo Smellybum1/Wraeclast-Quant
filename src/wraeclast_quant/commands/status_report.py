@@ -12,6 +12,7 @@ from wraeclast_quant.commands.status_report_rendering import (
 )
 from wraeclast_quant.reports.public_intel import DEFAULT_PUBLIC_INTEL_PATH
 from wraeclast_quant.reports.site_bundle import DEFAULT_SITE_BUNDLE_DIR
+from wraeclast_quant.reports.stash_ninja_watchlist import DEFAULT_STASH_NINJA_WATCHLIST_PATH
 from wraeclast_quant.reports.static_site import DEFAULT_SITE_DIR
 from wraeclast_quant.storage.backups import DEFAULT_BACKUP_DIR, DatabaseBackupError
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
@@ -27,6 +28,10 @@ def register(app: typer.Typer) -> None:
         intel_path: Path = typer.Option(DEFAULT_PUBLIC_INTEL_PATH, "--intel-path"),
         site_dir: Path = typer.Option(DEFAULT_SITE_DIR, "--site-dir"),
         bundle_dir: Path = typer.Option(DEFAULT_SITE_BUNDLE_DIR, "--bundle-dir"),
+        stash_ninja_path: Path = typer.Option(
+            DEFAULT_STASH_NINJA_WATCHLIST_PATH,
+            "--stash-ninja-path",
+        ),
         backup_dir: Path = typer.Option(DEFAULT_BACKUP_DIR, "--backup-dir"),
         strict: bool = typer.Option(False, "--strict", help="Exit nonzero when a health check needs attention."),
         json_output: bool = typer.Option(False, "--json", help="Print status as machine-readable JSON."),
@@ -39,6 +44,7 @@ def register(app: typer.Typer) -> None:
                 intel_path=intel_path,
                 site_dir=site_dir,
                 bundle_dir=bundle_dir,
+                stash_ninja_path=stash_ninja_path,
                 backup_dir=backup_dir,
             )
         except DatabaseBackupError as error:

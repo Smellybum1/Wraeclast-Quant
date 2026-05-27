@@ -7,6 +7,7 @@ from wraeclast_quant.config.resources_loader import Resource
 from wraeclast_quant.reports.market_brief import MarketBriefHealthResult
 from wraeclast_quant.reports.public_intel_contract import PublicIntelValidationResult
 from wraeclast_quant.reports.site_bundle import SiteBundleHealthResult
+from wraeclast_quant.reports.stash_ninja_watchlist_health import StashNinjaWatchlistHealthResult
 from wraeclast_quant.reports.static_site import StaticSiteHealthResult
 from wraeclast_quant.storage.backups import DatabaseBackupListing
 from wraeclast_quant.storage.health import DatabaseHealthResult
@@ -29,6 +30,7 @@ class StatusHealthContext:
     intel_error: str
     static_site_health: StaticSiteHealthResult | None
     site_bundle_health: SiteBundleHealthResult | None
+    stash_ninja_health: StashNinjaWatchlistHealthResult | None
 
 
 __all__ = ["StatusHealthContext"]
