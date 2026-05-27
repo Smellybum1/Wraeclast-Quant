@@ -6,7 +6,7 @@ Wraeclast Quant can record local manual review outcomes for recommendations. Thi
 
 ```powershell
 wq review-queue
-wq review-queue --output-path data/processed/review_queue.md
+wq review-queue --run-id <id> --output-path data/processed/review_queue.md
 wq review-coverage
 wq record-outcome --run-id <id> --item-name <name> --outcome positive
 wq outcomes
@@ -16,9 +16,9 @@ wq calibration
 wq calibration-report
 ```
 
-`review-queue` shows recommendations from a run that do not yet have a recorded outcome. It includes the run source mode, a local decision-support caveat, outcome-label guidance, and item-specific `record-outcome` command templates. Add `--output-path <file>` to write the same local-only queue as a Markdown worksheet without recording outcomes. The worksheet includes exact positive, neutral, and negative command options plus local notes fields for each item so a human can choose one outcome without editing the outcome label by hand.
+`review-queue` shows recommendations from a run that do not yet have a recorded outcome. It includes the run source mode, a local decision-support caveat, outcome-label guidance, and item-specific `record-outcome` command templates. Add `--run-id <id> --output-path <file>` to write the same local-only queue as a Markdown worksheet without recording outcomes. The worksheet includes exact positive, neutral, and negative command options plus local notes fields for each item so a human can choose one outcome without editing the outcome label by hand.
 
-`review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a `review-queue --output-path data/processed/review_queue.md` next action when unreviewed recommendations remain.
+`review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a `review-queue --run-id <id> --output-path data/processed/review_queue.md` next action when unreviewed recommendations remain.
 
 `record-outcome` records one local manual outcome for an item from an existing analysis run.
 
@@ -86,7 +86,7 @@ If no reviewed recommendations exist, the report says:
 
 ```text
 No reviewed recommendation outcomes found.
-Next: run wq review-queue --output-path data/processed/review_queue.md, then record human decisions with wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative.
+Next: run wq review-queue --run-id <id> --output-path data/processed/review_queue.md, then record human decisions with wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative.
 Outcome labels: positive=useful signal, neutral=mixed or unclear, negative=not useful after review.
 ```
 
