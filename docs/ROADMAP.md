@@ -631,6 +631,7 @@
 - Static dashboard review guidance now uses the same run-specific `wq review-queue --run-id <id>` action as the CLI review coverage command.
 - Review queue can now write a local Markdown worksheet with `--output-path <file>` so MVP outcome decisions can be reviewed offline before any `record-outcome` command is run.
 - Local status review-coverage and MVP-readiness guidance now points directly to a run-specific review worksheet export before outcome recording.
+- Static dashboard review guidance now also points to the local review worksheet export before outcome recording.
 
 ## Later Intelligence Improvements
 

@@ -853,3 +853,5 @@
 - Verification: bundled Python focused review/outcome and MVP/docs helper tests passed with 21 tests; `review-queue --output-path .tmp-review-worksheet\review_queue.md` wrote the current run #10 worksheet; `git diff --check`, `status --strict`, and `publish-check` passed.
 - Completed packet: status review-coverage and MVP-readiness rows now point to `wq review-queue --run-id <id> --output-path data/processed/review_queue.md` before `record-outcome`, making the worksheet path visible from the primary health readout.
 - Verification: bundled Python focused status/review/MVP workflow tests passed with 13 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: static dashboard MVP/review guidance now points to the same run-specific review worksheet export before outcome recording.
+- Verification: bundled Python focused static-site/status tests passed with 16 tests; regenerated `site` and `site-bundle`; `status --strict`, `publish-check`, and `git diff --check` passed.

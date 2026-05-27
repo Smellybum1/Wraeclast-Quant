@@ -39,6 +39,7 @@ def test_static_site_renders_mvp_readiness() -> None:
     assert "<th>Latest run</th><td>7</td>" in html
     assert "<th>Review state</th><td>1/2 reviewed</td>" in html
     assert "wq review-queue --run-id 7" in html
+    assert "data/processed/review_queue.md" in html
     assert "wq record-outcome --run-id 7" in html
 
 
