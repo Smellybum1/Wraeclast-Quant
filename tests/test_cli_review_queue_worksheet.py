@@ -91,6 +91,7 @@ def test_review_queue_command_writes_outcome_decisions_template(tmp_path: Path) 
     payload = json.loads(decisions_path.read_text(encoding="utf-8"))
     assert result.exit_code == 0
     assert "Wrote outcome decisions template" in result.output
+    assert f"wq record-outcomes --input-path {decisions_path} --dry-run" in result.output
     assert payload == {
         "run_id": 1,
         "decisions": [

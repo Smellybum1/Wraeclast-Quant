@@ -75,6 +75,10 @@ def register(app: typer.Typer) -> None:
                 opportunities=opportunities,
             )
             typer.echo(f"Wrote outcome decisions template to {decisions_output_path}")
+            typer.echo(
+                f"Next: fill outcome labels, then run "
+                f"wq record-outcomes --input-path {decisions_output_path} --dry-run."
+            )
 
     @app.command("review-coverage")
     def review_coverage(
