@@ -18,6 +18,7 @@ def test_watchlist_sample_data_mode() -> None:
 
     assert result.exit_code == 0
     assert "Watchlist - Sample Data" in result.output
+    assert "Review coverage:" not in result.output
 
 
 def test_watchlist_defaults_to_latest_stored_run(tmp_path: Path) -> None:
@@ -38,6 +39,13 @@ def test_watchlist_defaults_to_latest_stored_run(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert f"Watchlist - Run #{latest.id} (connector-fixture)" in result.output
     assert "Fresh Divine" in result.output
+    assert "Run source: connector-fixture." in result.output
+    assert "no trades, whispers, gameplay, publishing, or live collection" in result.output
+    assert f"Review coverage: 0/1 reviewed; 1 unreviewed." in result.output
+    assert (
+        f"wq review-queue --run-id {latest.id} --output-path data/processed/review_queue.md"
+        in result.output
+    )
     assert "Old Catalyst" not in result.output
 
 
@@ -64,6 +72,7 @@ def test_watchlist_can_select_run_and_limit_results(tmp_path: Path) -> None:
 
     assert result.exit_code == 0
     assert f"Watchlist - Run #{selected.id} (manual-import)" in result.output
+    assert "Run source: manual-import." in result.output
     assert "First Choice" in result.output
     assert "Second Choice" not in result.output
     assert "Latest Choice" not in result.output

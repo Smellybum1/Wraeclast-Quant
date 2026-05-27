@@ -884,3 +884,5 @@
 - Verification: bundled Python focused daily/Stash-Ninja/status tests passed with 17 tests, then broader daily and connector-fixture daily tests passed with 24 tests after test-artifact path hygiene was tightened.
 - Test hygiene: daily and connector-fixture daily test helpers now default artifact outputs next to the temp database path so tests do not stale ignored production public-intel/static-site artifacts.
 - Public CLI help coverage now includes `stash-ninja-watchlist`.
+- Completed packet: `wq watchlist` now shows the shared local decision-support caveat plus review coverage and a run-specific `review-queue --output-path data/processed/review_queue.md` next action for stored runs, while sample-data mode stays demo-only.
+- Verification: bundled Python focused tests `tests/test_cli_watchlist.py --basetemp=.tmp-pytest-watchlist-next-action -p no:cacheprovider` passed with 5 tests; nearby MVP/review tests `tests/test_cli_watchlist.py tests/test_cli_review_queue.py tests/test_mvp_daily_workflow_contract.py --basetemp=.tmp-pytest-watchlist-mvp-guidance -p no:cacheprovider` passed with 14 tests; `git diff --check` passed.

@@ -6,9 +6,11 @@ import typer
 from rich.table import Table
 
 from wraeclast_quant.commands.intake_rendering import console
+from wraeclast_quant.reports.review_queue_worksheet import local_review_caveat
 from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
 from wraeclast_quant.reports.watchlist import top_watchlist
 from wraeclast_quant.sample_data.items import SAMPLE_ITEMS
+from wraeclast_quant.storage.models import ReviewCoverageRecord
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -38,6 +40,7 @@ def register(app: typer.Typer) -> None:
             if not opportunities:
                 console.print(f"No scored opportunities found for run #{run.id}.")
                 return
+            coverage = repository.review_coverage_for_run(run.id)
             console.print(f"Watchlist - Run #{run.id} ({run.source_mode})")
             table = Table(title="Watchlist")
         table.add_column("Item")
@@ -50,3 +53,17 @@ def register(app: typer.Typer) -> None:
                 opportunity.action,
             )
         console.print(table)
+        if not sample_data:
+            console.print(local_review_caveat(run.source_mode))
+            console.print(_review_next_action(run.id, coverage))
+
+
+def _review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
+    reviewed = f"{coverage.reviewed_recommendations}/{coverage.total_recommendations} reviewed"
+    if coverage.unreviewed_recommendations:
+        return (
+            f"Review coverage: {reviewed}; {coverage.unreviewed_recommendations} unreviewed. "
+            f"Next: wq review-queue --run-id {run_id} "
+            "--output-path data/processed/review_queue.md."
+        )
+    return f"Review coverage: {reviewed}; all recommendations for run #{run_id} have outcomes."
