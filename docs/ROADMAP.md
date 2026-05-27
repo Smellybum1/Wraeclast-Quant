@@ -663,6 +663,7 @@
 - Stash-Ninja CLI run-selection and missing-run tests are split from the JSON/Markdown writer-shape test, with a shared command-argument helper.
 - Watchlist CLI run-selection and missing-run tests are split from default latest-run/sample-output coverage.
 - Review-queue worksheet file-write and worksheet escaping tests are split from main review-queue CLI behavior tests.
+- Review-queue run-selection, empty-database, fully-reviewed, and missing-run tests are split from queue rendering and command-template escaping coverage.
 
 ## Later Intelligence Improvements
 
