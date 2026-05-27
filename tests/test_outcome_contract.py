@@ -51,5 +51,9 @@ def test_outcome_contract_doc_matches_allowed_outcomes_and_report_markers() -> N
         [],
         {},
     )
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in render_outcome_review(
+        [],
+        {},
+    )
     assert "data/processed/review_queue.md" in render_outcome_review([], {})
     assert "positive=useful signal" in render_calibration_report(build_calibration_from_reviews([]))

@@ -114,7 +114,7 @@ If no reviewed recommendations exist, the report says:
 
 ```text
 No reviewed recommendation outcomes found.
-Next: run wq review-queue --run-id <id> --output-path data/processed/review_queue.md, then record human decisions with wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative.
+Next: wq review-queue --run-id <id> --output-path data/processed/review_queue.md; wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions.json; fill outcomes; wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run. After the dry-run passes, record the reviewed batch with wq record-outcomes --input-path data/processed/outcome_decisions.json.
 Outcome labels: positive=useful signal, neutral=mixed or unclear, negative=not useful after review.
 ```
 

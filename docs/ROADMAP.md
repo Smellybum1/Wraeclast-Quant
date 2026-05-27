@@ -632,7 +632,7 @@
 - Review queue and coverage output now include run source mode plus a local decision-support caveat before users record recommendation outcomes.
 - Review queue and coverage output now include concise positive/neutral/negative outcome-label guidance for the manual MVP review loop.
 - Review queue output now includes item-specific `record-outcome` command templates for each unreviewed recommendation.
-- Outcome review and calibration empty states now point back to `wq review-queue` and `wq record-outcome` so the MVP feedback loop no longer dead-ends before the first reviewed outcome.
+- Outcome review and calibration empty states now point back to the worksheet-first review flow so the MVP feedback loop no longer dead-ends before the first reviewed outcome.
 - Review coverage output now points directly to `wq review-queue --run-id <id>` when unreviewed recommendations remain.
 - Static dashboard review guidance now uses the same run-specific `wq review-queue --run-id <id>` action as the CLI review coverage command.
 - Review queue can now write a local Markdown worksheet with `--output-path <file>` so MVP outcome decisions can be reviewed offline before any `record-outcome` command is run.

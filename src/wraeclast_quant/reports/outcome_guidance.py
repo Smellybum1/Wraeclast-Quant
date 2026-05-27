@@ -1,13 +1,15 @@
 from __future__ import annotations
 
+from wraeclast_quant.reports.review_queue_commands import (
+    batch_outcome_review_next_action,
+    record_outcomes_command,
+)
+
 
 NO_OUTCOME_REVIEWS_MESSAGE = "No reviewed recommendation outcomes found."
 NO_OUTCOME_NEXT_STEP = (
-    "Next: run wq review-queue --run-id <id> "
-    "--output-path data/processed/review_queue.md, "
-    "then record human decisions with "
-    "wq record-outcome --run-id <id> --item-name <name> "
-    "--outcome positive|neutral|negative."
+    f"Next: {batch_outcome_review_next_action('<id>')}. "
+    f"After the dry-run passes, record the reviewed batch with {record_outcomes_command()}."
 )
 OUTCOME_LABEL_GUIDE = (
     "Outcome labels: positive=useful signal, neutral=mixed or unclear, "

@@ -33,7 +33,11 @@ def review_queue_decisions_template_command(run_id: int | str) -> str:
 
 
 def record_outcomes_dry_run_command(input_path: str = OUTCOME_DECISIONS_PATH) -> str:
-    return f"wq record-outcomes --input-path {input_path} --dry-run"
+    return f"{record_outcomes_command(input_path)} --dry-run"
+
+
+def record_outcomes_command(input_path: str = OUTCOME_DECISIONS_PATH) -> str:
+    return f"wq record-outcomes --input-path {input_path}"
 
 
 def batch_outcome_review_next_action(run_id: int | str) -> str:
@@ -68,6 +72,7 @@ __all__ = [
     "local_review_caveat",
     "outcome_label_guide",
     "powershell_double_quoted_text",
+    "record_outcomes_command",
     "record_outcomes_dry_run_command",
     "record_outcome_command",
     "review_queue_decisions_template_command",
