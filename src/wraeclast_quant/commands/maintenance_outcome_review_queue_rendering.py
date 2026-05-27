@@ -58,7 +58,10 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
     console.print(local_review_caveat(source_mode))
     console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
-        console.print(f"Next: run wq review-queue --run-id {run_id} to see item-specific review commands.")
+        console.print(
+            f"Next: run wq review-queue --run-id {run_id} "
+            "--output-path data/processed/review_queue.md to write a local review worksheet."
+        )
 
 
 def _record_outcome_command_templates(
