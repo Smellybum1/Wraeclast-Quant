@@ -663,6 +663,7 @@
 - Stash-Ninja companion Markdown now points to the same run-specific worksheet plus outcome-decisions dry-run flow, so manual overlay review and recommendation outcome review stay connected without changing Exile-UI files.
 - Stash-Ninja CLI output and daily opt-in handoff output now also print the run-specific batch review next action, using one shared helper for the command text.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
+- Blank outcome-decisions template entries now fail `record-outcomes --dry-run` with fill-and-rerun guidance instead of a generic invalid-label error.
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.
 - `wq record-outcomes --input-path <file>` can now record a human-reviewed local outcome batch after validating the entire JSON file, avoiding partial writes when one decision is invalid.
 - `wq outcomes` now points reviewed summaries to `wq outcome-review` and `wq calibration` so the manual feedback loop naturally continues into read-only performance review.

@@ -133,8 +133,13 @@ def normalize_batch_outcome_decision(index: int, raw_decision: Any) -> dict[str,
     if not isinstance(outcome, str):
         raise ValueError(f"decision {index} must include an outcome.")
     normalized_outcome = outcome.strip().lower()
+    allowed = ", ".join(sorted(ALLOWED_OUTCOMES))
+    if not normalized_outcome:
+        raise ValueError(
+            f"decision {index} outcome is blank; fill it with one of: {allowed}, "
+            "then rerun record-outcomes --dry-run."
+        )
     if normalized_outcome not in ALLOWED_OUTCOMES:
-        allowed = ", ".join(sorted(ALLOWED_OUTCOMES))
         raise ValueError(f"decision {index} outcome must be one of: {allowed}.")
     notes = raw_decision.get("notes", "")
     if not isinstance(notes, str):
