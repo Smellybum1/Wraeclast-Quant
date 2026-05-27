@@ -659,6 +659,7 @@
 - Site-bundle safety coverage and static artifact docs now explicitly keep local outcome and calibration Markdown reports out of public static handoff bundles.
 - Publish handoff checklists now explicitly flag local review worksheets, Stash-Ninja companion exports, outcome reports, and calibration reports as excluded from public handoff inputs.
 - README generated-artifact inventory now names the local review worksheet and publish handoff report alongside outcome, calibration, public intel, static-site, and Stash-Ninja handoff artifacts.
+- Stash-Ninja companion watchlist payload assembly and Markdown rendering are now split behind the existing report facade, preserving CLI and import compatibility.
 
 ## Later Intelligence Improvements
 
