@@ -883,3 +883,4 @@
 - Completed packet: `wq daily --stash-ninja-watchlist` can now write the derived-only Stash-Ninja companion JSON/Markdown handoff for the newly created daily run, while default daily behavior remains unchanged.
 - Verification: bundled Python focused daily/Stash-Ninja/status tests passed with 17 tests, then broader daily and connector-fixture daily tests passed with 24 tests after test-artifact path hygiene was tightened.
 - Test hygiene: daily and connector-fixture daily test helpers now default artifact outputs next to the temp database path so tests do not stale ignored production public-intel/static-site artifacts.
+- Public CLI help coverage now includes `stash-ninja-watchlist`.

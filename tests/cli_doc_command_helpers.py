@@ -9,6 +9,7 @@ PUBLIC_COMMANDS = [
     "alerts",
     "report",
     "export",
+    "stash-ninja-watchlist",
     "site",
     "validate-intel",
     "site-bundle",
