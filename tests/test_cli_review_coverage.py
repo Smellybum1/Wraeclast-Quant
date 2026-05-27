@@ -26,6 +26,7 @@ def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> N
     assert "#1" in result.output
     assert "50.0%" in result.output
     assert "positive=useful signal" in result.output
+    assert "wq review-queue --run-id 1" in result.output
 
 
 def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
@@ -38,6 +39,7 @@ def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
 
     assert result.exit_code == 0
     assert "0.0%" in result.output
+    assert f"wq review-queue --run-id {first.id}" in result.output
 
 
 def test_review_coverage_command_handles_no_snapshots(tmp_path: Path) -> None:

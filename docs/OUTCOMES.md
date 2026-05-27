@@ -17,7 +17,7 @@ wq calibration-report
 
 `review-queue` shows recommendations from a run that do not yet have a recorded outcome. It includes the run source mode, a local decision-support caveat, outcome-label guidance, and item-specific `record-outcome` command templates.
 
-`review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode and the same local-only caveat.
+`review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a `review-queue` next action when unreviewed recommendations remain.
 
 `record-outcome` records one local manual outcome for an item from an existing analysis run.
 
