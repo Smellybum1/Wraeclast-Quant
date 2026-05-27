@@ -661,6 +661,7 @@
 - README generated-artifact inventory now names the local review worksheet and publish handoff report alongside outcome, calibration, public intel, static-site, and Stash-Ninja handoff artifacts.
 - Stash-Ninja companion watchlist payload assembly and Markdown rendering are now split behind the existing report facade, preserving CLI and import compatibility.
 - Stash-Ninja CLI run-selection and missing-run tests are split from the JSON/Markdown writer-shape test, with a shared command-argument helper.
+- Watchlist CLI run-selection and missing-run tests are split from default latest-run/sample-output coverage.
 
 ## Later Intelligence Improvements
 
