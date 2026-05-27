@@ -147,6 +147,8 @@ def test_record_outcomes_command_dry_run_validates_without_writing(tmp_path: Pat
     assert result.exit_code == 0
     assert "Validated 2 outcome decision(s) for run #1" in result.output
     assert "no records written" in result.output
+    assert f"Next: wq record-outcomes --input-path {decisions_path}" in result.output
+    assert "--dry-run" not in result.output.split("Next:", 1)[1]
     assert SnapshotRepository(database_path).list_recent_outcomes() == []
 
 

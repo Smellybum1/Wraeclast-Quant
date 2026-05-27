@@ -11,6 +11,7 @@ from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
     print_outcome_record,
     print_recent_outcomes,
 )
+from wraeclast_quant.reports.review_queue_commands import record_outcomes_command
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES, SnapshotRepository
 
@@ -60,6 +61,7 @@ def register(app: typer.Typer) -> None:
                     f"Validated {len(decisions)} outcome decision(s) for run #{run_id} "
                     f"from {input_path}; no records written."
                 )
+                typer.echo(f"Next: {record_outcomes_command(str(input_path))}")
                 return
             records = [
                 repository.save_recommendation_outcome(
