@@ -34,10 +34,7 @@ def print_review_queue(
     console.print(table)
     console.print(_local_review_caveat(source_mode))
     console.print(_outcome_label_guide())
-    console.print(
-        "Use wq record-outcome --run-id "
-        f"{run_id} --item-name <name> --outcome positive|neutral|negative"
-    )
+    console.print(_record_outcome_command_templates(run_id, opportunities))
 
 
 def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverageRecord) -> None:
@@ -69,3 +66,22 @@ def _outcome_label_guide() -> str:
         "Outcome labels: positive=useful signal, neutral=mixed or unclear, "
         "negative=not useful after review."
     )
+
+
+def _record_outcome_command_templates(
+    run_id: int,
+    opportunities: list[StoredOpportunityRecord],
+) -> str:
+    lines = ["Suggested review commands:"]
+    for opportunity in opportunities:
+        lines.append(
+            "  wq record-outcome "
+            f"--run-id {run_id} "
+            f'--item-name "{_powershell_double_quoted_text(opportunity.item_name)}" '
+            "--outcome positive|neutral|negative"
+        )
+    return "\n".join(lines)
+
+
+def _powershell_double_quoted_text(value: str) -> str:
+    return value.replace("`", "``").replace('"', '`"')

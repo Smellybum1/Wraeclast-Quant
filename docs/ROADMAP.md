@@ -625,6 +625,7 @@
 - Static dashboard now renders an `MVP Readiness` section from existing public-intel latest-run and review-coverage data without changing the public JSON contract.
 - Review queue and coverage output now include run source mode plus a local decision-support caveat before users record recommendation outcomes.
 - Review queue and coverage output now include concise positive/neutral/negative outcome-label guidance for the manual MVP review loop.
+- Review queue output now includes item-specific `record-outcome` command templates for each unreviewed recommendation.
 
 ## Later Intelligence Improvements
 
