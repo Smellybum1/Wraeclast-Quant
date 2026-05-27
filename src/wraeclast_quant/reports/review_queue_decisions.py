@@ -21,6 +21,8 @@ def review_queue_decisions_payload(
         "decisions": [
             {
                 "item_name": opportunity.item_name,
+                "opportunity_score": opportunity.opportunity_score,
+                "action": opportunity.action,
                 "outcome": "",
                 "notes": "",
             }

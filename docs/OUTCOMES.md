@@ -39,6 +39,8 @@ Batch outcome JSON shape:
   "decisions": [
     {
       "item_name": "Exalted Orb / Divine Orb (Standard UI)",
+      "opportunity_score": 56.16,
+      "action": "WATCH",
       "outcome": "neutral",
       "notes": "Optional local note."
     }

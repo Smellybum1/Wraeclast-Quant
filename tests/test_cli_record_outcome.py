@@ -95,7 +95,9 @@ def test_record_outcomes_command_ignores_template_metadata(tmp_path: Path) -> No
                 "run_id": 1,
                 "decisions": [
                     {
+                        "action": "WATCH",
                         "item_name": "Stormglass Catalyst",
+                        "opportunity_score": 60.0,
                         "outcome": "positive",
                     }
                 ],

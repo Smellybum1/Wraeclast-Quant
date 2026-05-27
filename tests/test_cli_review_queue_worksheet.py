@@ -110,8 +110,10 @@ def test_review_queue_command_writes_outcome_decisions_template(tmp_path: Path) 
         "run_id": 1,
         "decisions": [
             {
+                "action": "WATCH",
                 "item_name": "Open Catalyst",
                 "outcome": "",
+                "opportunity_score": 60.0,
                 "notes": "",
             }
         ],
