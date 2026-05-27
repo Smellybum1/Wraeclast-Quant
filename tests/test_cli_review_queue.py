@@ -26,6 +26,12 @@ def test_review_queue_command_prints_unreviewed_latest_run(tmp_path: Path) -> No
     assert "sample-data" in result.output
     assert "local decision-support only" in result.output
     assert "positive=useful signal" in result.output
+    assert "Batch review next steps:" in result.output
+    assert "wq review-queue --run-id 1 --output-path data/processed/review_queue.md" in result.output
+    assert "wq review-queue --run-id 1 --decisions-output-path data/processed/outcome_decisions.json" in result.output
+    assert "wq record-outcomes --input-path" in result.output
+    assert "data/processed/outcome_decisions.json" in result.output
+    assert "--dry-run" in result.output
     assert "Open Catalyst" in result.output
     assert 'wq record-outcome --run-id 1 --item-name "Open Catalyst"' in result.output
     assert "Reviewed Catalyst" not in result.output
