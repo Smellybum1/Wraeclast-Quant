@@ -874,3 +874,7 @@
 - Completed packet: empty outcome-review and calibration runtime guidance now uses the same run-specific `review-queue --run-id <id> --output-path` worksheet command shape.
 - Verification: bundled Python focused outcome/review/calibration tests passed with 23 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Completed packet: reviewed Exile-UI Stash-Ninja as a possible companion integration and documented a safe derived-watchlist-first adapter path that avoids overlay automation, game-client interaction, third-party config writes, live HTTP, and price-cache mutation.
+- Completed packet: `wq watchlist` now reads the latest local SQLite run by default, supports `--run-id`, `--limit`, `--database-path`, and `--sample-data`, and reports missing databases or runs without touching local data.
+- Verification: bundled Python focused watchlist tests passed with 5 tests; nearby helper facade tests passed with 6 total tests; `git diff --check` passed.
+- Completed packet: added `wq stash-ninja-watchlist`, a derived-only JSON/Markdown companion handoff for manual Exile-UI Stash-Ninja review. It includes run metadata, review coverage, item names, scores, actions, suggested manual treatment, and safety flags, while excluding raw signals, outcome notes, local paths, live HTTP, game-client interaction, and third-party file writes.
+- Verification: bundled Python focused Stash-Ninja and site-bundle safety tests passed with 7 tests; `git diff --check` passed.

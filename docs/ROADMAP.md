@@ -611,7 +611,7 @@
 - Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
 - Do not pursue GGG OAuth access or live official Currency Exchange HTTP for now; focus on non-OAuth manual/fixture workflows and local decision-support.
 - Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local manual observations; add `--history-path` and `--output-fixture-path` when creating a local preview connector fixture.
-- If the Exile-UI/Stash-Ninja companion path is reopened, implement a derived-only watchlist export first; do not write Exile-UI settings or price caches.
+- Exile-UI/Stash-Ninja companion support now starts with a derived-only local watchlist export; do not write Exile-UI settings or price caches.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
 - Continue maintainability with another bounded command/storage/report service when human source review is blocked; recent full-suite and health checkpoint passed after the latest test-locality packets.
@@ -642,6 +642,8 @@
 - README, outcome contract, and MVP daily workflow docs now use the same run-specific review worksheet command shape.
 - Empty outcome-review and calibration runtime guidance now uses the same run-specific review worksheet command shape.
 - Exile-UI Stash-Ninja adapter review now documents a safe export-only companion path without overlay automation or third-party config writes.
+- `wq watchlist` now reads stored local runs by default while keeping deterministic sample data opt-in.
+- `wq stash-ninja-watchlist` writes derived-only local JSON/Markdown companion handoffs for manual Exile-UI Stash-Ninja review without overlay automation, game-client interaction, live HTTP, raw signals, or third-party file writes.
 
 ## Later Intelligence Improvements
 

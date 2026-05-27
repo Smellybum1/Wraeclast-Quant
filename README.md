@@ -10,6 +10,7 @@ Wraeclast Quant reads user-configured public resources from `RESOURCES.md`, impo
 python -m pip install -e ".[dev]"
 wq collect --dry-run
 wq daily --sample-data
+wq watchlist
 wq snapshots
 wq compare
 wq alerts
@@ -52,6 +53,8 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq validate-import --input-path <file>` checks a local JSON or CSV signal file without recording a run.
 - `wq inspect-import --input-path <file>` shows read-only score and signal diagnostics for a local import file.
 - `wq report --sample-data` writes `data/processed/market_brief.md`.
+- `wq watchlist` shows top recommendations from the latest local SQLite run; add `--run-id <id>` for a specific run or `--sample-data` for deterministic demo data.
+- `wq stash-ninja-watchlist` writes a derived-only local companion JSON/Markdown watchlist for manual Exile-UI Stash-Ninja use. It does not write Exile-UI files, automate the overlay, call live HTTP, or interact with the game client.
 - `wq snapshots` shows recent persisted runs and top items.
 - `wq db-check` verifies the local SQLite snapshot database and schema contract without writing files.
 - `wq backup-db` writes and immediately verifies a local SQLite backup of snapshot history. See `docs/BACKUPS.md` for the backup and restore-helper contract.
@@ -126,6 +129,7 @@ Starter templates live at `examples/manual_import_template.json` and `examples/m
 - `data/processed/site/index.html` is a local static dashboard preview.
 - `data/processed/site_bundle/` contains an optional local bundle and zip for manual inspection.
 - `data/processed/site_contract.json` contains a local derived-only static-site handoff contract when generated.
+- `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` are optional local companion handoffs for manual Stash-Ninja review; they are not site-bundle inputs.
 
 Use `wq restore-helper --backup-path <file>` before restoring a local SQLite backup. The command is read-only: it verifies backup structure and prints the manual PowerShell copy command, but it does not replace `data/wraeclast_quant.db` for you. The backup and restore-helper contract is documented in `docs/BACKUPS.md`.
 

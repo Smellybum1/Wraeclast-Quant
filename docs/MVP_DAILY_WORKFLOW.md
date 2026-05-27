@@ -39,6 +39,7 @@ wq daily --input-path <manual-import-output>
 
 ```powershell
 wq status --strict
+wq watchlist
 wq review-queue
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md
 wq review-coverage
@@ -51,6 +52,14 @@ The worksheet is local-only and includes exact positive, neutral, and negative `
 ```powershell
 wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative
 ```
+
+9. Optionally write a derived-only local companion handoff for manual Exile-UI Stash-Ninja review:
+
+```powershell
+wq stash-ninja-watchlist
+```
+
+This writes `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` from the latest local run. The files include item names, scores, actions, review coverage, and suggested manual Stash-Ninja treatment. They do not write Exile-UI settings or caches, automate the overlay, call live HTTP, read game-client state, include raw signals, or record outcomes.
 
 ## MVP Readiness
 
@@ -65,3 +74,5 @@ wq publish-check
 ## Safety Notes
 
 Public artifacts remain derived-only. They may include run metadata, scores, action labels, aggregate review coverage, and derived recommendations. They must not include secrets, cookies, OAuth tokens, raw source pages, private account data, raw signal inventories, or outcome notes.
+
+The Stash-Ninja companion watchlist is also derived-only and local-only. It is a manual handoff aid, not a public site artifact and not an Exile-UI integration runtime.
