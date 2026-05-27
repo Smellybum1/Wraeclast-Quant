@@ -3,17 +3,15 @@ from __future__ import annotations
 from pathlib import Path
 
 import typer
-from rich.table import Table
 
 from wraeclast_quant.commands.intake_rendering import console
-from wraeclast_quant.reports.review_queue_worksheet import (
-    local_review_caveat,
-    review_queue_worksheet_command,
+from wraeclast_quant.commands.intake_watchlist_rendering import (
+    print_watchlist_review_guidance,
+    print_watchlist_table,
 )
 from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
 from wraeclast_quant.reports.watchlist import top_watchlist
 from wraeclast_quant.sample_data.items import SAMPLE_ITEMS
-from wraeclast_quant.storage.models import ReviewCoverageRecord
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -28,8 +26,7 @@ def register(app: typer.Typer) -> None:
     ) -> None:
         if sample_data:
             opportunities = top_watchlist(rank_opportunities(SAMPLE_ITEMS), limit=limit)
-            console.print("Watchlist - Sample Data")
-            table = Table(title="Watchlist")
+            title = "Watchlist - Sample Data"
         else:
             repository = SnapshotRepository(database_path)
             run = repository.analysis_run(run_id) if run_id is not None else repository.latest_run()
@@ -44,28 +41,11 @@ def register(app: typer.Typer) -> None:
                 console.print(f"No scored opportunities found for run #{run.id}.")
                 return
             coverage = repository.review_coverage_for_run(run.id)
-            console.print(f"Watchlist - Run #{run.id} ({run.source_mode})")
-            table = Table(title="Watchlist")
-        table.add_column("Item")
-        table.add_column("Score", justify="right")
-        table.add_column("Action")
-        for opportunity in opportunities:
-            table.add_row(
-                opportunity.item_name,
-                f"{opportunity.opportunity_score:.2f}",
-                opportunity.action,
-            )
-        console.print(table)
+            title = f"Watchlist - Run #{run.id} ({run.source_mode})"
+        print_watchlist_table(title=title, opportunities=opportunities)
         if not sample_data:
-            console.print(local_review_caveat(run.source_mode))
-            console.print(_review_next_action(run.id, coverage))
-
-
-def _review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
-    reviewed = f"{coverage.reviewed_recommendations}/{coverage.total_recommendations} reviewed"
-    if coverage.unreviewed_recommendations:
-        return (
-            f"Review coverage: {reviewed}; {coverage.unreviewed_recommendations} unreviewed. "
-            f"Next: {review_queue_worksheet_command(run_id)}."
-        )
-    return f"Review coverage: {reviewed}; all recommendations for run #{run_id} have outcomes."
+            print_watchlist_review_guidance(
+                run_id=run.id,
+                source_mode=run.source_mode,
+                coverage=coverage,
+            )
