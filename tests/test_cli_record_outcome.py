@@ -82,6 +82,37 @@ def test_record_outcomes_command_saves_human_reviewed_batch(tmp_path: Path) -> N
     assert {record.outcome for record in records} == {"positive", "neutral"}
 
 
+def test_record_outcomes_command_ignores_template_metadata(tmp_path: Path) -> None:
+    database_path = tmp_path / "snapshots.db"
+    decisions_path = tmp_path / "outcome_decisions.json"
+    runner.invoke(app, _analyze_sample_args(database_path))
+    decisions_path.write_text(
+        json.dumps(
+            {
+                "local_review_only": True,
+                "instructions": "Fill outcomes after human review.",
+                "allowed_outcomes": ["positive", "neutral", "negative"],
+                "run_id": 1,
+                "decisions": [
+                    {
+                        "item_name": "Stormglass Catalyst",
+                        "outcome": "positive",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = runner.invoke(app, _record_outcomes_args(database_path, decisions_path))
+
+    records = SnapshotRepository(database_path).list_recent_outcomes(limit=10)
+    assert result.exit_code == 0
+    assert "Recorded 1 outcome(s) for run #1" in result.output
+    assert len(records) == 1
+    assert records[0].item_name == "Stormglass Catalyst"
+
+
 def test_record_outcomes_command_dry_run_validates_without_writing(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
     decisions_path = tmp_path / "outcome_decisions.json"

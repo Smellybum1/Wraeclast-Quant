@@ -646,6 +646,7 @@
 - `wq review-queue --decisions-output-path <file>` now prints the matching `record-outcomes --dry-run` command after writing the editable local decisions template.
 - `wq status`, `wq review-coverage`, and static dashboard review guidance now point unreviewed runs to the worksheet plus outcome-decisions template and dry-run validation path.
 - Review queue worksheets now include a `Batch Outcome Template` section with the decisions-template, dry-run, and final batch-record commands.
+- Outcome-decisions JSON templates now include local-review metadata, allowed outcome labels, and fill/dry-run instructions while remaining compatible with `record-outcomes`.
 - Site-bundle safety coverage now explicitly keeps local review queue worksheets out of public handoff bundles.
 - Review queue worksheets now include per-item local notes fields for the human outcome review step.
 - Empty outcome-review and calibration states now point to the worksheet-first review flow.

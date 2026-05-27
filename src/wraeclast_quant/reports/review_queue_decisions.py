@@ -11,6 +11,12 @@ def review_queue_decisions_payload(
     opportunities: list[StoredOpportunityRecord],
 ) -> dict[str, object]:
     return {
+        "local_review_only": True,
+        "instructions": (
+            "Fill each outcome with one of: positive, neutral, negative. "
+            "Then run record-outcomes --dry-run before recording."
+        ),
+        "allowed_outcomes": ["positive", "neutral", "negative"],
         "run_id": run_id,
         "decisions": [
             {

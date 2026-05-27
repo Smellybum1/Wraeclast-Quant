@@ -32,6 +32,9 @@ Batch outcome JSON shape:
 
 ```json
 {
+  "local_review_only": true,
+  "instructions": "Fill each outcome with one of: positive, neutral, negative. Then run record-outcomes --dry-run before recording.",
+  "allowed_outcomes": ["positive", "neutral", "negative"],
   "run_id": 11,
   "decisions": [
     {

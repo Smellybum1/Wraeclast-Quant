@@ -101,6 +101,12 @@ def test_review_queue_command_writes_outcome_decisions_template(tmp_path: Path) 
     assert "Wrote outcome decisions template" in result.output
     assert f"wq record-outcomes --input-path {decisions_path} --dry-run" in result.output
     assert payload == {
+        "allowed_outcomes": ["positive", "neutral", "negative"],
+        "instructions": (
+            "Fill each outcome with one of: positive, neutral, negative. "
+            "Then run record-outcomes --dry-run before recording."
+        ),
+        "local_review_only": True,
         "run_id": 1,
         "decisions": [
             {
