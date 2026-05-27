@@ -902,3 +902,5 @@
 - Verification: bundled Python focused tests `tests/test_cli_calibration.py tests/test_cli_calibration_report.py tests/test_outcome_contract.py --basetemp=.tmp-pytest-calibration-next -p no:cacheprovider` passed with 4 tests; `git diff --check` passed.
 - Completed packet: outcome-review and calibration report writer commands now print a local-report handoff reminder to run `wq status --strict` and `wq publish-check` before any manual handoff.
 - Verification: bundled Python focused tests `tests/test_cli_outcome_report.py tests/test_cli_calibration_report.py tests/test_outcome_contract.py --basetemp=.tmp-pytest-local-report-handoff -p no:cacheprovider` passed with 4 tests; `git diff --check` passed.
+- Full-suite checkpoint: bundled Python `pytest --basetemp=.tmp-pytest-full-mvp-handoff -p no:cacheprovider` passed with 536 tests after the latest MVP review/handoff packets.
+- Health checkpoint: `status --strict` and `publish-check` passed after the full suite; no derived artifact refresh was needed and the temporary pytest directory was removed.
