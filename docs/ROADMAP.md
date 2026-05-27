@@ -667,6 +667,7 @@
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
 - Blank outcome-decisions template entries now fail `record-outcomes --dry-run` with fill-and-rerun guidance instead of a generic invalid-label error.
 - Successful `record-outcomes --dry-run` validation now prints the exact final batch-record command without `--dry-run`, keeping the human review handoff explicit.
+- `wq status` now points unreviewed runs to the concise `wq review-coverage --run-id <id>` checklist instead of wrapping the full worksheet/template/dry-run command chain in the status table.
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.
 - `wq record-outcomes --input-path <file>` can now record a human-reviewed local outcome batch after validating the entire JSON file, avoiding partial writes when one decision is invalid.
 - `wq outcomes` now points reviewed summaries to `wq outcome-review` and `wq calibration` so the manual feedback loop naturally continues into read-only performance review.

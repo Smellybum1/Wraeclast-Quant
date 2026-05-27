@@ -41,10 +41,8 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
     assert "Review coverage" in result.output
     assert "1/2 reviewed" in result.output
     assert "50.0%" in result.output
-    assert "wq review-queue" in result.output
-    assert "data/processed/review_queue.md" in result.output
-    assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in result.output
+    assert "wq review-coverage --run-id 1" in result.output
+    assert "worksheet, outcome-decisions, and dry-run steps" in result.output
     assert "--run-id 1" in result.output
     assert "MVP readiness" in result.output
     assert "No-OAuth local loop ready on run #1" in result.output

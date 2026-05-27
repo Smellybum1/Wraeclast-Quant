@@ -3,7 +3,7 @@ from __future__ import annotations
 from wraeclast_quant.commands.status_health_context import StatusHealthContext
 from wraeclast_quant.commands.status_health_rows import add_status_row
 from wraeclast_quant.commands.status_health_storage import latest_run_empty_details
-from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
+from wraeclast_quant.reports.review_queue_commands import status_outcome_review_next_action
 from wraeclast_quant.storage.models import ReviewCoverageRecord
 
 
@@ -43,6 +43,6 @@ def review_coverage_details(coverage: ReviewCoverageRecord) -> str:
     )
     if coverage.unreviewed_recommendations:
         return (
-            f"{details}; next: {batch_outcome_review_next_action(coverage.run_id)}"
+            f"{details}; next: {status_outcome_review_next_action(coverage.run_id)}"
         )
     return f"{details}; all recommendations reviewed"

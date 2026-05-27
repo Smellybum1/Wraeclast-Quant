@@ -48,6 +48,17 @@ def batch_outcome_review_next_action(run_id: int | str) -> str:
     )
 
 
+def review_coverage_command(run_id: int | str) -> str:
+    return f"wq review-coverage --run-id {run_id}"
+
+
+def status_outcome_review_next_action(run_id: int | str) -> str:
+    return (
+        f"{review_coverage_command(run_id)} for worksheet, "
+        "outcome-decisions, and dry-run steps"
+    )
+
+
 def record_outcome_command(
     run_id: int,
     item_name: str,
@@ -75,6 +86,8 @@ __all__ = [
     "record_outcomes_command",
     "record_outcomes_dry_run_command",
     "record_outcome_command",
+    "review_coverage_command",
     "review_queue_decisions_template_command",
     "review_queue_worksheet_command",
+    "status_outcome_review_next_action",
 ]

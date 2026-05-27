@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from wraeclast_quant.commands.status_health_context import StatusHealthContext
 from wraeclast_quant.commands.status_health_rows import add_status_row
-from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
+from wraeclast_quant.reports.review_queue_commands import status_outcome_review_next_action
 
 
 NEXT_MANUAL_OBSERVATION_ACTION = (
@@ -45,7 +45,7 @@ def mvp_readiness_details(context: StatusHealthContext) -> str:
     if context.coverage.unreviewed_recommendations:
         return (
             f"{run_summary}; {reviewed}; next: "
-            f"{batch_outcome_review_next_action(context.coverage.run_id)}."
+            f"{status_outcome_review_next_action(context.coverage.run_id)}."
         )
     return f"{run_summary}; {reviewed}; {NEXT_MANUAL_OBSERVATION_ACTION}"
 

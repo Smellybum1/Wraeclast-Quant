@@ -74,14 +74,8 @@ def test_mvp_readiness_points_unreviewed_runs_to_batch_dry_run_loop() -> None:
     details = mvp_readiness_details(context)
 
     assert "1/2 reviewed" in details
-    assert "wq review-queue --run-id 7 --output-path data/processed/review_queue.md" in details
-    assert (
-        "wq review-queue --run-id 7 --decisions-output-path "
-        "data/processed/outcome_decisions.json"
-    ) in details
-    assert (
-        "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run"
-    ) in details
+    assert "wq review-coverage --run-id 7" in details
+    assert "worksheet, outcome-decisions, and dry-run steps" in details
 
 
 def test_mvp_readiness_points_empty_state_to_manual_snapshot_loop() -> None:
