@@ -34,7 +34,7 @@ def register(app: typer.Typer) -> None:
             print_no_unreviewed_recommendations(run.id)
             return
 
-        print_review_queue(run.id, opportunities)
+        print_review_queue(run.id, run.source_mode, opportunities)
 
     @app.command("review-coverage")
     def review_coverage(
@@ -50,4 +50,4 @@ def register(app: typer.Typer) -> None:
             raise typer.BadParameter(f"analysis run #{run_id} was not found")
 
         coverage = repository.review_coverage_for_run(run.id)
-        print_review_coverage(run.id, coverage)
+        print_review_coverage(run.id, run.source_mode, coverage)

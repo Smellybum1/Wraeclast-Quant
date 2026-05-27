@@ -623,6 +623,7 @@
 - MVP daily workflow guide added for the no-OAuth manual/fixture decision-support loop, and local status now includes an `MVP readiness` row that points to the next manual review or daily-run action.
 - MVP daily workflow bridge coverage now uses the official Currency Exchange connector review evidence for fixture export instead of the generic example API review.
 - Static dashboard now renders an `MVP Readiness` section from existing public-intel latest-run and review-coverage data without changing the public JSON contract.
+- Review queue and coverage output now include run source mode plus a local decision-support caveat before users record recommendation outcomes.
 
 ## Later Intelligence Improvements
 
