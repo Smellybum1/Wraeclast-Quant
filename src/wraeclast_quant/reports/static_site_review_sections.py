@@ -5,6 +5,13 @@ from typing import Any
 from wraeclast_quant.reports.static_site_html import key_value_table, section
 
 
+NEXT_MANUAL_OBSERVATION_ACTION = (
+    "Run wq currency-exchange-manual-snapshot --input-path <current-snapshot>, "
+    "then follow docs/MVP_DAILY_WORKFLOW.md to create <manual-import-output> "
+    "and run wq daily --input-path <manual-import-output>"
+)
+
+
 def compliance_section(compliance: dict[str, Any], status_counts: dict[str, Any]) -> str:
     rows = [
         ("Total resources", compliance.get("total_resources", 0)),
@@ -19,7 +26,7 @@ def mvp_readiness_section(latest_run: dict[str, Any], coverage: dict[str, Any]) 
     if run_id == "":
         rows = [
             ("Local loop", "Needs first run"),
-            ("Next action", "Validate a manual import, then run wq daily --input-path <file>"),
+            ("Next action", NEXT_MANUAL_OBSERVATION_ACTION),
         ]
         return section("MVP Readiness", key_value_table(rows))
 
@@ -34,7 +41,7 @@ def mvp_readiness_section(latest_run: dict[str, Any], coverage: dict[str, Any]) 
     if unreviewed:
         rows.append(("Next action", _review_action_text(run_id)))
     else:
-        rows.append(("Next action", "Prepare the next local manual snapshot or run wq daily --input-path <file>"))
+        rows.append(("Next action", NEXT_MANUAL_OBSERVATION_ACTION))
     return section("MVP Readiness", key_value_table(rows))
 
 

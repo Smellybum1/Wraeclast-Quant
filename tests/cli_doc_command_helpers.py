@@ -50,6 +50,7 @@ PUBLIC_COMMANDS = [
     "connector-fixture-daily",
     "connector-plan",
     "currency-exchange-manual-snapshot",
+    "currency-exchange-ui-observation",
     "analyze",
     "import",
     "validate-import",

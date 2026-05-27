@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from wraeclast_quant.reports.static_site import (
     render_static_site,
 )
@@ -15,6 +17,20 @@ def test_static_site_renders_mvp_readiness() -> None:
     assert "wq review-queue --run-id 7" in html
     assert "data/processed/review_queue.md" in html
     assert "wq record-outcome --run-id 7" in html
+
+
+def test_static_site_points_fully_reviewed_runs_to_manual_snapshot_loop() -> None:
+    payload = deepcopy(_payload())
+    payload["review_coverage"]["reviewed_recommendations"] = 2
+    payload["review_coverage"]["unreviewed_recommendations"] = 0
+    payload["review_coverage"]["reviewed_percent"] = 100.0
+
+    html = render_static_site(payload)
+
+    assert "<th>Review state</th><td>2/2 reviewed</td>" in html
+    assert "wq currency-exchange-manual-snapshot --input-path &lt;current-snapshot&gt;" in html
+    assert "docs/MVP_DAILY_WORKFLOW.md" in html
+    assert "wq daily --input-path &lt;manual-import-output&gt;" in html
 
 
 def test_static_site_renders_outcome_summary() -> None:

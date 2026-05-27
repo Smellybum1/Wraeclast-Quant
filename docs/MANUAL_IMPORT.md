@@ -116,6 +116,39 @@ Each Currency Exchange manual market has:
 
 Currency names are normalized to lowercase underscore codes before fixture conversion, so either `divine` or `Divine Orb` can be used in local manual observations.
 
+## Currency Exchange UI Observations
+
+Currency Exchange UI observations are a separate local intake path for manually transcribed in-game ratio and stock-ladder rows when API-shaped hourly fields are not available:
+
+```powershell
+wq currency-exchange-ui-observation --input-path examples/pathofexile_currency_exchange_ui_observation_template.json --output-path <manual-import-output>
+wq validate-import --input-path <manual-import-output>
+wq daily --input-path <manual-import-output>
+```
+
+The UI observation command writes normal manual-import JSON using conservative derived signals from visible UI data only. It does not use OAuth, read credentials, call live HTTP, scrape or OCR screenshots, create SQLite snapshots, approve a source, or publish artifacts.
+
+UI observation JSON has:
+
+- `league`
+- optional `observed_at`
+- `observations`
+
+Each observation has:
+
+- `want_currency`
+- `have_currency`
+- optional `market_ratio`, either `"30:1"` or `{"want": 30, "have": 1}`
+- optional `stock_rows`
+- optional `no_stock`
+- optional `notes`
+
+Each stock row has:
+
+- `ratio`, either `"30:1"` or `{"want": 30, "have": 1}`
+- `stock`
+- optional `comparator`: `exact`, `less_than`, or `greater_than`
+
 ## Safety Notes
 
 Manual import files remain user-owned local inputs. Wraeclast Quant does not rewrite, move, normalize in place, or delete them.

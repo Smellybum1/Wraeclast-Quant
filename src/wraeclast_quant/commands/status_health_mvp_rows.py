@@ -4,6 +4,13 @@ from wraeclast_quant.commands.status_health_context import StatusHealthContext
 from wraeclast_quant.commands.status_health_rows import add_status_row
 
 
+NEXT_MANUAL_OBSERVATION_ACTION = (
+    "next: wq currency-exchange-manual-snapshot --input-path <current-snapshot>; "
+    "then follow docs/MVP_DAILY_WORKFLOW.md to create <manual-import-output> "
+    "and run wq daily --input-path <manual-import-output>."
+)
+
+
 def add_mvp_readiness_row(
     status_rows: list[dict[str, str]],
     context: StatusHealthContext,
@@ -24,10 +31,7 @@ def mvp_readiness_status(context: StatusHealthContext) -> str:
 
 def mvp_readiness_details(context: StatusHealthContext) -> str:
     if context.latest is None:
-        return (
-            "No local run yet; next: validate a manual import, then run "
-            "wq daily --input-path <file>."
-        )
+        return f"No local run yet; {NEXT_MANUAL_OBSERVATION_ACTION}"
 
     run_summary = f"No-OAuth local loop ready on run #{context.latest.id}"
     if context.coverage is None:
@@ -44,14 +48,12 @@ def mvp_readiness_details(context: StatusHealthContext) -> str:
             f"wq record-outcome --run-id {context.coverage.run_id} --item-name <name> "
             "--outcome positive|neutral|negative."
         )
-    return (
-        f"{run_summary}; {reviewed}; next: prepare the next local manual snapshot "
-        "or run wq daily --input-path <file>."
-    )
+    return f"{run_summary}; {reviewed}; {NEXT_MANUAL_OBSERVATION_ACTION}"
 
 
 __all__ = [
     "add_mvp_readiness_row",
     "mvp_readiness_details",
     "mvp_readiness_status",
+    "NEXT_MANUAL_OBSERVATION_ACTION",
 ]

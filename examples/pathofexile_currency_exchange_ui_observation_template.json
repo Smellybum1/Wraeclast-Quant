@@ -1,0 +1,46 @@
+{
+  "league": "Standard",
+  "observed_at": "2026-05-27T17:00:00+00:00",
+  "observations": [
+    {
+      "want_currency": "Chaos Orb",
+      "have_currency": "Divine Orb",
+      "market_ratio": "30:1",
+      "stock_rows": [
+        {
+          "ratio": "30:1",
+          "stock": 18150
+        },
+        {
+          "ratio": "25:1",
+          "stock": 182850
+        },
+        {
+          "ratio": "23.71:1",
+          "stock": 735
+        },
+        {
+          "ratio": "23:1",
+          "stock": 2300
+        },
+        {
+          "ratio": "22:1",
+          "stock": 4400
+        },
+        {
+          "ratio": "22:1",
+          "stock": 214257,
+          "comparator": "less_than"
+        }
+      ],
+      "notes": "Example values are manually transcribed from the in-game Currency Exchange UI."
+    },
+    {
+      "want_currency": "Divine Orb",
+      "have_currency": "Regal Orb",
+      "market_ratio": "1:1",
+      "no_stock": true,
+      "notes": "Use no_stock when the UI reports no stock for the selected pair."
+    }
+  ]
+}

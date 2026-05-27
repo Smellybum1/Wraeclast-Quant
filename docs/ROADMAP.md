@@ -493,6 +493,8 @@
 - Local official Currency Exchange manual snapshot output covered through connector-fixture export and manual-import validation, proving the no-OAuth path can reach normalized scoring input without writing snapshots.
 - Local official Currency Exchange manual snapshot output covered through the existing daily `--input-path` pipeline using temp SQLite/artifacts, proving the no-OAuth path can produce local derived outputs without live collection.
 - Shared context, data-source, and design docs aligned with the Currency Exchange manual snapshot bridge so future work treats it as local-only rather than live collection.
+- Local `wq currency-exchange-ui-observation` command added to convert manually transcribed in-game Currency Exchange ratio/stock rows into manual-import-compatible JSON without OAuth, live HTTP, scraping, OCR, snapshots, source approval, or publishing.
+- Currency Exchange UI observation conversion is documented in shared context, README, connector policy, data-source/design docs, manual import, and MVP daily workflow docs with a local template.
 - Currency Exchange manual snapshot CLI test arguments extracted into a focused helper while preserving command coverage and behavior.
 - Currency Exchange manual snapshot CLI bridge tests moved into a focused module for fixture-run, fixture-export, and daily-pipeline proof paths.
 - Currency Exchange manual snapshot command workflow split from Typer registration/rendering while preserving command behavior.
@@ -606,6 +608,7 @@
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
+- Run #11 is the first Standard league manual UI-observation proof run from visible in-game Currency Exchange ratio/stock rows; review its local worksheet before recording outcomes.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
 - Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.

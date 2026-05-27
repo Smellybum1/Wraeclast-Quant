@@ -29,6 +29,15 @@ wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_
 wq validate-import --input-path <manual-import-output>
 ```
 
+If you only have manually transcribed in-game Currency Exchange ratio and stock-ladder rows, convert them directly into normalized manual-import JSON first:
+
+```powershell
+wq currency-exchange-ui-observation --input-path examples/pathofexile_currency_exchange_ui_observation_template.json --output-path <manual-import-output>
+wq validate-import --input-path <manual-import-output>
+```
+
+This UI observation path is local-only. It does not use OAuth, live HTTP, scraping, OCR, game-client automation, raw cache writes, snapshots, or publishing.
+
 6. Run the local daily pipeline:
 
 ```powershell

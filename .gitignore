@@ -19,6 +19,7 @@ venv/
 data/*.db
 data/*.sqlite
 data/*.sqlite3
+data/local/
 data/raw/cache/
 data/backups/
 data/processed/
