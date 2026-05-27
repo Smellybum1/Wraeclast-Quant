@@ -11,13 +11,13 @@ It does not automate gameplay, perform trades, send whispers, scrape without app
 3. Import local normalized item signals from JSON or CSV when provided.
 4. Score items deterministically with the public scoring contract documented in `docs/SCORING.md`.
 5. Store analysis runs and scored opportunities in local SQLite.
-6. Record local run provenance for connector-fixture pipeline runs.
+6. Record local run provenance for manual-import and connector-fixture pipeline runs.
 7. Compare the latest run with the previous run for score and action changes using the contract documented in `docs/SNAPSHOT_COMPARISONS.md`.
 8. Generate local alert candidates from snapshot changes.
 9. Write Markdown reports, derived JSON, and a local static dashboard. The daily orchestration contract is documented in `docs/DAILY_PIPELINE.md`.
 10. Validate local static bundles with publish-readiness, publish-handoff, and site-contract checks before any manual publishing outside the app.
 
-`wq connector-fixture-daily` proves that a reviewed, fixture-backed connector shape can drive the same local pipeline without live source access. It requires normalized local fixture signals, writes a `connector-fixture` run, and stays local-only.
+`wq daily --input-path` records path-safe local provenance for manual-import runs. `wq connector-fixture-daily` proves that a reviewed, fixture-backed connector shape can drive the same local pipeline without live source access. It requires normalized local fixture signals, writes a `connector-fixture` run, and stays local-only.
 
 `wq currency-exchange-manual-snapshot` is a source-specific local bridge for user-supplied official Currency Exchange observations when live API access is parked. It validates local JSON, can write connector-fixture JSON, and can be chained through `connector-fixture-export`, `validate-import`, or `daily --input-path` without OAuth, live HTTP, raw cache writes, or publishing.
 
@@ -62,7 +62,7 @@ The export includes a top-level `schema_version` plus derived fields such as ite
 - `daily` orchestrates one local pipeline run from sample data or a manual import file using the contract documented in `docs/DAILY_PIPELINE.md`.
 - `backup-db`, `verify-backup`, `backups`, `restore-helper`, and `migration-readiness` protect local SQLite data before future schema work.
 - `record-outcome`, `outcomes`, review coverage, outcome reports, and calibration commands support local recommendation review.
-- `run-provenance` inspects local audit metadata for runs that record provenance.
+- `run-provenance` inspects local audit metadata for runs that record provenance, including manual-import daily runs and connector-fixture proof runs.
 
 ## Extension Points
 

@@ -679,6 +679,7 @@
 - Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.
+- Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.
 
 ## Later Intelligence Improvements
 

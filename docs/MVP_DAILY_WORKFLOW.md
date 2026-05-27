@@ -48,11 +48,14 @@ wq daily --input-path <manual-import-output>
 
 ```powershell
 wq status --strict
+wq run-provenance --run-id <id>
 wq watchlist
 wq review-queue
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md
 wq review-coverage
 ```
+
+Run provenance is local-only audit metadata for the run. For manual-import daily runs it records path-safe input metadata, item count, and explicit no-live-collection flags.
 
 The worksheet is local-only and includes exact positive, neutral, and negative `record-outcome` commands plus local notes fields for each unreviewed item. Choose only one outcome per item after manual review.
 

@@ -6,6 +6,7 @@ import typer
 
 from wraeclast_quant.commands.daily_run_inputs import (
     daily_alert_settings,
+    daily_manual_import_provenance,
     daily_opportunities,
 )
 from wraeclast_quant.commands.daily_run_rendering import print_daily_result
@@ -52,6 +53,7 @@ def register(app: typer.Typer) -> None:
     ) -> None:
         alert_settings = daily_alert_settings(watch_threshold, buy_threshold, big_delta)
         source_mode, opportunities = daily_opportunities(sample_data, input_path)
+        provenance = daily_manual_import_provenance(input_path, item_count=len(opportunities))
         result = run_daily_pipeline(
             opportunities=opportunities,
             source_mode=source_mode,
@@ -62,6 +64,7 @@ def register(app: typer.Typer) -> None:
             site_dir=site_dir,
             limit=limit,
             alert_settings=alert_settings,
+            provenance=provenance,
         )
         stash_ninja_paths = write_daily_stash_ninja_handoff(
             result,

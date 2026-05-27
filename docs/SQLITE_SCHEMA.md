@@ -78,6 +78,8 @@ Required SQLite tables:
 - `metadata_json`
 - `created_at`
 
+Manual-import daily provenance uses this table for local audit metadata such as input file name, suffix, path kind, redacted absolute-path details when applicable, item count, and explicit no-live-collection flags. Connector-fixture provenance uses the same table for fixture/review audit metadata.
+
 ## Read-Only Behavior
 
 Read-only commands should not create an empty SQLite database or parent directories when the database is missing. They should report no data or no snapshots instead.

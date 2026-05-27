@@ -30,17 +30,18 @@ One daily run:
 2. Scores opportunities with the deterministic scoring contract.
 3. Creates exactly one SQLite analysis run.
 4. Saves scored opportunities for that run.
-5. Compares the new run against the previous run when one exists.
-6. Writes the delta-aware Markdown market brief.
-7. Records the market brief as a report artifact.
-8. Builds and writes derived-only `public_intel.json`.
-9. Renders the local static dashboard from the same public intel payload.
-10. Optionally writes a derived-only Stash-Ninja companion handoff when `--stash-ninja-watchlist` is passed.
-11. Prints local alert candidates when a comparison exists.
+5. Records local run provenance for manual-import daily runs using path-safe metadata.
+6. Compares the new run against the previous run when one exists.
+7. Writes the delta-aware Markdown market brief.
+8. Records the market brief as a report artifact.
+9. Builds and writes derived-only `public_intel.json`.
+10. Renders the local static dashboard from the same public intel payload.
+11. Optionally writes a derived-only Stash-Ninja companion handoff when `--stash-ninja-watchlist` is passed.
+12. Prints local alert candidates when a comparison exists.
 
 Daily does not call other CLI commands internally. It reuses lower-level scoring, storage, report, export, site, and alert functions so one run id is used consistently across artifacts.
 
-Connector fixture daily uses the shared workflow after connector review/check and fetch-plan readiness pass. It records `source_mode="connector-fixture"` and local provenance for the created run, then writes the same market brief, public intel, static dashboard, and alert preview artifacts from that run.
+Manual-import daily runs record local provenance with the input file name, suffix, relative path when one was supplied, redacted absolute-path metadata when needed, item count, and explicit `live_collection=false` / `source_approval=false` flags. Connector fixture daily uses the shared workflow after connector review/check and fetch-plan readiness pass. It records `source_mode="connector-fixture"` and local provenance for the created run, then writes the same market brief, public intel, static dashboard, and alert preview artifacts from that run.
 
 ## Default Paths
 

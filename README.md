@@ -63,7 +63,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq verify-backup --backup-path <file>` checks a local SQLite backup and schema contract without writing files.
 - `wq restore-helper --backup-path <file>` verifies a backup and prints a manual PowerShell restore command without writing files.
 - `wq migration-readiness` checks whether the current database and latest backup are ready before future SQLite schema work. See `docs/MIGRATIONS.md`.
-- `wq run-provenance` inspects local audit metadata for the latest run or a selected run.
+- `wq run-provenance` inspects local audit metadata for the latest run or a selected run, including path-safe manual-import daily provenance and connector-fixture proof provenance.
 - `wq review-queue` shows recommendations from the latest run that still need manual outcome review; add `--run-id <id> --output-path <file>` to write a local Markdown review worksheet without recording outcomes.
 - `wq review-coverage` shows how much of a run has recorded manual outcome review.
 - `wq record-outcome --run-id <id> --item-name <name> --outcome positive` records a local manual review result for a recommendation. See `docs/OUTCOMES.md` for the outcome review contract.
@@ -82,7 +82,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq publish-handoff` writes `data/processed/publish_handoff.md` with readiness evidence and a manual publishing checklist. It does not upload, host, or publish anything.
 - `wq site-contract` writes `data/processed/site_contract.json`, a local derived-only descriptor for future public-site handoff. It does not upload, host, or publish anything.
 - `wq daily --sample-data` runs the local sample-data pipeline end to end. See `docs/DAILY_PIPELINE.md` for the orchestration contract.
-- `wq daily --input-path <file>` runs the same pipeline from a local manual import file; add `--stash-ninja-watchlist` to write the local Stash-Ninja companion handoff for the created run.
+- `wq daily --input-path <file>` runs the same pipeline from a local manual import file and records path-safe local run provenance; add `--stash-ninja-watchlist` to write the local Stash-Ninja companion handoff for the created run.
 
 Alert preview sensitivity can be tuned per command with `--watch-threshold`, `--buy-threshold`, and `--big-delta` on `wq alerts`, `wq export`, and `wq daily`. Local alert rules are documented in `docs/ALERTS.md`.
 

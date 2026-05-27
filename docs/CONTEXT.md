@@ -51,7 +51,7 @@ SQLite persistence is the local audit trail for runs, scored opportunities, arti
 
 - Run: one stored analysis execution in SQLite.
 - Latest run: the newest run used for freshness checks and public artifact generation.
-- Run provenance: metadata explaining how a run was produced, especially connector-fixture runs.
+- Run provenance: local audit metadata explaining how a run was produced, including connector-fixture runs and manual-import daily runs. Manual-import provenance should avoid exposing absolute local paths in routine output.
 - Backup freshness: the newest verified backup covers the latest database run.
 - Migration readiness: read-only checks proving schema-change planning is safe. Actual schema changes require strict health, fresh backup, and explicit migration work.
 
