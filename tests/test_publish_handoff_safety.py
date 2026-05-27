@@ -40,3 +40,20 @@ def test_publish_handoff_excludes_raw_inputs_and_sensitive_values(tmp_path: Path
     ]
     for value in forbidden:
         assert value not in report
+
+
+def test_publish_handoff_names_local_feedback_artifacts_as_excluded(
+    tmp_path: Path,
+) -> None:
+    database_path, bundle_dir, _run_id = _write_publish_ready_bundle(tmp_path)
+    result = check_publish_readiness(database_path, bundle_dir)
+    output_path = tmp_path / "publish_handoff.md"
+
+    write_publish_handoff(result, output_path)
+
+    report = output_path.read_text(encoding="utf-8")
+    assert "`review_queue.md`" in report
+    assert "`outcome_review.md`" in report
+    assert "`calibration_report.md`" in report
+    assert "`exile_ui_stash_ninja_watchlist.*`" in report
+    assert "not public handoff inputs" in report
