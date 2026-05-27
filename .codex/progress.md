@@ -873,3 +873,4 @@
 - Verification: bundled Python focused MVP/outcome/review docs tests passed with 13 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Completed packet: empty outcome-review and calibration runtime guidance now uses the same run-specific `review-queue --run-id <id> --output-path` worksheet command shape.
 - Verification: bundled Python focused outcome/review/calibration tests passed with 23 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: reviewed Exile-UI Stash-Ninja as a possible companion integration and documented a safe derived-watchlist-first adapter path that avoids overlay automation, game-client interaction, third-party config writes, live HTTP, and price-cache mutation.
