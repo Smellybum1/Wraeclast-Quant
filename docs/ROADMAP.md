@@ -666,6 +666,7 @@
 - Review-queue run-selection, empty-database, fully-reviewed, and missing-run tests are split from queue rendering and command-template escaping coverage.
 - Site-bundle local artifact exclusion tests are split from manifest source-path and secret safety coverage.
 - Stash-Ninja status strict stale/missing handoff tests are split from fresh handoff row rendering coverage.
+- Static-site MVP readiness, outcome summary, and review coverage tests are split from base metadata/compliance/opportunity/alert rendering coverage.
 
 ## Later Intelligence Improvements
 
