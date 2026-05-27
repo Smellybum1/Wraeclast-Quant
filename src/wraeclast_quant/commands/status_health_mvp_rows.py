@@ -39,8 +39,9 @@ def mvp_readiness_details(context: StatusHealthContext) -> str:
     )
     if context.coverage.unreviewed_recommendations:
         return (
-            f"{run_summary}; {reviewed}; next: wq review-queue; "
-            "wq record-outcome --run-id <id> --item-name <name> "
+            f"{run_summary}; {reviewed}; next: wq review-queue "
+            f"--run-id {context.coverage.run_id} --output-path data/processed/review_queue.md; "
+            f"wq record-outcome --run-id {context.coverage.run_id} --item-name <name> "
             "--outcome positive|neutral|negative."
         )
     return (

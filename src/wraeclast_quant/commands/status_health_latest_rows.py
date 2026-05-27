@@ -42,7 +42,9 @@ def review_coverage_details(coverage: ReviewCoverageRecord) -> str:
     )
     if coverage.unreviewed_recommendations:
         return (
-            f"{details}; next: wq review-queue; "
-            "wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|negative"
+            f"{details}; next: wq review-queue --run-id {coverage.run_id} "
+            "--output-path data/processed/review_queue.md; "
+            f"wq record-outcome --run-id {coverage.run_id} --item-name <name> "
+            "--outcome positive|neutral|negative"
         )
     return f"{details}; all recommendations reviewed"

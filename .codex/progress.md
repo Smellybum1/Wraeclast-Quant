@@ -851,3 +851,5 @@
 - Verification: bundled Python focused tests `tests/test_static_site.py tests/test_static_site_safety.py tests/test_static_site_io.py tests/test_cli_site.py --basetemp=.tmp-pytest-mvp-static-review-action -p no:cacheprovider` passed with 12 tests.
 - Completed packet: added `wq review-queue --output-path <file>` to write a local Markdown review worksheet for unreviewed recommendations without recording outcomes or changing public artifacts.
 - Verification: bundled Python focused review/outcome and MVP/docs helper tests passed with 21 tests; `review-queue --output-path .tmp-review-worksheet\review_queue.md` wrote the current run #10 worksheet; `git diff --check`, `status --strict`, and `publish-check` passed.
+- Completed packet: status review-coverage and MVP-readiness rows now point to `wq review-queue --run-id <id> --output-path data/processed/review_queue.md` before `record-outcome`, making the worksheet path visible from the primary health readout.
+- Verification: bundled Python focused status/review/MVP workflow tests passed with 13 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
