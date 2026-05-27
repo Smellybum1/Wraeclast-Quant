@@ -664,6 +664,7 @@
 - Watchlist CLI run-selection and missing-run tests are split from default latest-run/sample-output coverage.
 - Review-queue worksheet file-write and worksheet escaping tests are split from main review-queue CLI behavior tests.
 - Review-queue run-selection, empty-database, fully-reviewed, and missing-run tests are split from queue rendering and command-template escaping coverage.
+- Site-bundle local artifact exclusion tests are split from manifest source-path and secret safety coverage.
 
 ## Later Intelligence Improvements
 
