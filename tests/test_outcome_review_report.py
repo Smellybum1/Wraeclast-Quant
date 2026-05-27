@@ -30,7 +30,7 @@ def test_outcome_review_report_renders_empty_message() -> None:
     report = render_outcome_review([], {})
 
     assert "No reviewed recommendation outcomes found." in report
-    assert "wq review-queue" in report
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in report
     assert "positive=useful signal" in report
     assert "Recent Reviewed Recommendations" not in report
 

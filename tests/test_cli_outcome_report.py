@@ -43,4 +43,6 @@ def test_outcome_report_command_writes_empty_report(tmp_path: Path) -> None:
 
     assert result.exit_code == 0
     assert "Wrote empty outcome review report" in result.output
-    assert "No reviewed recommendation outcomes found." in output_path.read_text(encoding="utf-8")
+    report = output_path.read_text(encoding="utf-8")
+    assert "No reviewed recommendation outcomes found." in report
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in report

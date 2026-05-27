@@ -639,6 +639,7 @@
 - Empty outcome-review and calibration states now point to the worksheet-first review flow.
 - Recommendation outcome contract coverage now includes local review queue worksheet section markers.
 - README, outcome contract, and MVP daily workflow docs now use the same run-specific review worksheet command shape.
+- Empty outcome-review and calibration runtime guidance now uses the same run-specific review worksheet command shape.
 
 ## Later Intelligence Improvements
 

@@ -871,3 +871,5 @@
 - Verification: bundled Python focused outcome contract/review tests passed with 13 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Completed packet: README, outcome contract, and MVP daily workflow docs now use the same run-specific `review-queue --run-id <id> --output-path` worksheet command shape.
 - Verification: bundled Python focused MVP/outcome/review docs tests passed with 13 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Completed packet: empty outcome-review and calibration runtime guidance now uses the same run-specific `review-queue --run-id <id> --output-path` worksheet command shape.
+- Verification: bundled Python focused outcome/review/calibration tests passed with 23 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
