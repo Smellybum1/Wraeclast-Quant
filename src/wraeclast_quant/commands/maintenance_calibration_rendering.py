@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from rich.console import Console
 from rich.table import Table
 
 from wraeclast_quant.reports.calibration import CalibrationResult, SCORE_BUCKETS
+from wraeclast_quant.reports.outcome_guidance import local_report_next_action
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
 console = Console(width=260)
@@ -58,3 +61,19 @@ def print_calibration_tables(result: CalibrationResult) -> None:
             review.observed_at,
         )
     console.print(recent)
+
+
+def calibration_report_written_message(written_path: Path, *, has_outcomes: bool) -> str:
+    if not has_outcomes:
+        return f"Wrote empty calibration report to {written_path}"
+    return f"Wrote calibration report to {written_path}"
+
+
+def print_calibration_report_written(written_path: Path, *, has_outcomes: bool) -> None:
+    console.print(
+        calibration_report_written_message(
+            written_path,
+            has_outcomes=has_outcomes,
+        )
+    )
+    console.print(local_report_next_action())

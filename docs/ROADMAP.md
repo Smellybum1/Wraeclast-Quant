@@ -708,6 +708,7 @@
 - Review-queue batch next-step and one-off command-template text is split into focused report helpers, preserving CLI output while making the manual review guidance directly testable.
 - Batch outcome-recording success, dry-run, and rollback-error messages are split into focused rendering helpers, preserving `record-outcomes` CLI output while making the final manual-review handoff text directly testable.
 - Local outcome/calibration report handoff safety wording is shared through focused outcome-guidance helpers, preserving CLI output while preventing drift between report commands.
+- Calibration report-written output is split into focused rendering helpers, keeping calibration command registration focused on orchestration while preserving CLI output.
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.
 - Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.

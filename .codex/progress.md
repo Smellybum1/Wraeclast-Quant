@@ -1105,3 +1105,8 @@
 
 - Completed packet: shared the outcome-review and calibration local-report handoff safety text through `reports.outcome_guidance`, preserving CLI output while keeping `outcome-report` and `calibration-report` wording from drifting.
 - Verification: focused outcome/calibration report guidance tests passed (`tests\test_outcome_guidance.py`, `tests\test_cli_outcome_report.py`, `tests\test_cli_calibration_report.py`, `tests\test_cli_calibration.py`, `tests\test_cli_outcome_review.py`); full bundled Python test suite passed with 585 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains 0/6 reviewed and should only be recorded after human labels are present.
+
+## 2026-05-28 Calibration Rendering Helper
+
+- Completed packet: split calibration report-written output into `maintenance_calibration_rendering`, leaving the calibration command module focused on build/write orchestration while preserving report output text and local-only handoff guidance.
+- Verification: focused calibration rendering/report tests passed (`tests\test_calibration_rendering.py`, `tests\test_cli_calibration.py`, `tests\test_cli_calibration_report.py`, `tests\test_calibration_report.py`, `tests\test_calibration_report_io.py`); full bundled Python test suite passed with 587 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains pending human outcome labels.

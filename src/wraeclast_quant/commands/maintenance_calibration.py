@@ -4,16 +4,17 @@ from pathlib import Path
 
 import typer
 
-from wraeclast_quant.commands.maintenance_calibration_rendering import console, print_calibration_tables
+from wraeclast_quant.commands.maintenance_calibration_rendering import (
+    console,
+    print_calibration_report_written,
+    print_calibration_tables,
+)
 from wraeclast_quant.reports.calibration import (
     DEFAULT_CALIBRATION_REPORT_PATH,
     build_calibration,
     write_calibration_report,
 )
-from wraeclast_quant.reports.outcome_guidance import (
-    local_report_next_action,
-    no_outcome_review_lines,
-)
+from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -46,9 +47,4 @@ def register(app: typer.Typer) -> None:
     ) -> None:
         result = build_calibration(SnapshotRepository(database_path), limit=limit)
         written_path = write_calibration_report(result, output_path)
-        if not result.has_outcomes:
-            console.print(f"Wrote empty calibration report to {written_path}")
-            console.print(local_report_next_action())
-            return
-        console.print(f"Wrote calibration report to {written_path}")
-        console.print(local_report_next_action())
+        print_calibration_report_written(written_path, has_outcomes=result.has_outcomes)
