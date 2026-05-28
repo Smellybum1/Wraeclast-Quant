@@ -6,7 +6,10 @@ from rich.console import Console
 from rich.table import Table
 
 from wraeclast_quant.reports.calibration import CalibrationResult, SCORE_BUCKETS
-from wraeclast_quant.reports.outcome_guidance import local_report_next_action
+from wraeclast_quant.reports.outcome_guidance import (
+    local_report_next_action,
+    no_outcome_review_lines,
+)
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
 console = Console(width=260)
@@ -61,6 +64,29 @@ def print_calibration_tables(result: CalibrationResult) -> None:
             review.observed_at,
         )
     console.print(recent)
+
+
+def calibration_local_readonly_message() -> str:
+    return (
+        "Calibration is local-only and read-only. "
+        "It did not change scoring weights or thresholds."
+    )
+
+
+def calibration_report_next_action() -> str:
+    return (
+        "Next: run wq calibration-report --output-path data/processed/calibration_report.md "
+        "to write the local Markdown calibration artifact."
+    )
+
+
+def print_no_calibration_outcomes() -> None:
+    console.print("\n".join(line for line in no_outcome_review_lines() if line))
+
+
+def print_calibration_next_steps() -> None:
+    console.print(calibration_local_readonly_message())
+    console.print(calibration_report_next_action())
 
 
 def calibration_report_written_message(written_path: Path, *, has_outcomes: bool) -> str:

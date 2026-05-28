@@ -1120,3 +1120,8 @@
 
 - Completed packet: split `wq outcomes` empty-state text and recent-outcomes next-action text into focused helpers in `maintenance_outcome_records_rendering`, preserving CLI output while making the local feedback-loop guidance directly testable.
 - Verification: focused outcome rendering/CLI tests passed (`tests\test_outcome_record_rendering.py`, `tests\test_cli_outcomes.py`, `tests\test_cli_record_outcome.py`); full bundled Python test suite passed with 591 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains pending human outcome labels.
+
+## 2026-05-28 Calibration Command Rendering Helper
+
+- Completed packet: split `wq calibration` empty-state output and read-only/report next-step footer text into focused helpers in `maintenance_calibration_rendering`, leaving calibration command registration focused on build/render orchestration while preserving CLI output.
+- Verification: focused calibration rendering/report tests passed (`tests\test_calibration_rendering.py`, `tests\test_cli_calibration.py`, `tests\test_cli_calibration_report.py`, `tests\test_calibration_report.py`, `tests\test_calibration_report_io.py`); full bundled Python test suite passed with 593 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains pending human outcome labels.
