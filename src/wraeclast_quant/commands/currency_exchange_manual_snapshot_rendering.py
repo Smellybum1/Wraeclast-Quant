@@ -20,6 +20,14 @@ def manual_snapshot_fixture_written_text(output_fixture_path: object) -> str:
     return f"Wrote connector fixture: {output_fixture_path}"
 
 
+def manual_snapshot_fixture_export_next_action(output_fixture_path: object) -> str:
+    return (
+        "Next: wq connector-fixture-export --review-path "
+        "examples/reviews/pathofexile_currency_exchange_connector_review.json "
+        f"--fixture-path {output_fixture_path} --output-path <manual-import-output>"
+    )
+
+
 def manual_snapshot_rows_text(row_count: int) -> str:
     return f"Manual snapshot rows: {row_count}"
 
@@ -55,11 +63,13 @@ def print_currency_exchange_manual_snapshot(
         console.print(manual_snapshot_history_text(history_path))
     if output_fixture_path is not None:
         console.print(manual_snapshot_fixture_written_text(output_fixture_path))
+        console.print(manual_snapshot_fixture_export_next_action(output_fixture_path))
     console.print(manual_snapshot_rows_text(len(fixture.items)))
     console.print(manual_snapshot_safety_text())
 
 
 __all__ = [
+    "manual_snapshot_fixture_export_next_action",
     "manual_snapshot_fixture_written_text",
     "manual_snapshot_history_text",
     "manual_snapshot_input_text",

@@ -1354,3 +1354,9 @@
 
 - Completed packet: successful `wq inspect-import --input-path <file>` output now prints the matching `wq validate-import --input-path <file>` next action after its read-only diagnostics, keeping score/signal inspection connected to the safe validation-before-daily path without changing diagnostics, validation rules, scoring, persistence, public artifacts, or live-source behavior.
 - Verification: focused inspect/validate/import CLI tests passed with 9 tests, then the post-doc focused slice passed with 11 tests; real run #13 manual-import inspection now prints `Next: wq validate-import --input-path data\processed\standard_currency_exchange_manual_import.json`; full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Manual Snapshot Fixture Export Handoff
+
+- Completed packet: successful `wq currency-exchange-manual-snapshot --output-fixture-path <file>` output now prints the matching `wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_exchange_connector_review.json --fixture-path <file> --output-path <manual-import-output>` next action, keeping the official manual snapshot bridge connected to the normalized manual-import path without changing fixture conversion, scoring, persistence, public artifacts, live-source behavior, or dry-run safety.
+- Documentation updated: `README.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the new fixture-export handoff.
+- Verification: focused manual snapshot CLI/rendering plus MVP/manual-import docs tests passed with 9 tests; real template smoke printed the fixture-export next action; full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

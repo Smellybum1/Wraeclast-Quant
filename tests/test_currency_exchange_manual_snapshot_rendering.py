@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from wraeclast_quant.commands.currency_exchange_manual_snapshot_rendering import (
+    manual_snapshot_fixture_export_next_action,
     manual_snapshot_fixture_written_text,
     manual_snapshot_history_text,
     manual_snapshot_input_text,
@@ -18,6 +19,11 @@ def test_manual_snapshot_path_text_preserves_cli_output() -> None:
     assert manual_snapshot_history_text(history_path) == f"History snapshot: {history_path}"
     assert manual_snapshot_fixture_written_text(fixture_path) == (
         f"Wrote connector fixture: {fixture_path}"
+    )
+    assert manual_snapshot_fixture_export_next_action(fixture_path) == (
+        "Next: wq connector-fixture-export --review-path "
+        "examples/reviews/pathofexile_currency_exchange_connector_review.json "
+        f"--fixture-path {fixture_path} --output-path <manual-import-output>"
     )
 
 

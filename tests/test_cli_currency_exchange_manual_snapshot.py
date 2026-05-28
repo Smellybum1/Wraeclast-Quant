@@ -44,6 +44,12 @@ def test_currency_exchange_manual_snapshot_writes_connector_fixture_with_history
 
     assert result.exit_code == 0
     assert "Wrote connector fixture" in result.output
+    assert "Next: wq connector-fixture-export --review-path" in result.output
+    assert "examples/reviews/pathofexile_currency_exchange_connector_review.json" in (
+        result.output
+    )
+    assert f"--fixture-path {output_path}" in result.output
+    assert "--output-path <manual-import-output>" in result.output
     assert payload["source_name"] == "Path of Exile Currency Exchange API Preview"
     assert payload["items"][0]["signals"]["demand_momentum"] == 50.0
 

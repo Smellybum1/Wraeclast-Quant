@@ -17,6 +17,8 @@ wq currency-exchange-manual-snapshot --input-path <current-snapshot>
 wq currency-exchange-manual-snapshot --input-path <current-snapshot> --history-path <previous-snapshot> --output-fixture-path <fixture-output>
 ```
 
+When the fixture is written, the command prints the matching `wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_exchange_connector_review.json --fixture-path <fixture-output> --output-path <manual-import-output>` next action.
+
 4. Convert the local fixture into normalized manual-import JSON:
 
 ```powershell
