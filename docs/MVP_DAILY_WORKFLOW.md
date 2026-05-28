@@ -29,6 +29,8 @@ wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_
 wq validate-import --input-path <manual-import-output>
 ```
 
+When validation passes, the command prints the matching `wq daily --input-path <manual-import-output>` next action.
+
 If you only have manually transcribed in-game Currency Exchange ratio and stock-ladder rows, convert them directly into normalized manual-import JSON first:
 
 ```powershell

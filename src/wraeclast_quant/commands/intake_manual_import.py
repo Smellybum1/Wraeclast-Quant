@@ -6,6 +6,7 @@ import typer
 
 from wraeclast_quant.commands.intake_rendering import console, print_opportunities
 from wraeclast_quant.commands.intake_manual_import_rendering import (
+    manual_import_daily_next_action,
     print_manual_import_diagnostics,
 )
 from wraeclast_quant.commands.intake_manual_import_workflow import (
@@ -34,6 +35,7 @@ def register(app: typer.Typer) -> None:
         opportunities = load_manual_opportunities(input_path)
         print_opportunities("Manual Import Validation", opportunities)
         console.print(f"Valid manual import: {len(opportunities)} items.")
+        console.print(manual_import_daily_next_action(input_path))
 
     @app.command("inspect-import")
     def inspect_import(

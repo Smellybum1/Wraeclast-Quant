@@ -24,6 +24,7 @@ def test_validate_import_prints_valid_count_and_table(tmp_path: Path) -> None:
     assert "Manual Import Validation" in result.output
     assert "Stormglass Catalyst" in result.output
     assert "Valid manual import: 1 items." in result.output
+    assert f"Next: wq daily --input-path {input_path}" in result.output
 
 
 def test_validate_import_invalid_input_exits_nonzero(tmp_path: Path) -> None:

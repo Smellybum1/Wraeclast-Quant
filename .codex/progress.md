@@ -1344,3 +1344,8 @@
 
 - Completed packet: `wq snapshots` now prints a truncation hint when the latest-run top-items table hides lower-ranked scored opportunities, pointing to the exact `--limit` value needed to show all rows when possible. This keeps the persisted-run overview aligned with the manual MVP review loop without changing scoring, storage, outcomes, public artifacts, live-source behavior, or the default limit.
 - Verification: focused CLI/storage snapshot tests passed with 7 tests; real run #13 `snapshots` now reports `Showing top 5 of 6 scored opportunities. Re-run with --limit 6 to show all.` Full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Validate Import Daily Handoff
+
+- Completed packet: successful `wq validate-import --input-path <file>` output now prints the matching `wq daily --input-path <file>` next action, keeping the fresh local observation path moving from read-only validation into the next manual daily run without changing validation rules, scoring, persistence, public artifacts, live-source behavior, or dry-run safety.
+- Verification: focused validate/import/inspect plus MVP workflow docs tests passed with 11 tests, then the post-doc focused slice passed with 13 tests; real run #13 manual-import validation now prints `Next: wq daily --input-path data\processed\standard_currency_exchange_manual_import.json`; full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

@@ -8,6 +8,10 @@ from wraeclast_quant.importers.summary import ManualImportSummary
 from wraeclast_quant.intelligence.scoring import ScoredOpportunity
 
 
+def manual_import_daily_next_action(input_path: object) -> str:
+    return f"Next: wq daily --input-path {input_path}"
+
+
 def print_manual_import_diagnostics(
     summary: ManualImportSummary,
     opportunities: list[ScoredOpportunity],
@@ -32,3 +36,9 @@ def print_manual_import_diagnostics(
     console.print(signals)
 
     print_opportunities("Top Imported Opportunities", opportunities[:limit])
+
+
+__all__ = [
+    "manual_import_daily_next_action",
+    "print_manual_import_diagnostics",
+]
