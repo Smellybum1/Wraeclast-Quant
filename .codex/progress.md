@@ -1115,3 +1115,8 @@
 
 - Completed packet: split outcome report-written output into a focused helper in `maintenance_outcome_reports_rendering`, matching the calibration report rendering pattern while preserving CLI output and local-only report handoff guidance.
 - Verification: focused outcome report rendering/CLI tests passed (`tests\test_outcome_report_rendering.py`, `tests\test_cli_outcome_report.py`, `tests\test_cli_outcome_review.py`, `tests\test_outcome_review_report.py`); full bundled Python test suite passed with 589 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains pending human outcome labels.
+
+## 2026-05-28 Outcome Summary Rendering Helper
+
+- Completed packet: split `wq outcomes` empty-state text and recent-outcomes next-action text into focused helpers in `maintenance_outcome_records_rendering`, preserving CLI output while making the local feedback-loop guidance directly testable.
+- Verification: focused outcome rendering/CLI tests passed (`tests\test_outcome_record_rendering.py`, `tests\test_cli_outcomes.py`, `tests\test_cli_record_outcome.py`); full bundled Python test suite passed with 591 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains pending human outcome labels.

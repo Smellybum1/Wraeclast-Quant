@@ -44,6 +44,17 @@ def batch_outcome_write_error_message(error: BaseException) -> str:
     return f"Error: could not record outcome batch; no records written: {error}"
 
 
+def recent_outcomes_next_action() -> str:
+    return (
+        "Next: run wq outcome-review to inspect scores/actions with outcomes, "
+        "or wq calibration to summarize reviewed recommendations."
+    )
+
+
+def no_outcomes_message() -> str:
+    return "No recommendation outcomes recorded."
+
+
 def print_outcome_record(record: RecommendationOutcomeRecord) -> None:
     console.print(f"Recorded {record.outcome} outcome for '{record.item_name}' from run #{record.run_id}.")
     console.print(post_outcome_record_next_steps(record.run_id))
@@ -75,22 +86,21 @@ def print_recent_outcomes(
     for label in sorted(ALLOWED_OUTCOMES):
         summary_table.add_row(label, str(summary.get(label, 0)))
     console.print(summary_table)
-    console.print(
-        "Next: run wq outcome-review to inspect scores/actions with outcomes, "
-        "or wq calibration to summarize reviewed recommendations."
-    )
+    console.print(recent_outcomes_next_action())
 
 
 def print_no_outcomes() -> None:
-    console.print("No recommendation outcomes recorded.")
+    console.print(no_outcomes_message())
 
 
 __all__ = [
     "batch_outcome_dry_run_success_message",
     "batch_outcome_record_success_message",
     "batch_outcome_write_error_message",
+    "no_outcomes_message",
     "post_outcome_record_next_steps",
     "print_no_outcomes",
     "print_outcome_record",
     "print_recent_outcomes",
+    "recent_outcomes_next_action",
 ]
