@@ -1171,3 +1171,13 @@
 
 - Completed packet: split batch `record-outcomes` validation and dry-run failure CLI tests into `tests\test_cli_record_outcomes_validation.py`, leaving `tests\test_cli_record_outcomes.py` focused on success, dry-run success, and write rollback coverage while preserving test names, assertions, helpers, and command behavior.
 - Verification: focused old/new outcome CLI tests passed (`tests\test_cli_record_outcomes.py`, `tests\test_cli_record_outcomes_validation.py`, `tests\test_outcome_batch_decisions.py`).
+
+## 2026-05-28 Archive Handoff Checkpoint
+
+- Branch/worktree before this Markdown-only handoff polish: `main...origin/main` was clean and synced at commit `b33d173` (`Split outcome batch validation tests`).
+- Current MVP proof state: run #13 is the latest Standard no-OAuth manual UI-observation run from user-supplied Currency Exchange screenshots. It has 6 recommendations, fresh public/static/site-bundle artifacts, and a verified SQLite backup at `data/backups/wraeclast_quant_20260528T021831Z.db`.
+- Current review state: run #13 remains 0/6 reviewed. `data/processed/outcome_decisions.json` still has blank `outcome` fields; `record-outcomes --dry-run` now reports all 6 blanks together and exits nonzero without writing records.
+- Current health state: `wq status --strict` and `wq publish-check` passed during handoff polish. Public artifacts remain derived-only and fresh for run #13.
+- Safety boundary remains unchanged: do not pursue live OAuth, live HTTP collection, scraping, Discord collection, Exile-UI file mutation, gameplay automation, trade automation, or game-client interaction.
+- Next recommended packet: if the user has filled run #13 outcome labels, run `wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run`; only if that passes, run `wq record-outcomes --input-path data/processed/outcome_decisions.json`, then inspect `wq review-coverage --run-id 13`, `wq outcomes`, `wq outcome-review`, and `wq calibration`, refresh local reports/artifacts as needed, and rerun strict status plus publish check.
+- If run #13 labels are still blank, either ask the user to complete the human review labels or continue only bounded behavior-preserving maintainability packets around the local manual-review loop.

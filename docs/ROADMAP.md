@@ -608,6 +608,7 @@
 
 ## Recommended Next Milestones
 
+- Current handoff checkpoint: before this Markdown-only handoff polish, `main` was synced with `origin/main` at commit `b33d173` (`Split outcome batch validation tests`). Run #13 is the latest Standard no-OAuth manual UI-observation run, strict status and publish checks are passing, and review coverage is still 0/6 until the local outcome-decisions JSON is human-labeled.
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
