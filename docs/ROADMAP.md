@@ -672,6 +672,7 @@
 - `wq review-coverage` now prints the same concise batch review next steps for unreviewed runs, avoiding a wrapped one-line command in the primary coverage readout.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
 - Blank outcome-decisions template entries now fail `record-outcomes --dry-run` with fill-and-rerun guidance instead of a generic invalid-label error.
+- Blank or malformed outcome-decisions entries now name the affected item in `record-outcomes --dry-run` validation output and avoid clipped usage-box errors for the batch JSON workflow.
 - Successful `record-outcomes --dry-run` validation now prints the exact final batch-record command without `--dry-run`, keeping the human review handoff explicit.
 - `wq status` now points unreviewed runs to the concise `wq review-coverage --run-id <id>` checklist instead of wrapping the full worksheet/template/dry-run command chain in the status table.
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.

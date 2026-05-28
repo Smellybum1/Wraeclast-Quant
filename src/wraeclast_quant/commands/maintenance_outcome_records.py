@@ -77,7 +77,8 @@ def register(app: typer.Typer) -> None:
                 typer.echo(batch_outcome_write_error_message(error), err=True)
                 raise typer.Exit(code=1) from error
         except ValueError as error:
-            raise typer.BadParameter(str(error)) from error
+            typer.echo(str(error), err=True)
+            raise typer.Exit(code=1) from error
 
         typer.echo(batch_outcome_record_success_message(len(records), run_id, input_path))
         typer.echo(post_outcome_record_next_steps(run_id))

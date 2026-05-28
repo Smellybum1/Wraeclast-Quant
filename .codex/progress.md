@@ -1145,3 +1145,8 @@
 
 - Completed packet: split Currency Exchange manual-snapshot path, row-count, fixture-written, and local-only safety text into focused rendering helpers, preserving CLI output and fixture preview behavior.
 - Verification: focused manual-snapshot rendering and CLI/bridge tests passed (`tests\test_currency_exchange_manual_snapshot_rendering.py`, `tests\test_cli_currency_exchange_manual_snapshot.py`, `tests\test_cli_currency_exchange_manual_snapshot_bridge.py`, `tests\test_cli_currency_exchange_manual_snapshot_bridge_daily.py`, `tests\test_cli_currency_exchange_manual_snapshot_bridge_export.py`); full bundled Python test suite passed with 598 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 review coverage remains 0/6 pending human outcome labels.
+
+## 2026-05-28 Outcome Decision Error Guidance
+
+- Completed packet: improved `wq record-outcomes --dry-run` validation guidance for local outcome-decision JSON so blank or malformed decisions name the affected item and print the full fix guidance directly instead of using a clipped parameter-error usage box.
+- Verification: focused outcome-decision and outcome-recording CLI tests passed (`tests\test_outcome_batch_decisions.py`, `tests\test_cli_record_outcomes.py`, `tests\test_cli_record_outcome.py`); full bundled Python test suite passed with 601 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. The real run #13 blank decisions file still fails safely without writes and now reports `decision 1 for 'Exalted Orb / Divine Orb (Standard UI)' blank outcome`.

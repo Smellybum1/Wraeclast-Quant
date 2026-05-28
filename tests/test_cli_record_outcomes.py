@@ -273,10 +273,11 @@ def test_record_outcomes_command_dry_run_explains_blank_template_outcome(
     )
 
     assert result.exit_code != 0
-    assert "decision 1 outcome is blank" in result.output
-    assert "fill it with one of" in result.output
+    assert "decision 1 for 'Stormglass Catalyst' blank outcome" in result.output
+    assert "use: negative, neutral, positive" in result.output
     assert "negative" in result.output
     assert "neutral" in result.output
     assert "positive" in result.output
     assert "record-outcomes --dry-run" in result.output
+    assert "Usage:" not in result.output
     assert SnapshotRepository(database_path).list_recent_outcomes() == []

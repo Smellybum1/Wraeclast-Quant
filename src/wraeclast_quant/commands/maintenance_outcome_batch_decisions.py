@@ -42,23 +42,25 @@ def normalize_batch_outcome_decision(index: int, raw_decision: Any) -> dict[str,
     item_name = raw_decision.get("item_name")
     if not isinstance(item_name, str) or not item_name.strip():
         raise ValueError(f"decision {index} must include a non-empty item_name.")
+    normalized_item_name = item_name.strip()
+    decision_label = f"decision {index} for '{normalized_item_name}'"
     outcome = raw_decision.get("outcome")
     if not isinstance(outcome, str):
-        raise ValueError(f"decision {index} must include an outcome.")
+        raise ValueError(f"{decision_label} must include an outcome.")
     normalized_outcome = outcome.strip().lower()
     allowed = ", ".join(sorted(ALLOWED_OUTCOMES))
     if not normalized_outcome:
         raise ValueError(
-            f"decision {index} outcome is blank; fill it with one of: {allowed}, "
-            "then rerun record-outcomes --dry-run."
+            f"{decision_label} blank outcome; use: {allowed}; "
+            "rerun record-outcomes --dry-run."
         )
     if normalized_outcome not in ALLOWED_OUTCOMES:
-        raise ValueError(f"decision {index} outcome must be one of: {allowed}.")
+        raise ValueError(f"{decision_label} outcome must be one of: {allowed}.")
     notes = raw_decision.get("notes", "")
     if not isinstance(notes, str):
-        raise ValueError(f"decision {index} notes must be a string when supplied.")
+        raise ValueError(f"{decision_label} notes must be a string when supplied.")
     return {
-        "item_name": item_name.strip(),
+        "item_name": normalized_item_name,
         "outcome": normalized_outcome,
         "notes": notes,
     }
