@@ -22,6 +22,7 @@ from wraeclast_quant.reports.calibration import (
     build_calibration,
     calibration_review_prompts,
 )
+from wraeclast_quant.reports.review_guidance import calibration_prompt_next_action
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -46,7 +47,7 @@ def register(app: typer.Typer) -> None:
         except ValueError as error:
             raise typer.BadParameter(str(error)) from error
 
-        print_outcome_record(record)
+        print_outcome_record(record, calibration_prompts=_calibration_prompts(repository))
 
     @app.command("record-outcomes")
     def record_outcomes(
@@ -85,6 +86,9 @@ def register(app: typer.Typer) -> None:
             raise typer.Exit(code=1) from error
 
         typer.echo(batch_outcome_record_success_message(len(records), run_id, input_path))
+        calibration_prompts = _calibration_prompts(repository)
+        if calibration_prompts:
+            typer.echo(calibration_prompt_next_action(len(calibration_prompts)))
         typer.echo(post_outcome_record_next_steps(run_id))
 
     @app.command()
@@ -102,7 +106,9 @@ def register(app: typer.Typer) -> None:
         print_recent_outcomes(
             records,
             summary,
-            calibration_prompts=calibration_review_prompts(
-                build_calibration(repository)
-            ),
+            calibration_prompts=_calibration_prompts(repository),
         )
+
+
+def _calibration_prompts(repository: SnapshotRepository) -> list[str]:
+    return calibration_review_prompts(build_calibration(repository))

@@ -56,8 +56,13 @@ def no_outcomes_message() -> str:
     return "No recommendation outcomes recorded."
 
 
-def print_outcome_record(record: RecommendationOutcomeRecord) -> None:
+def print_outcome_record(
+    record: RecommendationOutcomeRecord,
+    calibration_prompts: list[str] | None = None,
+) -> None:
     console.print(f"Recorded {record.outcome} outcome for '{record.item_name}' from run #{record.run_id}.")
+    if calibration_prompts:
+        console.print(calibration_prompt_next_action(len(calibration_prompts)))
     console.print(post_outcome_record_next_steps(record.run_id))
 
 
