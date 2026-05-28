@@ -15,6 +15,10 @@ OUTCOME_LABEL_GUIDE = (
     "Outcome labels: positive=useful signal, neutral=mixed or unclear, "
     "negative=not useful after review."
 )
+LOCAL_REPORT_NEXT_ACTION = (
+    "Local report artifact only. Run wq status --strict and wq publish-check "
+    "before any manual handoff."
+)
 
 
 def no_outcome_review_lines() -> list[str]:
@@ -27,9 +31,15 @@ def no_outcome_review_lines() -> list[str]:
     ]
 
 
+def local_report_next_action() -> str:
+    return LOCAL_REPORT_NEXT_ACTION
+
+
 __all__ = [
+    "LOCAL_REPORT_NEXT_ACTION",
     "NO_OUTCOME_NEXT_STEP",
     "NO_OUTCOME_REVIEWS_MESSAGE",
     "OUTCOME_LABEL_GUIDE",
+    "local_report_next_action",
     "no_outcome_review_lines",
 ]

@@ -5,7 +5,10 @@ from pathlib import Path
 from rich.console import Console
 from rich.table import Table
 
-from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
+from wraeclast_quant.reports.outcome_guidance import (
+    local_report_next_action,
+    no_outcome_review_lines,
+)
 from wraeclast_quant.storage.models import OutcomeReviewRecord
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 
@@ -60,14 +63,7 @@ def print_outcome_review(
 def print_outcome_report_written(written_path: Path, *, has_reviews: bool) -> None:
     if not has_reviews:
         console.print(f"Wrote empty outcome review report to {written_path}")
-        console.print(_local_report_next_action())
+        console.print(local_report_next_action())
         return
     console.print(f"Wrote outcome review report to {written_path}")
-    console.print(_local_report_next_action())
-
-
-def _local_report_next_action() -> str:
-    return (
-        "Local report artifact only. Run wq status --strict and wq publish-check "
-        "before any manual handoff."
-    )
+    console.print(local_report_next_action())

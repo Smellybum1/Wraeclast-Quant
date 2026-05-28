@@ -10,7 +10,10 @@ from wraeclast_quant.reports.calibration import (
     build_calibration,
     write_calibration_report,
 )
-from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
+from wraeclast_quant.reports.outcome_guidance import (
+    local_report_next_action,
+    no_outcome_review_lines,
+)
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -45,14 +48,7 @@ def register(app: typer.Typer) -> None:
         written_path = write_calibration_report(result, output_path)
         if not result.has_outcomes:
             console.print(f"Wrote empty calibration report to {written_path}")
-            console.print(_local_report_next_action())
+            console.print(local_report_next_action())
             return
         console.print(f"Wrote calibration report to {written_path}")
-        console.print(_local_report_next_action())
-
-
-def _local_report_next_action() -> str:
-    return (
-        "Local report artifact only. Run wq status --strict and wq publish-check "
-        "before any manual handoff."
-    )
+        console.print(local_report_next_action())
