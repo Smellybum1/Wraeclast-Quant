@@ -13,7 +13,7 @@ def test_mvp_daily_workflow_uses_currency_exchange_review() -> None:
     assert "ratio-only observations" in text
     assert "wq watchlist" in text
     assert "`wq watchlist`, `wq review-queue`, and `wq review-coverage`" in text
-    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in text
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md" in text
     assert "wq outcome-review" in text
     assert "wq calibration" in text
     assert "wq outcome-report --output-path data/processed/outcome_review.md" in text
@@ -26,7 +26,7 @@ def test_mvp_daily_workflow_uses_currency_exchange_review() -> None:
 def test_readme_generated_artifacts_include_local_mvp_handoffs() -> None:
     text = Path("README.md").read_text(encoding="utf-8")
 
-    assert "data/processed/review_queue.md" in text
+    assert "data/processed/review_queue_run_<id>.md" in text
     assert "data/processed/outcome_review.md" in text
     assert "data/processed/calibration_report.md" in text
     assert "data/processed/publish_handoff.md" in text

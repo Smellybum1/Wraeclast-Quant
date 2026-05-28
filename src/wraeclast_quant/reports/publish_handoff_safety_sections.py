@@ -10,7 +10,7 @@ def manual_checklist_lines() -> list[str]:
         "- [ ] Inspect the static dashboard locally.",
         "- [ ] Inspect `public_intel.json` for derived-only content.",
         "- [ ] Confirm the bundle archive contains only the expected static files.",
-        "- [ ] Keep local review worksheets and feedback reports out of the public handoff: `review_queue.md`, `outcome_review.md`, `calibration_report.md`, and `exile_ui_stash_ninja_watchlist.*`.",
+        "- [ ] Keep local review worksheets and feedback reports out of the public handoff: `review_queue*.md`, `outcome_review.md`, `calibration_report.md`, and `exile_ui_stash_ninja_watchlist.*`.",
         "- [ ] Manually publish outside Wraeclast Quant only if you choose to.",
         "",
     ]

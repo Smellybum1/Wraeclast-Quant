@@ -44,14 +44,14 @@ def test_outcome_contract_doc_matches_allowed_outcomes_and_report_markers() -> N
         assert marker in calibration_report
     for marker in documented_worksheet_markers:
         assert marker in worksheet
-    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in doc_text
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md" in doc_text
     assert "wq review-queue --output-path data/processed/review_queue.md" not in doc_text
     assert "Fully reviewed runs with calibration review prompts point back to `wq calibration`." in doc_text
     assert "When calibration review prompts exist, it surfaces the local read-only prompt count." in doc_text
     assert "After successful writes, active calibration review prompts surface" in doc_text
     assert "After a successful final write, active calibration review prompts surface" in doc_text
     assert "No reviewed recommendation outcomes found." in render_outcome_review([], {})
-    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in render_outcome_review(
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md" in render_outcome_review(
         [],
         {},
     )
@@ -59,5 +59,5 @@ def test_outcome_contract_doc_matches_allowed_outcomes_and_report_markers() -> N
         [],
         {},
     )
-    assert "data/processed/review_queue.md" in render_outcome_review([], {})
+    assert "data/processed/review_queue_run_<id>.md" in render_outcome_review([], {})
     assert "positive=useful signal" in render_calibration_report(build_calibration_from_reviews([]))

@@ -15,7 +15,7 @@ def test_static_site_renders_mvp_readiness() -> None:
     assert "<th>Latest run</th><td>7</td>" in html
     assert "<th>Review state</th><td>1/2 reviewed</td>" in html
     assert "wq review-queue --run-id 7" in html
-    assert "data/processed/review_queue.md" in html
+    assert "data/processed/review_queue_run_7.md" in html
     assert "--decisions-output-path data/processed/outcome_decisions_run_7.json" in html
     assert "wq record-outcomes --input-path data/processed/outcome_decisions_run_7.json --dry-run" in html
 

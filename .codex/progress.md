@@ -1258,3 +1258,9 @@
 - Completed packet: generated review guidance now uses run-scoped outcome decision paths like `data/processed/outcome_decisions_run_<id>.json`, so filled labels from older runs remain preserved while the next unreviewed run gets a clear batch-review template path.
 - Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, `docs/OUTCOMES.md`, and `docs/ROADMAP.md` describe the run-scoped decisions path, and the roadmap current handoff now reflects run #13 as 6/6 reviewed.
 - Verification: focused review/watchlist/Stash-Ninja/static/outcome docs tests passed with 44 tests; full bundled Python test suite passed with 625 tests; real `review-coverage --run-id 13`, `status --strict`, `publish-check`, and `git diff --check` passed.
+
+## 2026-05-28 Run-Scoped Review Worksheet Handoff
+
+- Completed packet: generated review guidance now also uses run-scoped review worksheet paths like `data/processed/review_queue_run_<id>.md`, preserving older local worksheet notes alongside the run-scoped decisions JSON.
+- Documentation and safety wording updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, `docs/OUTCOMES.md`, `docs/STATIC_ARTIFACTS.md`, `docs/ROADMAP.md`, and publish-handoff safety wording now name run-scoped local worksheets where relevant.
+- Verification: focused review/watchlist/Stash-Ninja/static/outcome/publish safety tests passed with 50 tests; full bundled Python test suite passed with 625 tests; real `review-coverage --run-id 13`, `status --strict`, `publish-check`, and `git diff --check` passed.

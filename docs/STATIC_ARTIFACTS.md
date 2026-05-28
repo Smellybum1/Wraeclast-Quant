@@ -17,7 +17,7 @@ wq status
 
 `wq site-bundle` validates `public_intel.json`, copies the static dashboard and JSON export into `data/processed/site_bundle/`, writes `manifest.json`, and creates `wraeclast_quant_site_bundle.zip` for manual inspection.
 
-Local review worksheets such as `data/processed/review_queue.md` are not site-bundle inputs and must stay out of `data/processed/site_bundle/` and `wraeclast_quant_site_bundle.zip`.
+Local review worksheets such as `data/processed/review_queue_run_<id>.md` are not site-bundle inputs and must stay out of `data/processed/site_bundle/` and `wraeclast_quant_site_bundle.zip`.
 
 Local companion handoffs such as `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` are also not site-bundle inputs. They are for manual local review only and must stay out of public static handoff bundles.
 

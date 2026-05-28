@@ -47,7 +47,10 @@ def test_daily_can_write_stash_ninja_handoff_for_created_run(tmp_path: Path) -> 
     assert "Stash-Ninja handoff:" in result.output
     assert str(stash_path) in result.output
     assert str(stash_markdown_path) in result.output
-    assert f"Next: wq review-queue --run-id {latest.id} --output-path data/processed/review_queue.md" in result.output
+    assert (
+        f"Next: wq review-queue --run-id {latest.id} "
+        f"--output-path data/processed/review_queue_run_{latest.id}.md"
+    ) in result.output
     assert (
         f"wq review-queue --run-id {latest.id} --decisions-output-path "
         f"data/processed/outcome_decisions_run_{latest.id}.json"

@@ -42,7 +42,10 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert result.exit_code == 0
     assert "Wrote derived-only Stash-Ninja companion watchlist" in result.output
     assert "no Exile-UI files or game-client state were touched" in result.output
-    assert f"Next: wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in result.output
+    assert (
+        f"Next: wq review-queue --run-id {run.id} "
+        f"--output-path data/processed/review_queue_run_{run.id}.md"
+    ) in result.output
     assert (
         f"wq review-queue --run-id {run.id} --decisions-output-path "
         f"data/processed/outcome_decisions_run_{run.id}.json"
@@ -89,7 +92,7 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
 
     markdown = markdown_path.read_text(encoding="utf-8")
     assert "Manual application required" in markdown
-    assert f"wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in markdown
+    assert f"wq review-queue --run-id {run.id} --output-path data/processed/review_queue_run_{run.id}.md" in markdown
     assert (
         f"wq review-queue --run-id {run.id} --decisions-output-path "
         f"data/processed/outcome_decisions_run_{run.id}.json"

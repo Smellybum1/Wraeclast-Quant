@@ -19,9 +19,10 @@ def outcome_label_guide() -> str:
 
 
 def review_queue_worksheet_command(run_id: int | str) -> str:
+    worksheet_path = run_review_queue_worksheet_path(run_id)
     return (
         f"wq review-queue --run-id {run_id} "
-        "--output-path data/processed/review_queue.md"
+        f"--output-path {worksheet_path}"
     )
 
 
@@ -78,6 +79,10 @@ def run_outcome_decisions_path(run_id: int | str) -> str:
     return f"data/processed/outcome_decisions_run_{run_id}.json"
 
 
+def run_review_queue_worksheet_path(run_id: int | str) -> str:
+    return f"data/processed/review_queue_run_{run_id}.md"
+
+
 def record_outcome_command(
     run_id: int,
     item_name: str,
@@ -118,5 +123,6 @@ __all__ = [
     "review_queue_decisions_template_command",
     "review_queue_worksheet_command",
     "run_outcome_decisions_path",
+    "run_review_queue_worksheet_path",
     "status_outcome_review_next_action",
 ]

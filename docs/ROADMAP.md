@@ -652,7 +652,7 @@
 - Review queue worksheets can now embed an optional local Markdown context file, keeping UI-observation sidecars beside exact outcome commands without recording outcomes or changing public artifacts.
 - Review queue can now write an editable local outcome-decisions JSON template for `record-outcomes`, keeping batch outcome recording tied to the same unreviewed queue.
 - Review queue outcome-decisions template writing now refuses to overwrite files that already contain human outcome labels, preserving local review work while still allowing blank templates to be refreshed.
-- Review queue guidance now uses run-scoped outcome-decision paths like `data/processed/outcome_decisions_run_<id>.json`, preserving old filled review files while keeping the next run's batch review path clear.
+- Review queue guidance now uses run-scoped worksheet and outcome-decision paths like `data/processed/review_queue_run_<id>.md` and `data/processed/outcome_decisions_run_<id>.json`, preserving old filled review files while keeping the next run's batch review path clear.
 - `wq record-outcomes --input-path <file> --dry-run` now validates an edited local outcome-decisions batch without writing records, so the human review file can be checked before the final write.
 - `wq review-queue --decisions-output-path <file>` now prints the matching `record-outcomes --dry-run` command after writing the editable local decisions template.
 - `wq status`, `wq review-coverage`, and static dashboard review guidance now point unreviewed runs to the worksheet plus outcome-decisions template and dry-run validation path.

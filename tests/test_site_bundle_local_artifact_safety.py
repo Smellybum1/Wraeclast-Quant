@@ -10,7 +10,9 @@ def test_site_bundle_excludes_local_review_queue_worksheet(tmp_path: Path) -> No
     intel_path, site_dir = _write_inputs(tmp_path)
     output_dir = tmp_path / "bundle"
     (intel_path.parent / "review_queue.md").write_text("local review worksheet", encoding="utf-8")
+    (intel_path.parent / "review_queue_run_13.md").write_text("local review worksheet", encoding="utf-8")
     (site_dir / "review_queue.md").write_text("local review worksheet", encoding="utf-8")
+    (site_dir / "review_queue_run_13.md").write_text("local review worksheet", encoding="utf-8")
 
     result = write_site_bundle(
         intel_path=intel_path,
@@ -19,8 +21,10 @@ def test_site_bundle_excludes_local_review_queue_worksheet(tmp_path: Path) -> No
     )
 
     assert not (output_dir / "review_queue.md").exists()
+    assert not (output_dir / "review_queue_run_13.md").exists()
     with zipfile.ZipFile(result.archive_path) as archive:
         assert "review_queue.md" not in archive.namelist()
+        assert "review_queue_run_13.md" not in archive.namelist()
 
 
 def test_site_bundle_excludes_stash_ninja_companion_exports(tmp_path: Path) -> None:

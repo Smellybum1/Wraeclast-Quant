@@ -43,7 +43,8 @@ def test_watchlist_defaults_to_latest_stored_run(tmp_path: Path) -> None:
     assert "no trades, whispers, gameplay, publishing, or live collection" in result.output
     assert f"Review coverage: 0/1 reviewed; 1 unreviewed." in result.output
     assert (
-        f"wq review-queue --run-id {latest.id} --output-path data/processed/review_queue.md"
+        f"wq review-queue --run-id {latest.id} "
+        f"--output-path data/processed/review_queue_run_{latest.id}.md"
         in result.output
     )
     assert (

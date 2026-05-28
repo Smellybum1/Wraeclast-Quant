@@ -48,5 +48,5 @@ def test_outcome_report_command_writes_empty_report(tmp_path: Path) -> None:
     assert "Local report artifact only." in result.output
     report = output_path.read_text(encoding="utf-8")
     assert "No reviewed recommendation outcomes found." in report
-    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in report
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md" in report
     assert "wq record-outcomes --input-path data/processed/outcome_decisions_run_<id>.json --dry-run" in report

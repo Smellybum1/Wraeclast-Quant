@@ -37,7 +37,7 @@ def test_calibration_command_missing_database_is_non_mutating(tmp_path: Path) ->
 
     assert result.exit_code == 0
     assert "No reviewed recommendation outcomes found." in result.output
-    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in result.output
+    assert "wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md" in result.output
     assert "wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions_run_<id>.json" in result.output
     assert "wq record-outcomes --input-path" in result.output
     assert "data/processed/outcome_decisions_run_<id>.json" in result.output

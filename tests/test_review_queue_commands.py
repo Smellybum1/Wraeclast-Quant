@@ -10,7 +10,7 @@ def test_batch_outcome_review_steps_lists_review_files_and_dry_run() -> None:
     assert text == "\n".join(
         [
             "Batch review next steps:",
-            "  wq review-queue --run-id 13 --output-path data/processed/review_queue.md",
+            "  wq review-queue --run-id 13 --output-path data/processed/review_queue_run_13.md",
             "  wq review-queue --run-id 13 --decisions-output-path data/processed/outcome_decisions_run_13.json",
             "  Fill outcome labels in data/processed/outcome_decisions_run_13.json.",
             "  wq record-outcomes --input-path data/processed/outcome_decisions_run_13.json --dry-run",

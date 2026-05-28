@@ -52,7 +52,7 @@ def test_publish_handoff_names_local_feedback_artifacts_as_excluded(
     write_publish_handoff(result, output_path)
 
     report = output_path.read_text(encoding="utf-8")
-    assert "`review_queue.md`" in report
+    assert "`review_queue*.md`" in report
     assert "`outcome_review.md`" in report
     assert "`calibration_report.md`" in report
     assert "`exile_ui_stash_ninja_watchlist.*`" in report

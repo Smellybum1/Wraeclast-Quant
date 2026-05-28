@@ -59,9 +59,9 @@ wq status --strict
 wq run-provenance --run-id <id>
 wq watchlist
 wq review-queue
-wq review-queue --run-id <id> --output-path data/processed/review_queue.md
+wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md
 wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions_run_<id>.json
-wq review-queue --run-id <id> --output-path data/processed/review_queue.md --context-path data/processed/ui_observation_review.md
+wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md --context-path data/processed/ui_observation_review.md
 wq review-coverage
 ```
 
