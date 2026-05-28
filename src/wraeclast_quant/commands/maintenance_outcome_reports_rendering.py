@@ -61,9 +61,11 @@ def print_outcome_review(
 
 
 def print_outcome_report_written(written_path: Path, *, has_reviews: bool) -> None:
-    if not has_reviews:
-        console.print(f"Wrote empty outcome review report to {written_path}")
-        console.print(local_report_next_action())
-        return
-    console.print(f"Wrote outcome review report to {written_path}")
+    console.print(outcome_report_written_message(written_path, has_reviews=has_reviews))
     console.print(local_report_next_action())
+
+
+def outcome_report_written_message(written_path: Path, *, has_reviews: bool) -> str:
+    if not has_reviews:
+        return f"Wrote empty outcome review report to {written_path}"
+    return f"Wrote outcome review report to {written_path}"
