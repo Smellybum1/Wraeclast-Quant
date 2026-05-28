@@ -715,6 +715,7 @@
 - Site-bundle local artifact exclusion tests are split from manifest source-path and secret safety coverage.
 - Stash-Ninja status strict stale/missing handoff tests are split from fresh handoff row rendering coverage.
 - Static-site MVP readiness, outcome summary, and review coverage tests are split from base metadata/compliance/opportunity/alert rendering coverage.
+- Currency Exchange UI observation facade contract tests are split from functional conversion/review tests, preserving facade import assertions while keeping behavior tests focused.
 - Review-queue worksheet command text and section-row helpers are split behind the existing worksheet facade, preserving CLI guidance and import compatibility.
 - Daily Stash-Ninja handoff writing and output are split from daily command registration behind a focused helper, preserving the opt-in local-only companion export.
 - Stash-Ninja handoff health has direct contract tests for missing files, valid payloads, invalid JSON, stale schema, and required manual-only safety flags.
