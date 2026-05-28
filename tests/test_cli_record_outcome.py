@@ -262,6 +262,9 @@ def test_record_outcomes_command_rolls_back_if_batch_write_fails(
     result = runner.invoke(app, _record_outcomes_args(database_path, decisions_path))
 
     assert result.exit_code != 0
+    assert "could not record outcome batch" in result.output
+    assert "no records written" in result.output
+    assert "blocked batch insert" in result.output
     assert SnapshotRepository(database_path).list_recent_outcomes(limit=10) == []
 
 

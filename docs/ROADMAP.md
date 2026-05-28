@@ -673,6 +673,7 @@
 - `wq record-outcome` and `wq record-outcomes` now both point from successful local writes into `wq outcomes`, `wq outcome-review`, and `wq calibration` before optional derived-artifact refresh.
 - Outcome recording now rejects duplicate run/item labels, and batch validation catches already-reviewed items before writing any new rows.
 - Batch outcome recording now writes validated decisions in one SQLite transaction, so a write failure rolls back the batch instead of leaving partial local feedback rows.
+- Batch outcome recording now reports rare SQLite write failures with a clear `no records written` message while preserving transaction rollback behavior.
 - `wq outcomes` now points reviewed summaries to `wq outcome-review` and `wq calibration` so the manual feedback loop naturally continues into read-only performance review.
 - `wq outcome-review` now points joined recommendation/outcome rows to `wq calibration` and `wq outcome-report --output-path data/processed/outcome_review.md` for local summary/report follow-up.
 - `wq calibration` now points to `wq calibration-report --output-path data/processed/calibration_report.md` after its local-only read-only summary without changing scoring.
