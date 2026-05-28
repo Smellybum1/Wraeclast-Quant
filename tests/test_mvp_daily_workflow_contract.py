@@ -8,6 +8,9 @@ def test_mvp_daily_workflow_uses_currency_exchange_review() -> None:
     assert "examples/connector_review_api_example.json" not in text
     assert "wq currency-exchange-manual-snapshot" in text
     assert "wq daily --input-path <manual-import-output>" in text
+    assert "Open the ratio/stock ladder and transcribe the visible rows" in text
+    assert 'comparator: "less_than"' in text
+    assert "ratio-only observations" in text
     assert "wq watchlist" in text
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in text
     assert "wq outcome-review" in text

@@ -46,3 +46,12 @@ A candidate becomes accepted only after:
 - Validation gate: Docs-only review, `git diff --check`, and local readiness checks after editing.
 - Decision: Accepted as a lightweight project process. Direct SkillOpt integration remains deferred.
 - Follow-up: Use this log when future packets reveal repeated workflow friction or a candidate update to project skills/guidance.
+
+### 2026-05-28 - Capture Stock Ladders Before Daily Runs
+
+- Status: Accepted
+- Evidence: During the run #12 Standard UI-observation proof, ratio-only screenshots were enough to create a valid run, but richer Chaos/Divine and Regal/Divine stock-ladder screenshots arrived after the run had already been recorded and reviewed. The existing behavior correctly avoids rewriting reviewed history, but future runs should capture stock ladders before `wq daily`.
+- Candidate guidance edit: Add a UI-observation capture checklist to `docs/MVP_DAILY_WORKFLOW.md` that tells the user to capture the market ratio, visible ratio/stock ladder rows, final `<` aggregate row, no-stock state, and ratio-only notes before running the daily pipeline.
+- Validation gate: Focused MVP workflow contract test, `git diff --check`, `status --strict`, and `publish-check`.
+- Decision: Accepted as docs/test guidance only. No scoring, persistence, source approval, live collection, or public artifact contract changed.
+- Follow-up: If this friction repeats, consider a local worksheet/template command for building UI-observation JSON before `wq daily`.

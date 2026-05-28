@@ -1064,3 +1064,9 @@
 - Backup: `wq backup-db` created and verified `data/backups/wraeclast_quant_20260528T014523Z.db`, covering latest run #12.
 - Verification: `wq validate-import --input-path data/processed/standard_currency_exchange_manual_import.json`, `wq status --strict`, and `wq publish-check` passed for run #12 after outcome recording and backup. No OAuth, live HTTP, scraping, OCR, gameplay automation, trade automation, Exile-UI mutation, or publishing was performed.
 - Next recommended packet: use a fresh user-supplied Standard/current-league Currency Exchange manual snapshot or UI observation for the next no-OAuth daily run; if none is available, continue another bounded behavior-preserving maintainability packet around the local manual-review loop.
+
+## 2026-05-28 UI Observation Capture Checklist
+
+- Completed packet: added a capture checklist to `docs/MVP_DAILY_WORKFLOW.md` so future no-OAuth UI observations gather market ratio, visible ratio/stock ladder rows, final `<` aggregate row, no-stock state, and ratio-only notes before `wq daily --input-path <manual-import-output>`.
+- Skill feedback: recorded the run #12 capture friction in `.codex/skill_feedback.md`; the accepted guidance edit is docs/test only and does not change scoring, persistence, source approval, live collection, or public artifact contracts.
+- Verification: bundled Python focused docs contract test `tests/test_mvp_daily_workflow_contract.py --basetemp=.tmp-pytest-mvp-capture-checklist -p no:cacheprovider` passed with 2 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
