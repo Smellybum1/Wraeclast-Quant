@@ -56,7 +56,7 @@ Batch outcome JSON shape:
 
 `calibration` summarizes reviewed recommendations by action, score bucket, outcome label, and local review prompts. It is read-only, does not change scoring weights or thresholds, and points to `wq calibration-report --output-path data/processed/calibration_report.md` when you want a local Markdown calibration artifact.
 
-`calibration-report` writes `data/processed/calibration_report.md` for local calibration review. Calibration review prompts are local-only hints for human inspection before any future scoring change; they do not retune scoring or change recommendations.
+`calibration-report` writes `data/processed/calibration_report.md` for local calibration review. Calibration review prompts are local-only hints for human inspection before any future scoring change; the report includes a local review checklist for inspecting outcome-review rows, run provenance, and UI-observation notes before any separate scoring packet. It does not retune scoring or change recommendations.
 
 ## Allowed Outcomes
 
@@ -100,6 +100,7 @@ The local calibration report includes:
 - `## Outcome Counts By Score Bucket`
 - `## Average Score By Outcome`
 - `## Calibration Review Prompts`
+- `## Calibration Review Checklist`
 - `## Recent Reviewed Recommendations`
 
 The local review queue worksheet includes:

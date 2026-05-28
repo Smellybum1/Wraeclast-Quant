@@ -55,6 +55,9 @@ def test_calibration_groups_by_action_score_bucket_and_average() -> None:
     assert "## Calibration Review Prompts" in result
     assert "AVOID has 1 positive outcome(s)" in result
     assert "WATCH has 1 negative outcome(s)" in result
+    assert "## Calibration Review Checklist" in result
+    assert "`wq run-provenance --run-id <id>`" in result
+    assert "does not retune recommendations" in result
 
 
 def test_calibration_recent_reviews_respect_limit() -> None:
@@ -77,3 +80,4 @@ def test_calibration_report_renders_empty_message() -> None:
     assert "wq review-queue" in report
     assert "positive=useful signal" in report
     assert "Outcome Counts By Action" not in report
+    assert "Calibration Review Checklist" not in report

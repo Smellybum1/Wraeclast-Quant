@@ -9,6 +9,7 @@ from wraeclast_quant.reports.calibration_models import (
 from wraeclast_quant.reports.calibration_sections import (
     average_score_by_outcome_section,
     calibration_report_header,
+    calibration_review_checklist_section,
     calibration_review_prompts_section,
     empty_calibration_report_body,
     outcome_counts_by_action_section,
@@ -27,6 +28,7 @@ def render_calibration_report(result: CalibrationResult) -> str:
     lines.extend(outcome_counts_by_score_bucket_section(result))
     lines.extend(average_score_by_outcome_section(result))
     lines.extend(calibration_review_prompts_section(result))
+    lines.extend(calibration_review_checklist_section())
     lines.extend(recent_reviewed_recommendations_section(result))
     return "\n".join(lines)
 

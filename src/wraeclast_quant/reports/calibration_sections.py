@@ -53,6 +53,18 @@ def calibration_review_prompts_section(result: CalibrationResult) -> list[str]:
     ]
 
 
+def calibration_review_checklist_section() -> list[str]:
+    return [
+        "",
+        "## Calibration Review Checklist",
+        "",
+        "- Open `wq outcome-review` beside this report and inspect the scored recommendations behind each prompt.",
+        "- Check `wq run-provenance --run-id <id>` and any local UI-observation notes for data quality before treating a pattern as scoring evidence.",
+        "- Gather another local Currency Exchange observation when the sample is sparse or one run dominates the pattern.",
+        "- Make any scoring or threshold change in a separate verified packet; this report is read-only and does not retune recommendations.",
+    ]
+
+
 def recent_reviewed_recommendations_section(result: CalibrationResult) -> list[str]:
     lines = [
         "",
@@ -70,6 +82,7 @@ def recent_reviewed_recommendations_section(result: CalibrationResult) -> list[s
 __all__ = [
     "average_score_by_outcome_section",
     "calibration_report_header",
+    "calibration_review_checklist_section",
     "calibration_review_prompts_section",
     "empty_calibration_report_body",
     "outcome_counts_by_action_section",

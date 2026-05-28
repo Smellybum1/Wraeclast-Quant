@@ -1284,3 +1284,8 @@
 
 - Completed packet: `wq record-outcomes` validation failures now render through the existing outcome-recording message helper and explicitly say `no records written`, keeping invalid, duplicate, and already-reviewed batches clearer without changing validation rules or persistence behavior.
 - Verification: focused outcome recording and batch-decision tests passed with 20 tests; the real run #13 duplicate `record-outcomes --dry-run` failed safely with all six already-reviewed item messages plus `no records written`; full bundled Python test suite passed with 626 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 Calibration Report Review Checklist
+
+- Completed packet: local calibration reports now include a `Calibration Review Checklist` section that points prompt review back to `wq outcome-review`, run provenance, UI-observation notes, another local Currency Exchange observation when evidence is sparse, and a separate verified scoring packet before any tuning.
+- Verification: focused calibration/report/contract tests passed with 11 tests; the real `calibration-report --output-path data/processed/calibration_report.md` refreshed the local ignored report with the checklist; full bundled Python test suite passed with 626 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
