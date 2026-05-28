@@ -30,6 +30,8 @@ When `review-queue` or `review-coverage` is run with a non-default `--database-p
 
 `record-outcomes` records a local batch of human-reviewed outcome decisions from a JSON file. The whole file is validated before any outcome is written, so a bad item name, duplicate item, already-reviewed item, missing run, invalid label, or malformed decision prevents partial writes and reports that no records were written. Row-level template problems are reported together so the local JSON can be fixed in one pass. The valid batch is then written in one local SQLite transaction, so a write failure rolls back the batch instead of leaving partial outcome rows and reports that no records were written. Add `--dry-run` to validate the same file without writing outcome records. After a successful final write, active calibration review prompts surface before it points to review coverage, recent outcomes, outcome review, calibration, and optional derived-artifact refresh.
 
+When `record-outcome` or `record-outcomes` is run with a non-default `--database-path`, the printed post-record next actions keep the same `--database-path` for review coverage, feedback summaries, calibration, and export refreshes. A successful `record-outcomes --dry-run` also keeps the same `--database-path` in the final batch-record command it prints.
+
 Batch outcome JSON shape:
 
 ```json

@@ -48,7 +48,12 @@ def register(app: typer.Typer) -> None:
         except ValueError as error:
             raise typer.BadParameter(str(error)) from error
 
-        print_outcome_record(record, calibration_prompts=_calibration_prompts(repository))
+        handoff_database_path = _handoff_database_path(database_path)
+        print_outcome_record(
+            record,
+            calibration_prompts=_calibration_prompts(repository),
+            database_path=handoff_database_path,
+        )
 
     @app.command("record-outcomes")
     def record_outcomes(
@@ -74,6 +79,7 @@ def register(app: typer.Typer) -> None:
                         len(decisions),
                         run_id,
                         input_path,
+                        database_path=_handoff_database_path(database_path),
                     )
                 )
                 return
@@ -90,7 +96,12 @@ def register(app: typer.Typer) -> None:
         calibration_prompts = _calibration_prompts(repository)
         if calibration_prompts:
             typer.echo(calibration_prompt_next_action(len(calibration_prompts)))
-        typer.echo(post_outcome_record_next_steps(run_id))
+        typer.echo(
+            post_outcome_record_next_steps(
+                run_id,
+                database_path=_handoff_database_path(database_path),
+            )
+        )
 
     @app.command()
     def outcomes(
@@ -113,3 +124,9 @@ def register(app: typer.Typer) -> None:
 
 def _calibration_prompts(repository: SnapshotRepository) -> list[str]:
     return calibration_review_prompts(build_calibration(repository))
+
+
+def _handoff_database_path(database_path: Path) -> Path | None:
+    if database_path == DEFAULT_DATABASE_PATH:
+        return None
+    return database_path

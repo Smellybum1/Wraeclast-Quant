@@ -42,10 +42,13 @@ def test_record_outcomes_command_saves_human_reviewed_batch(tmp_path: Path) -> N
     result = runner.invoke(app, _record_outcomes_args(database_path, decisions_path))
 
     records = SnapshotRepository(database_path).list_recent_outcomes(limit=10)
+    output = " ".join(result.output.split())
     assert result.exit_code == 0
-    assert "Recorded 2 outcome(s) for run #1" in result.output
-    assert "wq review-coverage --run-id 1" in result.output
-    assert "wq outcomes, wq outcome-review, and wq calibration" in result.output
+    assert "Recorded 2 outcome(s) for run #1" in output
+    assert f"wq review-coverage --database-path {database_path} --run-id 1" in output
+    assert f"wq outcomes --database-path {database_path}" in output
+    assert f"wq outcome-review --database-path {database_path}" in output
+    assert f"wq calibration --database-path {database_path}" in output
     assert len(records) == 2
     assert {record.item_name for record in records} == {
         "Stormglass Catalyst",
@@ -152,9 +155,13 @@ def test_record_outcomes_command_dry_run_validates_without_writing(tmp_path: Pat
         _record_outcomes_args(database_path, decisions_path, dry_run=True),
     )
 
+    output = " ".join(result.output.split())
     assert result.exit_code == 0
-    assert "Validated 2 outcome decision(s) for run #1" in result.output
-    assert "no records written" in result.output
-    assert f"Next: wq record-outcomes --input-path {decisions_path}" in result.output
-    assert "--dry-run" not in result.output.split("Next:", 1)[1]
+    assert "Validated 2 outcome decision(s) for run #1" in output
+    assert "no records written" in output
+    assert (
+        f"Next: wq record-outcomes --database-path {database_path} "
+        f"--input-path {decisions_path}"
+    ) in output
+    assert "--dry-run" not in output.split("Next:", 1)[1]
     assert SnapshotRepository(database_path).list_recent_outcomes() == []

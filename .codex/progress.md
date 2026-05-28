@@ -1390,3 +1390,9 @@
 - Completed packet: saved review queue worksheets now preserve a non-default `--database-path` in their review-coverage checklist, batch template, table command, and per-outcome `record-outcome` command options, matching the terminal handoff behavior.
 - Documentation updated: `docs/OUTCOMES.md` and `docs/ROADMAP.md` clarify that non-default database-path handoff also applies to saved worksheets.
 - Verification: focused worksheet/outcome-contract/review-command tests passed with 9 tests; full bundled Python test suite passed with 639 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Outcome Recording Database Path Handoff
+
+- Completed packet: `wq record-outcome` and final `wq record-outcomes` writes now preserve a non-default `--database-path` in their review-coverage, outcomes, outcome-review, calibration, and export-refresh next actions; successful `record-outcomes --dry-run` keeps the same path in the printed final batch-record command.
+- Documentation updated: `docs/OUTCOMES.md` and `docs/ROADMAP.md` describe the outcome-recording database-path handoff.
+- Verification: focused outcome-recording rendering/CLI/validation/rollback tests passed with 24 tests including the outcome contract; real temp `record-outcome` smoke preserved the non-default database path in follow-up commands; full bundled Python test suite passed with 642 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

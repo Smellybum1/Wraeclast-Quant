@@ -11,11 +11,31 @@ from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
 console = Console(width=260)
 
 
-def post_outcome_record_next_steps(run_id: int) -> str:
+def _database_path_option(database_path: object | None) -> str:
+    if database_path is None:
+        return ""
+    return f"--database-path {database_path} "
+
+
+def _command(command: str, database_path: object | None) -> str:
+    return f"wq {command} {_database_path_option(database_path)}".rstrip()
+
+
+def post_outcome_record_next_steps(
+    run_id: int,
+    *,
+    database_path: object | None = None,
+) -> str:
+    review_coverage_command = (
+        f"wq review-coverage {_database_path_option(database_path)}--run-id {run_id}"
+    )
     return (
-        f"Next: wq review-coverage --run-id {run_id}; "
-        "then wq outcomes, wq outcome-review, and wq calibration for local feedback. "
-        "Run wq export, wq site, and wq site-bundle when you want derived artifacts refreshed."
+        f"Next: {review_coverage_command}; "
+        f"then {_command('outcomes', database_path)}, "
+        f"{_command('outcome-review', database_path)}, and "
+        f"{_command('calibration', database_path)} for local feedback. "
+        f"Run {_command('export', database_path)}, wq site, and wq site-bundle "
+        "when you want derived artifacts refreshed."
     )
 
 
@@ -23,12 +43,14 @@ def batch_outcome_dry_run_success_message(
     decision_count: int,
     run_id: int,
     input_path: object,
+    *,
+    database_path: object | None = None,
 ) -> str:
     return "\n".join(
         [
             f"Validated {decision_count} outcome decision(s) for run #{run_id} "
             f"from {input_path}; no records written.",
-            f"Next: {record_outcomes_command(str(input_path))}",
+            f"Next: {record_outcomes_command(str(input_path), database_path=database_path)}",
         ]
     )
 
@@ -63,11 +85,12 @@ def no_outcomes_message() -> str:
 def print_outcome_record(
     record: RecommendationOutcomeRecord,
     calibration_prompts: list[str] | None = None,
+    database_path: object | None = None,
 ) -> None:
     console.print(f"Recorded {record.outcome} outcome for '{record.item_name}' from run #{record.run_id}.")
     if calibration_prompts:
         console.print(calibration_prompt_next_action(len(calibration_prompts)))
-    console.print(post_outcome_record_next_steps(record.run_id))
+    console.print(post_outcome_record_next_steps(record.run_id, database_path=database_path))
 
 
 def print_recent_outcomes(

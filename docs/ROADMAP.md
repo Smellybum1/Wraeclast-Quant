@@ -690,6 +690,7 @@
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.
 - `wq record-outcomes --input-path <file>` can now record a human-reviewed local outcome batch after validating the entire JSON file, avoiding partial writes when one decision is invalid.
 - `wq record-outcome` and `wq record-outcomes` now both point from successful local writes into `wq outcomes`, `wq outcome-review`, and `wq calibration` before optional derived-artifact refresh.
+- `wq record-outcome` and `wq record-outcomes` now preserve non-default `--database-path` values in post-record feedback and refresh next actions, and `record-outcomes --dry-run` preserves them in the final batch-record command.
 - Outcome recording now rejects duplicate run/item labels, and batch validation catches already-reviewed items before writing any new rows.
 - Batch outcome recording now writes validated decisions in one SQLite transaction, so a write failure rolls back the batch instead of leaving partial local feedback rows.
 - Batch outcome recording now reports rare SQLite write failures with a clear `no records written` message while preserving transaction rollback behavior.
