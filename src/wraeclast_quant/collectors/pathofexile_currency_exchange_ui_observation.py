@@ -43,6 +43,7 @@ class CurrencyExchangeUiObservationExportResult:
     item_count: int
     source_name: str
     review_notes_path: Path | None = None
+    capture_review_flag_count: int = 0
 
 
 def load_currency_exchange_ui_observation(path: str | Path) -> CurrencyExchangeUiObservationSnapshot:
@@ -75,6 +76,7 @@ def write_currency_exchange_ui_observation_manual_import(
 ) -> CurrencyExchangeUiObservationExportResult:
     snapshot = load_currency_exchange_ui_observation(input_path)
     payload = currency_exchange_ui_observation_manual_import_payload(snapshot)
+    capture_review_flags = currency_exchange_ui_observation_capture_review_flags(snapshot)
     destination = Path(output_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(
@@ -94,6 +96,7 @@ def write_currency_exchange_ui_observation_manual_import(
         item_count=len(payload["items"]),
         source_name="Path of Exile Currency Exchange UI Observation",
         review_notes_path=review_notes_path,
+        capture_review_flag_count=len(capture_review_flags),
     )
 
 
@@ -176,6 +179,15 @@ def currency_exchange_ui_observation_review_notes(
 def currency_exchange_ui_observation_review_flags(
     snapshot: CurrencyExchangeUiObservationSnapshot,
 ) -> list[str]:
+    flags = currency_exchange_ui_observation_capture_review_flags(snapshot)
+    if not flags:
+        return ["- No capture review flags detected."]
+    return flags
+
+
+def currency_exchange_ui_observation_capture_review_flags(
+    snapshot: CurrencyExchangeUiObservationSnapshot,
+) -> list[str]:
     flags: list[str] = []
     for observation in snapshot.observations:
         league = observation.league or snapshot.league
@@ -201,8 +213,6 @@ def currency_exchange_ui_observation_review_flags(
                 f"- {pair}: stock-ladder rows were captured without an order-entry market "
                 "ratio; verify the ratio before outcome review."
             )
-    if not flags:
-        return ["- No capture review flags detected."]
     return flags
 
 
@@ -319,6 +329,7 @@ __all__ = [
     "CurrencyExchangeUiObservationExportResult",
     "CurrencyExchangeUiObservationSnapshot",
     "CurrencyExchangeUiStockRow",
+    "currency_exchange_ui_observation_capture_review_flags",
     "currency_exchange_ui_observation_item",
     "currency_exchange_ui_observation_manual_import_payload",
     "currency_exchange_ui_observation_review_flags",

@@ -4,6 +4,9 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from wraeclast_quant.cli import app
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation import (
+    write_currency_exchange_ui_observation_manual_import,
+)
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
 from cli_daily_command_helpers import daily_args as _daily_args
@@ -80,6 +83,8 @@ def test_currency_exchange_ui_observation_writes_manual_import_json(tmp_path: Pa
 
     assert result.exit_code == 0
     assert "Currency Exchange UI Observation Export" in result.output
+    assert "Capture Flags" in result.output
+    assert "Capture review flags: none." in result.output
     assert "No OAuth, live HTTP, scraping, game-client automation" in result.output
     assert "wq validate-import" in result.output
     assert payload["items"][0]["name"] == "Chaos Orb / Divine Orb (Standard UI)"
@@ -104,9 +109,43 @@ def test_currency_exchange_ui_observation_writes_review_notes_sidecar(tmp_path: 
 
     assert result.exit_code == 0
     assert "Review sidecar" in result.output
+    assert "Capture review flags: none." in result.output
     assert "Chaos Orb / Divine Orb (Standard UI)" in notes
     assert "<621:1 stock 1,230,149" in notes
     assert "No OAuth, live HTTP, scraping, OCR, game-client automation" in notes
+
+
+def test_currency_exchange_ui_observation_export_result_counts_capture_flags(
+    tmp_path: Path,
+) -> None:
+    input_path = tmp_path / "ui_observation.json"
+    output_path = tmp_path / "manual_import.json"
+    review_notes_path = tmp_path / "ui_observation_review.md"
+    input_path.write_text(
+        json.dumps(
+            {
+                "league": "Standard",
+                "observations": [
+                    {
+                        "want_currency": "Divine Orb",
+                        "have_currency": "Regal Orb",
+                        "market_ratio": "1:1",
+                        "no_stock": True,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = write_currency_exchange_ui_observation_manual_import(
+        input_path=input_path,
+        output_path=output_path,
+        review_notes_output_path=review_notes_path,
+    )
+
+    assert result.capture_review_flag_count == 1
+    assert "Capture Review Flags" in review_notes_path.read_text(encoding="utf-8")
 
 
 def test_currency_exchange_ui_observation_output_runs_daily_pipeline(tmp_path: Path) -> None:

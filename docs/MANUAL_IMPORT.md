@@ -126,7 +126,7 @@ wq validate-import --input-path <manual-import-output>
 wq daily --input-path <manual-import-output>
 ```
 
-The UI observation command writes normal manual-import JSON using conservative derived signals from visible UI data only. The optional review-notes sidecar is a local Markdown summary of the transcribed ratios, visible stock rows, and capture review flags for human outcome review. It calls out ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry ratios before those observations are used for outcome review. It does not use OAuth, read credentials, call live HTTP, scrape or OCR screenshots, create SQLite snapshots, approve a source, record outcomes, or publish artifacts.
+The UI observation command writes normal manual-import JSON using conservative derived signals from visible UI data only and prints a capture review flag count in the CLI output. The optional review-notes sidecar is a local Markdown summary of the transcribed ratios, visible stock rows, and capture review flags for human outcome review. It calls out ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry ratios before those observations are used for outcome review. It does not use OAuth, read credentials, call live HTTP, scrape or OCR screenshots, create SQLite snapshots, approve a source, record outcomes, or publish artifacts.
 
 UI observation JSON has:
 

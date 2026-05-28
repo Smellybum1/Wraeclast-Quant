@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from wraeclast_quant.commands.currency_exchange_ui_observation_rendering import (
+    ui_observation_capture_flags_text,
     ui_observation_daily_next_action,
     ui_observation_export_safety_text,
     ui_observation_review_sidecar_text,
@@ -24,6 +25,16 @@ def test_ui_observation_next_actions_preserve_cli_text() -> None:
     )
     assert ui_observation_review_sidecar_text(review_notes_path) == (
         f"Review sidecar: {review_notes_path}"
+    )
+    assert ui_observation_capture_flags_text(0, review_notes_path) == (
+        "Capture review flags: none."
+    )
+    assert ui_observation_capture_flags_text(2, review_notes_path) == (
+        f"Capture review flags: 2; inspect {review_notes_path} before wq daily."
+    )
+    assert ui_observation_capture_flags_text(1, None) == (
+        "Capture review flags: 1; rerun with --review-notes-output-path <file> "
+        "to inspect them before wq daily."
     )
     assert ui_observation_daily_next_action(output_path) == (
         f"Then: wq daily --input-path {output_path}"

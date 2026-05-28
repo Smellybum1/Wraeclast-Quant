@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation import (
+    currency_exchange_ui_observation_capture_review_flags,
     currency_exchange_ui_observation_manual_import_payload,
     currency_exchange_ui_observation_review_flags,
     currency_exchange_ui_observation_review_notes,
@@ -135,6 +136,7 @@ def test_ui_observation_review_flags_name_ratio_only_captures(tmp_path: Path) ->
         "Divine Orb / Chaos Orb (Standard UI): stock-ladder rows" in flag
         for flag in flags
     )
+    assert currency_exchange_ui_observation_capture_review_flags(snapshot) == flags
 
 
 def test_ui_observation_review_flags_report_clean_capture(tmp_path: Path) -> None:
@@ -160,6 +162,7 @@ def test_ui_observation_review_flags_report_clean_capture(tmp_path: Path) -> Non
     assert currency_exchange_ui_observation_review_flags(snapshot) == [
         "- No capture review flags detected."
     ]
+    assert currency_exchange_ui_observation_capture_review_flags(snapshot) == []
 
 
 def test_ui_observation_rejects_empty_observations(tmp_path: Path) -> None:

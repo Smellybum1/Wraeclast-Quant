@@ -1294,3 +1294,8 @@
 
 - Completed packet: local Currency Exchange UI-observation review-note sidecars now include capture review flags for ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry market ratios, helping the next no-OAuth manual daily run catch weak captures before outcome review without changing manual-import scoring, persistence, public artifacts, or live-source behavior.
 - Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 15 tests; the real `currency-exchange-ui-observation` command against the checked-in template wrote a local temporary review sidecar with `Capture Review Flags`; full bundled Python test suite passed with 628 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation Capture Flag Count
+
+- Completed packet: `wq currency-exchange-ui-observation` now surfaces the capture review flag count in its export table and prints a local next-action hint to inspect the review sidecar before `wq daily` when weak captures are present, without changing manual-import JSON, scoring, persistence, public artifacts, or live-source behavior.
+- Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 16 tests; the real command against the checked-in template showed `Capture Flags` count `1` and pointed to the local temporary sidecar; full bundled Python test suite passed with 629 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
