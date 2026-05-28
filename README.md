@@ -71,7 +71,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq outcomes` shows recent local recommendation outcomes and summary counts, then points to read-only review and calibration commands.
 - `wq outcome-review` joins recorded outcomes to their original scores and actions, then points to local summary/report follow-up.
 - `wq outcome-report --output-path data/processed/outcome_review.md` writes a local recommendation review artifact.
-- `wq calibration` summarizes recorded outcomes by action, score bucket, and outcome label without changing scoring.
+- `wq calibration` summarizes recorded outcomes by action, score bucket, outcome label, and local review prompts without changing scoring.
 - `wq calibration-report --output-path data/processed/calibration_report.md` writes a local recommendation calibration artifact.
 - `wq compare` compares the latest run against the previous run using the contract documented in `docs/SNAPSHOT_COMPARISONS.md`.
 - `wq alerts` previews local alert candidates from snapshot changes.

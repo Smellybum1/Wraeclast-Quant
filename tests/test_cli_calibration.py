@@ -22,6 +22,8 @@ def test_calibration_command_prints_local_summaries(tmp_path: Path) -> None:
     assert "Calibration By Action" in result.output
     assert "Calibration By Score Bucket" in result.output
     assert "Average Score By Outcome" in result.output
+    assert "Calibration Review Prompts" in result.output
+    assert "WATCH has 1 negative outcome(s)" in result.output
     assert "Recent Reviewed Recommendations" in result.output
     assert "Stormglass Catalyst" in result.output
     assert "local-only and read-only" in result.output

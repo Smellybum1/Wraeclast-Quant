@@ -37,7 +37,7 @@ Local SQLite backup and restore-helper behavior is documented in `docs/BACKUPS.m
 
 Manual recommendation outcome review is documented in `docs/OUTCOMES.md`. Outcome notes stay local and are excluded from derived public intel.
 
-Calibration commands summarize recorded recommendation outcomes by action, score bucket, and outcome label. They are local decision-support only and do not retune scoring automatically.
+Calibration commands summarize recorded recommendation outcomes by action, score bucket, outcome label, and local review prompts. They are local decision-support only and do not retune scoring automatically.
 
 ## Derived Public Intel
 

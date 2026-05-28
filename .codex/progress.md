@@ -1196,3 +1196,10 @@
 - Refreshed artifacts: `outcome-report --output-path data/processed/outcome_review.md`, `calibration-report --output-path data/processed/calibration_report.md`, `export`, `site`, and `site-bundle` ran successfully so local reports and derived-only public/static artifacts reflect the reviewed run.
 - Backup and verification: `backup-db` created verified backup `data/backups/wraeclast_quant_20260528T075639Z.db`; `status --strict`, `publish-check`, and `git diff --check` passed after refresh. Direct `wq` remains absent from PATH in this shell, so commands were invoked through the bundled Python Typer app.
 - Next recommended packet: prepare the next local Currency Exchange manual snapshot or UI observation with stock ladders captured first, then run the no-OAuth daily loop from `docs/MVP_DAILY_WORKFLOW.md`; if no new observation is available, continue bounded behavior-preserving maintainability around the manual review loop.
+
+## 2026-05-28 Calibration Review Prompts
+
+- Completed packet: added local-only calibration review prompts to the `wq calibration` CLI output and `calibration-report` Markdown so outcome patterns are easier to inspect after run #13 without changing scores, actions, thresholds, public artifacts, or source behavior.
+- Run #13 evidence now triggers prompts for four positive AVOID outcomes and positive outcomes averaging below neutral outcomes; the prompt caveat explicitly says prompts are read-only and do not retune scoring or change recommendations.
+- Documentation updated: `docs/CONTEXT.md`, `docs/OUTCOMES.md`, `docs/DESIGN.md`, `README.md`, and `docs/ROADMAP.md` now describe calibration review prompts as local decision-support only.
+- Verification: focused calibration/report/outcome-contract tests passed with 17 tests; real `calibration` and `calibration-report --output-path data/processed/calibration_report.md` ran successfully; full bundled Python test suite passed with 610 tests; `git diff --check`, `status --strict`, and `publish-check` passed.

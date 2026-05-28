@@ -30,3 +30,4 @@ def test_calibration_report_command_writes_markdown(tmp_path: Path) -> None:
     assert "# Wraeclast Quant Recommendation Calibration" in report
     assert "Stormglass Catalyst" in report
     assert "Outcome Counts By Action" in report
+    assert "Calibration Review Prompts" in report

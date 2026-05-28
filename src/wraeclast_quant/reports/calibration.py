@@ -10,12 +10,16 @@ from wraeclast_quant.reports.calibration_rendering import (
     render_calibration_report,
     write_calibration_report,
 )
+from wraeclast_quant.reports.calibration_review_prompts import (
+    calibration_review_prompts,
+)
 
 __all__ = [
     "DEFAULT_CALIBRATION_REPORT_PATH",
     "SCORE_BUCKETS",
     "CalibrationResult",
     "build_calibration",
+    "calibration_review_prompts",
     "render_calibration_report",
     "score_bucket",
     "write_calibration_report",

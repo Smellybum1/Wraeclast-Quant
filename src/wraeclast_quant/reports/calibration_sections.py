@@ -5,6 +5,10 @@ from wraeclast_quant.reports.calibration_count_sections import (
     outcome_counts_by_score_bucket_section,
 )
 from wraeclast_quant.reports.calibration_models import CalibrationResult
+from wraeclast_quant.reports.calibration_review_prompts import (
+    calibration_review_prompt_caveat,
+    calibration_review_prompt_lines,
+)
 from wraeclast_quant.reports.outcome_markdown import reviewed_recommendation_row
 from wraeclast_quant.reports.outcome_guidance import no_outcome_review_lines
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
@@ -38,6 +42,17 @@ def average_score_by_outcome_section(result: CalibrationResult) -> list[str]:
     return lines
 
 
+def calibration_review_prompts_section(result: CalibrationResult) -> list[str]:
+    return [
+        "",
+        "## Calibration Review Prompts",
+        "",
+        calibration_review_prompt_caveat(),
+        "",
+        *calibration_review_prompt_lines(result),
+    ]
+
+
 def recent_reviewed_recommendations_section(result: CalibrationResult) -> list[str]:
     lines = [
         "",
@@ -55,6 +70,7 @@ def recent_reviewed_recommendations_section(result: CalibrationResult) -> list[s
 __all__ = [
     "average_score_by_outcome_section",
     "calibration_report_header",
+    "calibration_review_prompts_section",
     "empty_calibration_report_body",
     "outcome_counts_by_action_section",
     "outcome_counts_by_score_bucket_section",

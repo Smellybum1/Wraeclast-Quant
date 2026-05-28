@@ -6,6 +6,10 @@ from rich.console import Console
 from rich.table import Table
 
 from wraeclast_quant.reports.calibration import CalibrationResult, SCORE_BUCKETS
+from wraeclast_quant.reports.calibration_review_prompts import (
+    calibration_review_prompt_caveat,
+    calibration_review_prompt_lines,
+)
 from wraeclast_quant.reports.outcome_guidance import (
     local_report_next_action,
     no_outcome_review_lines,
@@ -46,6 +50,12 @@ def print_calibration_tables(result: CalibrationResult) -> None:
         average = result.average_score_by_outcome[outcome]
         averages.add_row(outcome, "" if average is None else f"{average:.2f}")
     console.print(averages)
+
+    console.print("Calibration Review Prompts")
+    console.print(calibration_review_prompt_caveat())
+    for line in calibration_review_prompt_lines(result):
+        console.print(line)
+    console.print()
 
     recent = Table(title="Recent Reviewed Recommendations")
     recent.add_column("Run", justify="right")

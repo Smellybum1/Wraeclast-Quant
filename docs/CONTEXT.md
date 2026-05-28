@@ -64,6 +64,7 @@ Scoring and outcomes are deterministic local decision-support surfaces.
 - Market brief: Markdown decision-support report under `data/processed/`.
 - Outcome review: local user feedback about recommendation results. Outcome notes stay local and must not leak into public artifacts.
 - Calibration report: local summary of outcomes by action/score bucket. It does not retune scoring automatically.
+- Calibration review prompt: local read-only guidance that highlights outcome patterns worth human inspection before any future scoring change. It does not retune scoring or change recommendations.
 
 ### Autonomous Execution
 

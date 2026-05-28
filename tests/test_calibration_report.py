@@ -52,6 +52,9 @@ def test_calibration_groups_by_action_score_bucket_and_average() -> None:
     assert "| positive | 48.00 |" in result
     assert "| negative | 60.00 |" in result
     assert "| neutral | 40.00 |" in result
+    assert "## Calibration Review Prompts" in result
+    assert "AVOID has 1 positive outcome(s)" in result
+    assert "WATCH has 1 negative outcome(s)" in result
 
 
 def test_calibration_recent_reviews_respect_limit() -> None:
