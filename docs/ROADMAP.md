@@ -691,6 +691,7 @@
 - Batch outcome recording now reports rare SQLite write failures with a clear `no records written` message while preserving transaction rollback behavior.
 - `wq outcomes` now points reviewed summaries to `wq outcome-review` and `wq calibration` so the manual feedback loop naturally continues into read-only performance review.
 - `wq outcome-review` now points joined recommendation/outcome rows to `wq calibration` and `wq outcome-report --output-path data/processed/outcome_review.md` for local summary/report follow-up.
+- `wq outcomes` and `wq outcome-review` now surface active local calibration prompt counts before their existing read-only calibration next actions.
 - `wq calibration` now points to `wq calibration-report --output-path data/processed/calibration_report.md` after its local-only read-only summary without changing scoring.
 - Outcome-review and calibration report writer commands now remind users that reports are local artifacts and to run `wq status --strict` plus `wq publish-check` before any manual handoff.
 - README and the MVP daily workflow now document the full post-outcome local feedback loop through review coverage, outcome review, calibration, and local report artifacts.

@@ -68,8 +68,8 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq review-coverage` shows how much of a run has recorded manual outcome review. Fully reviewed runs with calibration review prompts point back to `wq calibration`.
 - `wq record-outcome --run-id <id> --item-name <name> --outcome positive` records a local manual review result for a recommendation. See `docs/OUTCOMES.md` for the outcome review contract.
 - `wq record-outcomes --input-path <file> --dry-run` validates a local batch of human-reviewed outcome decisions without writing records; omit `--dry-run` to record the validated batch.
-- `wq outcomes` shows recent local recommendation outcomes and summary counts, then points to read-only review and calibration commands.
-- `wq outcome-review` joins recorded outcomes to their original scores and actions, then points to local summary/report follow-up.
+- `wq outcomes` shows recent local recommendation outcomes and summary counts, then points to read-only review and calibration commands. When calibration review prompts exist, it surfaces the local read-only prompt count.
+- `wq outcome-review` joins recorded outcomes to their original scores and actions, then points to local summary/report follow-up. When calibration review prompts exist, it surfaces the local read-only prompt count.
 - `wq outcome-report --output-path data/processed/outcome_review.md` writes a local recommendation review artifact.
 - `wq calibration` summarizes recorded outcomes by action, score bucket, outcome label, and local review prompts without changing scoring.
 - `wq calibration-report --output-path data/processed/calibration_report.md` writes a local recommendation calibration artifact.

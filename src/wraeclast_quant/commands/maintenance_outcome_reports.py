@@ -9,6 +9,10 @@ from wraeclast_quant.commands.maintenance_outcome_reports_rendering import (
     print_outcome_report_written,
     print_outcome_review,
 )
+from wraeclast_quant.reports.calibration import (
+    build_calibration,
+    calibration_review_prompts,
+)
 from wraeclast_quant.reports.outcome_review import (
     DEFAULT_OUTCOME_REVIEW_PATH,
     write_outcome_review,
@@ -30,7 +34,13 @@ def register(app: typer.Typer) -> None:
             return
 
         summary = repository.outcome_review_summary_by_action()
-        print_outcome_review(records, summary)
+        print_outcome_review(
+            records,
+            summary,
+            calibration_prompts=calibration_review_prompts(
+                build_calibration(repository)
+            ),
+        )
 
     @app.command("outcome-report")
     def outcome_report(

@@ -18,6 +18,10 @@ from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
     print_outcome_record,
     print_recent_outcomes,
 )
+from wraeclast_quant.reports.calibration import (
+    build_calibration,
+    calibration_review_prompts,
+)
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -95,4 +99,10 @@ def register(app: typer.Typer) -> None:
             return
 
         summary = repository.outcome_summary()
-        print_recent_outcomes(records, summary)
+        print_recent_outcomes(
+            records,
+            summary,
+            calibration_prompts=calibration_review_prompts(
+                build_calibration(repository)
+            ),
+        )

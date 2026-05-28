@@ -5,6 +5,7 @@ from pathlib import Path
 from rich.console import Console
 from rich.table import Table
 
+from wraeclast_quant.reports.review_guidance import calibration_prompt_next_action
 from wraeclast_quant.reports.outcome_guidance import (
     local_report_next_action,
     no_outcome_review_lines,
@@ -22,6 +23,7 @@ def print_no_outcome_reviews() -> None:
 def print_outcome_review(
     records: list[OutcomeReviewRecord],
     summary_by_action: dict[str, dict[str, int]],
+    calibration_prompts: list[str] | None = None,
 ) -> None:
     table = Table(title="Recommendation Outcome Review")
     table.add_column("Run", justify="right")
@@ -53,6 +55,8 @@ def print_outcome_review(
             *(str(counts.get(label, 0)) for label in sorted(ALLOWED_OUTCOMES)),
         )
     console.print(summary_table)
+    if calibration_prompts:
+        console.print(calibration_prompt_next_action(len(calibration_prompts)))
     console.print(outcome_review_next_action())
 
 

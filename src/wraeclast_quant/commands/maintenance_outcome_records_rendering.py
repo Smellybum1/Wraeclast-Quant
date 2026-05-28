@@ -3,6 +3,7 @@ from __future__ import annotations
 from rich.console import Console
 from rich.table import Table
 
+from wraeclast_quant.reports.review_guidance import calibration_prompt_next_action
 from wraeclast_quant.reports.review_queue_commands import record_outcomes_command
 from wraeclast_quant.storage.models import RecommendationOutcomeRecord
 from wraeclast_quant.storage.repositories import ALLOWED_OUTCOMES
@@ -63,6 +64,7 @@ def print_outcome_record(record: RecommendationOutcomeRecord) -> None:
 def print_recent_outcomes(
     records: list[RecommendationOutcomeRecord],
     summary: dict[str, int],
+    calibration_prompts: list[str] | None = None,
 ) -> None:
     table = Table(title="Recommendation Outcomes")
     table.add_column("Run", justify="right")
@@ -86,6 +88,8 @@ def print_recent_outcomes(
     for label in sorted(ALLOWED_OUTCOMES):
         summary_table.add_row(label, str(summary.get(label, 0)))
     console.print(summary_table)
+    if calibration_prompts:
+        console.print(calibration_prompt_next_action(len(calibration_prompts)))
     console.print(recent_outcomes_next_action())
 
 

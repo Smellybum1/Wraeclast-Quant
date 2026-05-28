@@ -1239,3 +1239,10 @@
 - Real run #13 `review-coverage --run-id 13` and `review-queue --run-id 13` now both print `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration.`
 - Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, `docs/OUTCOMES.md`, and `docs/ROADMAP.md` now describe the review-queue/review-coverage calibration handoff.
 - Verification: focused review queue/coverage/docs tests passed with 19 tests; full bundled Python test suite passed with 621 tests.
+
+## 2026-05-28 Outcome Summary Calibration Prompt Handoff
+
+- Completed packet: `wq outcomes` and `wq outcome-review` now surface the active local calibration prompt count before their existing read-only calibration next actions, keeping the post-outcome loop connected to `wq calibration`.
+- Real run #13 `outcomes` and `outcome-review` now both print `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration.`
+- Documentation updated: `README.md`, `docs/OUTCOMES.md`, and `docs/ROADMAP.md` now describe the outcome-summary calibration prompt handoff.
+- Verification: focused outcome summary/review/calibration tests passed with 16 tests.
