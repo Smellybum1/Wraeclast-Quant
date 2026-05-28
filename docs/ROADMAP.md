@@ -706,6 +706,7 @@
 - Watchlist CLI run-selection and missing-run tests are split from default latest-run/sample-output coverage.
 - Batch outcome-recording CLI tests are split from one-off outcome-recording tests, preserving command behavior while keeping dry-run, validation, and rollback coverage easier to scan.
 - Batch outcome-recording validation and dry-run failure tests are split from success/write/rollback coverage, preserving command behavior while keeping outcome-decision template failures easier to scan.
+- Batch outcome-recording rollback safety coverage is split from success and dry-run coverage, preserving transaction rollback assertions while making the SQLite failure path easier to scan.
 - Review-queue worksheet file-write and worksheet escaping tests are split from main review-queue CLI behavior tests.
 - Review-queue outcome-decisions template CLI tests are split from worksheet Markdown tests, preserving output and overwrite-safety assertions.
 - Review-queue run-selection, empty-database, fully-reviewed, and missing-run tests are split from queue rendering and command-template escaping coverage.

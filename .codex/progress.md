@@ -1274,3 +1274,8 @@
 
 - Completed packet: moved review-queue outcome-decisions template write/refresh/overwrite-safety CLI tests into `tests/test_cli_review_queue_decisions.py`, leaving `tests/test_cli_review_queue_worksheet.py` focused on Markdown worksheet, context, and escaping behavior.
 - Verification: focused review queue worksheet/decisions/queue/coverage tests passed with 13 tests; full bundled Python test suite passed with 625 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
+
+## 2026-05-28 Record Outcomes Rollback Test Split
+
+- Completed packet: moved the batch `record-outcomes` SQLite write-failure rollback test into `tests/test_cli_record_outcomes_rollback.py`, leaving `tests/test_cli_record_outcomes.py` focused on successful writes, template metadata, calibration prompt handoff, and dry-run success while preserving the rollback test name, trigger setup, assertions, and CLI behavior.
+- Verification: focused batch outcome recording tests passed with 10 tests (`tests/test_cli_record_outcomes.py`, `tests/test_cli_record_outcomes_validation.py`, `tests/test_cli_record_outcomes_rollback.py`); full bundled Python test suite passed with 625 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
