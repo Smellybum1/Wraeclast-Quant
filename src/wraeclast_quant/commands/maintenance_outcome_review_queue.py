@@ -10,6 +10,9 @@ from wraeclast_quant.commands.maintenance_outcome_review_queue_rendering import 
     print_review_coverage,
     print_review_queue,
 )
+from wraeclast_quant.commands.maintenance_outcome_review_context import (
+    read_review_queue_context,
+)
 from wraeclast_quant.reports.review_queue_commands import record_outcomes_dry_run_command
 from wraeclast_quant.reports.review_queue_decisions import (
     write_review_queue_decisions_template,
@@ -17,8 +20,6 @@ from wraeclast_quant.reports.review_queue_decisions import (
 from wraeclast_quant.reports.review_queue_worksheet import write_review_queue_worksheet
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
-
-MAX_REVIEW_CONTEXT_BYTES = 64 * 1024
 
 
 def register(app: typer.Typer) -> None:
@@ -96,14 +97,3 @@ def register(app: typer.Typer) -> None:
 
         coverage = repository.review_coverage_for_run(run.id)
         print_review_coverage(run.id, run.source_mode, coverage)
-
-
-def read_review_queue_context(path: Path) -> str:
-    try:
-        if path.stat().st_size > MAX_REVIEW_CONTEXT_BYTES:
-            raise typer.BadParameter(
-                f"review context is too large; limit is {MAX_REVIEW_CONTEXT_BYTES} bytes"
-            )
-        return path.read_text(encoding="utf-8")
-    except OSError as error:
-        raise typer.BadParameter(f"could not read review context: {error}") from error

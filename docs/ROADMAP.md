@@ -696,6 +696,7 @@
 - Watchlist table rendering and review-guidance text are split from command registration behind a focused helper, preserving CLI output and local review next actions.
 - Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
 - Batch outcome decision loading and validation are split from outcome command registration behind a focused helper, preserving `record-outcomes` CLI behavior and error wording.
+- Review-queue local context file loading is split from review-queue command registration behind a focused helper, preserving worksheet context behavior and size/read error wording.
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.
 - Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.
