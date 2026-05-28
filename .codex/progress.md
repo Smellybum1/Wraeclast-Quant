@@ -1289,3 +1289,8 @@
 
 - Completed packet: local calibration reports now include a `Calibration Review Checklist` section that points prompt review back to `wq outcome-review`, run provenance, UI-observation notes, another local Currency Exchange observation when evidence is sparse, and a separate verified scoring packet before any tuning.
 - Verification: focused calibration/report/contract tests passed with 11 tests; the real `calibration-report --output-path data/processed/calibration_report.md` refreshed the local ignored report with the checklist; full bundled Python test suite passed with 626 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation Capture Review Flags
+
+- Completed packet: local Currency Exchange UI-observation review-note sidecars now include capture review flags for ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry market ratios, helping the next no-OAuth manual daily run catch weak captures before outcome review without changing manual-import scoring, persistence, public artifacts, or live-source behavior.
+- Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 15 tests; the real `currency-exchange-ui-observation` command against the checked-in template wrote a local temporary review sidecar with `Capture Review Flags`; full bundled Python test suite passed with 628 tests; `git diff --check`, `status --strict`, and `publish-check` passed.

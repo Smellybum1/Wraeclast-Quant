@@ -44,7 +44,7 @@ Before running the conversion, finish the local UI capture for every pair you in
 - Mark ratio-only observations clearly in `notes`; they remain valid, but scoring treats them conservatively because no visible stock ladder was captured.
 - Prefer finishing all intended forward and reverse checks before `wq daily --input-path <manual-import-output>` so the stored run is not rewritten after review begins.
 
-This UI observation path is local-only. The optional review-notes sidecar keeps a local Markdown summary of the manually transcribed rows for later human outcome review. It does not use OAuth, live HTTP, scraping, OCR, game-client automation, raw cache writes, snapshots, outcome recording, or publishing.
+This UI observation path is local-only. The optional review-notes sidecar keeps a local Markdown summary of the manually transcribed rows and capture review flags for later human outcome review, including ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry ratios. It does not use OAuth, live HTTP, scraping, OCR, game-client automation, raw cache writes, snapshots, outcome recording, or publishing.
 
 6. Run the local daily pipeline:
 

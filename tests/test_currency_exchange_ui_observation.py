@@ -5,6 +5,7 @@ import pytest
 
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation import (
     currency_exchange_ui_observation_manual_import_payload,
+    currency_exchange_ui_observation_review_flags,
     currency_exchange_ui_observation_review_notes,
     load_currency_exchange_ui_observation,
     ratio_to_float,
@@ -95,7 +96,70 @@ def test_ui_observation_review_notes_summarize_visible_rows(tmp_path: Path) -> N
     assert "<22:1 stock 214,257" in notes
     assert "Divine Orb / Regal Orb (Standard UI)" in notes
     assert "No Stock" in notes
+    assert "## Capture Review Flags" in notes
+    assert "No Stock was transcribed" in notes
     assert "Do not record outcomes until a human review decision has been made." in notes
+
+
+def test_ui_observation_review_flags_name_ratio_only_captures(tmp_path: Path) -> None:
+    input_path = tmp_path / "ui_observation.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "league": "Standard",
+                "observations": [
+                    {
+                        "want_currency": "Exalted Orb",
+                        "have_currency": "Divine Orb",
+                        "market_ratio": "650:1",
+                    },
+                    {
+                        "want_currency": "Divine Orb",
+                        "have_currency": "Chaos Orb",
+                        "stock_rows": [{"ratio": "1:28", "stock": 2800}],
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    snapshot = load_currency_exchange_ui_observation(input_path)
+
+    flags = currency_exchange_ui_observation_review_flags(snapshot)
+
+    assert any(
+        "Exalted Orb / Divine Orb (Standard UI): ratio-only capture" in flag
+        for flag in flags
+    )
+    assert any(
+        "Divine Orb / Chaos Orb (Standard UI): stock-ladder rows" in flag
+        for flag in flags
+    )
+
+
+def test_ui_observation_review_flags_report_clean_capture(tmp_path: Path) -> None:
+    input_path = tmp_path / "ui_observation.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "league": "Standard",
+                "observations": [
+                    {
+                        "want_currency": "Chaos Orb",
+                        "have_currency": "Divine Orb",
+                        "market_ratio": "30:1",
+                        "stock_rows": [{"ratio": "30:1", "stock": 18150}],
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    snapshot = load_currency_exchange_ui_observation(input_path)
+
+    assert currency_exchange_ui_observation_review_flags(snapshot) == [
+        "- No capture review flags detected."
+    ]
 
 
 def test_ui_observation_rejects_empty_observations(tmp_path: Path) -> None:
