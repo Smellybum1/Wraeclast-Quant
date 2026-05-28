@@ -110,6 +110,8 @@ def test_currency_exchange_ui_observation_writes_review_notes_sidecar(tmp_path: 
     assert result.exit_code == 0
     assert "Review sidecar" in result.output
     assert "Capture review flags: none." in result.output
+    assert "--context-path" in result.output
+    assert str(review_notes_path) in result.output
     assert "Chaos Orb / Divine Orb (Standard UI)" in notes
     assert "<621:1 stock 1,230,149" in notes
     assert "No OAuth, live HTTP, scraping, OCR, game-client automation" in notes

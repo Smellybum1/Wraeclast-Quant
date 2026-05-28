@@ -41,6 +41,13 @@ def ui_observation_daily_next_action(output_path: object) -> str:
     return f"Then: wq daily --input-path {output_path}"
 
 
+def ui_observation_review_context_next_action(review_notes_path: object) -> str:
+    return (
+        "After daily creates a run: wq review-queue --run-id <id> "
+        f"--output-path data/processed/review_queue_run_<id>.md --context-path {review_notes_path}"
+    )
+
+
 def print_currency_exchange_ui_observation_export(
     result: CurrencyExchangeUiObservationExportResult,
 ) -> None:
@@ -69,6 +76,8 @@ def print_currency_exchange_ui_observation_export(
         )
     )
     console.print(ui_observation_daily_next_action(result.output_path))
+    if result.review_notes_path is not None:
+        console.print(ui_observation_review_context_next_action(result.review_notes_path))
 
 
 __all__ = [
@@ -76,6 +85,7 @@ __all__ = [
     "ui_observation_capture_flags_text",
     "ui_observation_daily_next_action",
     "ui_observation_export_safety_text",
+    "ui_observation_review_context_next_action",
     "ui_observation_review_sidecar_text",
     "ui_observation_validate_next_action",
 ]

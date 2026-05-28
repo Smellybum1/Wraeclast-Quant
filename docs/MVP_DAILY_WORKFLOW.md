@@ -46,6 +46,8 @@ Before running the conversion, finish the local UI capture for every pair you in
 
 This UI observation path is local-only. The optional review-notes sidecar keeps a local Markdown summary of the manually transcribed rows and capture review flags for later human outcome review, including ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry ratios. It does not use OAuth, live HTTP, scraping, OCR, game-client automation, raw cache writes, snapshots, outcome recording, or publishing.
 
+When a sidecar is written, the conversion command prints the later `wq review-queue --run-id <id> --output-path data/processed/review_queue_run_<id>.md --context-path <sidecar>` handoff so the local notes can be reused after `wq daily` creates a run.
+
 6. Run the local daily pipeline:
 
 ```powershell

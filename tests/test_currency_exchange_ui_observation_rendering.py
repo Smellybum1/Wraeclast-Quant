@@ -4,6 +4,7 @@ from wraeclast_quant.commands.currency_exchange_ui_observation_rendering import 
     ui_observation_capture_flags_text,
     ui_observation_daily_next_action,
     ui_observation_export_safety_text,
+    ui_observation_review_context_next_action,
     ui_observation_review_sidecar_text,
     ui_observation_validate_next_action,
 )
@@ -38,4 +39,8 @@ def test_ui_observation_next_actions_preserve_cli_text() -> None:
     )
     assert ui_observation_daily_next_action(output_path) == (
         f"Then: wq daily --input-path {output_path}"
+    )
+    assert ui_observation_review_context_next_action(review_notes_path) == (
+        "After daily creates a run: wq review-queue --run-id <id> "
+        f"--output-path data/processed/review_queue_run_<id>.md --context-path {review_notes_path}"
     )

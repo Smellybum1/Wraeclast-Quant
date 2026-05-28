@@ -1329,3 +1329,8 @@
 
 - Completed packet: Currency Exchange UI-observation facade contract assertions moved into `tests/test_currency_exchange_ui_observation_facade.py`, leaving `tests/test_currency_exchange_ui_observation.py` focused on ratio parsing, manual-import conversion, review notes, capture flags, and validation behavior.
 - Verification: focused old/new UI-observation collector, facade, CLI, rendering, and daily workflow docs tests passed with 21 tests; full bundled Python test suite passed with 634 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation Context Handoff
+
+- Completed packet: `wq currency-exchange-ui-observation` now prints the later `review-queue --context-path` handoff when a local review sidecar is written, keeping UI-observation notes connected to post-daily outcome review without changing conversion, scoring, persistence, public artifacts, or live-source behavior.
+- Verification: focused UI-observation CLI/rendering plus daily workflow docs tests passed with 9 tests; real template conversion smoke printed the later `review-queue --context-path` handoff; full bundled Python test suite passed with 634 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
