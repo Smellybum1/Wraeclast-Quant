@@ -20,6 +20,19 @@ def manual_snapshot_fixture_written_text(output_fixture_path: object) -> str:
     return f"Wrote connector fixture: {output_fixture_path}"
 
 
+def manual_snapshot_fixture_creation_next_action(
+    *,
+    input_path: object,
+    history_path: object | None,
+) -> str:
+    history_value = history_path if history_path is not None else "<previous-snapshot>"
+    return (
+        "Next: wq currency-exchange-manual-snapshot "
+        f"--input-path {input_path} --history-path {history_value} "
+        "--output-fixture-path <fixture-output>"
+    )
+
+
 def manual_snapshot_fixture_export_next_action(output_fixture_path: object) -> str:
     return (
         "Next: wq connector-fixture-export --review-path "
@@ -64,11 +77,19 @@ def print_currency_exchange_manual_snapshot(
     if output_fixture_path is not None:
         console.print(manual_snapshot_fixture_written_text(output_fixture_path))
         console.print(manual_snapshot_fixture_export_next_action(output_fixture_path))
+    else:
+        console.print(
+            manual_snapshot_fixture_creation_next_action(
+                input_path=input_path,
+                history_path=history_path,
+            )
+        )
     console.print(manual_snapshot_rows_text(len(fixture.items)))
     console.print(manual_snapshot_safety_text())
 
 
 __all__ = [
+    "manual_snapshot_fixture_creation_next_action",
     "manual_snapshot_fixture_export_next_action",
     "manual_snapshot_fixture_written_text",
     "manual_snapshot_history_text",

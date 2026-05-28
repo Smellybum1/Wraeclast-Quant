@@ -1366,3 +1366,9 @@
 - Completed packet: successful `wq connector-fixture-export --output-path <file>` output now prints the matching `wq validate-import --input-path <file>` next action, keeping connector-shaped fixture proof connected to read-only manual-import validation before any local daily run.
 - Documentation updated: `README.md`, `docs/CONNECTOR_POLICY.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the export-to-validation handoff.
 - Verification: focused connector export/manual snapshot rendering plus MVP/manual-import docs tests passed with 10 tests after making the long-path CLI assertion wrapping-tolerant; real connector export smoke printed the validation next action and the generated file passed `validate-import`; full bundled Python test suite passed with 636 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Manual Snapshot Fixture Creation Handoff
+
+- Completed packet: validation-only `wq currency-exchange-manual-snapshot --input-path <file>` output now points to rerunning with `--history-path <previous-snapshot> --output-fixture-path <fixture-output>` when the user is ready to create a local connector fixture, so the first official manual snapshot step no longer dead-ends.
+- Documentation updated: `README.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the validation-to-fixture-creation handoff.
+- Verification: focused manual snapshot CLI/rendering plus MVP/manual-import docs tests passed with 9 tests; real template validation smoke printed the fixture-creation next action; full bundled Python test suite passed with 636 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

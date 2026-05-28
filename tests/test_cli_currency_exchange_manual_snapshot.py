@@ -25,6 +25,9 @@ def test_currency_exchange_manual_snapshot_prints_rows() -> None:
     assert "Currency Exchange Manual Snapshot" in result.output
     assert "Chaos Orb / Divine Orb" in result.output
     assert "Manual snapshot rows: 2" in result.output
+    assert "Next: wq currency-exchange-manual-snapshot --input-path" in result.output
+    assert "--history-path <previous-snapshot>" in result.output
+    assert "--output-fixture-path <fixture-output>" in result.output
     assert "No network requests were made" in result.output
 
 

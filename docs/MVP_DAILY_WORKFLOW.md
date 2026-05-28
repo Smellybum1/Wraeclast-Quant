@@ -11,6 +11,8 @@ This is the local-first MVP loop for Wraeclast Quant. It uses user-supplied loca
 wq currency-exchange-manual-snapshot --input-path <current-snapshot>
 ```
 
+The validation-only output points to the rerun command with `--history-path <previous-snapshot> --output-fixture-path <fixture-output>` when you are ready to create a local fixture.
+
 3. When you have a previous local observation, export a connector fixture with preview rolling-baseline signals:
 
 ```powershell
