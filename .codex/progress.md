@@ -1076,3 +1076,8 @@
 - Completed packet: updated CLI and static-site MVP readiness next-action wording so fully reviewed or empty local loops point to either a manual Currency Exchange snapshot or a UI observation, with stock-ladder capture called out before the next daily run.
 - Artifact refresh: regenerated the local static site and site bundle so the on-disk dashboard reflects the updated MVP readiness wording.
 - Verification: bundled Python focused tests `tests/test_status_health_mvp_rows.py tests/test_static_site_review_loop.py tests/test_mvp_daily_workflow_contract.py --basetemp=.tmp-pytest-mvp-readiness-ui-wording -p no:cacheprovider` passed with 9 tests; `site`, `site-bundle`, `status --strict`, `publish-check`, and `git diff --check` passed.
+
+## 2026-05-28 MVP Readiness Action Helper
+
+- Completed packet: split shared MVP manual-observation next-action wording into `reports.mvp_readiness_actions`, preserving the CLI status and static-site compatibility constants while preventing drift between the two surfaces.
+- Verification: bundled Python focused tests `tests/test_mvp_readiness_actions.py tests/test_status_health_mvp_rows.py tests/test_static_site_review_loop.py --basetemp=.tmp-pytest-mvp-action-helper -p no:cacheprovider` passed with 9 tests; `git diff --check`, `status --strict`, and `publish-check` passed.

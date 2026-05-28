@@ -2,15 +2,11 @@ from __future__ import annotations
 
 from wraeclast_quant.commands.status_health_context import StatusHealthContext
 from wraeclast_quant.commands.status_health_rows import add_status_row
+from wraeclast_quant.reports.mvp_readiness_actions import manual_observation_next_action
 from wraeclast_quant.reports.review_queue_commands import status_outcome_review_next_action
 
 
-NEXT_MANUAL_OBSERVATION_ACTION = (
-    "next: prepare a local Currency Exchange manual snapshot or UI observation "
-    "(capture stock ladders first); then follow docs/MVP_DAILY_WORKFLOW.md "
-    "to create <manual-import-output> "
-    "and run wq daily --input-path <manual-import-output>."
-)
+NEXT_MANUAL_OBSERVATION_ACTION = manual_observation_next_action("status")
 
 
 def add_mvp_readiness_row(

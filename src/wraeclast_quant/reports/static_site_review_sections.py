@@ -2,16 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from wraeclast_quant.reports.mvp_readiness_actions import manual_observation_next_action
 from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
 from wraeclast_quant.reports.static_site_html import key_value_table, section
 
 
-NEXT_MANUAL_OBSERVATION_ACTION = (
-    "Prepare a local Currency Exchange manual snapshot or UI observation "
-    "(capture stock ladders first), then follow docs/MVP_DAILY_WORKFLOW.md "
-    "to create <manual-import-output> "
-    "and run wq daily --input-path <manual-import-output>"
-)
+NEXT_MANUAL_OBSERVATION_ACTION = manual_observation_next_action("static")
 
 
 def compliance_section(compliance: dict[str, Any], status_counts: dict[str, Any]) -> str:
