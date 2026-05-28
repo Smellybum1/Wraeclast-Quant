@@ -5,7 +5,10 @@ from typing import Protocol
 from rich.table import Table
 
 from wraeclast_quant.commands.intake_rendering import console
-from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
+from wraeclast_quant.reports.review_guidance import (
+    calibration_prompt_next_action,
+    review_next_action,
+)
 from wraeclast_quant.reports.review_queue_worksheet import (
     local_review_caveat,
 )
@@ -48,23 +51,6 @@ def print_watchlist_review_guidance(
     console.print(review_next_action(run_id, coverage))
     if calibration_prompts:
         console.print(calibration_prompt_next_action(len(calibration_prompts)))
-
-
-def review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
-    reviewed = f"{coverage.reviewed_recommendations}/{coverage.total_recommendations} reviewed"
-    if coverage.unreviewed_recommendations:
-        return (
-            f"Review coverage: {reviewed}; {coverage.unreviewed_recommendations} unreviewed. "
-            f"Next: {batch_outcome_review_next_action(run_id)}."
-        )
-    return f"Review coverage: {reviewed}; all recommendations for run #{run_id} have outcomes."
-
-
-def calibration_prompt_next_action(prompt_count: int) -> str:
-    return (
-        f"Calibration prompts: {prompt_count} local read-only prompt(s). "
-        "Next: wq calibration. Prompts do not retune scoring or change recommendations."
-    )
 
 
 __all__ = [

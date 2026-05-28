@@ -106,7 +106,7 @@ These commands are local review aids. They do not retune scoring, publish artifa
 wq stash-ninja-watchlist
 ```
 
-This writes `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` from the latest local run. The files include item names, scores, actions, review coverage, and suggested manual Stash-Ninja treatment. They do not write Exile-UI settings or caches, automate the overlay, call live HTTP, read game-client state, include raw signals, or record outcomes.
+This writes `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` from the latest local run. The files include item names, scores, actions, review coverage, suggested manual Stash-Ninja treatment, and an additive local calibration-prompt count. Unreviewed runs still point to the batch outcome-review flow; fully reviewed runs with calibration prompts point to `wq calibration`. They do not write Exile-UI settings or caches, automate the overlay, call live HTTP, read game-client state, include raw signals, retune scoring, change recommendations, or record outcomes.
 
 You can also generate the same handoff during the daily run:
 

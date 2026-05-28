@@ -3,6 +3,10 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from typing import Any
 
+from wraeclast_quant.reports.calibration import (
+    build_calibration,
+    calibration_review_prompts,
+)
 from wraeclast_quant.storage.models import (
     AnalysisRunRecord,
     ReviewCoverageRecord,
@@ -29,13 +33,19 @@ def build_stash_ninja_watchlist(
         if opportunity.opportunity_score >= min_score
     ][:limit]
     coverage = repository.review_coverage_for_run(run.id)
-    return _payload(run, opportunities, coverage)
+    calibration_prompt_count = 0
+    if not coverage.unreviewed_recommendations:
+        calibration_prompt_count = len(
+            calibration_review_prompts(build_calibration(repository))
+        )
+    return _payload(run, opportunities, coverage, calibration_prompt_count)
 
 
 def _payload(
     run: AnalysisRunRecord,
     opportunities: list[StoredOpportunityRecord],
     coverage: ReviewCoverageRecord,
+    calibration_prompt_count: int,
 ) -> dict[str, Any]:
     return {
         "schema_version": STASH_NINJA_WATCHLIST_SCHEMA_VERSION,
@@ -52,6 +62,7 @@ def _payload(
             "unreviewed_recommendations": coverage.unreviewed_recommendations,
             "reviewed_percent": round(coverage.reviewed_percent, 1),
         },
+        "calibration_prompt_count": calibration_prompt_count,
         "items": [_item_payload(opportunity) for opportunity in opportunities],
         "safety": {
             "derived_only": True,

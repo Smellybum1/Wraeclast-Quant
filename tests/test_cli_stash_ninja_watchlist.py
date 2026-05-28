@@ -55,6 +55,7 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert payload["latest_run"]["source_mode"] == "connector-fixture"
     assert payload["review_coverage"]["reviewed_recommendations"] == 1
     assert payload["review_coverage"]["unreviewed_recommendations"] == 2
+    assert payload["calibration_prompt_count"] == 0
     assert payload["safety"] == {
         "derived_only": True,
         "manual_application_required": True,
@@ -94,3 +95,54 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in markdown
     assert "| Divine Orb | 82.50 | BUY | bookmark-candidate |" in markdown
     assert "Low Signal Base" not in markdown
+
+
+def test_stash_ninja_watchlist_points_fully_reviewed_prompt_patterns_to_calibration(
+    tmp_path: Path,
+) -> None:
+    repository = SnapshotRepository(tmp_path / "snapshots.db")
+    run = _save_scored_run(
+        repository,
+        [
+            _opportunity("Avoid Good", 20.0, "AVOID"),
+            _opportunity("Watch Mixed", 60.0, "WATCH"),
+        ],
+        source_mode="manual-import",
+    )
+    repository.save_recommendation_outcome(run.id, "Avoid Good", "positive")
+    repository.save_recommendation_outcome(run.id, "Watch Mixed", "neutral")
+    output_path = tmp_path / "stash_ninja.json"
+    markdown_path = tmp_path / "stash_ninja.md"
+
+    result = runner.invoke(
+        app,
+        _stash_ninja_args(
+            repository.database_path,
+            output_path,
+            markdown_output_path=markdown_path,
+            limit=2,
+            min_score=0,
+        ),
+    )
+
+    assert result.exit_code == 0
+    assert "Calibration prompts: 2 local read-only prompt(s)." in result.output
+    assert "Next: wq calibration" in result.output
+    assert "do not retune scoring or change recommendations" in result.output
+    assert f"wq review-queue --run-id {run.id}" not in result.output
+
+    payload = json.loads(output_path.read_text(encoding="utf-8"))
+    assert payload["review_coverage"]["reviewed_recommendations"] == 2
+    assert payload["review_coverage"]["unreviewed_recommendations"] == 0
+    assert payload["calibration_prompt_count"] == 2
+    assert payload["safety"]["derived_only"] is True
+    assert payload["safety"]["no_raw_signals"] is True
+
+    payload_text = output_path.read_text(encoding="utf-8")
+    assert "positive" not in payload_text
+    assert "neutral" not in payload_text
+
+    markdown = markdown_path.read_text(encoding="utf-8")
+    assert "Calibration prompts: 2 local read-only prompt(s)." in markdown
+    assert "Next: wq calibration" in markdown
+    assert "wq review-queue" not in markdown

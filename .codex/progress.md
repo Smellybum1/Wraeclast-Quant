@@ -1217,3 +1217,11 @@
 - Real run #13 watchlist now shows 6/6 reviewed plus `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration.`
 - Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` now describe the watchlist-to-calibration prompt handoff.
 - Verification: focused watchlist/calibration tests passed with 11 tests; real `watchlist` showed the prompt handoff.
+
+## 2026-05-28 Stash-Ninja Calibration Prompt Handoff
+
+- Completed packet: `wq stash-ninja-watchlist`, its companion Markdown, and `daily --stash-ninja-watchlist` output now keep unreviewed runs on the batch outcome-review path while pointing fully reviewed runs with local calibration prompts back to `wq calibration`.
+- Stash-Ninja payloads now include an additive local `calibration_prompt_count` only when the selected run is fully reviewed; the count is derived-only and does not expose raw signals, labels, notes, local paths, or source data.
+- Real run #13 Stash-Ninja smoke now prints `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration. Prompts do not retune scoring or change recommendations.`
+- Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` now describe the Stash-Ninja-to-calibration prompt handoff.
+- Verification: focused Stash-Ninja/workflow tests passed with 12 tests; full bundled Python test suite passed with 617 tests; real `stash-ninja-watchlist --run-id 13`, `status --strict`, `publish-check`, and `git diff --check` passed.

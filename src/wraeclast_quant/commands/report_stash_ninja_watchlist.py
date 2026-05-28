@@ -5,7 +5,7 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
-from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
+from wraeclast_quant.reports.review_guidance import manual_review_handoff_next_action
 from wraeclast_quant.reports.stash_ninja_watchlist import (
     DEFAULT_STASH_NINJA_WATCHLIST_PATH,
     build_stash_ninja_watchlist,
@@ -55,4 +55,12 @@ def register(app: typer.Typer) -> None:
         )
         console.print(f"Wrote manual handoff Markdown to {written_markdown}")
         console.print("Manual application required; no Exile-UI files or game-client state were touched.")
-        console.print(f"Next: {batch_outcome_review_next_action(int(payload['latest_run']['id']))}")
+        console.print(
+            manual_review_handoff_next_action(
+                run_id=int(payload["latest_run"]["id"]),
+                unreviewed_recommendations=int(
+                    payload["review_coverage"]["unreviewed_recommendations"]
+                ),
+                calibration_prompt_count=int(payload.get("calibration_prompt_count", 0)),
+            )
+        )

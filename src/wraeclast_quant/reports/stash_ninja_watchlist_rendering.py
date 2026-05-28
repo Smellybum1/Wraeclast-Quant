@@ -2,12 +2,18 @@ from __future__ import annotations
 
 from typing import Any
 
-from wraeclast_quant.reports.review_queue_commands import batch_outcome_review_next_action
+from wraeclast_quant.reports.review_guidance import manual_review_handoff_next_action
 
 
 def render_stash_ninja_watchlist_markdown(payload: dict[str, Any]) -> str:
     run = payload["latest_run"]
     coverage = payload["review_coverage"]
+    run_id = int(run["id"])
+    next_action = manual_review_handoff_next_action(
+        run_id=run_id,
+        unreviewed_recommendations=int(coverage["unreviewed_recommendations"]),
+        calibration_prompt_count=int(payload.get("calibration_prompt_count", 0)),
+    )
     lines = [
         "# Exile-UI Stash-Ninja Companion Watchlist",
         "",
@@ -21,10 +27,7 @@ def render_stash_ninja_watchlist_markdown(payload: dict[str, Any]) -> str:
             f"{coverage['reviewed_recommendations']}/{coverage['total_recommendations']} reviewed "
             f"({coverage['reviewed_percent']:.1f}%)"
         ),
-        (
-            "- Next manual review: "
-            f"{batch_outcome_review_next_action(int(run['id']))}"
-        ),
+        _markdown_next_action_line(next_action),
         "",
         "| Item | Score | Action | Suggested manual treatment |",
         "| --- | ---: | --- | --- |",
@@ -47,6 +50,12 @@ def render_stash_ninja_watchlist_markdown(payload: dict[str, Any]) -> str:
         ]
     )
     return "\n".join(lines)
+
+
+def _markdown_next_action_line(next_action: str) -> str:
+    if next_action.startswith("Next: "):
+        return f"- Next manual review: {next_action.removeprefix('Next: ')}"
+    return f"- {next_action}"
 
 
 __all__ = ["render_stash_ninja_watchlist_markdown"]
