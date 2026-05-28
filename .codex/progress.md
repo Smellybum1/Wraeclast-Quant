@@ -1140,3 +1140,8 @@
 
 - Completed packet: split Currency Exchange UI-observation export safety text and validate/review/daily next-action text into focused rendering helpers, preserving CLI output and the local-only no-OAuth workflow handoff.
 - Verification: focused UI-observation rendering, CLI, and collector tests passed (`tests\test_currency_exchange_ui_observation_rendering.py`, `tests\test_cli_currency_exchange_ui_observation.py`, `tests\test_currency_exchange_ui_observation.py`); full bundled Python test suite passed with 596 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 review coverage remains 0/6 pending human outcome labels.
+
+## 2026-05-28 Manual Snapshot Rendering Helper
+
+- Completed packet: split Currency Exchange manual-snapshot path, row-count, fixture-written, and local-only safety text into focused rendering helpers, preserving CLI output and fixture preview behavior.
+- Verification: focused manual-snapshot rendering and CLI/bridge tests passed (`tests\test_currency_exchange_manual_snapshot_rendering.py`, `tests\test_cli_currency_exchange_manual_snapshot.py`, `tests\test_cli_currency_exchange_manual_snapshot_bridge.py`, `tests\test_cli_currency_exchange_manual_snapshot_bridge_daily.py`, `tests\test_cli_currency_exchange_manual_snapshot_bridge_export.py`); full bundled Python test suite passed with 598 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 review coverage remains 0/6 pending human outcome labels.

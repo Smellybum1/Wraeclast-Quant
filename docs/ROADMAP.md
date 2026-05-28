@@ -715,6 +715,7 @@
 - Calibration empty-state and read-only next-step text is split into focused rendering helpers, preserving `wq calibration` output while keeping command registration focused on orchestration.
 - Outcome-review next-action text is split into a focused rendering helper, preserving `wq outcome-review` output while making the report/calibration handoff directly testable.
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
+- Currency Exchange manual snapshot summary and local-only validation text is split into focused rendering helpers, preserving fixture preview output and manual-snapshot safety wording.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.
 - Currency Exchange UI observation export guidance text is split into focused rendering helpers, preserving local-only safety and validate/daily next-action wording.
 - Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.
