@@ -24,9 +24,9 @@ wq calibration-report
 
 `review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a worksheet plus decisions-template dry-run next action when unreviewed recommendations remain.
 
-`record-outcome` records one local manual outcome for an item from an existing analysis run. After recording, rerun `wq review-coverage --run-id <id>`, then use `wq outcomes`, `wq outcome-review`, and `wq calibration` for local feedback. Refresh derived artifacts with `wq export`, `wq site`, and `wq site-bundle` when you want local dashboard or public handoff files to reflect the new review state.
+`record-outcome` records one local manual outcome for an item from an existing analysis run. It rejects a second outcome for the same run item so accidental reruns do not duplicate local feedback. After recording, rerun `wq review-coverage --run-id <id>`, then use `wq outcomes`, `wq outcome-review`, and `wq calibration` for local feedback. Refresh derived artifacts with `wq export`, `wq site`, and `wq site-bundle` when you want local dashboard or public handoff files to reflect the new review state.
 
-`record-outcomes` records a local batch of human-reviewed outcome decisions from a JSON file. The whole file is validated before any outcome is written, so a bad item name, duplicate item, missing run, invalid label, or malformed decision prevents partial writes. Add `--dry-run` to validate the same file without writing outcome records. After a successful write, it points to review coverage, recent outcomes, outcome review, calibration, and optional derived-artifact refresh.
+`record-outcomes` records a local batch of human-reviewed outcome decisions from a JSON file. The whole file is validated before any outcome is written, so a bad item name, duplicate item, already-reviewed item, missing run, invalid label, or malformed decision prevents partial writes. Add `--dry-run` to validate the same file without writing outcome records. After a successful write, it points to review coverage, recent outcomes, outcome review, calibration, and optional derived-artifact refresh.
 
 Batch outcome JSON shape:
 
@@ -80,6 +80,7 @@ An outcome can only be recorded when:
 
 - the analysis run exists
 - the item exists in that analysis run
+- that run item does not already have a recorded outcome
 
 This keeps local review records tied to recommendations Wraeclast Quant actually produced.
 

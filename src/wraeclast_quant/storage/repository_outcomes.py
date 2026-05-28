@@ -17,6 +17,7 @@ from wraeclast_quant.storage.repository_outcome_policy import (
 from wraeclast_quant.storage.repository_outcome_records import (
     list_recent_outcome_records,
     outcome_count_summary,
+    recommendation_outcome_exists_query,
     save_recommendation_outcome_record,
 )
 from wraeclast_quant.storage.repository_outcome_reviews import (
@@ -51,6 +52,10 @@ class OutcomeReviewMixin:
             raise ValueError(f"analysis run #{run_id} was not found")
         if not self._item_exists_for_run(run_id, item_name):
             raise ValueError(f"item '{item_name}' was not found in analysis run #{run_id}")
+        if self.recommendation_outcome_exists(run_id, item_name):
+            raise ValueError(
+                f"item '{item_name}' already has a recorded outcome for analysis run #{run_id}"
+            )
 
         return save_recommendation_outcome_record(
             self.database_path,
@@ -75,6 +80,9 @@ class OutcomeReviewMixin:
 
     def review_coverage_for_run(self, run_id: int) -> ReviewCoverageRecord:
         return review_coverage_for_run_query(self.database_path, run_id)
+
+    def recommendation_outcome_exists(self, run_id: int, item_name: str) -> bool:
+        return recommendation_outcome_exists_query(self.database_path, run_id, item_name)
 
     def _item_exists_for_run(self, run_id: int, item_name: str) -> bool:
         return item_exists_for_run_query(self.database_path, run_id, item_name)

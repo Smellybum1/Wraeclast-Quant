@@ -38,3 +38,23 @@ def test_recommendation_outcome_rejects_invalid_outcome(tmp_path: Path) -> None:
         assert "outcome must be one of" in str(error)
     else:
         raise AssertionError("Expected invalid outcome to be rejected")
+
+
+def test_recommendation_outcome_rejects_duplicate_run_item(tmp_path: Path) -> None:
+    repository = SnapshotRepository(tmp_path / "snapshots.db")
+    opportunities = rank_opportunities(SAMPLE_ITEMS)
+    run = repository.create_analysis_run(source_mode="sample-data", item_count=len(opportunities))
+    repository.save_scored_opportunities(run.id, opportunities)
+
+    repository.save_recommendation_outcome(run.id, "Stormglass Catalyst", "positive")
+
+    try:
+        repository.save_recommendation_outcome(run.id, "stormglass catalyst", "neutral")
+    except ValueError as error:
+        assert "already has a recorded outcome" in str(error)
+    else:
+        raise AssertionError("Expected duplicate outcome to be rejected")
+
+    records = repository.list_recent_outcomes()
+    assert len(records) == 1
+    assert records[0].outcome == "positive"

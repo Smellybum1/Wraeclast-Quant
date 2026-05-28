@@ -48,6 +48,24 @@ def test_record_outcome_command_rejects_missing_item(tmp_path: Path) -> None:
     assert SnapshotRepository(database_path).list_recent_outcomes() == []
 
 
+def test_record_outcome_command_rejects_duplicate_item_outcome(tmp_path: Path) -> None:
+    database_path = tmp_path / "snapshots.db"
+    runner.invoke(app, _analyze_sample_args(database_path))
+    first = runner.invoke(app, _record_outcome_args(database_path))
+
+    result = runner.invoke(
+        app,
+        _record_outcome_args(database_path, outcome="neutral"),
+    )
+
+    records = SnapshotRepository(database_path).list_recent_outcomes()
+    assert first.exit_code == 0
+    assert result.exit_code != 0
+    assert "already has a recorded outcome" in result.output
+    assert len(records) == 1
+    assert records[0].outcome == "positive"
+
+
 def test_record_outcomes_command_saves_human_reviewed_batch(tmp_path: Path) -> None:
     database_path = tmp_path / "snapshots.db"
     decisions_path = tmp_path / "outcome_decisions.json"
@@ -176,6 +194,37 @@ def test_record_outcomes_command_rejects_invalid_batch_without_partial_writes(tm
     assert result.exit_code != 0
     assert "Missing Item" in result.output
     assert SnapshotRepository(database_path).list_recent_outcomes() == []
+
+
+def test_record_outcomes_command_rejects_already_reviewed_item_without_partial_writes(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "snapshots.db"
+    decisions_path = tmp_path / "outcome_decisions.json"
+    runner.invoke(app, _analyze_sample_args(database_path))
+    repository = SnapshotRepository(database_path)
+    repository.save_recommendation_outcome(1, "Ashen Rune Core", "neutral")
+    decisions_path.write_text(
+        json.dumps(
+            {
+                "run_id": 1,
+                "decisions": [
+                    {"item_name": "Stormglass Catalyst", "outcome": "positive"},
+                    {"item_name": "Ashen Rune Core", "outcome": "negative"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = runner.invoke(app, _record_outcomes_args(database_path, decisions_path))
+
+    records = SnapshotRepository(database_path).list_recent_outcomes(limit=10)
+    assert result.exit_code != 0
+    assert "already has a recorded outcome" in result.output
+    assert len(records) == 1
+    assert records[0].item_name == "Ashen Rune Core"
+    assert records[0].outcome == "neutral"
 
 
 def test_record_outcomes_command_dry_run_rejects_invalid_batch_without_writing(

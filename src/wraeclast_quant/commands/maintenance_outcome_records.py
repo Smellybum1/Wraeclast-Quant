@@ -166,3 +166,7 @@ def validate_batch_outcome_decisions(
         item_name = decision["item_name"]
         if item_name not in item_names:
             raise ValueError(f"item '{item_name}' was not found in analysis run #{run_id}")
+        if repository.recommendation_outcome_exists(run_id, item_name):
+            raise ValueError(
+                f"item '{item_name}' already has a recorded outcome for analysis run #{run_id}"
+            )
