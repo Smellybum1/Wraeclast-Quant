@@ -1314,3 +1314,8 @@
 
 - Completed packet: Currency Exchange UI-observation deterministic signal scoring, visible-stock totals, spread calculation, and ratio parsing moved into `pathofexile_currency_exchange_ui_observation_signals` while the existing collector facade continues to expose the same helper names.
 - Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 19 tests; full bundled Python test suite passed with 632 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation Manual Import Split
+
+- Completed packet: Currency Exchange UI-observation manual-import payload and item conversion moved into `pathofexile_currency_exchange_ui_observation_manual_import` while the existing collector facade continues to expose the same helper names and write the same manual-import JSON.
+- Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 20 tests; full bundled Python test suite passed with 633 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
