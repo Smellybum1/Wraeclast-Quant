@@ -1027,3 +1027,14 @@
 - Completed packet: split review-queue run lookup, unreviewed-opportunity selection, and review-coverage selection into `maintenance_outcome_review_selection`, leaving `maintenance_outcome_review_queue` focused on command registration and local output while preserving review queue and coverage behavior.
 - Verification: bundled Python focused tests `tests/test_cli_review_queue.py tests/test_cli_review_queue_selection.py tests/test_cli_review_queue_worksheet.py tests/test_cli_review_coverage.py --basetemp=.tmp-pytest-review-selection-split -p no:cacheprovider` passed with 14 tests; an import smoke for the new selection helper passed; full bundled Python `pytest --basetemp=.tmp-pytest-full-review-selection-split -p no:cacheprovider` passed with 576 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
 - Run #11 review coverage is now closed at 6/6 reviewed, all neutral, after human review.
+
+## 2026-05-28 Handoff Checkpoint
+
+- Branch/worktree before handoff polish: `main...origin/main` was clean and synced at commit `77e04ce` (`Split review queue selection helpers`).
+- Current completed proof state: run #10 was a synthetic poe.ninja-style connector fixture proof run and is fully reviewed with neutral outcomes; run #11 was the first Standard league no-OAuth manual UI-observation proof run and is fully reviewed at 6/6 outcomes, all neutral.
+- Supersession note: older chronological entries above that say run #11 still needs outcome review are historical only; this checkpoint is the current state.
+- Current readiness state: `wq status --strict` passes; `wq publish-check` passes; public intel, static site, and site bundle artifacts are fresh for run #11; recent full-suite verification passed with 576 tests.
+- Handoff docs polish updated `docs/ROADMAP.md` to stop pointing at run #11 outcome review as the next milestone.
+- Safety boundary remains unchanged: do not pursue live OAuth, live HTTP collection, scraping, Discord collection, Exile-UI file mutation, gameplay automation, trade automation, or game-client interaction.
+- Next recommended packet: prepare or validate a fresh local Currency Exchange manual snapshot or UI observation for Standard/current league, run `wq daily --input-path <validated-local-input>` with `--stash-ninja-watchlist` if useful, inspect `wq watchlist`, `wq review-queue`, and `wq review-coverage`, then record outcomes only after human review.
+- If fresh data is unavailable, continue only bounded behavior-preserving maintainability packets around the local manual review loop, one verified packet at a time.
