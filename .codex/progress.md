@@ -1038,3 +1038,18 @@
 - Safety boundary remains unchanged: do not pursue live OAuth, live HTTP collection, scraping, Discord collection, Exile-UI file mutation, gameplay automation, trade automation, or game-client interaction.
 - Next recommended packet: prepare or validate a fresh local Currency Exchange manual snapshot or UI observation for Standard/current league, run `wq daily --input-path <validated-local-input>` with `--stash-ninja-watchlist` if useful, inspect `wq watchlist`, `wq review-queue`, and `wq review-coverage`, then record outcomes only after human review.
 - If fresh data is unavailable, continue only bounded behavior-preserving maintainability packets around the local manual review loop, one verified packet at a time.
+
+## 2026-05-28 Review Output Split
+
+- Fresh-data check: no newer user-supplied Currency Exchange manual snapshot or UI observation was found beyond the existing run #11 local files, so no new daily run was created from stale data.
+- Completed packet: split review-queue optional worksheet and outcome-decisions file writing into `maintenance_outcome_review_outputs`, leaving `maintenance_outcome_review_queue` focused on command registration, run selection, and rendering while preserving CLI text, file formats, local-only behavior, and public-artifact boundaries.
+- Verification: bundled Python focused tests `tests/test_cli_review_queue.py tests/test_cli_review_queue_selection.py tests/test_cli_review_queue_worksheet.py tests/test_cli_review_coverage.py --basetemp=.tmp-pytest-review-output-split -p no:cacheprovider` passed with 14 tests; import smoke for `write_review_queue_outputs` passed; `review-queue --help` passed; full bundled Python `pytest --basetemp=.tmp-pytest-full-review-output-split -p no:cacheprovider` passed with 576 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
+- Current readiness state remains run #11 fully reviewed at 6/6 neutral outcomes, with strict status and publish-check green.
+- Next recommended packet: use a fresh user-supplied Standard/current-league Currency Exchange manual snapshot or UI observation for the next no-OAuth daily run; if none is available, continue another bounded behavior-preserving manual-review-loop maintainability packet.
+
+## 2026-05-28 Skill Feedback Loop
+
+- Completed packet: added a lightweight SkillOpt-inspired feedback process in `.codex/skill_feedback.md`, plus `AGENTS.md` and `docs/CONTEXT.md` guidance, so repeated Codex workflow issues can become evidence-based, bounded, validation-gated guidance or skill edits without adding SkillOpt as a dependency.
+- Roadmap update: recorded the new skill feedback loop as completed local workflow infrastructure.
+- Verification: docs-only review of `.codex/skill_feedback.md` passed; `git diff --check`, `status --strict`, and `publish-check` passed after edits.
+- Next recommended use: add entries only when future runs show repeated workflow friction, missed checks, or candidate guidance improvements that can be validated.

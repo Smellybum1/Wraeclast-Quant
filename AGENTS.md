@@ -35,6 +35,7 @@
 - For bug fixes, prefer adding or updating a focused regression test when practical.
 - Before non-trivial edits, state assumptions, success criteria, and the narrow verification path.
 - Push back when a request risks violating the project safety boundary or source terms.
+- Use `.codex/skill_feedback.md` for the lightweight SkillOpt-inspired guidance loop when repeated agent friction suggests a reusable process, project-guidance, or skill update. Proposed guidance edits should be evidence-based, bounded, validation-gated, and accepted or rejected explicitly; do not add automatic skill rewriting or new optimizer dependencies without explicit approval.
 
 ## Autonomous Roadmap Execution
 

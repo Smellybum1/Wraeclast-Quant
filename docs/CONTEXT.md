@@ -73,6 +73,8 @@ Autonomous execution means Codex advances the project one bounded packet at a ti
 - Highest-impact unblocked task: the best next task that fits current guardrails and does not require user decisions.
 - Stop-and-ask decision: a decision affecting architecture, product direction, data model, public API, auth/security, deployment, persistence semantics, pricing, major UX behavior, source approval, dependencies, migrations, or live network behavior.
 - Green handoff: relevant focused checks passed, broader checks ran when needed, artifacts are fresh when affected, risks are named, and the next packet is clear.
+- Skill feedback loop: the local `.codex/skill_feedback.md` process for turning repeated agent workflow evidence into bounded, validation-gated guidance or skill edits. It is inspired by SkillOpt but is not automatic skill rewriting, a model-training loop, or a new runtime dependency.
+- Skill feedback entry: one proposed, accepted, rejected, or deferred improvement to agent/project guidance, with evidence, candidate edit, validation gate, decision, and follow-up.
 
 ## Language Preferences
 

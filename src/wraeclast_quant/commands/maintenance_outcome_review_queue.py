@@ -10,18 +10,13 @@ from wraeclast_quant.commands.maintenance_outcome_review_queue_rendering import 
     print_review_coverage,
     print_review_queue,
 )
+from wraeclast_quant.commands.maintenance_outcome_review_outputs import (
+    write_review_queue_outputs,
+)
 from wraeclast_quant.commands.maintenance_outcome_review_selection import (
     selected_review_coverage,
     selected_unreviewed_opportunities,
 )
-from wraeclast_quant.commands.maintenance_outcome_review_context import (
-    read_review_queue_context,
-)
-from wraeclast_quant.reports.review_queue_commands import record_outcomes_dry_run_command
-from wraeclast_quant.reports.review_queue_decisions import (
-    write_review_queue_decisions_template,
-)
-from wraeclast_quant.reports.review_queue_worksheet import write_review_queue_worksheet
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -67,27 +62,13 @@ def register(app: typer.Typer) -> None:
             return
 
         print_review_queue(run.id, run.source_mode, opportunities)
-        if output_path is not None:
-            context_markdown = read_review_queue_context(context_path) if context_path is not None else None
-            write_review_queue_worksheet(
-                output_path,
-                run_id=run.id,
-                source_mode=run.source_mode,
-                opportunities=opportunities,
-                context_markdown=context_markdown,
-            )
-            typer.echo(f"Wrote review queue worksheet to {output_path}")
-        if decisions_output_path is not None:
-            write_review_queue_decisions_template(
-                decisions_output_path,
-                run_id=run.id,
-                opportunities=opportunities,
-            )
-            typer.echo(f"Wrote outcome decisions template to {decisions_output_path}")
-            typer.echo(
-                f"Next: fill outcome labels, then run "
-                f"{record_outcomes_dry_run_command(str(decisions_output_path))}."
-            )
+        write_review_queue_outputs(
+            output_path=output_path,
+            decisions_output_path=decisions_output_path,
+            context_path=context_path,
+            run=run,
+            opportunities=opportunities,
+        )
 
     @app.command("review-coverage")
     def review_coverage(

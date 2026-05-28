@@ -383,6 +383,7 @@
 - Status command table rendering split from command orchestration behind the stable status command facade.
 - Status health storage wording helpers split into focused backup and database helper modules behind the stable storage facade.
 - Reusable general Codex skills extracted for behavior-preserving decomposition and local compliance data workflows.
+- Lightweight SkillOpt-inspired skill feedback loop added under `.codex/skill_feedback.md` for evidence-based, validation-gated guidance improvements without adding optimizer dependencies.
 - Autonomous roadmap execution guidance added to `AGENTS.md`, with a short Goal Mode prompt and operating loop in `docs/GOAL_MODE.md`.
 - Shared project language captured in `docs/CONTEXT.md`, with lightweight ADR scaffolding for durable decisions.
 - Markdown documentation refreshed to reflect connector review, fixture pipeline, publishing handoff, migration readiness, provenance, calibration, and recent decomposition work.
@@ -698,6 +699,7 @@
 - Batch outcome decision loading and validation are split from outcome command registration behind a focused helper, preserving `record-outcomes` CLI behavior and error wording.
 - Review-queue local context file loading is split from review-queue command registration behind a focused helper, preserving worksheet context behavior and size/read error wording.
 - Review-queue run selection, unreviewed-opportunity loading, and coverage loading are split from review-queue command registration behind a focused helper, preserving review queue and review coverage output behavior.
+- Review-queue optional worksheet and outcome-decisions file writing is split from review-queue command registration behind a focused helper, preserving CLI output and local review artifacts.
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.
 - Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.
