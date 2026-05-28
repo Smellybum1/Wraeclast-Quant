@@ -1210,3 +1210,10 @@
 - Real run #13 status now reports `2 local read-only prompt(s); next: wq calibration` while `status --strict` remains green; the row does not fail strict mode, retune scoring, change recommendations, regenerate artifacts, or touch public handoff outputs.
 - Documentation updated: `docs/STATUS_JSON.md` documents the additive stable row key `calibration_prompts`; `docs/ROADMAP.md` records the completed local status improvement.
 - Verification: focused status tests passed with 10 tests; real `status --strict` and `status --json` showed the row; full bundled Python test suite passed with 613 tests; `git diff --check` passed with only LF/CRLF warnings.
+
+## 2026-05-28 Watchlist Calibration Prompt Handoff
+
+- Completed packet: `wq watchlist` now prints a local-only calibration prompt next action for fully reviewed stored runs when calibration review prompts exist, connecting the daily recommendation surface back to `wq calibration` without changing scoring, recommendations, public artifacts, or source behavior.
+- Real run #13 watchlist now shows 6/6 reviewed plus `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration.`
+- Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` now describe the watchlist-to-calibration prompt handoff.
+- Verification: focused watchlist/calibration tests passed with 11 tests; real `watchlist` showed the prompt handoff.

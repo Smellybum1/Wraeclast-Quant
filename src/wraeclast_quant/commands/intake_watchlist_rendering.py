@@ -42,9 +42,12 @@ def print_watchlist_review_guidance(
     run_id: int,
     source_mode: str,
     coverage: ReviewCoverageRecord,
+    calibration_prompts: list[str] | None = None,
 ) -> None:
     console.print(local_review_caveat(source_mode))
     console.print(review_next_action(run_id, coverage))
+    if calibration_prompts:
+        console.print(calibration_prompt_next_action(len(calibration_prompts)))
 
 
 def review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
@@ -57,7 +60,15 @@ def review_next_action(run_id: int, coverage: ReviewCoverageRecord) -> str:
     return f"Review coverage: {reviewed}; all recommendations for run #{run_id} have outcomes."
 
 
+def calibration_prompt_next_action(prompt_count: int) -> str:
+    return (
+        f"Calibration prompts: {prompt_count} local read-only prompt(s). "
+        "Next: wq calibration. Prompts do not retune scoring or change recommendations."
+    )
+
+
 __all__ = [
+    "calibration_prompt_next_action",
     "print_watchlist_review_guidance",
     "print_watchlist_table",
     "review_next_action",

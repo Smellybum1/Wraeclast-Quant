@@ -672,6 +672,7 @@
 - `wq watchlist` now also shows the shared local-only caveat, review coverage, and the run-specific batch review next action for stored runs, keeping the daily MVP watchlist loop connected to human outcome review.
 - Stash-Ninja companion Markdown now points to the same run-specific worksheet plus outcome-decisions dry-run flow, so manual overlay review and recommendation outcome review stay connected without changing Exile-UI files.
 - Stash-Ninja CLI output and daily opt-in handoff output now also print the run-specific batch review next action, using one shared helper for the command text.
+- `wq watchlist` now points fully reviewed stored runs with local calibration review prompts back to `wq calibration`, keeping the daily recommendation surface connected to read-only outcome feedback without changing scoring.
 - `wq review-queue` now prints concise batch review next steps before one-off command templates, keeping the interactive review surface aligned with status, watchlist, worksheet, and Stash-Ninja guidance.
 - `wq review-coverage` now prints the same concise batch review next steps for unreviewed runs, avoiding a wrapped one-line command in the primary coverage readout.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.

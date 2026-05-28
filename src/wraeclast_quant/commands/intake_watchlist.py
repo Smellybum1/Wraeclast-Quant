@@ -10,6 +10,7 @@ from wraeclast_quant.commands.intake_watchlist_rendering import (
     print_watchlist_table,
 )
 from wraeclast_quant.intelligence.opportunity_ranker import rank_opportunities
+from wraeclast_quant.reports.calibration import build_calibration, calibration_review_prompts
 from wraeclast_quant.reports.watchlist import top_watchlist
 from wraeclast_quant.sample_data.items import SAMPLE_ITEMS
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
@@ -41,6 +42,7 @@ def register(app: typer.Typer) -> None:
                 console.print(f"No scored opportunities found for run #{run.id}.")
                 return
             coverage = repository.review_coverage_for_run(run.id)
+            calibration_prompts = calibration_review_prompts(build_calibration(repository))
             title = f"Watchlist - Run #{run.id} ({run.source_mode})"
         print_watchlist_table(title=title, opportunities=opportunities)
         if not sample_data:
@@ -48,4 +50,5 @@ def register(app: typer.Typer) -> None:
                 run_id=run.id,
                 source_mode=run.source_mode,
                 coverage=coverage,
+                calibration_prompts=calibration_prompts if not coverage.unreviewed_recommendations else [],
             )

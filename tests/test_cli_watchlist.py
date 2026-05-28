@@ -53,3 +53,25 @@ def test_watchlist_defaults_to_latest_stored_run(tmp_path: Path) -> None:
     assert "wq record-outcomes --input-path" in result.output
     assert "data/processed/outcome_decisions.json --dry-run" in result.output
     assert "Old Catalyst" not in result.output
+
+
+def test_watchlist_points_fully_reviewed_prompt_patterns_to_calibration(tmp_path: Path) -> None:
+    repository = SnapshotRepository(tmp_path / "snapshots.db")
+    latest = _save_scored_run(
+        repository,
+        [
+            _opportunity("Avoid Good", 20.0, "AVOID"),
+            _opportunity("Watch Mixed", 60.0, "WATCH"),
+        ],
+        source_mode="manual-import",
+    )
+    repository.save_recommendation_outcome(latest.id, "Avoid Good", "positive")
+    repository.save_recommendation_outcome(latest.id, "Watch Mixed", "neutral")
+
+    result = runner.invoke(app, _watchlist_args(repository.database_path))
+
+    assert result.exit_code == 0
+    assert f"Review coverage: 2/2 reviewed; all recommendations for run #{latest.id} have outcomes." in result.output
+    assert "Calibration prompts: 2 local read-only prompt(s)." in result.output
+    assert "Next: wq calibration" in result.output
+    assert "do not retune scoring or change recommendations" in result.output
