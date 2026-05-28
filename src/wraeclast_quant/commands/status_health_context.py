@@ -41,6 +41,7 @@ def load_status_health_context(
         latest=snapshot_context.latest,
         latest_run_id=snapshot_context.latest_run_id,
         coverage=snapshot_context.coverage,
+        calibration_prompts=snapshot_context.calibration_prompts,
         market_brief_health=artifact_context.market_brief_health,
         intel_validation=artifact_context.intel_validation,
         intel_error=artifact_context.intel_error,

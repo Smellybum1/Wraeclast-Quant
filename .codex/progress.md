@@ -1203,3 +1203,10 @@
 - Run #13 evidence now triggers prompts for four positive AVOID outcomes and positive outcomes averaging below neutral outcomes; the prompt caveat explicitly says prompts are read-only and do not retune scoring or change recommendations.
 - Documentation updated: `docs/CONTEXT.md`, `docs/OUTCOMES.md`, `docs/DESIGN.md`, `README.md`, and `docs/ROADMAP.md` now describe calibration review prompts as local decision-support only.
 - Verification: focused calibration/report/outcome-contract tests passed with 17 tests; real `calibration` and `calibration-report --output-path data/processed/calibration_report.md` ran successfully; full bundled Python test suite passed with 610 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 Status Calibration Prompt Row
+
+- Completed packet: added a read-only `Calibration prompts` row to `wq status` and `status --json`, using the existing local calibration prompt helper so reviewed runs with prompt patterns point back to `wq calibration` from the daily-driver health surface.
+- Real run #13 status now reports `2 local read-only prompt(s); next: wq calibration` while `status --strict` remains green; the row does not fail strict mode, retune scoring, change recommendations, regenerate artifacts, or touch public handoff outputs.
+- Documentation updated: `docs/STATUS_JSON.md` documents the additive stable row key `calibration_prompts`; `docs/ROADMAP.md` records the completed local status improvement.
+- Verification: focused status tests passed with 10 tests; real `status --strict` and `status --json` showed the row; full bundled Python test suite passed with 613 tests; `git diff --check` passed with only LF/CRLF warnings.

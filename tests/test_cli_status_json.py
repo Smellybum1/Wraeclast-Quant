@@ -36,12 +36,14 @@ def test_status_json_outputs_machine_readable_rows(tmp_path: Path) -> None:
     assert payload["ok"] is True
     assert payload["strict_failures"] == []
     assert payload["strict_failure_keys"] == []
-    assert payload["status_counts"] == {"no": 6, "none": 5, "ok": 2}
+    assert payload["status_counts"] == {"no": 6, "none": 6, "ok": 2}
     rows_by_key = {row["key"]: row for row in payload["rows"]}
     assert payload["rows_by_key"] == rows_by_key
     assert rows_by_key["database_health"]["check"] == "Database health"
     assert rows_by_key["mvp_readiness"]["status"] == "none"
     assert "wq daily --input-path" in rows_by_key["mvp_readiness"]["details"]
+    assert rows_by_key["calibration_prompts"]["status"] == "none"
+    assert "No local run yet" in rows_by_key["calibration_prompts"]["details"]
     assert rows_by_key["stash_ninja_handoff"]["status"] == "none"
     assert "wq stash-ninja-watchlist" in rows_by_key["stash_ninja_handoff"]["details"]
     assert payload["rows_by_key"]["public_intel"]["status"] == "no"

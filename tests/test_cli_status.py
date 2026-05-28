@@ -46,6 +46,8 @@ def test_status_command_prints_local_health(tmp_path: Path) -> None:
     assert "--run-id 1" in result.output
     assert "MVP readiness" in result.output
     assert "No-OAuth local loop ready on run #1" in result.output
+    assert "Calibration prompts" in result.output
+    assert "No calibration review prompts triggered" in result.output
     assert "Market brief" in result.output
     assert "no snapshot changes" in result.output
     assert "Public intel" in result.output

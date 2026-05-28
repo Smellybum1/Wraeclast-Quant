@@ -723,6 +723,7 @@
 - Calibration empty-state and read-only next-step text is split into focused rendering helpers, preserving `wq calibration` output while keeping command registration focused on orchestration.
 - Outcome-review next-action text is split into a focused rendering helper, preserving `wq outcome-review` output while making the report/calibration handoff directly testable.
 - Calibration now includes local-only review prompts that flag patterns such as positive AVOID outcomes and lower positive average scores without retuning scoring or changing recommendations.
+- Local status now includes a read-only `Calibration prompts` row that points reviewed runs with prompt patterns back to `wq calibration` without failing strict mode or changing public artifacts.
 - Run #10 review coverage is closed at 3/3 reviewed, all neutral, and derived local/public artifacts were refreshed with strict status and publish-check passing.
 - Currency Exchange manual snapshot summary and local-only validation text is split into focused rendering helpers, preserving fixture preview output and manual-snapshot safety wording.
 - Currency Exchange UI observation conversion can now optionally write a local Markdown review-notes sidecar that summarizes transcribed ratios and visible stock rows for human outcome review without changing manual-import scoring, snapshots, public artifacts, or live-source boundaries.

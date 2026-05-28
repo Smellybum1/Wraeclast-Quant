@@ -58,6 +58,7 @@ Current row keys:
 - `latest_run`
 - `review_coverage`
 - `mvp_readiness`
+- `calibration_prompts`
 - `market_brief`
 - `public_intel`
 - `static_site`

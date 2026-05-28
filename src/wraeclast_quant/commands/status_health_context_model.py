@@ -25,6 +25,7 @@ class StatusHealthContext:
     latest: AnalysisRunRecord | None
     latest_run_id: int | None
     coverage: ReviewCoverageRecord | None
+    calibration_prompts: list[str]
     market_brief_health: MarketBriefHealthResult | None
     intel_validation: PublicIntelValidationResult | None
     intel_error: str
