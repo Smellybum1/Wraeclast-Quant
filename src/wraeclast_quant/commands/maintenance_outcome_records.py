@@ -64,15 +64,7 @@ def register(app: typer.Typer) -> None:
                 )
                 typer.echo(f"Next: {record_outcomes_command(str(input_path))}")
                 return
-            records = [
-                repository.save_recommendation_outcome(
-                    run_id=run_id,
-                    item_name=decision["item_name"],
-                    outcome=decision["outcome"],
-                    notes=decision["notes"],
-                )
-                for decision in decisions
-            ]
+            records = repository.save_recommendation_outcome_batch(run_id, decisions)
         except ValueError as error:
             raise typer.BadParameter(str(error)) from error
 

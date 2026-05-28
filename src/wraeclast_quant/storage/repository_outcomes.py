@@ -19,6 +19,7 @@ from wraeclast_quant.storage.repository_outcome_records import (
     outcome_count_summary,
     recommendation_outcome_exists_query,
     save_recommendation_outcome_record,
+    save_recommendation_outcome_records,
 )
 from wraeclast_quant.storage.repository_outcome_reviews import (
     list_outcome_review_records,
@@ -64,6 +65,17 @@ class OutcomeReviewMixin:
             normalized_outcome,
             notes,
             observed_at,
+        )
+
+    def save_recommendation_outcome_batch(
+        self,
+        run_id: int,
+        decisions: list[dict[str, str]],
+    ) -> list[RecommendationOutcomeRecord]:
+        return save_recommendation_outcome_records(
+            self.database_path,
+            run_id,
+            decisions,
         )
 
     def list_recent_outcomes(self, limit: int = 20) -> list[RecommendationOutcomeRecord]:

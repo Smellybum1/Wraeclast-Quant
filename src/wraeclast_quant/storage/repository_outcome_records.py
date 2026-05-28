@@ -11,6 +11,7 @@ from wraeclast_quant.storage.repository_outcome_record_summary import (
 )
 from wraeclast_quant.storage.repository_outcome_record_writes import (
     save_recommendation_outcome_record,
+    save_recommendation_outcome_records,
 )
 
 
@@ -19,4 +20,5 @@ __all__ = [
     "outcome_count_summary",
     "recommendation_outcome_exists_query",
     "save_recommendation_outcome_record",
+    "save_recommendation_outcome_records",
 ]
