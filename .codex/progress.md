@@ -1150,3 +1150,8 @@
 
 - Completed packet: improved `wq record-outcomes --dry-run` validation guidance for local outcome-decision JSON so blank or malformed decisions name the affected item and print the full fix guidance directly instead of using a clipped parameter-error usage box.
 - Verification: focused outcome-decision and outcome-recording CLI tests passed (`tests\test_outcome_batch_decisions.py`, `tests\test_cli_record_outcomes.py`, `tests\test_cli_record_outcome.py`); full bundled Python test suite passed with 601 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. The real run #13 blank decisions file still fails safely without writes and now reports `decision 1 for 'Exalted Orb / Divine Orb (Standard UI)' blank outcome`.
+
+## 2026-05-28 Outcome Decision Template Overwrite Guard
+
+- Completed packet: protected `wq review-queue --decisions-output-path` from overwriting an existing outcome-decisions file that already contains human labels, while still allowing all-blank templates to be refreshed.
+- Verification: focused review-queue worksheet/queue/coverage tests passed (`tests\test_cli_review_queue_worksheet.py`, `tests\test_cli_review_queue.py`, `tests\test_cli_review_coverage.py`); full bundled Python test suite passed with 603 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. The real run #13 blank outcome-decisions template still refreshes successfully because it contains no human labels.

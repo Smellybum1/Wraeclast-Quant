@@ -34,11 +34,15 @@ def write_review_queue_outputs(
         )
         typer.echo(f"Wrote review queue worksheet to {output_path}")
     if decisions_output_path is not None:
-        write_review_queue_decisions_template(
-            decisions_output_path,
-            run_id=run.id,
-            opportunities=opportunities,
-        )
+        try:
+            write_review_queue_decisions_template(
+                decisions_output_path,
+                run_id=run.id,
+                opportunities=opportunities,
+            )
+        except ValueError as error:
+            typer.echo(str(error), err=True)
+            raise typer.Exit(code=1) from error
         typer.echo(f"Wrote outcome decisions template to {decisions_output_path}")
         typer.echo(
             f"Next: fill outcome labels, then run "

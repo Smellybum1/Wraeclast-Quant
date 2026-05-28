@@ -37,6 +37,7 @@ def write_review_queue_decisions_template(
     run_id: int,
     opportunities: list[StoredOpportunityRecord],
 ) -> None:
+    ensure_outcome_decisions_template_can_be_written(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(
@@ -49,7 +50,42 @@ def write_review_queue_decisions_template(
     )
 
 
+def ensure_outcome_decisions_template_can_be_written(path: Path) -> None:
+    if not path.exists():
+        return
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(
+            "outcome decisions file already exists and could not be safely inspected; "
+            f"refusing to overwrite local review work: {path}"
+        ) from error
+    if _has_outcome_labels(payload):
+        raise ValueError(
+            "outcome decisions file already contains outcome labels; "
+            f"refusing to overwrite local review work: {path}"
+        )
+
+
+def _has_outcome_labels(payload: object) -> bool:
+    if not isinstance(payload, dict):
+        return True
+    decisions = payload.get("decisions")
+    if not isinstance(decisions, list):
+        return True
+    for decision in decisions:
+        if not isinstance(decision, dict):
+            return True
+        outcome = decision.get("outcome", "")
+        if not isinstance(outcome, str):
+            return True
+        if outcome.strip():
+            return True
+    return False
+
+
 __all__ = [
+    "ensure_outcome_decisions_template_can_be_written",
     "review_queue_decisions_payload",
     "write_review_queue_decisions_template",
 ]
