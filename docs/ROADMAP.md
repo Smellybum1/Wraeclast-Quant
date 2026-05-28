@@ -624,7 +624,7 @@
 - Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
 - Do not pursue GGG OAuth access or live official Currency Exchange HTTP for now; focus on non-OAuth manual/fixture workflows and local decision-support.
 - Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local manual observations; add `--history-path` and `--output-fixture-path` when creating a local preview connector fixture.
-- For the current no-OAuth MVP proof, review run #13 using `data/processed/review_queue.md` and `data/processed/outcome_decisions.json`, then run `wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run` before recording any outcomes.
+- Run #13 no-OAuth MVP review is closed at 6/6 reviewed after human-filled `data/processed/outcome_decisions.json`; all six labels are positive, local outcome/calibration reports and public/static artifacts were refreshed, and fresh backup `data/backups/wraeclast_quant_20260528T075639Z.db` verifies latest run #13.
 - Exile-UI/Stash-Ninja companion support now starts with a derived-only local watchlist export; do not write Exile-UI settings or price caches.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
@@ -710,6 +710,7 @@
 - Watchlist table rendering and review-guidance text are split from command registration behind a focused helper, preserving CLI output and local review next actions.
 - Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
 - Batch outcome decision loading and validation are split from outcome command registration behind a focused helper, preserving `record-outcomes` CLI behavior and error wording.
+- Batch outcome-decision row and repository validation helpers are split from JSON loading behind the existing batch-decisions facade, preserving `record-outcomes` imports and error wording.
 - Review-queue local context file loading is split from review-queue command registration behind a focused helper, preserving worksheet context behavior and size/read error wording.
 - Review-queue run selection, unreviewed-opportunity loading, and coverage loading are split from review-queue command registration behind a focused helper, preserving review queue and review coverage output behavior.
 - Review-queue optional worksheet and outcome-decisions file writing is split from review-queue command registration behind a focused helper, preserving CLI output and local review artifacts.

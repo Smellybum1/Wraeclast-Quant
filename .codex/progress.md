@@ -1181,3 +1181,18 @@
 - Safety boundary remains unchanged: do not pursue live OAuth, live HTTP collection, scraping, Discord collection, Exile-UI file mutation, gameplay automation, trade automation, or game-client interaction.
 - Next recommended packet: if the user has filled run #13 outcome labels, run `wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run`; only if that passes, run `wq record-outcomes --input-path data/processed/outcome_decisions.json`, then inspect `wq review-coverage --run-id 13`, `wq outcomes`, `wq outcome-review`, and `wq calibration`, refresh local reports/artifacts as needed, and rerun strict status plus publish check.
 - If run #13 labels are still blank, either ask the user to complete the human review labels or continue only bounded behavior-preserving maintainability packets around the local manual-review loop.
+
+## 2026-05-28 Outcome Batch Validation Helper
+
+- Startup checks: direct `wq` and `python` were not on PATH in this shell, so the bundled Python runtime was used to invoke the Typer app. `git status --short --branch` reported `main...origin/main`; `wq status --strict` and `wq publish-check` passed through the module entry point before edits.
+- Completed packet: split batch outcome-decision row normalization, aggregate error formatting, and repository validation into `maintenance_outcome_batch_decision_validation`, keeping `maintenance_outcome_batch_decisions` as the stable loader/facade imported by `record-outcomes`.
+- Verification: focused outcome batch tests passed (`tests\test_outcome_batch_decisions.py`, `tests\test_cli_record_outcomes.py`, `tests\test_cli_record_outcomes_validation.py`); full bundled Python test suite passed with 606 tests; `git diff --check` passed with only the existing LF/CRLF warning on the touched facade file. The real run #13 blank decisions dry run still reports all 6 blank outcomes and exits nonzero without writing records.
+- Current review state: run #13 remains 0/6 reviewed because `data/processed/outcome_decisions.json` still has blank labels. Do not run the final `record-outcomes` write until human positive/neutral/negative labels are present and the dry run passes.
+
+## 2026-05-28 Run #13 Outcome Recording
+
+- Completed packet: after the user filled `data/processed/outcome_decisions.json`, `record-outcomes --dry-run` validated 6 run #13 decisions and the final batch write recorded all 6 outcomes. Run #13 review coverage is now 6/6 reviewed, 100.0%, with all six outcomes labeled positive.
+- Local feedback inspected: `review-coverage --run-id 13`, `outcomes`, `outcome-review`, and `calibration` all ran successfully. Calibration now shows 21 total outcomes across runs #10-#13: 15 neutral and 6 positive, with run #13 positives including four AVOID recommendations.
+- Refreshed artifacts: `outcome-report --output-path data/processed/outcome_review.md`, `calibration-report --output-path data/processed/calibration_report.md`, `export`, `site`, and `site-bundle` ran successfully so local reports and derived-only public/static artifacts reflect the reviewed run.
+- Backup and verification: `backup-db` created verified backup `data/backups/wraeclast_quant_20260528T075639Z.db`; `status --strict`, `publish-check`, and `git diff --check` passed after refresh. Direct `wq` remains absent from PATH in this shell, so commands were invoked through the bundled Python Typer app.
+- Next recommended packet: prepare the next local Currency Exchange manual snapshot or UI observation with stock ladders captured first, then run the no-OAuth daily loop from `docs/MVP_DAILY_WORKFLOW.md`; if no new observation is available, continue bounded behavior-preserving maintainability around the manual review loop.
