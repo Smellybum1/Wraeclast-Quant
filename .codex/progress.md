@@ -1095,3 +1095,8 @@
 
 - Completed packet: split review queue batch next-step text and one-off `record-outcome` command-template text into focused helpers in `reports.review_queue_commands`, leaving `maintenance_outcome_review_queue_rendering` focused on table rendering while preserving CLI output.
 - Verification: focused review queue command/rendering tests passed (`tests\test_cli_review_queue.py`, `tests\test_cli_review_coverage.py`, `tests\test_review_queue_commands.py`); `git diff --check`, `wq status --strict`, and `wq publish-check` passed. `record-outcomes --dry-run` correctly remains blocked because run #13 decisions still have blank outcomes.
+
+## 2026-05-28 Outcome Batch Rendering Helper
+
+- Completed packet: split `record-outcomes` dry-run success, batch write success, and rollback/error text into focused rendering helpers in `maintenance_outcome_records_rendering`, leaving `maintenance_outcome_records` focused on command orchestration while preserving CLI output and all-or-nothing local outcome recording behavior.
+- Verification: focused outcome CLI/storage/rendering tests passed (`tests\test_cli_record_outcome.py`, `tests\test_outcome_record_rendering.py`, `tests\test_storage_outcomes.py`, `tests\test_storage_outcome_validation.py`); full bundled Python test suite passed with 583 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains 0/6 reviewed because outcome labels are still blank in `data/processed/outcome_decisions.json`.

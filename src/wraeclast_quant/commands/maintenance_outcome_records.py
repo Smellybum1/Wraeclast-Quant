@@ -10,12 +10,14 @@ from wraeclast_quant.commands.maintenance_outcome_batch_decisions import (
     validate_batch_outcome_decisions,
 )
 from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
+    batch_outcome_dry_run_success_message,
+    batch_outcome_record_success_message,
+    batch_outcome_write_error_message,
     post_outcome_record_next_steps,
     print_no_outcomes,
     print_outcome_record,
     print_recent_outcomes,
 )
-from wraeclast_quant.reports.review_queue_commands import record_outcomes_command
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
@@ -62,23 +64,22 @@ def register(app: typer.Typer) -> None:
             validate_batch_outcome_decisions(repository, run_id, decisions)
             if dry_run:
                 typer.echo(
-                    f"Validated {len(decisions)} outcome decision(s) for run #{run_id} "
-                    f"from {input_path}; no records written."
+                    batch_outcome_dry_run_success_message(
+                        len(decisions),
+                        run_id,
+                        input_path,
+                    )
                 )
-                typer.echo(f"Next: {record_outcomes_command(str(input_path))}")
                 return
             try:
                 records = repository.save_recommendation_outcome_batch(run_id, decisions)
             except sqlite3.Error as error:
-                typer.echo(
-                    f"Error: could not record outcome batch; no records written: {error}",
-                    err=True,
-                )
+                typer.echo(batch_outcome_write_error_message(error), err=True)
                 raise typer.Exit(code=1) from error
         except ValueError as error:
             raise typer.BadParameter(str(error)) from error
 
-        typer.echo(f"Recorded {len(records)} outcome(s) for run #{run_id} from {input_path}.")
+        typer.echo(batch_outcome_record_success_message(len(records), run_id, input_path))
         typer.echo(post_outcome_record_next_steps(run_id))
 
     @app.command()
