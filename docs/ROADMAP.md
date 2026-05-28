@@ -610,6 +610,7 @@
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
 - Run #11 is the first Standard league manual UI-observation proof run from visible in-game Currency Exchange ratio/stock rows; it is now fully reviewed at 6/6 outcomes, all neutral, with strict status and publish checks passing.
+- Run #12 is the latest Standard league manual UI-observation run from user-provided Currency Exchange screenshots; it is fully reviewed at 6/6 outcomes, all neutral, with fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
 - Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.

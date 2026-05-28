@@ -1053,3 +1053,14 @@
 - Roadmap update: recorded the new skill feedback loop as completed local workflow infrastructure.
 - Verification: docs-only review of `.codex/skill_feedback.md` passed; `git diff --check`, `status --strict`, and `publish-check` passed after edits.
 - Next recommended use: add entries only when future runs show repeated workflow friction, missed checks, or candidate guidance improvements that can be validated.
+
+## 2026-05-28 Run #12 Standard UI Observation
+
+- Completed packet: transcribed user-provided Standard Currency Exchange screenshots into `data/processed/standard_currency_exchange_ui_observation.json`, converted them to `data/processed/standard_currency_exchange_manual_import.json`, and generated the local review sidecar `data/processed/standard_currency_exchange_ui_observation_review.md`.
+- Run result: `wq daily --input-path data/processed/standard_currency_exchange_manual_import.json --stash-ninja-watchlist` created run #12 with 6 manual-import recommendations. `Exalted Orb / Divine Orb (Standard UI)` scored 66.26 / WATCH; the ratio-only or no-stock rows scored conservative AVOID outcomes. A medium alert noted Exalted/Divine increased from 56.16 to 66.26 while remaining WATCH.
+- Review state: `wq watchlist --run-id 12`, `wq review-queue --run-id 12`, and `wq review-coverage --run-id 12` were inspected. Review coverage is now closed at 6/6, all neutral, after the user filled `data/processed/outcome_decisions.json` and recorded the batch.
+- Artifact refresh: `wq site-bundle` refreshed the local site bundle for run #12 after strict status initially flagged the bundle as stale.
+- Local feedback loop: `wq outcome-review` and `wq calibration` were inspected; `wq outcome-report --output-path data/processed/outcome_review.md` and `wq calibration-report --output-path data/processed/calibration_report.md` refreshed local-only review artifacts. All 15 recorded outcomes across runs #10-#12 are neutral.
+- Backup: `wq backup-db` created and verified `data/backups/wraeclast_quant_20260528T014523Z.db`, covering latest run #12.
+- Verification: `wq validate-import --input-path data/processed/standard_currency_exchange_manual_import.json`, `wq status --strict`, and `wq publish-check` passed for run #12 after outcome recording and backup. No OAuth, live HTTP, scraping, OCR, gameplay automation, trade automation, Exile-UI mutation, or publishing was performed.
+- Next recommended packet: use a fresh user-supplied Standard/current-league Currency Exchange manual snapshot or UI observation for the next no-OAuth daily run; if none is available, continue another bounded behavior-preserving maintainability packet around the local manual-review loop.
