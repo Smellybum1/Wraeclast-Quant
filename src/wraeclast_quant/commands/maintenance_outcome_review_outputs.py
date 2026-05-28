@@ -20,6 +20,7 @@ def write_review_queue_outputs(
     output_path: Path | None,
     decisions_output_path: Path | None,
     context_path: Path | None,
+    database_path: object | None = None,
     run: AnalysisRunRecord,
     opportunities: list[StoredOpportunityRecord],
 ) -> None:
@@ -46,7 +47,7 @@ def write_review_queue_outputs(
         typer.echo(f"Wrote outcome decisions template to {decisions_output_path}")
         typer.echo(
             f"Next: fill outcome labels, then run "
-            f"{record_outcomes_dry_run_command(str(decisions_output_path))}."
+            f"{record_outcomes_dry_run_command(str(decisions_output_path), database_path=database_path)}."
         )
 
 

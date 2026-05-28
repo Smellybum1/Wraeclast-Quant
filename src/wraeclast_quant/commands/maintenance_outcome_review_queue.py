@@ -73,11 +73,18 @@ def register(app: typer.Typer) -> None:
             )
             return
 
-        print_review_queue(run.id, run.source_mode, opportunities)
+        handoff_database_path = _handoff_database_path(database_path)
+        print_review_queue(
+            run.id,
+            run.source_mode,
+            opportunities,
+            database_path=handoff_database_path,
+        )
         write_review_queue_outputs(
             output_path=output_path,
             decisions_output_path=decisions_output_path,
             context_path=context_path,
+            database_path=handoff_database_path,
             run=run,
             opportunities=opportunities,
         )
@@ -99,6 +106,7 @@ def register(app: typer.Typer) -> None:
             run.id,
             run.source_mode,
             coverage,
+            database_path=_handoff_database_path(database_path),
             calibration_prompts=_calibration_prompts_for_completed_run(
                 repository,
                 coverage,
@@ -113,3 +121,9 @@ def _calibration_prompts_for_completed_run(
     if coverage.unreviewed_recommendations:
         return []
     return calibration_review_prompts(build_calibration(repository))
+
+
+def _handoff_database_path(database_path: Path) -> Path | None:
+    if database_path == DEFAULT_DATABASE_PATH:
+        return None
+    return database_path

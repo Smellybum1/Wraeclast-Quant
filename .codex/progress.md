@@ -1378,3 +1378,9 @@
 - Completed packet: successful manual-import `wq daily --input-path <file>` output now prints the matching `wq run-provenance --database-path <database> --run-id <id>` and `wq review-coverage --database-path <database> --run-id <id>` next actions for the created run, keeping the local daily run connected to provenance and outcome-review setup.
 - Documentation updated: `README.md`, `docs/DAILY_PIPELINE.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the post-daily provenance/review handoff.
 - Verification: focused daily CLI/rendering plus MVP/manual-import docs tests passed with 13 tests after making the long-path CLI assertion wrapping-tolerant; real temp `daily --input-path` smoke printed the next action, and both printed follow-up commands passed against the temp database; full bundled Python test suite passed with 637 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Review Queue Database Path Handoff
+
+- Completed packet: `wq review-queue` and `wq review-coverage` now preserve a non-default `--database-path` in printed batch-review, decisions-template, dry-run, and one-off `record-outcome` command templates, so temp or alternate local databases do not fall back to the default SQLite path during manual outcome review.
+- Documentation updated: `docs/OUTCOMES.md` and `docs/ROADMAP.md` describe the non-default database-path handoff behavior.
+- Verification: focused review-queue/coverage/decisions/worksheet plus daily-input/outcome-contract tests passed with 27 tests; real temp review-coverage and review-queue smokes preserved `--database-path` in every printed review command; full bundled Python test suite passed with 639 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

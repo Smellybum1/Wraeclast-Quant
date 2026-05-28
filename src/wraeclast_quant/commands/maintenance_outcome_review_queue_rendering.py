@@ -34,6 +34,8 @@ def print_review_queue(
     run_id: int,
     source_mode: str,
     opportunities: list[StoredOpportunityRecord],
+    *,
+    database_path: object | None = None,
 ) -> None:
     table = Table(title=f"Recommendation Review Queue - Run #{run_id} ({source_mode})")
     table.add_column("Item")
@@ -48,11 +50,12 @@ def print_review_queue(
     console.print(table)
     console.print(local_review_caveat(source_mode))
     console.print(outcome_label_guide())
-    console.print(batch_outcome_review_steps(run_id))
+    console.print(batch_outcome_review_steps(run_id, database_path=database_path))
     console.print(
         record_outcome_command_templates(
             run_id,
             [opportunity.item_name for opportunity in opportunities],
+            database_path=database_path,
         )
     )
 
@@ -61,6 +64,8 @@ def print_review_coverage(
     run_id: int,
     source_mode: str,
     coverage: ReviewCoverageRecord,
+    *,
+    database_path: object | None = None,
     calibration_prompts: list[str] | None = None,
 ) -> None:
     table = Table(title=f"Recommendation Review Coverage - Run #{run_id} ({source_mode})")
@@ -78,6 +83,6 @@ def print_review_coverage(
     console.print(local_review_caveat(source_mode))
     console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
-        console.print(batch_outcome_review_steps(run_id))
+        console.print(batch_outcome_review_steps(run_id, database_path=database_path))
     elif calibration_prompts:
         console.print(calibration_prompt_next_action(len(calibration_prompts)))
