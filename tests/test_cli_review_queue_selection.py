@@ -6,6 +6,7 @@ from wraeclast_quant.cli import app
 
 from cli_outcome_command_helpers import review_queue_args as _review_queue_args
 from cli_outcome_database_helpers import (
+    fully_reviewed_calibration_prompt_database as _fully_reviewed_calibration_prompt_database,
     reviewed_single_opportunity_database as _reviewed_single_opportunity_database,
 )
 from cli_outcome_database_helpers import two_run_database as _two_run_database
@@ -47,6 +48,23 @@ def test_review_queue_command_handles_fully_reviewed_run(tmp_path: Path) -> None
 
     assert result.exit_code == 0
     assert "No unreviewed recommendations found for run #1." in result.output
+
+
+def test_review_queue_points_fully_reviewed_prompt_patterns_to_calibration(
+    tmp_path: Path,
+) -> None:
+    database_path, run = _fully_reviewed_calibration_prompt_database(tmp_path)
+
+    result = runner.invoke(
+        app,
+        _review_queue_args(database_path, run_id=run.id),
+    )
+
+    assert result.exit_code == 0
+    assert f"No unreviewed recommendations found for run #{run.id}." in result.output
+    assert "Calibration prompts: 2 local read-only prompt(s)." in result.output
+    assert "Next: wq calibration" in result.output
+    assert "do not retune scoring or change recommendations" in result.output
 
 
 def test_review_queue_command_rejects_missing_run(tmp_path: Path) -> None:

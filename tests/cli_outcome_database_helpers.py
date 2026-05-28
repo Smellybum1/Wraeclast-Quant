@@ -80,8 +80,27 @@ def calibration_reviewed_database(tmp_path: Path) -> Path:
     return database_path
 
 
+def fully_reviewed_calibration_prompt_database(
+    tmp_path: Path,
+) -> tuple[Path, AnalysisRunRecord]:
+    database_path = tmp_path / "snapshots.db"
+    repository = SnapshotRepository(database_path)
+    run = save_scored_run(
+        repository,
+        [
+            opportunity("Avoid Good", 20.0, "AVOID"),
+            opportunity("Watch Mixed", 60.0, "WATCH"),
+        ],
+        source_mode="manual-import",
+    )
+    repository.save_recommendation_outcome(run.id, "Avoid Good", "positive")
+    repository.save_recommendation_outcome(run.id, "Watch Mixed", "neutral")
+    return database_path, run
+
+
 __all__ = [
     "calibration_reviewed_database",
+    "fully_reviewed_calibration_prompt_database",
     "partially_reviewed_two_item_database",
     "reviewed_single_opportunity_database",
     "two_run_database",

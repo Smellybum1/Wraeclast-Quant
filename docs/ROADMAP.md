@@ -676,6 +676,7 @@
 - `wq stash-ninja-watchlist`, Stash-Ninja companion Markdown, and daily opt-in handoff output now point fully reviewed runs with local calibration review prompts back to `wq calibration`, while unreviewed runs keep the batch outcome-review next action.
 - `wq review-queue` now prints concise batch review next steps before one-off command templates, keeping the interactive review surface aligned with status, watchlist, worksheet, and Stash-Ninja guidance.
 - `wq review-coverage` now prints the same concise batch review next steps for unreviewed runs, avoiding a wrapped one-line command in the primary coverage readout.
+- `wq review-queue` and `wq review-coverage` now point fully reviewed runs with local calibration review prompts back to `wq calibration`, keeping the post-review CLI loop from dead-ending after 100% coverage.
 - Review queue worksheets now include a local-only review checklist before command options, clarifying the inspect-decide-record-rerun coverage loop for MVP outcome review.
 - Blank outcome-decisions template entries now fail `record-outcomes --dry-run` with fill-and-rerun guidance instead of a generic invalid-label error.
 - Blank or malformed outcome-decisions entries now name the affected item in `record-outcomes --dry-run` validation output and avoid clipped usage-box errors for the batch JSON workflow.

@@ -6,6 +6,7 @@ from wraeclast_quant.cli import app
 
 from cli_outcome_command_helpers import review_coverage_args as _review_coverage_args
 from cli_outcome_database_helpers import (
+    fully_reviewed_calibration_prompt_database as _fully_reviewed_calibration_prompt_database,
     partially_reviewed_two_item_database as _partially_reviewed_two_item_database,
 )
 from cli_outcome_database_helpers import (
@@ -48,6 +49,24 @@ def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
     assert f"wq review-queue --run-id {first.id}" in result.output
     assert "data/processed/review_queue.md" in result.output
     assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
+
+
+def test_review_coverage_points_fully_reviewed_prompt_patterns_to_calibration(
+    tmp_path: Path,
+) -> None:
+    database_path, run = _fully_reviewed_calibration_prompt_database(tmp_path)
+
+    result = runner.invoke(
+        app,
+        _review_coverage_args(database_path, run_id=run.id),
+    )
+
+    assert result.exit_code == 0
+    assert "100.0%" in result.output
+    assert "Calibration prompts: 2 local read-only prompt(s)." in result.output
+    assert "Next: wq calibration" in result.output
+    assert "do not retune scoring or change recommendations" in result.output
+    assert "Batch review next steps:" not in result.output
 
 
 def test_review_coverage_command_handles_no_snapshots(tmp_path: Path) -> None:

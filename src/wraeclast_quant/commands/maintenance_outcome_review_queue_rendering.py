@@ -7,6 +7,7 @@ from wraeclast_quant.reports.review_queue_commands import (
     batch_outcome_review_steps,
     record_outcome_command_templates,
 )
+from wraeclast_quant.reports.review_guidance import calibration_prompt_next_action
 from wraeclast_quant.reports.review_queue_worksheet import (
     local_review_caveat,
     outcome_label_guide,
@@ -20,8 +21,13 @@ def print_no_snapshots() -> None:
     console.print("No snapshots found.")
 
 
-def print_no_unreviewed_recommendations(run_id: int) -> None:
+def print_no_unreviewed_recommendations(
+    run_id: int,
+    calibration_prompts: list[str] | None = None,
+) -> None:
     console.print(f"No unreviewed recommendations found for run #{run_id}.")
+    if calibration_prompts:
+        console.print(calibration_prompt_next_action(len(calibration_prompts)))
 
 
 def print_review_queue(
@@ -51,7 +57,12 @@ def print_review_queue(
     )
 
 
-def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverageRecord) -> None:
+def print_review_coverage(
+    run_id: int,
+    source_mode: str,
+    coverage: ReviewCoverageRecord,
+    calibration_prompts: list[str] | None = None,
+) -> None:
     table = Table(title=f"Recommendation Review Coverage - Run #{run_id} ({source_mode})")
     table.add_column("Total", justify="right")
     table.add_column("Reviewed", justify="right")
@@ -68,3 +79,5 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
     console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
         console.print(batch_outcome_review_steps(run_id))
+    elif calibration_prompts:
+        console.print(calibration_prompt_next_action(len(calibration_prompts)))

@@ -67,7 +67,7 @@ wq review-coverage
 
 Run provenance is local-only audit metadata for the run. For manual-import daily runs it records path-safe input metadata, file size, SHA-256 hash, item count, and explicit no-live-collection flags.
 
-For stored runs, `wq watchlist` shows review coverage and points fully reviewed runs with local calibration review prompts back to `wq calibration`. These prompts are read-only and do not retune scoring, publish artifacts, automate trades, or change recommendations.
+For stored runs, `wq watchlist`, `wq review-queue`, and `wq review-coverage` show review state and point fully reviewed runs with local calibration review prompts back to `wq calibration`. These prompts are read-only and do not retune scoring, publish artifacts, automate trades, or change recommendations.
 
 The worksheet is local-only and includes exact positive, neutral, and negative `record-outcome` commands plus local notes fields for each unreviewed item. When you have a local context sidecar from `currency-exchange-ui-observation`, pass it with `--context-path` so the transcribed ratios and stock rows sit beside the outcome commands. Choose only one outcome per item after manual review.
 

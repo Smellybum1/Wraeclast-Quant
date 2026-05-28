@@ -1232,3 +1232,10 @@
 - Real run #13 status now reports the Stash-Ninja handoff as `1 items; 2 calibration prompt(s); manual-only companion handoff`.
 - Documentation updated: `docs/ROADMAP.md` records the completed local artifact-health improvement.
 - Verification: focused Stash-Ninja health/status tests passed with 15 tests; real `status --strict` passed.
+
+## 2026-05-28 Review Queue Calibration Prompt Handoff
+
+- Completed packet: `wq review-queue` and `wq review-coverage` now point fully reviewed runs with local calibration review prompts back to `wq calibration`, while unreviewed runs still use the worksheet plus outcome-decisions dry-run flow.
+- Real run #13 `review-coverage --run-id 13` and `review-queue --run-id 13` now both print `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration.`
+- Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, `docs/OUTCOMES.md`, and `docs/ROADMAP.md` now describe the review-queue/review-coverage calibration handoff.
+- Verification: focused review queue/coverage/docs tests passed with 19 tests; full bundled Python test suite passed with 621 tests.

@@ -17,7 +17,12 @@ from wraeclast_quant.commands.maintenance_outcome_review_selection import (
     selected_review_coverage,
     selected_unreviewed_opportunities,
 )
+from wraeclast_quant.reports.calibration import (
+    build_calibration,
+    calibration_review_prompts,
+)
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
+from wraeclast_quant.storage.models import ReviewCoverageRecord
 from wraeclast_quant.storage.repositories import SnapshotRepository
 
 
@@ -58,7 +63,14 @@ def register(app: typer.Typer) -> None:
             raise typer.BadParameter(f"analysis run #{run_id} was not found")
 
         if not opportunities:
-            print_no_unreviewed_recommendations(run.id)
+            coverage = repository.review_coverage_for_run(run.id)
+            print_no_unreviewed_recommendations(
+                run.id,
+                calibration_prompts=_calibration_prompts_for_completed_run(
+                    repository,
+                    coverage,
+                ),
+            )
             return
 
         print_review_queue(run.id, run.source_mode, opportunities)
@@ -83,4 +95,21 @@ def register(app: typer.Typer) -> None:
                 return
             raise typer.BadParameter(f"analysis run #{run_id} was not found")
 
-        print_review_coverage(run.id, run.source_mode, coverage)
+        print_review_coverage(
+            run.id,
+            run.source_mode,
+            coverage,
+            calibration_prompts=_calibration_prompts_for_completed_run(
+                repository,
+                coverage,
+            ),
+        )
+
+
+def _calibration_prompts_for_completed_run(
+    repository: SnapshotRepository,
+    coverage: ReviewCoverageRecord,
+) -> list[str]:
+    if coverage.unreviewed_recommendations:
+        return []
+    return calibration_review_prompts(build_calibration(repository))

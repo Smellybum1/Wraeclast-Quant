@@ -46,6 +46,7 @@ def test_outcome_contract_doc_matches_allowed_outcomes_and_report_markers() -> N
         assert marker in worksheet
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in doc_text
     assert "wq review-queue --output-path data/processed/review_queue.md" not in doc_text
+    assert "Fully reviewed runs with calibration review prompts point back to `wq calibration`." in doc_text
     assert "No reviewed recommendation outcomes found." in render_outcome_review([], {})
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in render_outcome_review(
         [],

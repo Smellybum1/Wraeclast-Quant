@@ -12,6 +12,7 @@ def test_mvp_daily_workflow_uses_currency_exchange_review() -> None:
     assert 'comparator: "less_than"' in text
     assert "ratio-only observations" in text
     assert "wq watchlist" in text
+    assert "`wq watchlist`, `wq review-queue`, and `wq review-coverage`" in text
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in text
     assert "wq outcome-review" in text
     assert "wq calibration" in text
