@@ -6,8 +6,9 @@ from wraeclast_quant.reports.review_queue_commands import status_outcome_review_
 
 
 NEXT_MANUAL_OBSERVATION_ACTION = (
-    "next: wq currency-exchange-manual-snapshot --input-path <current-snapshot>; "
-    "then follow docs/MVP_DAILY_WORKFLOW.md to create <manual-import-output> "
+    "next: prepare a local Currency Exchange manual snapshot or UI observation "
+    "(capture stock ladders first); then follow docs/MVP_DAILY_WORKFLOW.md "
+    "to create <manual-import-output> "
     "and run wq daily --input-path <manual-import-output>."
 )
 

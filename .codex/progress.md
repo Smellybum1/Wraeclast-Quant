@@ -1070,3 +1070,9 @@
 - Completed packet: added a capture checklist to `docs/MVP_DAILY_WORKFLOW.md` so future no-OAuth UI observations gather market ratio, visible ratio/stock ladder rows, final `<` aggregate row, no-stock state, and ratio-only notes before `wq daily --input-path <manual-import-output>`.
 - Skill feedback: recorded the run #12 capture friction in `.codex/skill_feedback.md`; the accepted guidance edit is docs/test only and does not change scoring, persistence, source approval, live collection, or public artifact contracts.
 - Verification: bundled Python focused docs contract test `tests/test_mvp_daily_workflow_contract.py --basetemp=.tmp-pytest-mvp-capture-checklist -p no:cacheprovider` passed with 2 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 MVP Readiness Next Action Wording
+
+- Completed packet: updated CLI and static-site MVP readiness next-action wording so fully reviewed or empty local loops point to either a manual Currency Exchange snapshot or a UI observation, with stock-ladder capture called out before the next daily run.
+- Artifact refresh: regenerated the local static site and site bundle so the on-disk dashboard reflects the updated MVP readiness wording.
+- Verification: bundled Python focused tests `tests/test_status_health_mvp_rows.py tests/test_static_site_review_loop.py tests/test_mvp_daily_workflow_contract.py --basetemp=.tmp-pytest-mvp-readiness-ui-wording -p no:cacheprovider` passed with 9 tests; `site`, `site-bundle`, `status --strict`, `publish-check`, and `git diff --check` passed.

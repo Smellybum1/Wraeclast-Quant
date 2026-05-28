@@ -29,7 +29,8 @@ def test_static_site_points_fully_reviewed_runs_to_manual_snapshot_loop() -> Non
     html = render_static_site(payload)
 
     assert "<th>Review state</th><td>2/2 reviewed</td>" in html
-    assert "wq currency-exchange-manual-snapshot --input-path &lt;current-snapshot&gt;" in html
+    assert "manual snapshot or UI observation" in html
+    assert "capture stock ladders first" in html
     assert "docs/MVP_DAILY_WORKFLOW.md" in html
     assert "wq daily --input-path &lt;manual-import-output&gt;" in html
 

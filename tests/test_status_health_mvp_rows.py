@@ -36,7 +36,8 @@ def test_mvp_readiness_points_fully_reviewed_runs_to_manual_snapshot_loop() -> N
     details = mvp_readiness_details(context)
 
     assert "2/2 reviewed" in details
-    assert "wq currency-exchange-manual-snapshot --input-path <current-snapshot>" in details
+    assert "manual snapshot or UI observation" in details
+    assert "capture stock ladders first" in details
     assert "docs/MVP_DAILY_WORKFLOW.md" in details
     assert "wq daily --input-path <manual-import-output>" in details
 
@@ -100,5 +101,6 @@ def test_mvp_readiness_points_empty_state_to_manual_snapshot_loop() -> None:
     details = mvp_readiness_details(context)
 
     assert details.startswith("No local run yet")
-    assert "wq currency-exchange-manual-snapshot --input-path <current-snapshot>" in details
+    assert "manual snapshot or UI observation" in details
+    assert "capture stock ladders first" in details
     assert "wq daily --input-path <manual-import-output>" in details

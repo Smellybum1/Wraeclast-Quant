@@ -612,6 +612,7 @@
 - Run #11 is the first Standard league manual UI-observation proof run from visible in-game Currency Exchange ratio/stock rows; it is now fully reviewed at 6/6 outcomes, all neutral, with strict status and publish checks passing.
 - Run #12 is the latest Standard league manual UI-observation run from user-provided Currency Exchange screenshots; it is fully reviewed at 6/6 outcomes, all neutral, with fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
 - MVP daily workflow docs now include a UI-observation capture checklist so stock-ladder rows and final aggregate rows are gathered before a daily run is recorded.
+- MVP readiness guidance now points fully reviewed or empty local loops to either a manual snapshot or UI observation, with stock-ladder capture called out before the next daily run.
 - Obtain source-owner documentation or confirmation for the poe.ninja POE2 currency endpoint and response-field schema before enabling any live network collection.
 - Before official Currency Exchange live implementation, build OAuth/app-registration handling, user-agent/contact configuration, dynamic rate-limit parsing, cache/backoff behavior, credential storage outside the repo, and failure-closed tests.
 - Keep official Currency Exchange live HTTP blocked until those auth/cache/runtime decisions are implemented; do not reuse browser sessions or trade-site cookies for connector automation.

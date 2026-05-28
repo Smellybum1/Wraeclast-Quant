@@ -7,8 +7,9 @@ from wraeclast_quant.reports.static_site_html import key_value_table, section
 
 
 NEXT_MANUAL_OBSERVATION_ACTION = (
-    "Run wq currency-exchange-manual-snapshot --input-path <current-snapshot>, "
-    "then follow docs/MVP_DAILY_WORKFLOW.md to create <manual-import-output> "
+    "Prepare a local Currency Exchange manual snapshot or UI observation "
+    "(capture stock ladders first), then follow docs/MVP_DAILY_WORKFLOW.md "
+    "to create <manual-import-output> "
     "and run wq daily --input-path <manual-import-output>"
 )
 
