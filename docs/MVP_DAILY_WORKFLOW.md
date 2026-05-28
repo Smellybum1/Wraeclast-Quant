@@ -60,7 +60,7 @@ wq run-provenance --run-id <id>
 wq watchlist
 wq review-queue
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md
-wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions.json
+wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions_run_<id>.json
 wq review-queue --run-id <id> --output-path data/processed/review_queue.md --context-path data/processed/ui_observation_review.md
 wq review-coverage
 ```
@@ -80,12 +80,12 @@ wq record-outcome --run-id <id> --item-name <name> --outcome positive|neutral|ne
 For a reviewed batch, put the human decisions in local JSON and record them together:
 
 ```powershell
-wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions.json
-wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run
-wq record-outcomes --input-path data/processed/outcome_decisions.json
+wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions_run_<id>.json
+wq record-outcomes --input-path data/processed/outcome_decisions_run_<id>.json --dry-run
+wq record-outcomes --input-path data/processed/outcome_decisions_run_<id>.json
 ```
 
-The dry run validates the edited file without writing records and reports all row-level template errors together. The batch write command validates the whole file again before writing any outcome.
+The dry run validates the edited run-scoped file without writing records and reports all row-level template errors together. The batch write command validates the whole file again before writing any outcome.
 
 9. Inspect the local feedback loop after recording outcomes:
 

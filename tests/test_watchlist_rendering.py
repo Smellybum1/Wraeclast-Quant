@@ -18,6 +18,6 @@ def test_manual_review_handoff_next_action_prioritizes_unreviewed_items() -> Non
         calibration_prompt_count=2,
     ) == (
         "Next: wq review-queue --run-id 13 --output-path data/processed/review_queue.md; "
-        "wq review-queue --run-id 13 --decisions-output-path data/processed/outcome_decisions.json; "
-        "fill outcomes; wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run"
+        "wq review-queue --run-id 13 --decisions-output-path data/processed/outcome_decisions_run_13.json; "
+        "fill outcomes; wq record-outcomes --input-path data/processed/outcome_decisions_run_13.json --dry-run"
     )

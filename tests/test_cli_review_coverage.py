@@ -30,8 +30,8 @@ def test_review_coverage_command_prints_latest_run_coverage(tmp_path: Path) -> N
     assert "Batch review next steps:" in result.output
     assert "wq review-queue --run-id 1" in result.output
     assert "data/processed/review_queue.md" in result.output
-    assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json" in result.output
+    assert "--decisions-output-path data/processed/outcome_decisions_run_1.json" in result.output
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions_run_1.json" in result.output
     assert "--dry-run" in result.output
 
 
@@ -48,7 +48,7 @@ def test_review_coverage_command_uses_requested_run_id(tmp_path: Path) -> None:
     assert "Batch review next steps:" in result.output
     assert f"wq review-queue --run-id {first.id}" in result.output
     assert "data/processed/review_queue.md" in result.output
-    assert "--decisions-output-path data/processed/outcome_decisions.json" in result.output
+    assert "--decisions-output-path data/processed/outcome_decisions_run_1.json" in result.output
 
 
 def test_review_coverage_points_fully_reviewed_prompt_patterns_to_calibration(

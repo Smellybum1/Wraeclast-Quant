@@ -50,9 +50,12 @@ def test_daily_can_write_stash_ninja_handoff_for_created_run(tmp_path: Path) -> 
     assert f"Next: wq review-queue --run-id {latest.id} --output-path data/processed/review_queue.md" in result.output
     assert (
         f"wq review-queue --run-id {latest.id} --decisions-output-path "
-        "data/processed/outcome_decisions.json"
+        f"data/processed/outcome_decisions_run_{latest.id}.json"
     ) in result.output
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in result.output
+    assert (
+        f"wq record-outcomes --input-path "
+        f"data/processed/outcome_decisions_run_{latest.id}.json --dry-run"
+    ) in result.output
     assert "Manual application required" in markdown
 
 

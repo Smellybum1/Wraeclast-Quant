@@ -55,7 +55,7 @@ def test_outcome_contract_doc_matches_allowed_outcomes_and_report_markers() -> N
         [],
         {},
     )
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in render_outcome_review(
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions_run_<id>.json --dry-run" in render_outcome_review(
         [],
         {},
     )

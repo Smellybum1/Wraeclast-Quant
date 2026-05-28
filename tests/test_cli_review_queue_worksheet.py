@@ -38,10 +38,10 @@ def test_review_queue_command_writes_local_review_worksheet(tmp_path: Path) -> N
     assert "## Batch Outcome Template" in worksheet
     assert (
         "`wq review-queue --run-id 1 --decisions-output-path "
-        "data/processed/outcome_decisions.json`"
+        "data/processed/outcome_decisions_run_1.json`"
     ) in worksheet
     assert (
-        "`wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run`"
+        "`wq record-outcomes --input-path data/processed/outcome_decisions_run_1.json --dry-run`"
     ) in worksheet
     assert "### Open Catalyst" in worksheet
     assert '`positive`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome positive`' in worksheet

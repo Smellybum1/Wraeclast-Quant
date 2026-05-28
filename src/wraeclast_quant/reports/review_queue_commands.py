@@ -26,9 +26,10 @@ def review_queue_worksheet_command(run_id: int | str) -> str:
 
 
 def review_queue_decisions_template_command(run_id: int | str) -> str:
+    decisions_path = run_outcome_decisions_path(run_id)
     return (
         f"wq review-queue --run-id {run_id} "
-        f"--decisions-output-path {OUTCOME_DECISIONS_PATH}"
+        f"--decisions-output-path {decisions_path}"
     )
 
 
@@ -41,21 +42,23 @@ def record_outcomes_command(input_path: str = OUTCOME_DECISIONS_PATH) -> str:
 
 
 def batch_outcome_review_next_action(run_id: int | str) -> str:
+    decisions_path = run_outcome_decisions_path(run_id)
     return (
         f"{review_queue_worksheet_command(run_id)}; "
         f"{review_queue_decisions_template_command(run_id)}; "
-        f"fill outcomes; {record_outcomes_dry_run_command()}"
+        f"fill outcomes; {record_outcomes_dry_run_command(decisions_path)}"
     )
 
 
 def batch_outcome_review_steps(run_id: int | str) -> str:
+    decisions_path = run_outcome_decisions_path(run_id)
     return "\n".join(
         [
             "Batch review next steps:",
             f"  {review_queue_worksheet_command(run_id)}",
             f"  {review_queue_decisions_template_command(run_id)}",
-            f"  Fill outcome labels in {OUTCOME_DECISIONS_PATH}.",
-            f"  {record_outcomes_dry_run_command()}",
+            f"  Fill outcome labels in {decisions_path}.",
+            f"  {record_outcomes_dry_run_command(decisions_path)}",
         ]
     )
 
@@ -69,6 +72,10 @@ def status_outcome_review_next_action(run_id: int | str) -> str:
         f"{review_coverage_command(run_id)} for worksheet, "
         "outcome-decisions, and dry-run steps"
     )
+
+
+def run_outcome_decisions_path(run_id: int | str) -> str:
+    return f"data/processed/outcome_decisions_run_{run_id}.json"
 
 
 def record_outcome_command(
@@ -110,5 +117,6 @@ __all__ = [
     "review_coverage_command",
     "review_queue_decisions_template_command",
     "review_queue_worksheet_command",
+    "run_outcome_decisions_path",
     "status_outcome_review_next_action",
 ]

@@ -31,7 +31,7 @@ def test_outcome_review_report_renders_empty_message() -> None:
 
     assert "No reviewed recommendation outcomes found." in report
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in report
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in report
+    assert "wq record-outcomes --input-path data/processed/outcome_decisions_run_<id>.json --dry-run" in report
     assert "positive=useful signal" in report
     assert "Recent Reviewed Recommendations" not in report
 

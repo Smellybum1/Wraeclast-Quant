@@ -53,8 +53,8 @@ def test_outcome_review_command_handles_empty_database(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert "No reviewed recommendation outcomes found." in result.output
     assert "wq review-queue --run-id <id> --output-path data/processed/review_queue.md" in result.output
-    assert "wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions.json" in result.output
+    assert "wq review-queue --run-id <id> --decisions-output-path data/processed/outcome_decisions_run_<id>.json" in result.output
     assert "wq record-outcomes --input-path" in result.output
-    assert "data/processed/outcome_decisions.json" in result.output
+    assert "data/processed/outcome_decisions_run_<id>.json" in result.output
     assert "--dry-run" in result.output
     assert "positive=useful signal" in result.output

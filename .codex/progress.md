@@ -1252,3 +1252,9 @@
 - Completed packet: successful `wq record-outcome` writes and final `wq record-outcomes` writes now surface active local calibration prompt counts immediately after recording outcomes, keeping the post-recording handoff connected to `wq calibration` without changing dry-run/no-write behavior.
 - Documentation updated: `README.md`, `docs/OUTCOMES.md`, and `docs/ROADMAP.md` now describe the successful-write calibration prompt handoff.
 - Verification: focused outcome recording/rendering/docs tests passed with 25 tests; full bundled Python test suite passed with 625 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 Run-Scoped Outcome Decisions Handoff
+
+- Completed packet: generated review guidance now uses run-scoped outcome decision paths like `data/processed/outcome_decisions_run_<id>.json`, so filled labels from older runs remain preserved while the next unreviewed run gets a clear batch-review template path.
+- Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, `docs/OUTCOMES.md`, and `docs/ROADMAP.md` describe the run-scoped decisions path, and the roadmap current handoff now reflects run #13 as 6/6 reviewed.
+- Verification: focused review/watchlist/Stash-Ninja/static/outcome docs tests passed with 44 tests; full bundled Python test suite passed with 625 tests; real `review-coverage --run-id 13`, `status --strict`, `publish-check`, and `git diff --check` passed.

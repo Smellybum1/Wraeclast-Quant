@@ -608,13 +608,13 @@
 
 ## Recommended Next Milestones
 
-- Current handoff checkpoint: before this Markdown-only handoff polish, `main` was synced with `origin/main` at commit `b33d173` (`Split outcome batch validation tests`). Run #13 is the latest Standard no-OAuth manual UI-observation run, strict status and publish checks are passing, and review coverage is still 0/6 until the local outcome-decisions JSON is human-labeled.
+- Current handoff checkpoint: run #13 is the latest Standard no-OAuth manual UI-observation run, review coverage is closed at 6/6, strict status and publish checks are passing, and the next data step is a fresh local Currency Exchange manual snapshot or UI observation.
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
 - Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
 - Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
 - Run #11 is the first Standard league manual UI-observation proof run from visible in-game Currency Exchange ratio/stock rows; it is now fully reviewed at 6/6 outcomes, all neutral, with strict status and publish checks passing.
 - Run #12 is the latest Standard league manual UI-observation run from user-provided Currency Exchange screenshots; it is fully reviewed at 6/6 outcomes, all neutral, with fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
-- Run #13 is the latest Standard league manual UI-observation run using the richer stock-ladder screenshots for Chaos/Divine and Regal/Divine; it has 6 recommendations, 0/6 reviewed, fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
+- Run #13 is the latest Standard league manual UI-observation run using the richer stock-ladder screenshots for Chaos/Divine and Regal/Divine; it has 6 recommendations, 6/6 reviewed, fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
 - MVP daily workflow docs now include a UI-observation capture checklist so stock-ladder rows and final aggregate rows are gathered before a daily run is recorded.
 - MVP readiness guidance now points fully reviewed or empty local loops to either a manual snapshot or UI observation, with stock-ladder capture called out before the next daily run.
 - MVP readiness manual-observation next-action wording is shared by CLI status and static-site rendering behind a focused helper.
@@ -652,6 +652,7 @@
 - Review queue worksheets can now embed an optional local Markdown context file, keeping UI-observation sidecars beside exact outcome commands without recording outcomes or changing public artifacts.
 - Review queue can now write an editable local outcome-decisions JSON template for `record-outcomes`, keeping batch outcome recording tied to the same unreviewed queue.
 - Review queue outcome-decisions template writing now refuses to overwrite files that already contain human outcome labels, preserving local review work while still allowing blank templates to be refreshed.
+- Review queue guidance now uses run-scoped outcome-decision paths like `data/processed/outcome_decisions_run_<id>.json`, preserving old filled review files while keeping the next run's batch review path clear.
 - `wq record-outcomes --input-path <file> --dry-run` now validates an edited local outcome-decisions batch without writing records, so the human review file can be checked before the final write.
 - `wq review-queue --decisions-output-path <file>` now prints the matching `record-outcomes --dry-run` command after writing the editable local decisions template.
 - `wq status`, `wq review-coverage`, and static dashboard review guidance now point unreviewed runs to the worksheet plus outcome-decisions template and dry-run validation path.

@@ -45,9 +45,11 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert f"Next: wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in result.output
     assert (
         f"wq review-queue --run-id {run.id} --decisions-output-path "
-        "data/processed/outcome_decisions.json"
+        f"data/processed/outcome_decisions_run_{run.id}.json"
     ) in result.output
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json" in result.output
+    assert "wq record-outcomes" in result.output
+    assert "--input-path" in result.output
+    assert f"data/processed/outcome_decisions_run_{run.id}.json" in result.output
     assert "--dry-run" in result.output
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     assert payload["schema_version"] == "1.0"
@@ -90,9 +92,12 @@ def test_stash_ninja_watchlist_writes_derived_only_json_and_markdown(tmp_path: P
     assert f"wq review-queue --run-id {run.id} --output-path data/processed/review_queue.md" in markdown
     assert (
         f"wq review-queue --run-id {run.id} --decisions-output-path "
-        "data/processed/outcome_decisions.json"
+        f"data/processed/outcome_decisions_run_{run.id}.json"
     ) in markdown
-    assert "wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run" in markdown
+    assert (
+        f"wq record-outcomes --input-path "
+        f"data/processed/outcome_decisions_run_{run.id}.json --dry-run"
+    ) in markdown
     assert "| Divine Orb | 82.50 | BUY | bookmark-candidate |" in markdown
     assert "Low Signal Base" not in markdown
 

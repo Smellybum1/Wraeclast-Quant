@@ -11,6 +11,7 @@ from wraeclast_quant.reports.review_queue_commands import (
     record_outcomes_dry_run_command,
     review_queue_decisions_template_command,
     review_queue_worksheet_command,
+    run_outcome_decisions_path,
 )
 from wraeclast_quant.reports.review_queue_worksheet_sections import (
     manual_review_note_rows,
@@ -26,6 +27,7 @@ def render_review_queue_worksheet(
     opportunities: list[StoredOpportunityRecord],
     context_markdown: str | None = None,
 ) -> str:
+    decisions_path = run_outcome_decisions_path(run_id)
     rows = [
         "# Wraeclast Quant Review Queue",
         "",
@@ -80,8 +82,8 @@ def render_review_queue_worksheet(
             "dry-run the file, then record it:",
             "",
             f"- Template: `{review_queue_decisions_template_command(run_id)}`",
-            f"- Dry run: `{record_outcomes_dry_run_command()}`",
-            f"- Record: `{record_outcomes_command()}`",
+            f"- Dry run: `{record_outcomes_dry_run_command(decisions_path)}`",
+            f"- Record: `{record_outcomes_command(decisions_path)}`",
             "",
             "## Outcome Command Options",
             "",
@@ -130,5 +132,6 @@ __all__ = [
     "review_queue_decisions_template_command",
     "render_review_queue_worksheet",
     "review_queue_worksheet_command",
+    "run_outcome_decisions_path",
     "write_review_queue_worksheet",
 ]
