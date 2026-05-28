@@ -24,7 +24,7 @@ wq calibration-report
 
 `review-coverage` shows reviewed, unreviewed, and reviewed-percent counts for a run. It includes the run source mode, the same local-only caveat, and a worksheet plus decisions-template dry-run next action when unreviewed recommendations remain. Fully reviewed runs with calibration review prompts point back to `wq calibration`.
 
-When `review-queue` or `review-coverage` is run with a non-default `--database-path`, the printed batch-review and one-off outcome command templates keep the same `--database-path` so local temp or alternate databases do not accidentally fall back to `data/wraeclast_quant.db`.
+When `review-queue` or `review-coverage` is run with a non-default `--database-path`, the printed batch-review and one-off outcome command templates keep the same `--database-path` so local temp or alternate databases do not accidentally fall back to `data/wraeclast_quant.db`. Saved review queue worksheets do the same for their checklist, batch template, and per-item outcome commands.
 
 `record-outcome` records one local manual outcome for an item from an existing analysis run. It rejects a second outcome for the same run item so accidental reruns do not duplicate local feedback. After successful writes, active calibration review prompts surface before the review-coverage and local feedback next steps. After recording, rerun `wq review-coverage --run-id <id>`, then use `wq outcomes`, `wq outcome-review`, and `wq calibration` for local feedback. Refresh derived artifacts with `wq export`, `wq site`, and `wq site-bundle` when you want local dashboard or public handoff files to reflect the new review state.
 

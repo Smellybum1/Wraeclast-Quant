@@ -1384,3 +1384,9 @@
 - Completed packet: `wq review-queue` and `wq review-coverage` now preserve a non-default `--database-path` in printed batch-review, decisions-template, dry-run, and one-off `record-outcome` command templates, so temp or alternate local databases do not fall back to the default SQLite path during manual outcome review.
 - Documentation updated: `docs/OUTCOMES.md` and `docs/ROADMAP.md` describe the non-default database-path handoff behavior.
 - Verification: focused review-queue/coverage/decisions/worksheet plus daily-input/outcome-contract tests passed with 27 tests; real temp review-coverage and review-queue smokes preserved `--database-path` in every printed review command; full bundled Python test suite passed with 639 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Review Queue Worksheet Database Path Handoff
+
+- Completed packet: saved review queue worksheets now preserve a non-default `--database-path` in their review-coverage checklist, batch template, table command, and per-outcome `record-outcome` command options, matching the terminal handoff behavior.
+- Documentation updated: `docs/OUTCOMES.md` and `docs/ROADMAP.md` clarify that non-default database-path handoff also applies to saved worksheets.
+- Verification: focused worksheet/outcome-contract/review-command tests passed with 9 tests; full bundled Python test suite passed with 639 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

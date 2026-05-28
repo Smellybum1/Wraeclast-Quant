@@ -32,6 +32,7 @@ def write_review_queue_outputs(
             source_mode=run.source_mode,
             opportunities=opportunities,
             context_markdown=context_markdown,
+            database_path=database_path,
         )
         typer.echo(f"Wrote review queue worksheet to {output_path}")
     if decisions_output_path is not None:

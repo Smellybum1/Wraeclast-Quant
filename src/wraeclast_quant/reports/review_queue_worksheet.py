@@ -26,8 +26,14 @@ def render_review_queue_worksheet(
     source_mode: str,
     opportunities: list[StoredOpportunityRecord],
     context_markdown: str | None = None,
+    database_path: object | None = None,
 ) -> str:
     decisions_path = run_outcome_decisions_path(run_id)
+    review_coverage_command = f"wq review-coverage --run-id {run_id}"
+    if database_path is not None:
+        review_coverage_command = (
+            f"wq review-coverage --database-path {database_path} --run-id {run_id}"
+        )
     rows = [
         "# Wraeclast Quant Review Queue",
         "",
@@ -63,7 +69,7 @@ def render_review_queue_worksheet(
             "| --- | ---: | --- | --- | --- |",
         ]
     )
-    rows.extend(opportunity_rows(run_id, opportunities))
+    rows.extend(opportunity_rows(run_id, opportunities, database_path=database_path))
     rows.extend(
         [
             "",
@@ -73,21 +79,24 @@ def render_review_queue_worksheet(
             "- Choose exactly one outcome label per item: positive, neutral, or negative.",
             "- Use the batch decisions JSON plus dry-run path, or run only the matching local "
             "`record-outcome` command after you decide.",
-            "- Rerun `wq review-coverage --run-id "
-            f"{run_id}` to confirm the reviewed count changed.",
+            f"- Rerun `{review_coverage_command}` to confirm the reviewed count changed.",
             "",
             "## Batch Outcome Template",
             "",
             "For batch review, write the editable decisions JSON, fill one outcome per item, "
             "dry-run the file, then record it:",
             "",
-            f"- Template: `{review_queue_decisions_template_command(run_id)}`",
-            f"- Dry run: `{record_outcomes_dry_run_command(decisions_path)}`",
-            f"- Record: `{record_outcomes_command(decisions_path)}`",
+            f"- Template: `{review_queue_decisions_template_command(run_id, database_path=database_path)}`",
+            f"- Dry run: `{record_outcomes_dry_run_command(decisions_path, database_path=database_path)}`",
+            f"- Record: `{record_outcomes_command(decisions_path, database_path=database_path)}`",
             "",
             "## Outcome Command Options",
             "",
-            *outcome_command_option_rows(run_id, opportunities),
+            *outcome_command_option_rows(
+                run_id,
+                opportunities,
+                database_path=database_path,
+            ),
             "",
             "## Manual Review Notes",
             "",
@@ -109,6 +118,7 @@ def write_review_queue_worksheet(
     source_mode: str,
     opportunities: list[StoredOpportunityRecord],
     context_markdown: str | None = None,
+    database_path: object | None = None,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
@@ -117,6 +127,7 @@ def write_review_queue_worksheet(
             source_mode,
             opportunities,
             context_markdown=context_markdown,
+            database_path=database_path,
         ),
         encoding="utf-8",
     )

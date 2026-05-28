@@ -5,10 +5,20 @@ from wraeclast_quant.reports.review_queue_commands import record_outcome_command
 from wraeclast_quant.storage.models import StoredOpportunityRecord
 
 
-def opportunity_rows(run_id: int, opportunities: list[StoredOpportunityRecord]) -> list[str]:
+def opportunity_rows(
+    run_id: int,
+    opportunities: list[StoredOpportunityRecord],
+    *,
+    database_path: object | None = None,
+) -> list[str]:
     rows = []
     for opportunity in opportunities:
-        command = record_outcome_command(run_id, opportunity.item_name, outcome="<decision>")
+        command = record_outcome_command(
+            run_id,
+            opportunity.item_name,
+            outcome="<decision>",
+            database_path=database_path,
+        )
         rows.append(
             f"| {escape_cell(opportunity.item_name)} | "
             f"{opportunity.opportunity_score:.2f} | "
@@ -22,6 +32,8 @@ def opportunity_rows(run_id: int, opportunities: list[StoredOpportunityRecord]) 
 def outcome_command_option_rows(
     run_id: int,
     opportunities: list[StoredOpportunityRecord],
+    *,
+    database_path: object | None = None,
 ) -> list[str]:
     rows = []
     for index, opportunity in enumerate(opportunities):
@@ -30,7 +42,12 @@ def outcome_command_option_rows(
         rows.append(f"### {opportunity.item_name}")
         rows.append("")
         for outcome in ["positive", "neutral", "negative"]:
-            command = record_outcome_command(run_id, opportunity.item_name, outcome=outcome)
+            command = record_outcome_command(
+                run_id,
+                opportunity.item_name,
+                outcome=outcome,
+                database_path=database_path,
+            )
             rows.append(f"- `{outcome}`: `{command}`")
     return rows
 

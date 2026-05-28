@@ -24,28 +24,45 @@ def test_review_queue_command_writes_local_review_worksheet(tmp_path: Path) -> N
     assert result.exit_code == 0
     assert "Wrote review queue worksheet" in result.output
     worksheet = output_path.read_text(encoding="utf-8")
+    database_path_text = str(database_path)
     assert "# Wraeclast Quant Review Queue" in worksheet
     assert "Local review worksheet only. No outcome decisions have been recorded." in worksheet
     assert "Run source: sample-data." in worksheet
     assert "| Open Catalyst | 60.00 | WATCH | positive / neutral / negative |" in worksheet
-    assert '`wq record-outcome --run-id 1 --item-name "Open Catalyst"' in worksheet
+    assert "`wq record-outcome --database-path" in worksheet
+    assert database_path_text in worksheet
+    assert '--run-id 1 --item-name "Open Catalyst"' in worksheet
     assert "--outcome <decision>" in worksheet
     assert "## Outcome Command Options" in worksheet
     assert "## Review Checklist" in worksheet
     assert "Inspect each item in your local market context" in worksheet
-    assert "wq review-coverage --run-id 1" in worksheet
+    assert f"wq review-coverage --database-path {database_path_text} --run-id 1" in worksheet
     assert "## Batch Outcome Template" in worksheet
     assert (
-        "`wq review-queue --run-id 1 --decisions-output-path "
+        f"`wq review-queue --database-path {database_path_text} --run-id 1 --decisions-output-path "
         "data/processed/outcome_decisions_run_1.json`"
     ) in worksheet
     assert (
-        "`wq record-outcomes --input-path data/processed/outcome_decisions_run_1.json --dry-run`"
+        f"`wq record-outcomes --database-path {database_path_text} "
+        "--input-path data/processed/outcome_decisions_run_1.json --dry-run`"
+    ) in worksheet
+    assert (
+        f"`wq record-outcomes --database-path {database_path_text} "
+        "--input-path data/processed/outcome_decisions_run_1.json`"
     ) in worksheet
     assert "### Open Catalyst" in worksheet
-    assert '`positive`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome positive`' in worksheet
-    assert '`neutral`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome neutral`' in worksheet
-    assert '`negative`: `wq record-outcome --run-id 1 --item-name "Open Catalyst" --outcome negative`' in worksheet
+    assert (
+        f'`positive`: `wq record-outcome --database-path {database_path_text} '
+        '--run-id 1 --item-name "Open Catalyst" --outcome positive`'
+    ) in worksheet
+    assert (
+        f'`neutral`: `wq record-outcome --database-path {database_path_text} '
+        '--run-id 1 --item-name "Open Catalyst" --outcome neutral`'
+    ) in worksheet
+    assert (
+        f'`negative`: `wq record-outcome --database-path {database_path_text} '
+        '--run-id 1 --item-name "Open Catalyst" --outcome negative`'
+    ) in worksheet
     assert "## Manual Review Notes" in worksheet
     assert "- Open Catalyst:" in worksheet
     assert "  - Local notes:" in worksheet
