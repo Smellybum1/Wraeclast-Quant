@@ -5,6 +5,7 @@ from pathlib import Path
 import typer
 from rich.table import Table
 
+from wraeclast_quant.commands.snapshot_formatting import hidden_snapshot_items_text
 from wraeclast_quant.commands.snapshot_rendering import console
 from wraeclast_quant.storage.db import DEFAULT_DATABASE_PATH
 from wraeclast_quant.storage.repositories import SnapshotRepository
@@ -44,3 +45,9 @@ def register(app: typer.Typer) -> None:
                 opportunity.action,
             )
         console.print(items_table)
+        hidden_items = hidden_snapshot_items_text(
+            displayed_count=len(opportunities),
+            total_count=latest.item_count,
+        )
+        if hidden_items is not None:
+            console.print(hidden_items)

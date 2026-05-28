@@ -1339,3 +1339,8 @@
 
 - Completed packet: `wq watchlist` now prints a truncation hint when the selected run has more scored opportunities than the displayed limit, pointing to the exact `--limit` value needed to show all rows when possible. This keeps the next manual MVP review loop from overlooking lower-ranked recommendations without changing scoring, storage, outcomes, public artifacts, live-source behavior, or the default limit.
 - Verification: focused watchlist CLI/rendering tests passed with 9 tests; real run #13 `watchlist` now reports `Showing top 5 of 6 scored opportunities. Re-run with --limit 6 to show all.` Full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Snapshots Truncation Hint
+
+- Completed packet: `wq snapshots` now prints a truncation hint when the latest-run top-items table hides lower-ranked scored opportunities, pointing to the exact `--limit` value needed to show all rows when possible. This keeps the persisted-run overview aligned with the manual MVP review loop without changing scoring, storage, outcomes, public artifacts, live-source behavior, or the default limit.
+- Verification: focused CLI/storage snapshot tests passed with 7 tests; real run #13 `snapshots` now reports `Showing top 5 of 6 scored opportunities. Re-run with --limit 6 to show all.` Full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

@@ -56,7 +56,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq report --sample-data` writes `data/processed/market_brief.md`.
 - `wq watchlist` shows top recommendations from the latest local SQLite run; add `--run-id <id>` for a specific run, `--limit <n>` to show more rows, or `--sample-data` for deterministic demo data. For fully reviewed stored runs with calibration review prompts, it points back to `wq calibration` without changing scoring.
 - `wq stash-ninja-watchlist` writes a derived-only local companion JSON/Markdown watchlist for manual Exile-UI Stash-Ninja use. Fully reviewed handoffs with calibration prompts point back to `wq calibration`; the command does not write Exile-UI files, automate the overlay, call live HTTP, or interact with the game client.
-- `wq snapshots` shows recent persisted runs and top items.
+- `wq snapshots` shows recent persisted runs and top items; add `--limit <n>` to show more runs and more top rows when the default view is truncated.
 - `wq db-check` verifies the local SQLite snapshot database and schema contract without writing files.
 - `wq backup-db` writes and immediately verifies a local SQLite backup of snapshot history. See `docs/BACKUPS.md` for the backup and restore-helper contract.
 - `wq backups` lists local SQLite backups and quick verification metadata.

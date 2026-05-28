@@ -41,6 +41,8 @@ def test_snapshots_command_prints_latest_run(tmp_path: Path) -> None:
     assert result.exit_code == 0
     assert "Recent Analysis Runs" in result.output
     assert "Stormglass Catalyst" in result.output
+    assert "Showing top 5 of 10 scored opportunities." in result.output
+    assert "Re-run with --limit 10 to show all." in result.output
 
 
 def test_read_only_snapshot_commands_do_not_create_missing_database(tmp_path: Path) -> None:

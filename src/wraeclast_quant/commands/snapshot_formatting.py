@@ -21,8 +21,25 @@ def format_action_change(candidate: AlertCandidate) -> str:
     return candidate.latest_action or candidate.previous_action or ""
 
 
+def hidden_snapshot_items_text(
+    *,
+    displayed_count: int,
+    total_count: int,
+    max_limit: int = 25,
+) -> str | None:
+    if total_count <= displayed_count:
+        return None
+    next_limit = min(total_count, max_limit)
+    detail = "all" if next_limit == total_count else "more"
+    return (
+        f"Showing top {displayed_count} of {total_count} scored opportunities. "
+        f"Re-run with --limit {next_limit} to show {detail}."
+    )
+
+
 __all__ = [
     "format_action_change",
     "format_delta",
     "format_score",
+    "hidden_snapshot_items_text",
 ]
