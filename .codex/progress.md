@@ -1090,3 +1090,8 @@
 - Artifact refresh and backup: `wq site-bundle` refreshed the local site bundle for run #13, and `wq backup-db` created verified backup `data/backups/wraeclast_quant_20260528T021831Z.db` covering latest run #13.
 - Verification: `wq validate-import --input-path data/processed/standard_currency_exchange_manual_import.json`, `wq status --strict`, and `wq publish-check` passed for run #13. No OAuth, live HTTP, scraping, OCR, gameplay automation, trade automation, Exile-UI mutation, or publishing was performed.
 - Next recommended packet: human review run #13 using `data/processed/review_queue.md` and `data/processed/outcome_decisions.json`; fill one positive/neutral/negative outcome per item, run `wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run`, then record outcomes only after the human-reviewed dry run passes.
+
+## 2026-05-28 Review Queue Guidance Helper
+
+- Completed packet: split review queue batch next-step text and one-off `record-outcome` command-template text into focused helpers in `reports.review_queue_commands`, leaving `maintenance_outcome_review_queue_rendering` focused on table rendering while preserving CLI output.
+- Verification: focused review queue command/rendering tests passed (`tests\test_cli_review_queue.py`, `tests\test_cli_review_coverage.py`, `tests\test_review_queue_commands.py`); `git diff --check`, `wq status --strict`, and `wq publish-check` passed. `record-outcomes --dry-run` correctly remains blocked because run #13 decisions still have blank outcomes.

@@ -4,15 +4,12 @@ from rich.console import Console
 from rich.table import Table
 
 from wraeclast_quant.reports.review_queue_commands import (
-    OUTCOME_DECISIONS_PATH,
-    record_outcomes_dry_run_command,
-    review_queue_decisions_template_command,
-    review_queue_worksheet_command,
+    batch_outcome_review_steps,
+    record_outcome_command_templates,
 )
 from wraeclast_quant.reports.review_queue_worksheet import (
     local_review_caveat,
     outcome_label_guide,
-    record_outcome_command,
 )
 from wraeclast_quant.storage.models import ReviewCoverageRecord, StoredOpportunityRecord
 
@@ -45,8 +42,13 @@ def print_review_queue(
     console.print(table)
     console.print(local_review_caveat(source_mode))
     console.print(outcome_label_guide())
-    console.print(_batch_review_next_steps(run_id))
-    console.print(_record_outcome_command_templates(run_id, opportunities))
+    console.print(batch_outcome_review_steps(run_id))
+    console.print(
+        record_outcome_command_templates(
+            run_id,
+            [opportunity.item_name for opportunity in opportunities],
+        )
+    )
 
 
 def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverageRecord) -> None:
@@ -65,26 +67,4 @@ def print_review_coverage(run_id: int, source_mode: str, coverage: ReviewCoverag
     console.print(local_review_caveat(source_mode))
     console.print(outcome_label_guide())
     if coverage.unreviewed_recommendations:
-        console.print(_batch_review_next_steps(run_id))
-
-
-def _record_outcome_command_templates(
-    run_id: int,
-    opportunities: list[StoredOpportunityRecord],
-) -> str:
-    lines = ["Suggested review commands:"]
-    for opportunity in opportunities:
-        lines.append(f"  {record_outcome_command(run_id, opportunity.item_name)}")
-    return "\n".join(lines)
-
-
-def _batch_review_next_steps(run_id: int) -> str:
-    return "\n".join(
-        [
-            "Batch review next steps:",
-            f"  {review_queue_worksheet_command(run_id)}",
-            f"  {review_queue_decisions_template_command(run_id)}",
-            f"  Fill outcome labels in {OUTCOME_DECISIONS_PATH}.",
-            f"  {record_outcomes_dry_run_command()}",
-        ]
-    )
+        console.print(batch_outcome_review_steps(run_id))

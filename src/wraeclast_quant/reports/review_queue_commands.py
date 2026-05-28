@@ -48,6 +48,18 @@ def batch_outcome_review_next_action(run_id: int | str) -> str:
     )
 
 
+def batch_outcome_review_steps(run_id: int | str) -> str:
+    return "\n".join(
+        [
+            "Batch review next steps:",
+            f"  {review_queue_worksheet_command(run_id)}",
+            f"  {review_queue_decisions_template_command(run_id)}",
+            f"  Fill outcome labels in {OUTCOME_DECISIONS_PATH}.",
+            f"  {record_outcomes_dry_run_command()}",
+        ]
+    )
+
+
 def review_coverage_command(run_id: int | str) -> str:
     return f"wq review-coverage --run-id {run_id}"
 
@@ -73,16 +85,25 @@ def record_outcome_command(
     )
 
 
+def record_outcome_command_templates(run_id: int, item_names: list[str]) -> str:
+    lines = ["Suggested review commands:"]
+    for item_name in item_names:
+        lines.append(f"  {record_outcome_command(run_id, item_name)}")
+    return "\n".join(lines)
+
+
 def powershell_double_quoted_text(value: str) -> str:
     return value.replace("`", "``").replace('"', '`"')
 
 
 __all__ = [
     "OUTCOME_DECISIONS_PATH",
+    "batch_outcome_review_steps",
     "batch_outcome_review_next_action",
     "local_review_caveat",
     "outcome_label_guide",
     "powershell_double_quoted_text",
+    "record_outcome_command_templates",
     "record_outcomes_command",
     "record_outcomes_dry_run_command",
     "record_outcome_command",
