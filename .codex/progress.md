@@ -1319,3 +1319,8 @@
 
 - Completed packet: Currency Exchange UI-observation manual-import payload and item conversion moved into `pathofexile_currency_exchange_ui_observation_manual_import` while the existing collector facade continues to expose the same helper names and write the same manual-import JSON.
 - Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 20 tests; full bundled Python test suite passed with 633 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation IO Split
+
+- Completed packet: Currency Exchange UI-observation JSON loading and manual-import writer orchestration moved into `pathofexile_currency_exchange_ui_observation_io` while the existing collector facade continues to expose the same load/write helper names used by CLI commands and tests.
+- Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 21 tests; real template conversion smoke wrote local temporary manual-import JSON and review sidecar with `Capture Flags` count `1`; full bundled Python test suite passed with 634 tests; `git diff --check`, `status --strict`, and `publish-check` passed.

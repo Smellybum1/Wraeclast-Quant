@@ -12,6 +12,11 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation imp
     currency_exchange_ui_observation_signals,
     load_currency_exchange_ui_observation,
     ratio_to_float,
+    write_currency_exchange_ui_observation_manual_import,
+)
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_io import (
+    load_currency_exchange_ui_observation as io_module_load,
+    write_currency_exchange_ui_observation_manual_import as io_module_write,
 )
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_manual_import import (
     currency_exchange_ui_observation_manual_import_payload as manual_import_module_payload,
@@ -76,6 +81,11 @@ def test_ui_observation_signals_remain_available_from_facade() -> None:
 
 def test_ui_observation_manual_import_payload_remains_available_from_facade() -> None:
     assert currency_exchange_ui_observation_manual_import_payload is manual_import_module_payload
+
+
+def test_ui_observation_io_helpers_remain_available_from_facade() -> None:
+    assert load_currency_exchange_ui_observation is io_module_load
+    assert write_currency_exchange_ui_observation_manual_import is io_module_write
 
 
 def test_ratio_to_float_accepts_strings_and_objects() -> None:
