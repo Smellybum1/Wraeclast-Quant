@@ -32,8 +32,11 @@ def stash_ninja_details(
         return f"{path}; invalid: {'; '.join(health.errors)}; run wq stash-ninja-watchlist"
     details = (
         f"{path}; schema {health.schema_version}; latest run #{health.latest_run_id}; "
-        f"{health.item_count} items; manual-only companion handoff"
+        f"{health.item_count} items"
     )
+    if health.calibration_prompt_count:
+        details = f"{details}; {health.calibration_prompt_count} calibration prompt(s)"
+    details = f"{details}; manual-only companion handoff"
     if latest_run_id is not None and health.latest_run_id != latest_run_id:
         return (
             f"{details}; stale; latest database run #{latest_run_id}, "

@@ -1225,3 +1225,10 @@
 - Real run #13 Stash-Ninja smoke now prints `Calibration prompts: 2 local read-only prompt(s). Next: wq calibration. Prompts do not retune scoring or change recommendations.`
 - Documentation updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` now describe the Stash-Ninja-to-calibration prompt handoff.
 - Verification: focused Stash-Ninja/workflow tests passed with 12 tests; full bundled Python test suite passed with 617 tests; real `stash-ninja-watchlist --run-id 13`, `status --strict`, `publish-check`, and `git diff --check` passed.
+
+## 2026-05-28 Stash-Ninja Prompt Count Health
+
+- Completed packet: Stash-Ninja handoff health now validates the optional `calibration_prompt_count` as a nonnegative integer when present and shows the count in the status details for reviewed prompt handoffs.
+- Real run #13 status now reports the Stash-Ninja handoff as `1 items; 2 calibration prompt(s); manual-only companion handoff`.
+- Documentation updated: `docs/ROADMAP.md` records the completed local artifact-health improvement.
+- Verification: focused Stash-Ninja health/status tests passed with 15 tests; real `status --strict` passed.

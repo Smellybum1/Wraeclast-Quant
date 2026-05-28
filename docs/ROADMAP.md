@@ -709,6 +709,7 @@
 - Review-queue worksheet command text and section-row helpers are split behind the existing worksheet facade, preserving CLI guidance and import compatibility.
 - Daily Stash-Ninja handoff writing and output are split from daily command registration behind a focused helper, preserving the opt-in local-only companion export.
 - Stash-Ninja handoff health has direct contract tests for missing files, valid payloads, invalid JSON, stale schema, and required manual-only safety flags.
+- Stash-Ninja handoff health now validates the optional calibration prompt count and surfaces it in status details when present.
 - Watchlist table rendering and review-guidance text are split from command registration behind a focused helper, preserving CLI output and local review next actions.
 - Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
 - Batch outcome decision loading and validation are split from outcome command registration behind a focused helper, preserving `record-outcomes` CLI behavior and error wording.

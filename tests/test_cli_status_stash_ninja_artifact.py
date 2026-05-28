@@ -16,6 +16,7 @@ def _health(
     errors: list[str] | None = None,
     run_id: int | None = 7,
     item_count: int | None = 3,
+    calibration_prompt_count: int | None = None,
 ) -> StashNinjaWatchlistHealthResult:
     return StashNinjaWatchlistHealthResult(
         path=Path("stash_ninja.json"),
@@ -24,6 +25,7 @@ def _health(
         schema_version="1.0",
         latest_run_id=run_id,
         item_count=item_count,
+        calibration_prompt_count=calibration_prompt_count,
     )
 
 
@@ -55,6 +57,15 @@ def test_stash_ninja_status_row_reports_fresh_handoff() -> None:
     assert stash_ninja_details(Path("stash_ninja.json"), health, latest_run_id=7) == (
         "stash_ninja.json; schema 1.0; latest run #7; 3 items; "
         "manual-only companion handoff"
+    )
+
+
+def test_stash_ninja_status_row_reports_calibration_prompt_count() -> None:
+    health = _health(calibration_prompt_count=2)
+
+    assert stash_ninja_details(Path("stash_ninja.json"), health, latest_run_id=7) == (
+        "stash_ninja.json; schema 1.0; latest run #7; 3 items; "
+        "2 calibration prompt(s); manual-only companion handoff"
     )
 
 

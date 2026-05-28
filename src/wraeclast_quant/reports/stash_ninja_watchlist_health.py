@@ -18,6 +18,7 @@ class StashNinjaWatchlistHealthResult:
     schema_version: str
     latest_run_id: int | None
     item_count: int | None
+    calibration_prompt_count: int | None
 
 
 def check_stash_ninja_watchlist_health(
@@ -35,6 +36,7 @@ def check_stash_ninja_watchlist_health(
             schema_version="",
             latest_run_id=None,
             item_count=None,
+            calibration_prompt_count=None,
         )
     if not isinstance(payload, dict):
         return StashNinjaWatchlistHealthResult(
@@ -44,6 +46,7 @@ def check_stash_ninja_watchlist_health(
             schema_version="",
             latest_run_id=None,
             item_count=None,
+            calibration_prompt_count=None,
         )
     return _health_from_payload(path, payload)
 
@@ -62,6 +65,11 @@ def _health_from_payload(path: Path, payload: dict[str, Any]) -> StashNinjaWatch
 
     items = payload.get("items")
     item_count = _item_count(items, errors)
+    calibration_prompt_count = _optional_nonnegative_int(
+        payload.get("calibration_prompt_count"),
+        "calibration_prompt_count",
+        errors,
+    )
 
     safety = payload.get("safety")
     if not isinstance(safety, dict) or safety.get("derived_only") is not True:
@@ -78,6 +86,7 @@ def _health_from_payload(path: Path, payload: dict[str, Any]) -> StashNinjaWatch
         schema_version=schema_version,
         latest_run_id=latest_run_id,
         item_count=item_count,
+        calibration_prompt_count=calibration_prompt_count,
     )
 
 
@@ -97,6 +106,15 @@ def _item_count(items: object, errors: list[str]) -> int | None:
         errors.append("items must be a list")
         return None
     return len(items)
+
+
+def _optional_nonnegative_int(value: object, key: str, errors: list[str]) -> int | None:
+    if value is None:
+        return None
+    if not isinstance(value, int) or value < 0:
+        errors.append(f"{key} must be a nonnegative integer when present")
+        return None
+    return value
 
 
 __all__ = ["StashNinjaWatchlistHealthResult", "check_stash_ninja_watchlist_health"]
