@@ -1372,3 +1372,9 @@
 - Completed packet: validation-only `wq currency-exchange-manual-snapshot --input-path <file>` output now points to rerunning with `--history-path <previous-snapshot> --output-fixture-path <fixture-output>` when the user is ready to create a local connector fixture, so the first official manual snapshot step no longer dead-ends.
 - Documentation updated: `README.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the validation-to-fixture-creation handoff.
 - Verification: focused manual snapshot CLI/rendering plus MVP/manual-import docs tests passed with 9 tests; real template validation smoke printed the fixture-creation next action; full bundled Python test suite passed with 636 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Daily Manual Review Handoff
+
+- Completed packet: successful manual-import `wq daily --input-path <file>` output now prints the matching `wq run-provenance --database-path <database> --run-id <id>` and `wq review-coverage --database-path <database> --run-id <id>` next actions for the created run, keeping the local daily run connected to provenance and outcome-review setup.
+- Documentation updated: `README.md`, `docs/DAILY_PIPELINE.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the post-daily provenance/review handoff.
+- Verification: focused daily CLI/rendering plus MVP/manual-import docs tests passed with 13 tests after making the long-path CLI assertion wrapping-tolerant; real temp `daily --input-path` smoke printed the next action, and both printed follow-up commands passed against the temp database; full bundled Python test suite passed with 637 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

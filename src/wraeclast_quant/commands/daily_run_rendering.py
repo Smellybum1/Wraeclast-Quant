@@ -10,6 +10,18 @@ from wraeclast_quant.workflows.daily_pipeline import DailyPipelineResult
 console = Console(width=260)
 
 
+def daily_manual_review_next_action(
+    *,
+    run_id: int,
+    database_path: object,
+) -> str:
+    return (
+        "Next: "
+        f"wq run-provenance --database-path {database_path} --run-id {run_id}; "
+        f"wq review-coverage --database-path {database_path} --run-id {run_id}"
+    )
+
+
 def print_daily_result(
     result: DailyPipelineResult | None,
     *,
@@ -25,6 +37,13 @@ def print_daily_result(
     console.print(f"Market brief: {result.brief_path}")
     console.print(f"Public intel: {result.intel_path}")
     console.print(f"Dashboard: {result.site_path}")
+    if result.run.source_mode == "manual-import":
+        console.print(
+            daily_manual_review_next_action(
+                run_id=result.run.id,
+                database_path=database_path,
+            )
+        )
 
     if result.comparison is None:
         console.print("No previous snapshot found for comparison.")

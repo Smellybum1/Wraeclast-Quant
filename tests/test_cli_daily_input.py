@@ -36,6 +36,10 @@ def test_daily_input_path_writes_artifacts(tmp_path: Path) -> None:
     assert intel_path.exists()
     assert (site_dir / "index.html").exists()
     assert "Daily run #1 complete." in result.output
+    assert "Next: wq run-provenance --database-path" in result.output
+    assert "wq review-coverage --database-path" in result.output
+    assert database_path.name in result.output
+    assert "--run-id 1" in result.output
     assert "Manual Daily Catalyst" in intel_path.read_text(encoding="utf-8")
 
 

@@ -16,7 +16,7 @@ wq daily --input-path <file>
 - `validate-import` is read-only, checks that the file can be loaded and scored, and prints the matching `wq daily --input-path <file>` next action when it passes.
 - `inspect-import` is read-only, prints score and signal diagnostics, and points back to `wq validate-import --input-path <file>`.
 - `import` scores the file and records one `manual-import` analysis run.
-- `daily --input-path` runs the full local pipeline from the file using the contract documented in `docs/DAILY_PIPELINE.md`.
+- `daily --input-path` runs the full local pipeline from the file using the contract documented in `docs/DAILY_PIPELINE.md`; successful manual-import runs point to the matching `wq run-provenance` and `wq review-coverage` checks for the created run.
 
 ## Supported Files
 

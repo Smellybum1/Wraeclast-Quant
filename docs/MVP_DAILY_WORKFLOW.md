@@ -62,6 +62,8 @@ When a sidecar is written, the conversion command prints the later `wq review-qu
 wq daily --input-path <manual-import-output>
 ```
 
+For manual-import runs, the daily command prints the matching `wq run-provenance --database-path <database> --run-id <id>` and `wq review-coverage --database-path <database> --run-id <id>` next actions for the created run.
+
 7. Inspect health and review state:
 
 ```powershell

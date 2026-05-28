@@ -656,6 +656,7 @@
 - `wq record-outcomes --input-path <file> --dry-run` now validates an edited local outcome-decisions batch without writing records, so the human review file can be checked before the final write.
 - `wq review-queue --decisions-output-path <file>` now prints the matching `record-outcomes --dry-run` command after writing the editable local decisions template.
 - `wq status`, `wq review-coverage`, and static dashboard review guidance now point unreviewed runs to the worksheet plus outcome-decisions template and dry-run validation path.
+- `wq daily --input-path` now points successful manual-import runs to the matching run-provenance and review-coverage checks for the created run.
 - Review queue worksheets now include a `Batch Outcome Template` section with the decisions-template, dry-run, and final batch-record commands.
 - Outcome-decisions JSON templates now include local-review metadata, allowed outcome labels, and fill/dry-run instructions while remaining compatible with `record-outcomes`.
 - Outcome-decisions JSON entries now include item score and action metadata for local human review while `record-outcomes` still records only item, outcome, and notes.

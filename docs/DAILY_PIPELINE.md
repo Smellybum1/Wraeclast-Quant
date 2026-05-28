@@ -65,6 +65,8 @@ Successful daily runs print these output labels:
 
 The command also prints the completed daily run id.
 
+Manual-import daily runs also print the matching `wq run-provenance --database-path <database> --run-id <id>` and `wq review-coverage --database-path <database> --run-id <id>` next actions for the created run.
+
 When `--stash-ninja-watchlist` is passed, the command also prints `Stash-Ninja handoff` and `Stash-Ninja handoff Markdown` output paths.
 
 ## Alert Settings

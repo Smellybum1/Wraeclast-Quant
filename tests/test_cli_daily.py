@@ -36,6 +36,7 @@ def test_daily_sample_data_writes_artifacts(tmp_path: Path) -> None:
     assert "Daily run #1 complete." in result.output
     assert str(brief_path) in result.output
     assert str(intel_path) in result.output
+    assert "wq run-provenance" not in result.output
 
 
 def test_daily_creates_exactly_one_analysis_run(tmp_path: Path) -> None:

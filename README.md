@@ -83,7 +83,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq publish-handoff` writes `data/processed/publish_handoff.md` with readiness evidence and a manual publishing checklist. It does not upload, host, or publish anything.
 - `wq site-contract` writes `data/processed/site_contract.json`, a local derived-only descriptor for future public-site handoff. It does not upload, host, or publish anything.
 - `wq daily --sample-data` runs the local sample-data pipeline end to end. See `docs/DAILY_PIPELINE.md` for the orchestration contract.
-- `wq daily --input-path <file>` runs the same pipeline from a local manual import file and records path-safe local run provenance; add `--stash-ninja-watchlist` to write the local Stash-Ninja companion handoff for the created run.
+- `wq daily --input-path <file>` runs the same pipeline from a local manual import file, records path-safe local run provenance, and points to the matching `wq run-provenance` plus `wq review-coverage` checks for the created run; add `--stash-ninja-watchlist` to write the local Stash-Ninja companion handoff for the created run.
 
 Alert preview sensitivity can be tuned per command with `--watch-threshold`, `--buy-threshold`, and `--big-delta` on `wq alerts`, `wq export`, and `wq daily`. Local alert rules are documented in `docs/ALERTS.md`.
 
