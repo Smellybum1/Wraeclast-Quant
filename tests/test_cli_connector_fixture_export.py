@@ -26,6 +26,7 @@ def test_connector_fixture_export_writes_manual_import_json(tmp_path: Path) -> N
     assert "Connector Fixture Export" in result.output
     assert "2" in result.output
     assert str(output_path) in result.output
+    assert f"Next: wq validate-import --input-path {output_path}" in result.output
     assert payload["items"][0]["name"] == "Stormglass Catalyst"
     assert "signals" in payload["items"][0]
 

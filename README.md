@@ -173,7 +173,7 @@ Use `wq connector-fixture-run --review-path <file> --fixture-path <file>` to tes
 
 Use `wq connector-dry-run --review-path <file> --fixture-path <file>` to exercise the future source-connector interface against the same local fixture. It prints the connector class, normalized rows, and future cache path without collecting live data.
 
-Use `wq connector-fixture-export --review-path <file> --fixture-path <file> --output-path <file>` when a local fixture includes normalized `signals` for every row. The command writes manual-import-compatible JSON that can be checked with `wq validate-import --input-path <file>` or used by `wq import` and `wq daily --input-path`. It does not create snapshots, fetch data, or infer scores from raw prices.
+Use `wq connector-fixture-export --review-path <file> --fixture-path <file> --output-path <file>` when a local fixture includes normalized `signals` for every row. The command writes manual-import-compatible JSON and prints the matching `wq validate-import --input-path <file>` next action before the file is used by `wq import` or `wq daily --input-path`. It does not create snapshots, fetch data, or infer scores from raw prices.
 
 Use `wq connector-fixture-daily --review-path <file> --fixture-path <file>` to run the existing local daily pipeline directly from a normalized-signal fixture. It creates one SQLite run with `source_mode="connector-fixture"`, writes the market brief, public intel JSON, and static dashboard, and previews local alert candidates without any network access.
 

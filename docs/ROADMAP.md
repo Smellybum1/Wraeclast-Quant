@@ -610,7 +610,7 @@
 
 - Current handoff checkpoint: run #13 is the latest Standard no-OAuth manual UI-observation run, review coverage is closed at 6/6, strict status and publish checks are passing, and the next data step is a fresh local Currency Exchange manual snapshot or UI observation.
 - Keep live poe.ninja collection unsupported until a separate implementation packet specifies the exact endpoint/field contract, cache read/write behavior, HTTP failures, and tests.
-- Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows.
+- Use the poe.ninja fixture export with `wq validate-import`, `wq import`, or `wq daily --input-path` when proving manual-import scoring from connector-shaped rows; successful `wq connector-fixture-export` writes now print the matching `wq validate-import --input-path <manual-import-output>` next action.
 - Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
 - Run #11 is the first Standard league manual UI-observation proof run from visible in-game Currency Exchange ratio/stock rows; it is now fully reviewed at 6/6 outcomes, all neutral, with strict status and publish checks passing.
 - Run #12 is the latest Standard league manual UI-observation run from user-provided Currency Exchange screenshots; it is fully reviewed at 6/6 outcomes, all neutral, with fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.

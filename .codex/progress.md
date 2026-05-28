@@ -1360,3 +1360,9 @@
 - Completed packet: successful `wq currency-exchange-manual-snapshot --output-fixture-path <file>` output now prints the matching `wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_exchange_connector_review.json --fixture-path <file> --output-path <manual-import-output>` next action, keeping the official manual snapshot bridge connected to the normalized manual-import path without changing fixture conversion, scoring, persistence, public artifacts, live-source behavior, or dry-run safety.
 - Documentation updated: `README.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the new fixture-export handoff.
 - Verification: focused manual snapshot CLI/rendering plus MVP/manual-import docs tests passed with 9 tests; real template smoke printed the fixture-export next action; full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Connector Fixture Export Validation Handoff
+
+- Completed packet: successful `wq connector-fixture-export --output-path <file>` output now prints the matching `wq validate-import --input-path <file>` next action, keeping connector-shaped fixture proof connected to read-only manual-import validation before any local daily run.
+- Documentation updated: `README.md`, `docs/CONNECTOR_POLICY.md`, `docs/MANUAL_IMPORT.md`, `docs/MVP_DAILY_WORKFLOW.md`, and `docs/ROADMAP.md` describe the export-to-validation handoff.
+- Verification: focused connector export/manual snapshot rendering plus MVP/manual-import docs tests passed with 10 tests after making the long-path CLI assertion wrapping-tolerant; real connector export smoke printed the validation next action and the generated file passed `validate-import`; full bundled Python test suite passed with 636 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

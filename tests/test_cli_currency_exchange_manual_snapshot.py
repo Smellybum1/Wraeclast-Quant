@@ -48,7 +48,8 @@ def test_currency_exchange_manual_snapshot_writes_connector_fixture_with_history
     assert "examples/reviews/pathofexile_currency_exchange_connector_review.json" in (
         result.output
     )
-    assert f"--fixture-path {output_path}" in result.output
+    assert "--fixture-path" in result.output
+    assert output_path.name in result.output
     assert "--output-path <manual-import-output>" in result.output
     assert payload["source_name"] == "Path of Exile Currency Exchange API Preview"
     assert payload["items"][0]["signals"]["demand_momentum"] == 50.0

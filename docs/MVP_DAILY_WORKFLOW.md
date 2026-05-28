@@ -25,6 +25,8 @@ When the fixture is written, the command prints the matching `wq connector-fixtu
 wq connector-fixture-export --review-path examples/reviews/pathofexile_currency_exchange_connector_review.json --fixture-path <fixture-output> --output-path <manual-import-output>
 ```
 
+When export succeeds, the command prints the matching `wq validate-import --input-path <manual-import-output>` next action.
+
 5. Validate the normalized input before recording a run:
 
 ```powershell

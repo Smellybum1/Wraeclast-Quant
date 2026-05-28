@@ -60,7 +60,7 @@ Use `wq connector-fixture-run --review-path <file> --fixture-path <file>` to val
 
 Use `wq connector-dry-run --review-path <file> --fixture-path <file>` to exercise the future source-connector interface with local fixture data. The dry-run connector reports the connector class, normalized rows, and future cache path, but live collection remains unsupported.
 
-Use `wq connector-fixture-export --review-path <file> --fixture-path <file> --output-path <file>` only when a local synthetic fixture includes normalized `0-100` signal scores for every row. The command writes manual-import-compatible JSON for `wq validate-import`, `wq import`, or `wq daily --input-path`; it does not infer signals from raw price text, create snapshots, fetch data, or approve live collection.
+Use `wq connector-fixture-export --review-path <file> --fixture-path <file> --output-path <file>` only when a local synthetic fixture includes normalized `0-100` signal scores for every row. The command writes manual-import-compatible JSON and prints the matching `wq validate-import --input-path <file>` next action before `wq import` or `wq daily --input-path`; it does not infer signals from raw price text, create snapshots, fetch data, or approve live collection.
 
 Use `wq connector-fixture-daily --review-path <file> --fixture-path <file>` to prove that a fixture-backed connector shape can drive the full local pipeline. The command requires a ready review and normalized fixture signals, creates a local `connector-fixture` snapshot run, and writes local derived artifacts only. It is not live collection approval.
 

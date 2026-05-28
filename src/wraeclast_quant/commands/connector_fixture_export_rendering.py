@@ -13,6 +13,10 @@ def connector_fixture_export_safety_text() -> str:
     )
 
 
+def connector_fixture_export_validation_next_action(output_path: object) -> str:
+    return f"Next: wq validate-import --input-path {output_path}"
+
+
 def print_connector_fixture_export(export: ConnectorFixtureExportResult) -> None:
     table = Table(title="Connector Fixture Export")
     table.add_column("Source")
@@ -21,9 +25,11 @@ def print_connector_fixture_export(export: ConnectorFixtureExportResult) -> None
     table.add_row(export.source_name, str(export.item_count), str(export.output_path))
     console.print(table)
     console.print(connector_fixture_export_safety_text())
+    console.print(connector_fixture_export_validation_next_action(export.output_path))
 
 
 __all__ = [
     "connector_fixture_export_safety_text",
+    "connector_fixture_export_validation_next_action",
     "print_connector_fixture_export",
 ]
