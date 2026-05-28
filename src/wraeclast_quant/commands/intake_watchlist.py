@@ -26,7 +26,9 @@ def register(app: typer.Typer) -> None:
         sample_data: bool = typer.Option(False, "--sample-data"),
     ) -> None:
         if sample_data:
-            opportunities = top_watchlist(rank_opportunities(SAMPLE_ITEMS), limit=limit)
+            ranked_sample_items = rank_opportunities(SAMPLE_ITEMS)
+            opportunities = top_watchlist(ranked_sample_items, limit=limit)
+            total_count = len(ranked_sample_items)
             title = "Watchlist - Sample Data"
         else:
             repository = SnapshotRepository(database_path)
@@ -38,13 +40,14 @@ def register(app: typer.Typer) -> None:
                     console.print(f"Analysis run #{run_id} was not found.")
                 return
             opportunities = repository.scored_opportunities_for_run(run.id, limit=limit)
+            total_count = run.item_count
             if not opportunities:
                 console.print(f"No scored opportunities found for run #{run.id}.")
                 return
             coverage = repository.review_coverage_for_run(run.id)
             calibration_prompts = calibration_review_prompts(build_calibration(repository))
             title = f"Watchlist - Run #{run.id} ({run.source_mode})"
-        print_watchlist_table(title=title, opportunities=opportunities)
+        print_watchlist_table(title=title, opportunities=opportunities, total_count=total_count)
         if not sample_data:
             print_watchlist_review_guidance(
                 run_id=run.id,

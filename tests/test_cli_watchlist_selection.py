@@ -40,6 +40,8 @@ def test_watchlist_can_select_run_and_limit_results(tmp_path: Path) -> None:
     assert "First Choice" in result.output
     assert "Second Choice" not in result.output
     assert "Latest Choice" not in result.output
+    assert "Showing top 1 of 2 scored opportunities." in result.output
+    assert "Re-run with --limit 2 to show all." in result.output
 
 
 def test_watchlist_reports_missing_database(tmp_path: Path) -> None:

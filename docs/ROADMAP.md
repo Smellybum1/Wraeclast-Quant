@@ -721,6 +721,7 @@
 - Stash-Ninja handoff health has direct contract tests for missing files, valid payloads, invalid JSON, stale schema, and required manual-only safety flags.
 - Stash-Ninja handoff health now validates the optional calibration prompt count and surfaces it in status details when present.
 - Watchlist table rendering and review-guidance text are split from command registration behind a focused helper, preserving CLI output and local review next actions.
+- Watchlist output now calls out when the default view hides lower-ranked scored opportunities and points to the matching `--limit` value, so the manual MVP review loop can inspect every recommendation in a run.
 - Stash-Ninja status-row helper behavior has direct tests for missing optional handoffs, invalid handoffs, fresh handoffs, and stale run guidance.
 - Batch outcome decision loading and validation are split from outcome command registration behind a focused helper, preserving `record-outcomes` CLI behavior and error wording.
 - Batch outcome-decision row and repository validation helpers are split from JSON loading behind the existing batch-decisions facade, preserving `record-outcomes` imports and error wording.

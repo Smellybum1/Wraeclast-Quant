@@ -21,10 +21,27 @@ class WatchlistOpportunity(Protocol):
     action: str
 
 
+def hidden_watchlist_items_text(
+    *,
+    displayed_count: int,
+    total_count: int,
+    max_limit: int = 50,
+) -> str | None:
+    if total_count <= displayed_count:
+        return None
+    next_limit = min(total_count, max_limit)
+    detail = "all" if next_limit == total_count else "more"
+    return (
+        f"Showing top {displayed_count} of {total_count} scored opportunities. "
+        f"Re-run with --limit {next_limit} to show {detail}."
+    )
+
+
 def print_watchlist_table(
     *,
     title: str,
     opportunities: list[WatchlistOpportunity],
+    total_count: int | None = None,
 ) -> None:
     console.print(title)
     table = Table(title="Watchlist")
@@ -38,6 +55,13 @@ def print_watchlist_table(
             opportunity.action,
         )
     console.print(table)
+    if total_count is not None:
+        hidden_items = hidden_watchlist_items_text(
+            displayed_count=len(opportunities),
+            total_count=total_count,
+        )
+        if hidden_items is not None:
+            console.print(hidden_items)
 
 
 def print_watchlist_review_guidance(
@@ -55,6 +79,7 @@ def print_watchlist_review_guidance(
 
 __all__ = [
     "calibration_prompt_next_action",
+    "hidden_watchlist_items_text",
     "print_watchlist_review_guidance",
     "print_watchlist_table",
     "review_next_action",

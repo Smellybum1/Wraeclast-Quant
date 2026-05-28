@@ -1334,3 +1334,8 @@
 
 - Completed packet: `wq currency-exchange-ui-observation` now prints the later `review-queue --context-path` handoff when a local review sidecar is written, keeping UI-observation notes connected to post-daily outcome review without changing conversion, scoring, persistence, public artifacts, or live-source behavior.
 - Verification: focused UI-observation CLI/rendering plus daily workflow docs tests passed with 9 tests; real template conversion smoke printed the later `review-queue --context-path` handoff; full bundled Python test suite passed with 634 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Watchlist Truncation Hint
+
+- Completed packet: `wq watchlist` now prints a truncation hint when the selected run has more scored opportunities than the displayed limit, pointing to the exact `--limit` value needed to show all rows when possible. This keeps the next manual MVP review loop from overlooking lower-ranked recommendations without changing scoring, storage, outcomes, public artifacts, live-source behavior, or the default limit.
+- Verification: focused watchlist CLI/rendering tests passed with 9 tests; real run #13 `watchlist` now reports `Showing top 5 of 6 scored opportunities. Re-run with --limit 6 to show all.` Full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
