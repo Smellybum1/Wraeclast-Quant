@@ -9,6 +9,7 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation imp
     currency_exchange_ui_observation_manual_import_payload,
     currency_exchange_ui_observation_review_flags,
     currency_exchange_ui_observation_review_notes,
+    currency_exchange_ui_observation_signals,
     load_currency_exchange_ui_observation,
     ratio_to_float,
 )
@@ -17,6 +18,9 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_mod
 )
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_review import (
     currency_exchange_ui_observation_review_notes as review_module_review_notes,
+)
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_signals import (
+    currency_exchange_ui_observation_signals as signals_module_signals,
 )
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.importers.manual import load_manual_items
@@ -61,6 +65,10 @@ def test_ui_observation_models_remain_available_from_facade() -> None:
 
 def test_ui_observation_review_notes_remain_available_from_facade() -> None:
     assert currency_exchange_ui_observation_review_notes is review_module_review_notes
+
+
+def test_ui_observation_signals_remain_available_from_facade() -> None:
+    assert currency_exchange_ui_observation_signals is signals_module_signals
 
 
 def test_ratio_to_float_accepts_strings_and_objects() -> None:
