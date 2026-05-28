@@ -35,6 +35,8 @@ def test_record_outcomes_command_rejects_invalid_batch_without_partial_writes(
     result = runner.invoke(app, _record_outcomes_args(database_path, decisions_path))
 
     assert result.exit_code != 0
+    assert "could not validate outcome batch" in result.output
+    assert "no records written" in result.output
     assert "Missing Item" in result.output
     assert SnapshotRepository(database_path).list_recent_outcomes() == []
 
@@ -64,6 +66,8 @@ def test_record_outcomes_command_rejects_already_reviewed_item_without_partial_w
 
     records = SnapshotRepository(database_path).list_recent_outcomes(limit=10)
     assert result.exit_code != 0
+    assert "could not validate outcome batch" in result.output
+    assert "no records written" in result.output
     assert "already has a recorded outcome" in result.output
     assert len(records) == 1
     assert records[0].item_name == "Ashen Rune Core"
@@ -95,6 +99,8 @@ def test_record_outcomes_command_dry_run_rejects_invalid_batch_without_writing(
     )
 
     assert result.exit_code != 0
+    assert "could not validate outcome batch" in result.output
+    assert "no records written" in result.output
     assert "Missing Item" in result.output
     assert SnapshotRepository(database_path).list_recent_outcomes() == []
 
@@ -123,6 +129,8 @@ def test_record_outcomes_command_dry_run_explains_blank_template_outcome(
     )
 
     assert result.exit_code != 0
+    assert "could not validate outcome batch" in result.output
+    assert "no records written" in result.output
     assert "decision 1 for 'Stormglass Catalyst' blank outcome" in result.output
     assert "use: negative, neutral, positive" in result.output
     assert "negative" in result.output
@@ -158,6 +166,8 @@ def test_record_outcomes_command_dry_run_reports_multiple_template_errors(
     )
 
     assert result.exit_code != 0
+    assert "could not validate outcome batch" in result.output
+    assert "no records written" in result.output
     assert "outcome decisions have 2 validation errors:" in result.output
     assert "decision 1 for 'Stormglass Catalyst' blank outcome" in result.output
     assert (

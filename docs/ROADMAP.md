@@ -682,6 +682,7 @@
 - Blank outcome-decisions template entries now fail `record-outcomes --dry-run` with fill-and-rerun guidance instead of a generic invalid-label error.
 - Blank or malformed outcome-decisions entries now name the affected item in `record-outcomes --dry-run` validation output and avoid clipped usage-box errors for the batch JSON workflow.
 - Batch outcome-decision dry-run validation now reports all row-level template errors together, so a human-reviewed JSON file can be fixed in one pass while still writing no records.
+- Batch outcome validation failures now explicitly report `no records written`, including already-reviewed duplicate batches, so rerunning a filled local review file has a clearer safe failure.
 - Successful `record-outcomes --dry-run` validation now prints the exact final batch-record command without `--dry-run`, keeping the human review handoff explicit.
 - `wq status` now points unreviewed runs to the concise `wq review-coverage --run-id <id>` checklist instead of wrapping the full worksheet/template/dry-run command chain in the status table.
 - `wq record-outcome` now points users to rerun review coverage and refresh derived artifacts after recording local decisions, closing the immediate post-review handoff loop.

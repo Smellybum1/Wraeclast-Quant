@@ -12,6 +12,7 @@ from wraeclast_quant.commands.maintenance_outcome_batch_decisions import (
 from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
     batch_outcome_dry_run_success_message,
     batch_outcome_record_success_message,
+    batch_outcome_validation_error_message,
     batch_outcome_write_error_message,
     post_outcome_record_next_steps,
     print_no_outcomes,
@@ -82,7 +83,7 @@ def register(app: typer.Typer) -> None:
                 typer.echo(batch_outcome_write_error_message(error), err=True)
                 raise typer.Exit(code=1) from error
         except ValueError as error:
-            typer.echo(str(error), err=True)
+            typer.echo(batch_outcome_validation_error_message(error), err=True)
             raise typer.Exit(code=1) from error
 
         typer.echo(batch_outcome_record_success_message(len(records), run_id, input_path))

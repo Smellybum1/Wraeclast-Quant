@@ -1279,3 +1279,8 @@
 
 - Completed packet: moved the batch `record-outcomes` SQLite write-failure rollback test into `tests/test_cli_record_outcomes_rollback.py`, leaving `tests/test_cli_record_outcomes.py` focused on successful writes, template metadata, calibration prompt handoff, and dry-run success while preserving the rollback test name, trigger setup, assertions, and CLI behavior.
 - Verification: focused batch outcome recording tests passed with 10 tests (`tests/test_cli_record_outcomes.py`, `tests/test_cli_record_outcomes_validation.py`, `tests/test_cli_record_outcomes_rollback.py`); full bundled Python test suite passed with 625 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 Record Outcomes Validation No-Write Wording
+
+- Completed packet: `wq record-outcomes` validation failures now render through the existing outcome-recording message helper and explicitly say `no records written`, keeping invalid, duplicate, and already-reviewed batches clearer without changing validation rules or persistence behavior.
+- Verification: focused outcome recording and batch-decision tests passed with 20 tests; the real run #13 duplicate `record-outcomes --dry-run` failed safely with all six already-reviewed item messages plus `no records written`; full bundled Python test suite passed with 626 tests; `git diff --check`, `status --strict`, and `publish-check` passed.

@@ -1,6 +1,7 @@
 from wraeclast_quant.commands.maintenance_outcome_records_rendering import (
     batch_outcome_dry_run_success_message,
     batch_outcome_record_success_message,
+    batch_outcome_validation_error_message,
     batch_outcome_write_error_message,
     no_outcomes_message,
     recent_outcomes_next_action,
@@ -31,6 +32,17 @@ def test_batch_outcome_record_success_message_preserves_cli_text() -> None:
             "data/processed/outcome_decisions.json",
         )
         == "Recorded 6 outcome(s) for run #13 from data/processed/outcome_decisions.json."
+    )
+
+
+def test_batch_outcome_validation_error_message_says_no_records_written() -> None:
+    message = batch_outcome_validation_error_message(
+        ValueError("item 'Missing Item' was not found in analysis run #13")
+    )
+
+    assert message == (
+        "Error: could not validate outcome batch; no records written: "
+        "item 'Missing Item' was not found in analysis run #13"
     )
 
 

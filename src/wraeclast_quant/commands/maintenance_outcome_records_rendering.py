@@ -41,6 +41,10 @@ def batch_outcome_record_success_message(
     return f"Recorded {record_count} outcome(s) for run #{run_id} from {input_path}."
 
 
+def batch_outcome_validation_error_message(error: BaseException) -> str:
+    return f"Error: could not validate outcome batch; no records written: {error}"
+
+
 def batch_outcome_write_error_message(error: BaseException) -> str:
     return f"Error: could not record outcome batch; no records written: {error}"
 
@@ -105,6 +109,7 @@ def print_no_outcomes() -> None:
 __all__ = [
     "batch_outcome_dry_run_success_message",
     "batch_outcome_record_success_message",
+    "batch_outcome_validation_error_message",
     "batch_outcome_write_error_message",
     "no_outcomes_message",
     "post_outcome_record_next_steps",
