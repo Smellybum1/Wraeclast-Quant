@@ -1166,3 +1166,8 @@
 
 - Completed packet: `wq record-outcomes --input-path <file> --dry-run` now reports all row-level outcome-decision template errors together, preserving item-specific messages and no-write behavior so the run #13 decisions file can be fixed in one pass.
 - Verification: focused outcome-decision loader and batch CLI tests passed (`tests\test_outcome_batch_decisions.py`, `tests\test_cli_record_outcomes.py`); the real run #13 blank decisions file now reports all 6 blank outcomes and still exits nonzero without recording outcomes.
+
+## 2026-05-28 Record Outcomes Validation Test Split
+
+- Completed packet: split batch `record-outcomes` validation and dry-run failure CLI tests into `tests\test_cli_record_outcomes_validation.py`, leaving `tests\test_cli_record_outcomes.py` focused on success, dry-run success, and write rollback coverage while preserving test names, assertions, helpers, and command behavior.
+- Verification: focused old/new outcome CLI tests passed (`tests\test_cli_record_outcomes.py`, `tests\test_cli_record_outcomes_validation.py`, `tests\test_outcome_batch_decisions.py`).

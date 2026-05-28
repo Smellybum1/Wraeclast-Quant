@@ -697,6 +697,7 @@
 - Stash-Ninja CLI run-selection and missing-run tests are split from the JSON/Markdown writer-shape test, with a shared command-argument helper.
 - Watchlist CLI run-selection and missing-run tests are split from default latest-run/sample-output coverage.
 - Batch outcome-recording CLI tests are split from one-off outcome-recording tests, preserving command behavior while keeping dry-run, validation, and rollback coverage easier to scan.
+- Batch outcome-recording validation and dry-run failure tests are split from success/write/rollback coverage, preserving command behavior while keeping outcome-decision template failures easier to scan.
 - Review-queue worksheet file-write and worksheet escaping tests are split from main review-queue CLI behavior tests.
 - Review-queue run-selection, empty-database, fully-reviewed, and missing-run tests are split from queue rendering and command-template escaping coverage.
 - Site-bundle local artifact exclusion tests are split from manifest source-path and secret safety coverage.
