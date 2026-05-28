@@ -4,12 +4,16 @@ from pathlib import Path
 import pytest
 
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation import (
+    CurrencyExchangeUiObservation,
     currency_exchange_ui_observation_capture_review_flags,
     currency_exchange_ui_observation_manual_import_payload,
     currency_exchange_ui_observation_review_flags,
     currency_exchange_ui_observation_review_notes,
     load_currency_exchange_ui_observation,
     ratio_to_float,
+)
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_models import (
+    CurrencyExchangeUiObservation as ModelCurrencyExchangeUiObservation,
 )
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.importers.manual import load_manual_items
@@ -46,6 +50,10 @@ def write_ui_observation(path: Path) -> None:
         ),
         encoding="utf-8",
     )
+
+
+def test_ui_observation_models_remain_available_from_facade() -> None:
+    assert CurrencyExchangeUiObservation is ModelCurrencyExchangeUiObservation
 
 
 def test_ratio_to_float_accepts_strings_and_objects() -> None:

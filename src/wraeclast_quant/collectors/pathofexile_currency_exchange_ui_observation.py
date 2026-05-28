@@ -1,49 +1,21 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import ValidationError
 
 from wraeclast_quant.collectors.pathofexile_currency_exchange_metrics import clamp_score
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_models import (
+    CurrencyExchangeUiObservation,
+    CurrencyExchangeUiObservationExportResult,
+    CurrencyExchangeUiObservationSnapshot,
+    CurrencyExchangeUiStockRow,
+    RatioValue,
+)
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.intelligence.scoring import OpportunityInputs
-
-
-RatioValue = str | dict[str, float]
-
-
-class CurrencyExchangeUiStockRow(BaseModel):
-    ratio: RatioValue
-    stock: int = Field(ge=0)
-    comparator: Literal["exact", "less_than", "greater_than"] = "exact"
-
-
-class CurrencyExchangeUiObservation(BaseModel):
-    want_currency: str
-    have_currency: str
-    market_ratio: RatioValue | None = None
-    stock_rows: list[CurrencyExchangeUiStockRow] = Field(default_factory=list)
-    no_stock: bool = False
-    league: str | None = None
-    notes: str = ""
-
-
-class CurrencyExchangeUiObservationSnapshot(BaseModel):
-    league: str
-    observed_at: str | None = None
-    observations: list[CurrencyExchangeUiObservation]
-
-
-@dataclass(frozen=True)
-class CurrencyExchangeUiObservationExportResult:
-    output_path: Path
-    item_count: int
-    source_name: str
-    review_notes_path: Path | None = None
-    capture_review_flag_count: int = 0
 
 
 def load_currency_exchange_ui_observation(path: str | Path) -> CurrencyExchangeUiObservationSnapshot:

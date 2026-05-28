@@ -1299,3 +1299,8 @@
 
 - Completed packet: `wq currency-exchange-ui-observation` now surfaces the capture review flag count in its export table and prints a local next-action hint to inspect the review sidecar before `wq daily` when weak captures are present, without changing manual-import JSON, scoring, persistence, public artifacts, or live-source behavior.
 - Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 16 tests; the real command against the checked-in template showed `Capture Flags` count `1` and pointed to the local temporary sidecar; full bundled Python test suite passed with 629 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation Model Split
+
+- Completed packet: Currency Exchange UI-observation Pydantic/dataclass models moved into `pathofexile_currency_exchange_ui_observation_models` while the existing collector module continues to re-export the public facade names used by commands and tests.
+- Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 17 tests; full bundled Python test suite passed with 630 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
