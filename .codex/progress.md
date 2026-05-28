@@ -1264,3 +1264,8 @@
 - Completed packet: generated review guidance now also uses run-scoped review worksheet paths like `data/processed/review_queue_run_<id>.md`, preserving older local worksheet notes alongside the run-scoped decisions JSON.
 - Documentation and safety wording updated: `README.md`, `docs/MVP_DAILY_WORKFLOW.md`, `docs/OUTCOMES.md`, `docs/STATIC_ARTIFACTS.md`, `docs/ROADMAP.md`, and publish-handoff safety wording now name run-scoped local worksheets where relevant.
 - Verification: focused review/watchlist/Stash-Ninja/static/outcome/publish safety tests passed with 50 tests; full bundled Python test suite passed with 625 tests; real `review-coverage --run-id 13`, `status --strict`, `publish-check`, and `git diff --check` passed.
+
+## 2026-05-28 Outcome Decisions Publish Safety
+
+- Completed packet: publish-handoff checklist wording, static artifact docs, and site-bundle local artifact safety coverage now explicitly treat `outcome_decisions*.json` as local manual-review data that must stay out of public static handoff bundles.
+- Verification: focused publish/static safety tests passed with 11 tests; full bundled Python test suite passed with 625 tests; local `publish-handoff` refreshed `data/processed/publish_handoff.md`; `status --strict`, `publish-check`, and `git diff --check` passed.

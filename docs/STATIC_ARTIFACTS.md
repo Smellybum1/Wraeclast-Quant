@@ -17,7 +17,7 @@ wq status
 
 `wq site-bundle` validates `public_intel.json`, copies the static dashboard and JSON export into `data/processed/site_bundle/`, writes `manifest.json`, and creates `wraeclast_quant_site_bundle.zip` for manual inspection.
 
-Local review worksheets such as `data/processed/review_queue_run_<id>.md` are not site-bundle inputs and must stay out of `data/processed/site_bundle/` and `wraeclast_quant_site_bundle.zip`.
+Local review worksheets and outcome-decision files such as `data/processed/review_queue_run_<id>.md` and `data/processed/outcome_decisions_run_<id>.json` are not site-bundle inputs and must stay out of `data/processed/site_bundle/` and `wraeclast_quant_site_bundle.zip`.
 
 Local companion handoffs such as `data/processed/exile_ui_stash_ninja_watchlist.json` and `.md` are also not site-bundle inputs. They are for manual local review only and must stay out of public static handoff bundles.
 
@@ -116,7 +116,7 @@ Static artifacts may include derived fields from `public_intel.json`: item names
 
 They must not include raw source pages, raw signal inputs, resource notes, full source inventories, private data, secrets, cookies, tokens, API keys, credentials, `.env` values, or manual outcome notes.
 
-Local review worksheets, Stash-Ninja companion watchlists, outcome reports, and calibration reports are for the manual feedback loop only. They are not public site artifacts and must not be bundled for static handoff.
+Local review worksheets, outcome-decision files, Stash-Ninja companion watchlists, outcome reports, and calibration reports are for the manual feedback loop only. They are not public site artifacts and must not be bundled for static handoff.
 
 ## Safety Notes
 

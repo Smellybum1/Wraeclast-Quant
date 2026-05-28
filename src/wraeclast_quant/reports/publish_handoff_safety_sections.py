@@ -10,7 +10,7 @@ def manual_checklist_lines() -> list[str]:
         "- [ ] Inspect the static dashboard locally.",
         "- [ ] Inspect `public_intel.json` for derived-only content.",
         "- [ ] Confirm the bundle archive contains only the expected static files.",
-        "- [ ] Keep local review worksheets and feedback reports out of the public handoff: `review_queue*.md`, `outcome_review.md`, `calibration_report.md`, and `exile_ui_stash_ninja_watchlist.*`.",
+        "- [ ] Keep local review worksheets, outcome-decision files, and feedback reports out of the public handoff: `review_queue*.md`, `outcome_decisions*.json`, `outcome_review.md`, `calibration_report.md`, and `exile_ui_stash_ninja_watchlist.*`.",
         "- [ ] Manually publish outside Wraeclast Quant only if you choose to.",
         "",
     ]
@@ -24,7 +24,7 @@ def safety_boundary_lines() -> list[str]:
         "",
         "Do not include unprocessed signal payloads, source data excerpts, resource notes, credentials, cookies, tokens, or secret environment values in a public handoff.",
         "",
-        "Local review worksheets, Stash-Ninja companion exports, outcome reports, and calibration reports are manual feedback-loop artifacts, not public handoff inputs.",
+        "Local review worksheets, outcome-decision files, Stash-Ninja companion exports, outcome reports, and calibration reports are manual feedback-loop artifacts, not public handoff inputs.",
         "",
     ]
 
