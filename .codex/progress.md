@@ -1130,3 +1130,8 @@
 
 - Completed packet: split `wq outcome-review` report/calibration next-action text into a focused helper in `maintenance_outcome_reports_rendering`, preserving CLI output while making the local feedback-loop handoff directly testable.
 - Verification: focused outcome-review/report tests passed (`tests\test_outcome_report_rendering.py`, `tests\test_cli_outcome_review.py`, `tests\test_cli_outcome_report.py`, `tests\test_outcome_review_report.py`); full bundled Python test suite passed with 594 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 remains pending human outcome labels.
+
+## 2026-05-28 Record Outcomes Test Split
+
+- Completed packet: split batch `record-outcomes` CLI tests into `tests\test_cli_record_outcomes.py`, leaving `tests\test_cli_record_outcome.py` focused on one-off `record-outcome` behavior while preserving test names, assertions, CLI output expectations, and runtime code.
+- Verification: focused old/new outcome CLI test modules passed (`tests\test_cli_record_outcome.py`, `tests\test_cli_record_outcomes.py`); full bundled Python test suite passed with 594 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 review coverage remains 0/6 pending human outcome labels.
