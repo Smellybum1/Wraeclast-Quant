@@ -14,7 +14,7 @@ wq daily --input-path <file>
 ```
 
 - `validate-import` is read-only, checks that the file can be loaded and scored, and prints the matching `wq daily --input-path <file>` next action when it passes.
-- `inspect-import` is read-only and prints score and signal diagnostics.
+- `inspect-import` is read-only, prints score and signal diagnostics, and points back to `wq validate-import --input-path <file>`.
 - `import` scores the file and records one `manual-import` analysis run.
 - `daily --input-path` runs the full local pipeline from the file using the contract documented in `docs/DAILY_PIPELINE.md`.
 
@@ -81,6 +81,8 @@ Starter templates:
 - `examples/manual_import_template.csv`
 
 Use `wq validate-import --input-path <file>` before persisting a new manual snapshot. When validation passes, the command prints the matching `wq daily --input-path <file>` next action.
+
+Use `wq inspect-import --input-path <file>` first when you want read-only score ranges, action counts, and signal averages; it prints the matching validation command afterward.
 
 ## Currency Exchange Manual Snapshots
 

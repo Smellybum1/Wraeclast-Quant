@@ -7,6 +7,7 @@ import typer
 from wraeclast_quant.commands.intake_rendering import console, print_opportunities
 from wraeclast_quant.commands.intake_manual_import_rendering import (
     manual_import_daily_next_action,
+    manual_import_validate_next_action,
     print_manual_import_diagnostics,
 )
 from wraeclast_quant.commands.intake_manual_import_workflow import (
@@ -47,3 +48,4 @@ def register(app: typer.Typer) -> None:
 
         print_manual_import_diagnostics(summary, opportunities, limit)
         console.print("Inspect import is read-only. No snapshots, reports, exports, or databases were written.")
+        console.print(manual_import_validate_next_action(input_path))

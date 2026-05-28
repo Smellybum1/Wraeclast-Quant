@@ -12,6 +12,10 @@ def manual_import_daily_next_action(input_path: object) -> str:
     return f"Next: wq daily --input-path {input_path}"
 
 
+def manual_import_validate_next_action(input_path: object) -> str:
+    return f"Next: wq validate-import --input-path {input_path}"
+
+
 def print_manual_import_diagnostics(
     summary: ManualImportSummary,
     opportunities: list[ScoredOpportunity],
@@ -40,5 +44,6 @@ def print_manual_import_diagnostics(
 
 __all__ = [
     "manual_import_daily_next_action",
+    "manual_import_validate_next_action",
     "print_manual_import_diagnostics",
 ]

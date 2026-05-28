@@ -1349,3 +1349,8 @@
 
 - Completed packet: successful `wq validate-import --input-path <file>` output now prints the matching `wq daily --input-path <file>` next action, keeping the fresh local observation path moving from read-only validation into the next manual daily run without changing validation rules, scoring, persistence, public artifacts, live-source behavior, or dry-run safety.
 - Verification: focused validate/import/inspect plus MVP workflow docs tests passed with 11 tests, then the post-doc focused slice passed with 13 tests; real run #13 manual-import validation now prints `Next: wq daily --input-path data\processed\standard_currency_exchange_manual_import.json`; full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.
+
+## 2026-05-28 Inspect Import Validation Handoff
+
+- Completed packet: successful `wq inspect-import --input-path <file>` output now prints the matching `wq validate-import --input-path <file>` next action after its read-only diagnostics, keeping score/signal inspection connected to the safe validation-before-daily path without changing diagnostics, validation rules, scoring, persistence, public artifacts, or live-source behavior.
+- Verification: focused inspect/validate/import CLI tests passed with 9 tests, then the post-doc focused slice passed with 11 tests; real run #13 manual-import inspection now prints `Next: wq validate-import --input-path data\processed\standard_currency_exchange_manual_import.json`; full bundled Python test suite passed with 635 tests; final `git diff --check`, `status --strict`, and `publish-check` gates passed.

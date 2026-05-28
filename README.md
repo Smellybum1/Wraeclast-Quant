@@ -52,7 +52,7 @@ For the no-OAuth MVP daily loop, see `docs/MVP_DAILY_WORKFLOW.md`.
 - `wq analyze --sample-data` scores sample items and records one SQLite run.
 - `wq import --input-path <file>` scores a local JSON or CSV signal file and records one manual-import run.
 - `wq validate-import --input-path <file>` checks a local JSON or CSV signal file without recording a run and prints the matching `wq daily --input-path <file>` next action when it passes.
-- `wq inspect-import --input-path <file>` shows read-only score and signal diagnostics for a local import file.
+- `wq inspect-import --input-path <file>` shows read-only score and signal diagnostics for a local import file, then points back to `wq validate-import --input-path <file>`.
 - `wq report --sample-data` writes `data/processed/market_brief.md`.
 - `wq watchlist` shows top recommendations from the latest local SQLite run; add `--run-id <id>` for a specific run, `--limit <n>` to show more rows, or `--sample-data` for deterministic demo data. For fully reviewed stored runs with calibration review prompts, it points back to `wq calibration` without changing scoring.
 - `wq stash-ninja-watchlist` writes a derived-only local companion JSON/Markdown watchlist for manual Exile-UI Stash-Ninja use. Fully reviewed handoffs with calibration prompts point back to `wq calibration`; the command does not write Exile-UI files, automate the overlay, call live HTTP, or interact with the game client.
@@ -118,7 +118,7 @@ name,demand_momentum,build_dependency_score,price_discount_score,liquidity_score
 Stormglass Catalyst,88,82,76,70,68,74,18,8
 ```
 
-Starter templates live at `examples/manual_import_template.json` and `examples/manual_import_template.csv`. See `docs/MANUAL_IMPORT.md` for the full import contract. Use `wq validate-import --input-path <file>` before `wq import` or `wq daily --input-path` when you want a read-only schema check; successful validation prints the matching `wq daily --input-path <file>` command. Use `wq inspect-import --input-path <file>` when you want read-only action counts, score ranges, and signal averages before recording a snapshot.
+Starter templates live at `examples/manual_import_template.json` and `examples/manual_import_template.csv`. See `docs/MANUAL_IMPORT.md` for the full import contract. Use `wq inspect-import --input-path <file>` when you want read-only action counts, score ranges, and signal averages; it points back to `wq validate-import --input-path <file>` afterward. Use `wq validate-import --input-path <file>` before `wq import` or `wq daily --input-path` when you want a read-only schema check; successful validation prints the matching `wq daily --input-path <file>` command.
 
 ## Generated Local Artifacts
 

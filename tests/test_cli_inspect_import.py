@@ -26,6 +26,7 @@ def test_inspect_import_prints_read_only_diagnostics(tmp_path: Path) -> None:
     assert "Top Imported Opportunities" in result.output
     assert "Stormglass Catalyst" in result.output
     assert "read-only" in result.output
+    assert f"Next: wq validate-import --input-path {input_path}" in result.output
 
 
 def test_inspect_import_does_not_create_database(tmp_path: Path, monkeypatch) -> None:
