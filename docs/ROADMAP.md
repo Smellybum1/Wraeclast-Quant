@@ -611,6 +611,7 @@
 - Run #10's poe.ninja-style connector fixture recommendations have been reviewed as neutral workflow-proof outcomes; use a fresh manual observation snapshot for the next real MVP review loop.
 - Run #11 is the first Standard league manual UI-observation proof run from visible in-game Currency Exchange ratio/stock rows; it is now fully reviewed at 6/6 outcomes, all neutral, with strict status and publish checks passing.
 - Run #12 is the latest Standard league manual UI-observation run from user-provided Currency Exchange screenshots; it is fully reviewed at 6/6 outcomes, all neutral, with fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
+- Run #13 is the latest Standard league manual UI-observation run using the richer stock-ladder screenshots for Chaos/Divine and Regal/Divine; it has 6 recommendations, 0/6 reviewed, fresh public/static artifacts, fresh SQLite backup, strict status, and publish checks passing.
 - MVP daily workflow docs now include a UI-observation capture checklist so stock-ladder rows and final aggregate rows are gathered before a daily run is recorded.
 - MVP readiness guidance now points fully reviewed or empty local loops to either a manual snapshot or UI observation, with stock-ladder capture called out before the next daily run.
 - MVP readiness manual-observation next-action wording is shared by CLI status and static-site rendering behind a focused helper.
@@ -620,7 +621,7 @@
 - Keep official Currency Exchange preview diagnostics local-only until auth, cache writes, storage format, and promotion gates are implemented and verified.
 - Do not pursue GGG OAuth access or live official Currency Exchange HTTP for now; focus on non-OAuth manual/fixture workflows and local decision-support.
 - Use `wq currency-exchange-manual-snapshot --input-path examples/pathofexile_currency_exchange_manual_snapshot_template.json` to validate local manual observations; add `--history-path` and `--output-fixture-path` when creating a local preview connector fixture.
-- For the next no-OAuth MVP proof, prefer a fresh user-supplied Standard/current-league manual Currency Exchange snapshot or UI observation, then run `wq daily --input-path <validated-local-input>` and review the resulting recommendations before recording outcomes.
+- For the current no-OAuth MVP proof, review run #13 using `data/processed/review_queue.md` and `data/processed/outcome_decisions.json`, then run `wq record-outcomes --input-path data/processed/outcome_decisions.json --dry-run` before recording any outcomes.
 - Exile-UI/Stash-Ninja companion support now starts with a derived-only local watchlist export; do not write Exile-UI settings or price caches.
 - Plan future static publishing only after `wq publish-check`, `wq publish-handoff`, and `wq site-contract` are ready and manually reviewed.
 - Use the `AGENTS.md` autonomous roadmap loop and `docs/GOAL_MODE.md` prompt when asking Codex to advance the project packet-by-packet.
