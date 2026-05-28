@@ -707,6 +707,7 @@
 - Batch outcome-recording CLI tests are split from one-off outcome-recording tests, preserving command behavior while keeping dry-run, validation, and rollback coverage easier to scan.
 - Batch outcome-recording validation and dry-run failure tests are split from success/write/rollback coverage, preserving command behavior while keeping outcome-decision template failures easier to scan.
 - Review-queue worksheet file-write and worksheet escaping tests are split from main review-queue CLI behavior tests.
+- Review-queue outcome-decisions template CLI tests are split from worksheet Markdown tests, preserving output and overwrite-safety assertions.
 - Review-queue run-selection, empty-database, fully-reviewed, and missing-run tests are split from queue rendering and command-template escaping coverage.
 - Site-bundle local artifact exclusion tests are split from manifest source-path and secret safety coverage.
 - Stash-Ninja status strict stale/missing handoff tests are split from fresh handoff row rendering coverage.

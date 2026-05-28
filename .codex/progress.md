@@ -1269,3 +1269,8 @@
 
 - Completed packet: publish-handoff checklist wording, static artifact docs, and site-bundle local artifact safety coverage now explicitly treat `outcome_decisions*.json` as local manual-review data that must stay out of public static handoff bundles.
 - Verification: focused publish/static safety tests passed with 11 tests; full bundled Python test suite passed with 625 tests; local `publish-handoff` refreshed `data/processed/publish_handoff.md`; `status --strict`, `publish-check`, and `git diff --check` passed.
+
+## 2026-05-28 Review Queue Decisions Test Split
+
+- Completed packet: moved review-queue outcome-decisions template write/refresh/overwrite-safety CLI tests into `tests/test_cli_review_queue_decisions.py`, leaving `tests/test_cli_review_queue_worksheet.py` focused on Markdown worksheet, context, and escaping behavior.
+- Verification: focused review queue worksheet/decisions/queue/coverage tests passed with 13 tests; full bundled Python test suite passed with 625 tests; `status --strict`, `publish-check`, and `git diff --check` passed.
