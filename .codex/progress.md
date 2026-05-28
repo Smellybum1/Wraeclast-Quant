@@ -1135,3 +1135,8 @@
 
 - Completed packet: split batch `record-outcomes` CLI tests into `tests\test_cli_record_outcomes.py`, leaving `tests\test_cli_record_outcome.py` focused on one-off `record-outcome` behavior while preserving test names, assertions, CLI output expectations, and runtime code.
 - Verification: focused old/new outcome CLI test modules passed (`tests\test_cli_record_outcome.py`, `tests\test_cli_record_outcomes.py`); full bundled Python test suite passed with 594 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 review coverage remains 0/6 pending human outcome labels.
+
+## 2026-05-28 UI Observation Rendering Helper
+
+- Completed packet: split Currency Exchange UI-observation export safety text and validate/review/daily next-action text into focused rendering helpers, preserving CLI output and the local-only no-OAuth workflow handoff.
+- Verification: focused UI-observation rendering, CLI, and collector tests passed (`tests\test_currency_exchange_ui_observation_rendering.py`, `tests\test_cli_currency_exchange_ui_observation.py`, `tests\test_currency_exchange_ui_observation.py`); full bundled Python test suite passed with 596 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. Run #13 review coverage remains 0/6 pending human outcome labels.

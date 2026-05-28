@@ -8,6 +8,25 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation imp
 )
 
 
+def ui_observation_export_safety_text() -> str:
+    return (
+        "Exported manual-import-compatible JSON from local UI observations only. "
+        "No OAuth, live HTTP, scraping, game-client automation, snapshots, or publishing were performed."
+    )
+
+
+def ui_observation_validate_next_action(output_path: object) -> str:
+    return f"Next: wq validate-import --input-path {output_path}"
+
+
+def ui_observation_review_sidecar_text(review_notes_path: object) -> str:
+    return f"Review sidecar: {review_notes_path}"
+
+
+def ui_observation_daily_next_action(output_path: object) -> str:
+    return f"Then: wq daily --input-path {output_path}"
+
+
 def print_currency_exchange_ui_observation_export(
     result: CurrencyExchangeUiObservationExportResult,
 ) -> None:
@@ -23,14 +42,17 @@ def print_currency_exchange_ui_observation_export(
         str(result.review_notes_path) if result.review_notes_path is not None else "not written",
     )
     console.print(table)
-    console.print(
-        "Exported manual-import-compatible JSON from local UI observations only. "
-        "No OAuth, live HTTP, scraping, game-client automation, snapshots, or publishing were performed."
-    )
-    console.print(f"Next: wq validate-import --input-path {result.output_path}")
+    console.print(ui_observation_export_safety_text())
+    console.print(ui_observation_validate_next_action(result.output_path))
     if result.review_notes_path is not None:
-        console.print(f"Review sidecar: {result.review_notes_path}")
-    console.print(f"Then: wq daily --input-path {result.output_path}")
+        console.print(ui_observation_review_sidecar_text(result.review_notes_path))
+    console.print(ui_observation_daily_next_action(result.output_path))
 
 
-__all__ = ["print_currency_exchange_ui_observation_export"]
+__all__ = [
+    "print_currency_exchange_ui_observation_export",
+    "ui_observation_daily_next_action",
+    "ui_observation_export_safety_text",
+    "ui_observation_review_sidecar_text",
+    "ui_observation_validate_next_action",
+]
