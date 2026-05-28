@@ -1155,3 +1155,9 @@
 
 - Completed packet: protected `wq review-queue --decisions-output-path` from overwriting an existing outcome-decisions file that already contains human labels, while still allowing all-blank templates to be refreshed.
 - Verification: focused review-queue worksheet/queue/coverage tests passed (`tests\test_cli_review_queue_worksheet.py`, `tests\test_cli_review_queue.py`, `tests\test_cli_review_coverage.py`); full bundled Python test suite passed with 603 tests; `git diff --check`, `wq status --strict`, and `wq publish-check` passed. The real run #13 blank outcome-decisions template still refreshes successfully because it contains no human labels.
+
+## 2026-05-28 Connector Fixture Export Rendering Helper
+
+- Completed packet: split `connector-fixture-export` local-only safety text into a focused rendering helper, preserving CLI output for the fixture-to-manual-import workflow.
+- Follow-up fix: moved invalid site-bundle status errors before long archive paths so full-suite Rich table output keeps the actionable `not a valid zip file` detail visible in long temp paths.
+- Verification: focused connector fixture export rendering/CLI and invalid site-bundle status tests passed (`tests\test_connector_fixture_export_rendering.py`, `tests\test_cli_connector_fixture_export.py`, `tests\test_cli_status_site_bundle_health.py`); full bundled Python test suite passed with 604 tests.

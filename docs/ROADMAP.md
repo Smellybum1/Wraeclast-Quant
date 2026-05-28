@@ -146,6 +146,7 @@
 - Status health report row assembly split into focused latest-run, artifact, and backup/safety helpers behind the stable report-builder facade.
 - Status health context and artifact-row status calculations split into focused helpers behind stable status facades.
 - Status health artifact row specifications split from status table mutation behind the stable artifact-row facade.
+- Invalid site-bundle status details now put actionable errors before long archive paths so Rich table clipping cannot hide the failure reason.
 - Static site rendering helper logic decomposed into focused section, HTML helper, and style modules behind the stable renderer entry point.
 - Static site dashboard section ordering split from HTML shell rendering behind the stable renderer entry point.
 - Static site section rendering split into focused run/history, review/compliance, and market-change helpers behind the stable section facade.
@@ -168,6 +169,7 @@
 - Connector fixture run command rendering split into a focused helper behind the stable fixture-run command.
 - Connector dry-run command rendering split into a focused helper behind the stable dry-run command.
 - Connector fixture export command rendering split into a focused helper behind the stable `connector-fixture-export` command.
+- Connector fixture export local-only safety text is split into a focused rendering helper, preserving the fixture-to-manual-import workflow output.
 - Connector review command registration decomposed into focused draft/prep, evidence/status, and readiness-check modules behind the stable connector review aggregator.
 - Connector review prep command rendering split into a focused helper behind the stable draft/prep command module.
 - Connector review draft and prep command workspace workflows split into focused helpers behind stable draft/prep commands.

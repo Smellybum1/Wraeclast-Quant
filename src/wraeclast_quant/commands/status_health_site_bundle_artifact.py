@@ -21,7 +21,7 @@ def site_bundle_details(
     if health is None:
         return str(archive_path)
     if not health.valid:
-        return f"{health.archive_path}; " + "; ".join(health.errors)
+        return "; ".join(health.errors) + f"; {health.archive_path}"
     details = (
         f"{health.archive_path}; schema {health.schema_version or 'unknown'}; "
         f"latest run #{health.latest_run_id or 'none'}; "
