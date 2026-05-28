@@ -1304,3 +1304,8 @@
 
 - Completed packet: Currency Exchange UI-observation Pydantic/dataclass models moved into `pathofexile_currency_exchange_ui_observation_models` while the existing collector module continues to re-export the public facade names used by commands and tests.
 - Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 17 tests; full bundled Python test suite passed with 630 tests; `git diff --check`, `status --strict`, and `publish-check` passed.
+
+## 2026-05-28 UI Observation Review Helper Split
+
+- Completed packet: Currency Exchange UI-observation review-note Markdown, capture review flags, and sidecar formatting helpers moved into focused review/formatting modules while the existing collector facade continues to expose the same helper names.
+- Verification: focused UI-observation CLI/rendering/collector plus daily workflow docs tests passed with 18 tests; full bundled Python test suite passed with 631 tests; `git diff --check`, `status --strict`, and `publish-check` passed.

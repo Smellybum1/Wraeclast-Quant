@@ -7,12 +7,21 @@ from typing import Any
 from pydantic import ValidationError
 
 from wraeclast_quant.collectors.pathofexile_currency_exchange_metrics import clamp_score
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_formatting import (
+    currency_name,
+    format_ratio_value,
+)
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_models import (
     CurrencyExchangeUiObservation,
     CurrencyExchangeUiObservationExportResult,
     CurrencyExchangeUiObservationSnapshot,
     CurrencyExchangeUiStockRow,
     RatioValue,
+)
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_review import (
+    currency_exchange_ui_observation_capture_review_flags,
+    currency_exchange_ui_observation_review_flags,
+    currency_exchange_ui_observation_review_notes,
 )
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.intelligence.scoring import OpportunityInputs
@@ -98,96 +107,6 @@ def currency_exchange_ui_observation_item(
     }
 
 
-def currency_exchange_ui_observation_review_notes(
-    snapshot: CurrencyExchangeUiObservationSnapshot,
-) -> str:
-    lines = [
-        "# Currency Exchange UI Observation Review Notes",
-        "",
-        "Local review notes only. This file is generated from manually transcribed in-game UI rows.",
-        "No OAuth, live HTTP, scraping, OCR, game-client automation, snapshots, outcome recording, or publishing were performed.",
-        "",
-        f"- League: {snapshot.league}",
-        f"- Observed at: {snapshot.observed_at or 'not supplied'}",
-        f"- Observations: {len(snapshot.observations)}",
-        "",
-        "| Pair | Market ratio | Visible stock | Rows | Notes |",
-        "| --- | --- | ---: | --- | --- |",
-    ]
-    for observation in snapshot.observations:
-        league = observation.league or snapshot.league
-        pair = f"{currency_name(observation.want_currency)} / {currency_name(observation.have_currency)} ({league} UI)"
-        rows = "; ".join(_stock_row_summary(row) for row in observation.stock_rows)
-        if observation.no_stock and not rows:
-            rows = "No stock"
-        lines.append(
-            "| "
-            + " | ".join(
-                [
-                    _markdown_cell(pair),
-                    _markdown_cell(_ratio_summary(observation.market_ratio, observation.no_stock)),
-                    str(visible_stock_total(observation)),
-                    _markdown_cell(rows or "none"),
-                    _markdown_cell(observation.notes or ""),
-                ]
-            )
-            + " |"
-        )
-    lines.extend(
-        [
-            "",
-            "## Capture Review Flags",
-            "",
-            *currency_exchange_ui_observation_review_flags(snapshot),
-            "",
-            "Use this sidecar while choosing local outcome labels after `wq daily --input-path <manual-import-output>`.",
-            "Do not record outcomes until a human review decision has been made.",
-            "",
-        ]
-    )
-    return "\n".join(lines)
-
-
-def currency_exchange_ui_observation_review_flags(
-    snapshot: CurrencyExchangeUiObservationSnapshot,
-) -> list[str]:
-    flags = currency_exchange_ui_observation_capture_review_flags(snapshot)
-    if not flags:
-        return ["- No capture review flags detected."]
-    return flags
-
-
-def currency_exchange_ui_observation_capture_review_flags(
-    snapshot: CurrencyExchangeUiObservationSnapshot,
-) -> list[str]:
-    flags: list[str] = []
-    for observation in snapshot.observations:
-        league = observation.league or snapshot.league
-        pair = f"{currency_name(observation.want_currency)} / {currency_name(observation.have_currency)} ({league} UI)"
-        has_rows = bool(observation.stock_rows)
-        if observation.no_stock:
-            flags.append(
-                f"- {pair}: No Stock was transcribed; verify this after the next market "
-                "refresh before treating the absence as durable evidence."
-            )
-        elif not has_rows and observation.market_ratio is not None:
-            flags.append(
-                f"- {pair}: ratio-only capture; add visible stock-ladder rows before "
-                "`wq daily` if possible because scoring treats missing stock conservatively."
-            )
-        elif not has_rows:
-            flags.append(
-                f"- {pair}: missing market ratio and stock-ladder rows; "
-                "recapture before `wq daily` if possible."
-            )
-        elif observation.market_ratio is None:
-            flags.append(
-                f"- {pair}: stock-ladder rows were captured without an order-entry market "
-                "ratio; verify the ratio before outcome review."
-            )
-    return flags
-
-
 def currency_exchange_ui_observation_signals(
     observation: CurrencyExchangeUiObservation,
     max_visible_stock: int,
@@ -267,33 +186,6 @@ def _positive_float(value: Any, original: object) -> float:
     if parsed <= 0:
         raise ConnectorPolicyError(f"Ratio values must be positive: {original}")
     return parsed
-
-
-def currency_name(value: str) -> str:
-    return " ".join(part.capitalize() for part in value.replace("_", " ").split())
-
-
-def _stock_row_summary(row: CurrencyExchangeUiStockRow) -> str:
-    prefix = {"exact": "", "less_than": "<", "greater_than": ">"}[row.comparator]
-    return f"{prefix}{format_ratio_value(row.ratio)} stock {row.stock:,}"
-
-
-def _ratio_summary(value: RatioValue | None, no_stock: bool) -> str:
-    if no_stock:
-        return "No Stock"
-    if value is None:
-        return "not supplied"
-    return format_ratio_value(value)
-
-
-def format_ratio_value(value: RatioValue) -> str:
-    if isinstance(value, str):
-        return value
-    return f"{value['want']:g}:{value['have']:g}"
-
-
-def _markdown_cell(value: str) -> str:
-    return value.replace("\\", "\\\\").replace("|", "\\|").replace("\r", " ").replace("\n", " ")
 
 
 __all__ = [

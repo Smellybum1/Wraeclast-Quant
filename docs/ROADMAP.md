@@ -742,6 +742,7 @@
 - Currency Exchange UI observation review-note sidecars now include capture review flags for ratio-only captures, No Stock rows, missing stock ladders, and missing order-entry ratios without changing manual-import scoring or public artifacts.
 - Currency Exchange UI observation export output now shows a capture review flag count and points users to inspect the local sidecar before `wq daily` when flags exist.
 - Currency Exchange UI observation models are split into a focused module behind the existing collector facade, preserving manual-import conversion, review notes, capture flags, and CLI imports.
+- Currency Exchange UI observation review-note and capture-flag helpers are split behind the existing collector facade, preserving sidecar Markdown and CLI export behavior.
 - Currency Exchange UI observation export guidance text is split into focused rendering helpers, preserving local-only safety and validate/daily next-action wording.
 - Manual-import daily runs now record path-safe local run provenance with input file metadata, item count, and explicit no-live-collection flags, making no-OAuth MVP proof runs easier to audit without changing the SQLite schema or public artifacts.
 - Manual-import daily provenance now includes file size and SHA-256 hash metadata so future no-OAuth runs can be verified against the local input file without storing raw signals in public artifacts.

@@ -15,6 +15,9 @@ from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation imp
 from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_models import (
     CurrencyExchangeUiObservation as ModelCurrencyExchangeUiObservation,
 )
+from wraeclast_quant.collectors.pathofexile_currency_exchange_ui_observation_review import (
+    currency_exchange_ui_observation_review_notes as review_module_review_notes,
+)
 from wraeclast_quant.config.connector_policy import ConnectorPolicyError
 from wraeclast_quant.importers.manual import load_manual_items
 
@@ -54,6 +57,10 @@ def write_ui_observation(path: Path) -> None:
 
 def test_ui_observation_models_remain_available_from_facade() -> None:
     assert CurrencyExchangeUiObservation is ModelCurrencyExchangeUiObservation
+
+
+def test_ui_observation_review_notes_remain_available_from_facade() -> None:
+    assert currency_exchange_ui_observation_review_notes is review_module_review_notes
 
 
 def test_ratio_to_float_accepts_strings_and_objects() -> None:
