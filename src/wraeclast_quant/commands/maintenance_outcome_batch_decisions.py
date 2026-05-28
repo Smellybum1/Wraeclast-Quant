@@ -25,14 +25,25 @@ def load_batch_outcome_decisions(input_path: Path) -> tuple[int, list[dict[str, 
         raise ValueError("outcome decisions must include a non-empty decisions list.")
 
     decisions: list[dict[str, str]] = []
-    seen_items: set[str] = set()
+    seen_items: dict[str, int] = {}
+    errors: list[str] = []
     for index, raw_decision in enumerate(raw_decisions, start=1):
-        decision = normalize_batch_outcome_decision(index, raw_decision)
+        try:
+            decision = normalize_batch_outcome_decision(index, raw_decision)
+        except ValueError as error:
+            errors.append(str(error))
+            continue
         item_name = decision["item_name"]
         if item_name in seen_items:
-            raise ValueError(f"decision {index} duplicates item_name '{item_name}'.")
-        seen_items.add(item_name)
+            errors.append(
+                f"decision {index} duplicates item_name '{item_name}' "
+                f"(first seen at decision {seen_items[item_name]})."
+            )
+            continue
+        seen_items[item_name] = index
         decisions.append(decision)
+    if errors:
+        raise ValueError(format_batch_outcome_decision_errors(errors))
     return run_id, decisions
 
 
@@ -77,18 +88,31 @@ def validate_batch_outcome_decisions(
         opportunity.item_name
         for opportunity in repository.scored_opportunities_for_run(run_id, limit=None)
     }
+    errors: list[str] = []
     for decision in decisions:
         item_name = decision["item_name"]
         if item_name not in item_names:
-            raise ValueError(f"item '{item_name}' was not found in analysis run #{run_id}")
+            errors.append(f"item '{item_name}' was not found in analysis run #{run_id}")
+            continue
         if repository.recommendation_outcome_exists(run_id, item_name):
-            raise ValueError(
+            errors.append(
                 f"item '{item_name}' already has a recorded outcome for analysis run #{run_id}"
             )
+    if errors:
+        raise ValueError(format_batch_outcome_decision_errors(errors))
+
+
+def format_batch_outcome_decision_errors(errors: list[str]) -> str:
+    if len(errors) == 1:
+        return errors[0]
+    lines = [f"outcome decisions have {len(errors)} validation errors:"]
+    lines.extend(f"- {error}" for error in errors)
+    return "\n".join(lines)
 
 
 __all__ = [
     "load_batch_outcome_decisions",
+    "format_batch_outcome_decision_errors",
     "normalize_batch_outcome_decision",
     "validate_batch_outcome_decisions",
 ]

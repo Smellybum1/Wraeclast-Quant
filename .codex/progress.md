@@ -1161,3 +1161,8 @@
 - Completed packet: split `connector-fixture-export` local-only safety text into a focused rendering helper, preserving CLI output for the fixture-to-manual-import workflow.
 - Follow-up fix: moved invalid site-bundle status errors before long archive paths so full-suite Rich table output keeps the actionable `not a valid zip file` detail visible in long temp paths.
 - Verification: focused connector fixture export rendering/CLI and invalid site-bundle status tests passed (`tests\test_connector_fixture_export_rendering.py`, `tests\test_cli_connector_fixture_export.py`, `tests\test_cli_status_site_bundle_health.py`); full bundled Python test suite passed with 604 tests.
+
+## 2026-05-28 Batch Outcome Aggregate Errors
+
+- Completed packet: `wq record-outcomes --input-path <file> --dry-run` now reports all row-level outcome-decision template errors together, preserving item-specific messages and no-write behavior so the run #13 decisions file can be fixed in one pass.
+- Verification: focused outcome-decision loader and batch CLI tests passed (`tests\test_outcome_batch_decisions.py`, `tests\test_cli_record_outcomes.py`); the real run #13 blank decisions file now reports all 6 blank outcomes and still exits nonzero without recording outcomes.

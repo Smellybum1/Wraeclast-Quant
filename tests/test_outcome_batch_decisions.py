@@ -1,6 +1,10 @@
+import json
+from pathlib import Path
+
 import pytest
 
 from wraeclast_quant.commands.maintenance_outcome_batch_decisions import (
+    load_batch_outcome_decisions,
     normalize_batch_outcome_decision,
 )
 
@@ -45,3 +49,40 @@ def test_batch_decision_notes_type_error_names_item() -> None:
     assert (
         "decision 3 for 'Regal Orb / Divine Orb (Standard UI)' notes must be a string"
     ) in str(error.value)
+
+
+def test_batch_decision_loader_reports_multiple_row_errors(tmp_path: Path) -> None:
+    decisions_path = tmp_path / "outcome_decisions.json"
+    decisions_path.write_text(
+        json.dumps(
+            {
+                "run_id": 13,
+                "decisions": [
+                    {
+                        "item_name": "Exalted Orb / Divine Orb (Standard UI)",
+                        "outcome": "neutral",
+                    },
+                    {
+                        "item_name": "Chaos Orb / Divine Orb (Standard UI)",
+                        "outcome": "",
+                    },
+                    {
+                        "item_name": "Exalted Orb / Divine Orb (Standard UI)",
+                        "outcome": "positive",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError) as error:
+        load_batch_outcome_decisions(decisions_path)
+
+    message = str(error.value)
+    assert "outcome decisions have 2 validation errors:" in message
+    assert "decision 2 for 'Chaos Orb / Divine Orb (Standard UI)' blank outcome" in message
+    assert (
+        "decision 3 duplicates item_name 'Exalted Orb / Divine Orb (Standard UI)' "
+        "(first seen at decision 1)."
+    ) in message
